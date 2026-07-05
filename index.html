@@ -182,11 +182,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
   #overlay.show{display:block;}
 }
 </style>
-
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Urgence & Réanimation"></head>
+</head>
 <body>
 <div id="app">
   <aside id="sidebar">
@@ -680,6 +676,15 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-dystocie-epaules').scrollIntoView({behavior:'smooth',block:'start'})">💪 Dystocie des épaules</a></li>
         <li><a onclick="document.getElementById('proto-rupture-uterine').scrollIntoView({behavior:'smooth',block:'start'})">💥 Rupture utérine</a></li>
         <li><a onclick="document.getElementById('proto-torsion-annexe').scrollIntoView({behavior:'smooth',block:'start'})">🌀 Torsion d'annexe</a></li>
+        <li><a onclick="document.getElementById('proto-hellp').scrollIntoView({behavior:'smooth',block:'start'})">🤰 Syndrome HELLP</a></li>
+        <li><a onclick="document.getElementById('proto-embolie-amniotique').scrollIntoView({behavior:'smooth',block:'start'})">💥 Embolie amniotique</a></li>
+        <li><a onclick="document.getElementById('proto-acr-grossesse').scrollIntoView({behavior:'smooth',block:'start'})">🫀 ACR chez la femme enceinte / césarienne périmortem</a></li>
+        <li><a onclick="document.getElementById('proto-inversion-uterine').scrollIntoView({behavior:'smooth',block:'start'})">🔄 Inversion utérine</a></li>
+        <li><a onclick="document.getElementById('proto-sepsis-puerperal').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Sepsis puerpéral / chorioamniotite</a></li>
+        <li><a onclick="document.getElementById('proto-trauma-grossesse').scrollIntoView({behavior:'smooth',block:'start'})">🚑 Traumatisme chez la femme enceinte</a></li>
+        <li><a onclick="document.getElementById('proto-mole-hydatiforme').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Môle hydatiforme hémorragique</a></li>
+        <li><a onclick="document.getElementById('proto-map-tocolyse').scrollIntoView({behavior:'smooth',block:'start'})">⏱️ Menace d'accouchement prématuré / tocolyse</a></li>
+        <li><a onclick="document.getElementById('proto-violences-sexuelles').scrollIntoView({behavior:'smooth',block:'start'})">⚖️ Violences sexuelles — prise en charge médico-légale</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🍼 Pédiatrie</span><span class="toc-cat-arrow">▾</span></li>
@@ -1969,6 +1974,148 @@ function renderProtocoles(){
     </ol>
   </div>
 
+  <div class="card" id="proto-hellp">
+    <h3>🤰 Syndrome HELLP</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>H</strong>emolysis (hémolyse), <strong>E</strong>levated <strong>L</strong>iver enzymes (cytolyse hépatique), <strong>L</strong>ow <strong>P</strong>latelets (thrombopénie) — variante ou complication sévère de la prééclampsie (survient dans 10-20% des prééclampsies sévères), mais peut aussi apparaître isolément, sans HTA franche ni protéinurie dans 10-15% des cas, et jusqu'à 30% des cas se révèlent en post-partum (jusqu'à 7 jours après l'accouchement). Mortalité maternelle jusqu'à 1%, morbidité sévère (hématome sous-capsulaire du foie, CIVD, insuffisance rénale aiguë, œdème pulmonaire, décollement rétinien).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Diagnostic biologique (critères de Tennessee/Mississippi) :</strong> hémolyse (schizocytes, haptoglobine effondrée, LDH &gt;600 UI/L, bilirubine élevée), cytolyse hépatique (ASAT/ALAT &gt;2x la normale), thrombopénie (&lt;100 000-150 000/mm³) — le tableau peut être incomplet (formes partielles)</li>
+      <li><strong>Signes d'alerte cliniques :</strong> douleur épigastrique/hypochondre droit (distension capsulaire hépatique — signe cardinal, souvent au premier plan), nausées/vomissements, céphalées, malaise général ; parfois tableau trompeur isolé sans HTA sévère</li>
+      <li><strong>Recherche systématique d'une complication hépatique grave :</strong> imagerie (échographie ou TDM abdominale) au moindre doute de douleur épigastrique intense ou de choc inexpliqué — <strong>hématome sous-capsulaire/rupture hépatique</strong> = urgence chirurgicale vitale (laparotomie d'hémostase, embolisation si disponible)</li>
+      <li><strong>Sulfate de magnésium</strong> systématique (prévention des convulsions, schéma identique au protocole éclampsie) même en l'absence de convulsions, dès que le diagnostic de prééclampsie sévère/HELLP est posé</li>
+      <li><strong>Contrôle tensionnel</strong> si TA ≥160/110 mmHg : Labétalol IV ou Nicardipine IV (cf. protocole éclampsie)</li>
+      <li><strong>Bilan de gravité répété</strong> (toutes les 12-24h ou plus rapproché si instable) : NFS/plaquettes, bilan hépatique, coagulation (fibrinogène), fonction rénale, LDH, haptoglobine — surveiller l'aggravation rapide possible</li>
+      <li><strong>Transfusion plaquettaire</strong> si plaquettes &lt;20 000-50 000/mm³ selon le contexte (avant césarienne notamment) ou saignement actif ; correction de la coagulopathie associée (PFC, fibrinogène) si CIVD</li>
+      <li><strong>Le seul traitement curatif reste l'accouchement</strong> — à discuter en urgence avec l'équipe obstétricale dès la 34e SA, ou avant si dégradation maternelle/fœtale sévère quel que soit le terme ; corticothérapie de maturation pulmonaire fœtale si extraction anticipée et terme le permettant</li>
+      <li>Orientation en réanimation/unité de soins intensifs si défaillance d'organe associée (CIVD, insuffisance rénale, OAP, atteinte neurologique)</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-embolie-amniotique">
+    <h3>💥 Embolie amniotique</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Passage de liquide amniotique/débris fœtaux dans la circulation maternelle déclenchant une réaction anaphylactoïde systémique — <strong>urgence vitale extrême</strong>, imprévisible, survenant typiquement pendant le travail, l'accouchement ou dans les 30 minutes suivant la délivrance (parfois après amniocentèse/traumatisme abdominal). Mortalité maternelle élevée (20-40% selon les séries), risque majeur d'atteinte fœtale/mortalité périnatale.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Présentation classique en 2 phases :</strong> phase 1 — détresse respiratoire aiguë brutale + collapsus cardiovasculaire ± convulsions/arrêt cardiaque d'installation soudaine, souvent précédée d'une agitation ou d'une sensation de mort imminente ; phase 2 (si survie initiale) — <strong>CIVD sévère</strong> et hémorragie massive incoercible (atonie utérine associée fréquente)</li>
+      <li><strong>Diagnostic clinique d'élimination</strong> — aucun test de confirmation rapide disponible ; évoquer devant l'association brutale hypoxie + hypotension/choc + coagulopathie en péri-partum, en éliminant les autres causes (embolie pulmonaire, choc hémorragique isolé, anaphylaxie, éclampsie, cardiomyopathie du péri-partum)</li>
+      <li><strong>Prise en charge = réanimation cardio-respiratoire immédiate et symptomatique</strong> — oxygénothérapie à haut débit d'emblée, intubation précoce si détresse respiratoire sévère ou trouble de conscience ; si ACR : RCP standard avec déplacement utérin gauche manuel (cf. protocole ACR chez la femme enceinte) — <strong>extraction fœtale en urgence (césarienne périmortem) si arrêt cardiaque et grossesse ≥20 SA</strong>, améliore le pronostic maternel ET fœtal</li>
+      <li><strong>Support hémodynamique :</strong> remplissage vasculaire prudent (risque d'aggraver l'OAP si dysfonction ventriculaire droite associée), <strong>noradrénaline</strong> en 1ère ligne si choc, échocardiographie précoce si disponible (dysfonction ventriculaire droite fréquente, guide le remplissage/inotropes — dobutamine ou milrinone à discuter)</li>
+      <li><strong>Correction agressive et précoce de la coagulopathie</strong> dès les premiers signes (ne pas attendre le bilan complet si hémorragie active) : PFC, fibrinogène concentré/cryoprécipités, culots plaquettaires, transfusion massive protocolisée — la CIVD est quasi-constante et souvent au premier plan du pronostic</li>
+      <li><strong>Prise en charge obstétricale simultanée :</strong> traitement de l'atonie utérine associée (utérotoniques, cf. protocole HPP), extraction fœtale sans délai si non encore réalisée et fœtus in utero avec signes de souffrance</li>
+      <li>Orientation systématique en réanimation ; annonce et accompagnement de l'entourage dès que possible compte tenu de la gravité du pronostic</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-acr-grossesse">
+    <h3>🫀 Arrêt cardio-respiratoire chez la femme enceinte / césarienne périmortem</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations ERC 2021 (circonstances particulières) et AHA. La RCP chez la femme enceinte (grossesse ≥20 SA, utérus palpable au-dessus de l'ombilic) nécessite des adaptations spécifiques liées à la compression aorto-cave par l'utérus gravide, qui réduit drastiquement le retour veineux et l'efficacité du massage cardiaque.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>RCP standard immédiate</strong> (algorithme ACR habituel : massage cardiaque, ventilation, DAE/défibrillation dès que possible — aucune contre-indication à la défibrillation ni aux médicaments de l'ACR pendant la grossesse) avec les adaptations suivantes</li>
+      <li><strong>Déplacement utérin manuel vers la gauche</strong> par un assistant dédié (une ou deux mains, l'utérus poussé/soulevé vers la gauche du patient) — <strong>à privilégier par rapport à l'inclinaison latérale du corps</strong>, qui diminue l'efficacité du massage cardiaque ; ne jamais utiliser de billot/coussin sous le bassin si cela compromet la qualité des compressions</li>
+      <li>Massage cardiaque : position des mains légèrement plus haute sur le sternum que d'habitude (l'utérus gravide surélève le diaphragme) ; intubation précoce recommandée (risque d'inhalation majoré, œdème des voies aériennes supérieures possible) par l'opérateur le plus expérimenté disponible</li>
+      <li><strong>Rechercher activement les causes réversibles spécifiques à la grossesse</strong> en plus des 4H/4T classiques : hémorragie (HPP, HRP, rupture utérine, GEU rompue), embolie amniotique, embolie pulmonaire, prééclampsie/éclampsie/HELLP, iatrogénie (surdosage sulfate de magnésium, anesthésie locorégionale — toxicité aux anesthésiques locaux, overdose d'anesthésiques), cardiomyopathie du péri-partum, dissection aortique</li>
+      <li><strong>Antidote sulfate de magnésium si surdosage suspecté</strong> : Gluconate de calcium 10%, 10 mL IV (cf. protocole éclampsie)</li>
+      <li><strong>Césarienne périmortem (extraction fœtale de sauvetage maternel) :</strong> décision à prendre dès le début de la RCP si utérus gravide ≥20 SA (fond utérin palpable au-dessus de l'ombilic) — <strong>débuter le geste si absence de retour à une circulation spontanée dans les 4 minutes de RCP bien conduite</strong>, objectif d'extraction fœtale dans la 5e minute. Ne pas attendre de matériel spécifique ni de transfert : geste réalisable sur place avec un simple bistouri, sans anesthésie (patiente en ACR)</li>
+      <li>La césarienne périmortem est réalisée avant tout <strong>pour améliorer les chances de survie maternelle</strong> (lève la compression aorto-cave, améliore le retour veineux et l'efficacité du massage cardiaque) — le bénéfice fœtal est secondaire mais réel si le geste est rapide</li>
+      <li><strong>Poursuivre la RCP pendant et après l'extraction</strong>, sans interrompre les compressions thoraciques pour le geste chirurgical ; prise en charge néonatale immédiate simultanée par une seconde équipe (cf. protocole réanimation du nouveau-né)</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-inversion-uterine">
+    <h3>🔄 Inversion utérine</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Retournement du fond utérin qui s'invagine à travers le col, parfois extériorisé à la vulve — complication rare (≈1/2000 à 1/20000 accouchements) mais gravissime de la délivrance, associant <strong>choc vagal brutal</strong> (souvent disproportionné par rapport aux pertes sanguines visibles) et <strong>hémorragie sévère</strong>. Favorisée par une traction excessive sur le cordon ou une pression fundique avant décollement placentaire complet.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Reconnaître le tableau :</strong> douleur pelvienne intense brutale au moment de la délivrance, choc vagal (bradycardie, hypotension) souvent au premier plan avant même l'hémorragie extériorisée, masse violacée extériorisée à la vulve ou fond utérin non palpable à la palpation abdominale (dépression en cupule)</li>
+      <li><strong>Alerte immédiate</strong> — appel à l'aide (obstétricien/sage-femme expérimentée), 2 VVP de gros calibre, bilan (NFS, coagulation, groupe/Rh/RAI), remplissage vasculaire et traitement du choc vagal (atropine si bradycardie sévère symptomatique)</li>
+      <li><strong>Ne pas retirer le placenta avant la réduction</strong> si celui-ci est encore inséré — le retrait précoce peut aggraver l'hémorragie ; la réduction manuelle prime</li>
+      <li><strong>Réduction manuelle immédiate (manœuvre de Johnson) :</strong> repousser le fond utérin inversé à travers le col avec la paume de la main, en direction de l'ombilic, le plus rapidement possible après le diagnostic — plus la réduction est précoce, plus elle est facile (l'anneau cervical se rétracte rapidement autour de l'utérus inversé)</li>
+      <li><strong>Relâchement utérin transitoire</strong> pour faciliter la réduction si nécessaire (résistance importante) : tocolytique (Terbutaline) ou agent anesthésique halogéné selon disponibilité — <strong>arrêter tout utérotonique</strong> avant/pendant la manœuvre de réduction</li>
+      <li><strong>Après réduction réussie :</strong> reprendre immédiatement les utérotoniques (Oxytocine en 1ère ligne) pour maintenir la rétraction utérine et prévenir la récidive immédiate/l'atonie secondaire ; maintenir une contre-pression manuelle transabdominale quelques minutes</li>
+      <li><strong>Si échec de la réduction manuelle :</strong> réduction hydrostatique (instillation de sérum tiède dans le vagin, cul-de-sac obturé) ou reprise chirurgicale (laparotomie, intervention de Huntington/Haultain) selon plateau technique disponible</li>
+      <li>Traitement de l'hémorragie et de la coagulopathie associées selon le protocole HPP ; transfusion précoce si choc hémorragique</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-sepsis-puerperal">
+    <h3>🦠 Sepsis puerpéral / chorioamniotite</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection génitale survenant pendant le travail/l'accouchement (chorioamniotite) ou dans les 6 semaines du post-partum (endométrite, plus rarement avortement septique) — cause majeure de mortalité maternelle évitable, particulièrement dans les contextes à ressources limitées où les avortements non sécurisés restent fréquents. Peut évoluer très rapidement vers un choc septique.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes évocateurs :</strong> fièvre ≥38°C (ou hypothermie dans les formes sévères), douleur pelvienne/utérine, lochies fétides ou purulentes, utérus mal involué et douloureux à la palpation, tachycardie maternelle/fœtale ; rechercher systématiquement des critères de sepsis (qSOFA, lactates) devant tout tableau fébrile en péri-partum</li>
+      <li><strong>Facteurs de risque à rechercher :</strong> rupture prématurée des membranes prolongée, travail prolongé, touchers vaginaux répétés, rétention de débris placentaires, manœuvres endo-utérines (révision utérine, délivrance artificielle), avortement provoqué en conditions non sécurisées, césarienne</li>
+      <li><strong>Prélèvements avant antibiothérapie</strong> si possible sans retarder le traitement : hémocultures, prélèvement vaginal/endocervical, ECBU ; bilan biologique (NFS, CRP, lactates, fonction rénale, bilan de coagulation)</li>
+      <li><strong>Antibiothérapie probabiliste précoce (dans l'heure)</strong>, large spectre couvrant germes à Gram négatif, streptocoques et anaérobies : association <strong>Amoxicilline-Acide clavulanique</strong> ou <strong>Céphalosporine 3G (Ceftriaxone)</strong> + <strong>Métronidazole</strong> IV ; ajouter un aminoside (Gentamicine) en cas de sepsis sévère/choc septique — adapter secondairement aux prélèvements</li>
+      <li><strong>Recherche et évacuation d'une rétention utérine</strong> (débris placentaires, produits de conception) — cause fréquente d'entretien du sepsis, échographie pelvienne puis évacuation utérine (aspiration/curetage) dès stabilisation hémodynamique, sous couverture antibiotique</li>
+      <li><strong>Prise en charge du choc septique si présent</strong> : remplissage vasculaire par cristalloïdes, noradrénaline si hypotension réfractaire, objectifs identiques au protocole sepsis général (cf. protocole dédié) — orientation en réanimation</li>
+      <li><strong>Si suspicion d'avortement septique :</strong> évacuation utérine en urgence après début de l'antibiothérapie, recherche de complications (perforation utérine, péritonite, CIVD, insuffisance rénale aiguë par nécrose corticale) ; vaccination antitétanique à vérifier/compléter selon le contexte</li>
+      <li>Prévention du choc septique gravissime (fasciite nécrosante périnéale, gangrène gazeuse utérine) : réévaluation rapprochée, avis chirurgical si non-amélioration sous 24-48h d'antibiothérapie adaptée ou aggravation locale/systémique</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-trauma-grossesse">
+    <h3>🚑 Traumatisme chez la femme enceinte</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après ATLS 10th Ed. (chapitre grossesse et traumatisme). <strong>La priorité reste la réanimation maternelle</strong> — la meilleure prise en charge du fœtus passe par une stabilisation maternelle optimale. Toute femme en âge de procréer victime d'un traumatisme doit bénéficier d'un dosage de β-hCG.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>ABCDE standard</strong> avec adaptations : <strong>décubitus latéral gauche ou déplacement utérin manuel vers la gauche</strong> dès que l'utérus est palpable au-dessus de l'ombilic (≥20 SA), pour lever la compression aorto-cave et améliorer le retour veineux/le débit cardiaque maternel</li>
+      <li><strong>Particularités physiologiques de la grossesse à connaître</strong> pour l'interprétation clinique : volume sanguin augmenté de 30-50% (les signes de choc hémorragique peuvent être retardés — jusqu'à 30% de perte volémique avant les premiers signes cliniques francs), tachycardie physiologique relative, hypotension de décubitus dorsal fréquente sans rapport avec une hémorragie</li>
+      <li><strong>Remplissage vasculaire et transfusion</strong> : ne pas attendre l'apparition de signes de choc francs pour réanimer activement compte tenu de la réserve physiologique trompeuse ; transfusion précoce si suspicion de choc hémorragique (le fœtus peut être en souffrance avant que la mère ne montre des signes de choc)</li>
+      <li><strong>Monitoring fœtal continu ≥4-6h minimum</strong> (cardiotocographie) dès que la mère est stabilisée, même en cas de traumatisme apparemment mineur — le décollement placentaire (HRP traumatique) peut survenir même après un choc abdominal minime et se révéler avec un délai de plusieurs heures</li>
+      <li><strong>Signes évocateurs de décollement placentaire post-traumatique :</strong> contractions utérines répétées, douleur/sensibilité utérine, saignement vaginal, anomalies du rythme cardiaque fœtal, utérus hypertonique — échographie obstétricale et avis obstétrical en urgence</li>
+      <li><strong>Immunoglobulines anti-D (Rhophylac®)</strong> si mère Rhésus négatif, quelle que soit la sévérité apparente du traumatisme (risque d'allo-immunisation par passage de sang fœtal dans la circulation maternelle)</li>
+      <li><strong>Imagerie :</strong> ne pas priver la mère d'une imagerie indiquée (TDM notamment) par crainte de l'irradiation fœtale — les bénéfices d'un diagnostic précis dépassent largement le risque radique aux doses diagnostiques ; protéger l'abdomen/pelvis si possible sans compromettre la qualité de l'examen</li>
+      <li><strong>Césarienne périmortem</strong> à envisager sans délai en cas d'arrêt cardiaque maternel post-traumatique et grossesse ≥20 SA (cf. protocole dédié) ; césarienne en urgence (hors ACR) à discuter avec l'équipe obstétricale si détresse fœtale sévère et mère stabilisable</li>
+      <li>Prévention de la maladie thromboembolique (mobilisation précoce, bas de contention) et anti-tétanique selon les plaies associées</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-mole-hydatiforme">
+    <h3>🩸 Môle hydatiforme hémorragique</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Grossesse môlaire (complète ou partielle) — prolifération trophoblastique anormale sans embryon viable (forme complète) ou avec embryon non viable (forme partielle). Se révèle typiquement par des métrorragies du 1er trimestre, un utérus souvent plus gros que l'âge gestationnel théorique, et des β-hCG très élevées. Le risque hémorragique peut être sévère, notamment lors de l'expulsion spontanée ou de l'évacuation utérine.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes évocateurs :</strong> métrorragies souvent abondantes et répétées (parfois expulsion de vésicules caractéristiques « en grappe de raisin »), hyperemesis gravidique marqué, utérus mou et plus volumineux que ne le voudrait le terme, absence de bruits du cœur fœtal (forme complète), signes de prééclampsie précoce (&lt;20 SA — évocateur), kystes ovariens lutéiniques bilatéraux</li>
+      <li><strong>Diagnostic :</strong> β-hCG plasmatiques très élevées (souvent &gt;100 000 UI/L), échographie pelvienne caractéristique (image en « tempête de neige » ou « nid d'abeille », absence d'embryon ou embryon malformé avec placenta hydropique)</li>
+      <li><strong>Prise en charge de l'hémorragie active :</strong> 2 VVP de gros calibre, bilan (NFS, coagulation, groupe/Rh/RAI), remplissage vasculaire, transfusion précoce si choc hémorragique — l'hémorragie peut être brutale et sévère, notamment au moment de l'évacuation utérine</li>
+      <li><strong>Évacuation utérine par aspiration</strong> (méthode de référence) dès stabilisation hémodynamique, sous couverture utérotonique (Oxytocine) débutée pendant le geste pour limiter le saignement — à réaliser en milieu équipé pour transfusion en urgence compte tenu du risque hémorragique et de perforation utérine (utérus fragile)</li>
+      <li><strong>Immunoglobulines anti-D</strong> si mère Rhésus négatif</li>
+      <li><strong>Rechercher des complications associées</strong> aux formes évoluées/volumineuses : prééclampsie précoce, hyperthyroïdie (l'hCG a une activité thyréotrope croisée), détresse respiratoire aiguë (embolisation trophoblastique pulmonaire, rare mais décrite lors de l'évacuation de môles volumineuses)</li>
+      <li><strong>Suivi post-évacuation impératif</strong> (à organiser avec l'équipe obstétricale/oncologique) : décroissance hebdomadaire puis mensuelle des β-hCG jusqu'à négativation, contraception efficace pendant toute la surveillance (6-12 mois) — risque de tumeur trophoblastique gestationnelle persistante/choriocarcinome nécessitant une chimiothérapie si les β-hCG plafonnent ou remontent</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-map-tocolyse">
+    <h3>⏱️ Menace d'accouchement prématuré (MAP) et tocolyse</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Contractions utérines régulières associées à des modifications cervicales entre 22 et 36 SA + 6 jours. L'objectif de la prise en charge n'est pas d'arrêter indéfiniment le travail mais de <strong>gagner le temps nécessaire</strong> à la corticothérapie de maturation pulmonaire fœtale et, si besoin, au transfert vers une structure adaptée au terme (in utero de préférence à un transfert néonatal).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Confirmer le diagnostic :</strong> contractions utérines régulières et douloureuses (≥1 toutes les 10 min pendant ≥30 min) + modifications cervicales (raccourcissement/ouverture au toucher vaginal, ou longueur cervicale &lt;25 mm à l'échographie endovaginale si disponible)</li>
+      <li><strong>Éliminer une cause/un facteur déclenchant à traiter spécifiquement :</strong> infection urinaire (ECBU systématique), chorioamniotite (fièvre, tachycardie fœtale — contre-indique la tocolyse, cf. protocole sepsis puerpéral), hématome rétro-placentaire, rupture prématurée des membranes, béance cervicale, grossesse multiple, malformation utérine</li>
+      <li><strong>Corticothérapie de maturation pulmonaire fœtale — priorité absolue</strong> entre 24 et 34 SA (à discuter au cas par cas jusqu'à 36 SA+6j selon contexte) : <strong>Bétaméthasone (Célestène Chronodose®)</strong> 12 mg IM, 2 injections à 24h d'intervalle, ou <strong>Dexaméthasone</strong> 6 mg IM toutes les 12h (4 doses) selon disponibilité — bénéfice materno-fœtal majeur (réduction de la mortalité néonatale, du syndrome de détresse respiratoire, de l'hémorragie intraventriculaire)</li>
+      <li><strong>Tocolyse de 1ère intention</strong> (objectif : 48h pour laisser le temps à la corticothérapie d'agir, pas au-delà sauf situation particulière) :
+        <ul style="margin-top:6px; margin-left:16px; line-height:1.9;">
+          <li><strong>Nifédipine (Adalate®)</strong> PO — <strong>dose de charge :</strong> 20 mg PO, à renouveler une fois après 30 min si les contractions persistent (max 2 doses de charge, soit 40 mg dans la 1ère heure) ; <strong>entretien :</strong> 20 mg PO toutes les 4 à 8h (forme LP) — <strong>dose maximale : 160 mg/24h</strong>, durée max 48h ; surveillance TA/FC (risque d'hypotension, notamment si association à un autre antihypertenseur/sulfate de magnésium)</li>
+          <li><strong>Atosiban (Tractocile®)</strong> IV — antagoniste de l'ocytocine, schéma en 3 étapes : <strong>1) bolus initial</strong> 6,75 mg IV (0,9 mL de solution à 7,5 mg/mL) en 1 min ; <strong>2) perfusion de charge</strong> 18 mg/h (300 µg/min = 24 mL/h de la solution à 7,5 mg/mL diluée) pendant 3h ; <strong>3) perfusion d'entretien</strong> 6 mg/h (100 µg/min = 8 mL/h) pendant jusqu'à 45h — <strong>durée totale maximale : 48h</strong>, cure unique (retraitement possible si récidive selon RCP) ; meilleur profil de tolérance cardiovasculaire que la Nifédipine mais coût nettement plus élevé</li>
+        </ul>
+        Efficacité comparable entre les deux molécules à 48h ; choix selon disponibilité, tolérance et comorbidités (préférer Atosiban si cardiopathie/mauvaise tolérance hémodynamique à la Nifédipine)
+      </li>
+      <li><strong>Contre-indications à la tocolyse</strong> (ne pas retarder l'accouchement dans ces situations) : chorioamniotite, HRP, éclampsie/prééclampsie sévère, mort fœtale in utero, anomalie sévère du rythme cardiaque fœtal, hémorragie maternelle sévère, terme &gt;34-36 SA selon les équipes</li>
+      <li><strong>Sulfate de magnésium à visée de neuroprotection fœtale</strong> (et non tocolytique à cette dose) si accouchement prématuré imminent avant 32 SA : schéma de charge puis entretien identique/proche du protocole éclampsie — réduit le risque de paralysie cérébrale chez le prématuré</li>
+      <li><strong>Antibioprophylaxie</strong> si suspicion de rupture prématurée des membranes associée (cf. protocoles spécifiques) — ne pas donner d'antibiotiques systématiques en l'absence de rupture des membranes ou d'infection identifiée</li>
+      <li>Repos relatif (l'alitement strict prolongé n'est plus recommandé en routine — risque thromboembolique), surveillance du bien-être fœtal, organisation du transfert in utero vers une maternité de niveau adapté au terme si nécessaire</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-violences-sexuelles">
+    <h3>⚖️ Violences sexuelles — prise en charge médico-légale et somatique</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Prise en charge à double objectif indissociable : soins somatiques/psychologiques immédiats et préservation des éléments médico-légaux, sans que l'un ne retarde l'autre. L'accueil doit se faire dans un lieu calme et confidentiel, par un soignant si possible formé, avec le consentement éclairé de la personne à chaque étape de l'examen.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Priorité aux urgences vitales</strong> (lésions traumatiques associées, hémorragie) avant tout examen médico-légal — la stabilisation somatique prime toujours</li>
+      <li><strong>Recueil du consentement éclairé</strong> à chaque étape (examen, prélèvements, dépôt de plainte, réquisition) — respecter le rythme et les refus de la personne, l'examen ne doit jamais être imposé</li>
+      <li><strong>Anamnèse structurée</strong> (circonstances, type(s) d'agression, délai depuis les faits, antécédents gynéco-obstétricaux, statut vaccinal) — consigner les propos rapportés entre guillemets, éviter les termes interprétatifs</li>
+      <li><strong>Examen clinique complet</strong> : lésions traumatiques générales (à photographier/schématiser avec accord), examen gynécologique (lésions génitales, anales) réalisé avec délicatesse, un seul examinateur si possible pour limiter les touchers répétés</li>
+      <li><strong>Préservation des prélèvements médico-légaux</strong> (kit d'agression sexuelle si disponible) le plus précocement possible (idéalement &lt;72h, utile au-delà selon le type de prélèvement) : prélèvements buccaux/vaginaux/anaux/cutanés à visée de recherche de sperme/ADN, avant toute toilette intime — respecter la chaîne de conservation (traçabilité, scellés) pour la recevabilité judiciaire</li>
+      <li><strong>Contraception d'urgence</strong> si rapport à risque de grossesse, dans les délais les plus brefs (efficacité décroissante avec le temps, jusqu'à 5 jours selon la molécule) — Lévonorgestrel ou Ulipristal acétate selon disponibilité et délai</li>
+      <li><strong>Prophylaxie post-exposition VIH</strong> à évaluer sans délai selon le contexte (statut de l'agresseur si connu, type de rapport, délai — idéalement &lt;4h, possible jusqu'à 48-72h) ; <strong>prophylaxie des IST</strong> (Gonocoque, Chlamydia, Syphilis) selon les recommandations locales ; <strong>rappel vaccinal antitétanique</strong> si lésions cutanéo-muqueuses</li>
+      <li><strong>Soutien psychologique immédiat</strong> et orientation vers un suivi spécialisé (psychotraumatologie) — proposer systématiquement, sans l'imposer ; information sur les droits (dépôt de plainte à tout moment, y compris différé, associations d'aide aux victimes)</li>
+      <li><strong>Rédaction d'un certificat médical initial descriptif</strong> (constatations objectives, sans jugement de valeur ni conclusion sur la réalité des faits qui ne relève pas du rôle médical), remis à la personne ou transmis selon réquisition judiciaire</li>
+    </ol>
+  </div>
+
   <div class="card" id="proto-pancreatite">
     <h3>🟠 Pancréatite aiguë</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Inflammation aiguë du pancréas, le plus souvent d'origine biliaire (lithiase) ou alcoolique. Diagnostic retenu devant <strong>au moins 2 critères sur 3</strong> : douleur épigastrique/hypochondre gauche typique (transfixiante, irradiant dans le dos), lipasémie &gt;3x la limite supérieure de la normale, et/ou imagerie évocatrice. La majorité des formes sont bénignes, mais 15-20% évoluent vers une forme sévère avec défaillance d'organe.</p>
@@ -2248,6 +2395,17 @@ function renderProtocoles(){
       <li>ACOG (American College of Obstetricians and Gynecologists) Practice Bulletin — Placental Abruption, Placenta Previa, Uterine Rupture</li>
       <li>Advanced Life Support in Obstetrics (ALSO) — Protocoles d'urgences obstétricales extra-hospitalières</li>
       <li>Société Française de Médecine d'Urgence (SFMU) / CNGOF — Prise en charge des urgences gynécologiques (torsion d'annexe, fausse couche hémorragique)</li>
+      <li>ERC Guidelines 2021 — Cardiac arrest in special circumstances : arrêt cardiaque chez la femme enceinte et césarienne périmortem</li>
+      <li>AHA Scientific Statement — Cardiac Arrest in Pregnancy (2015, réaffirmé) ; ALSO (Advanced Life Support in Obstetrics) — Maternal Cardiac Arrest</li>
+      <li>Sibai BM et al. ; ACOG Practice Bulletin — HELLP Syndrome : diagnostic (critères de Tennessee/Mississippi) et prise en charge</li>
+      <li>Society for Maternal-Fetal Medicine (SMFM) / RCOG Green-top Guideline — Amniotic Fluid Embolism : diagnosis and management</li>
+      <li>RCOG Green-top Guideline — Management of Acute Uterine Inversion</li>
+      <li>RCOG Green-top Guideline ; Surviving Sepsis Campaign — Bacterial Sepsis following Pregnancy (sepsis puerpéral, chorioamniotite)</li>
+      <li>OMS — Prévention et prise en charge de l'avortement à risque et de ses complications</li>
+      <li>ATLS 10th Ed. — Trauma in Pregnancy and Intimate Partner Violence</li>
+      <li>RCOG Green-top Guideline — The Management of Gestational Trophoblastic Disease (môle hydatiforme)</li>
+      <li>ACOG Practice Bulletin ; RCOG Green-top Guideline — Preterm Labour : tocolyse, corticothérapie de maturation fœtale, neuroprotection par sulfate de magnésium</li>
+      <li>OMS — Guidelines for Medico-legal Care for Victims of Sexual Violence ; Haute Autorité de Santé (HAS) — Prise en charge des personnes victimes de violences sexuelles</li>
       <li>World Allergy Organization (WAO) Anaphylaxis Guidance 2020 ; EAACI Guidelines — Anaphylaxis: diagnosis and management</li>
       <li>ESC Guidelines 2015 — Diagnosis and Management of Pericardial Diseases (tamponnade cardiaque, péricardiocentèse)</li>
       <li>British Thoracic Society (BTS) Pleural Disease Guideline 2023 ; ATLS 10th Ed. — Prise en charge du pneumothorax spontané et suffocant</li>
@@ -3192,6 +3350,7 @@ const ABBR_DATA = [
   ["DEP","Débit expiratoire de pointe"],
   ["ECBU","Examen cytobactériologique des urines"],
   ["ECG","Électrocardiogramme"],
+  ["EA","Embolie amniotique"],
   ["EP","Embolie pulmonaire"],
   ["ERC","European Resuscitation Council"],
   ["ESC","European Society of Cardiology"],
@@ -3559,8 +3718,5 @@ resultsList.addEventListener('click', (e)=>{
 
 showModule('accueil');
 </script>
-
-<script>
-if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js");});}
-</script></body>
+</body>
 </html>
