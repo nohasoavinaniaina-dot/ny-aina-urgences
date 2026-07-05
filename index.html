@@ -182,7 +182,11 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
   #overlay.show{display:block;}
 }
 </style>
-</head>
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Urgence & Réanimation"></head>
 <body>
 <div id="app">
   <aside id="sidebar">
@@ -3718,5 +3722,8 @@ resultsList.addEventListener('click', (e)=>{
 
 showModule('accueil');
 </script>
-</body>
+
+<script>
+if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js");});}
+</script></body>
 </html>
