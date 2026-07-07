@@ -616,6 +616,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-purpura-fulminans').scrollIntoView({behavior:'smooth',block:'start'})">🟣 Purpura fulminans</a></li>
         <li><a onclick="document.getElementById('proto-tetanos').scrollIntoView({behavior:'smooth',block:'start'})">🦷 Tétanos</a></li>
         <li><a onclick="document.getElementById('proto-cholera').scrollIntoView({behavior:'smooth',block:'start'})">🚱 Choléra / Diarrhée aiguë sévère</a></li>
+        <li><a onclick="document.getElementById('proto-fasciite-necrosante').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Fasciite nécrosante / Infections nécrosantes des tissus mous</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🩸 Hématologie</span><span class="toc-cat-arrow">▾</span></li>
@@ -659,6 +660,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-trauma-thoracique').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Traumatisme thoracique</a></li>
         <li><a onclick="document.getElementById('proto-syndrome-loges').scrollIntoView({behavior:'smooth',block:'start'})">🦵 Syndrome des loges</a></li>
         <li><a onclick="document.getElementById('proto-trauma-abdominal').scrollIntoView({behavior:'smooth',block:'start'})">🫃 Traumatisme abdominal fermé</a></li>
+        <li><a onclick="document.getElementById('proto-fracture-bassin').scrollIntoView({behavior:'smooth',block:'start'})">🦴 Fracture du bassin instable / Hémorragie pelvienne</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫃 Digestif / Abdominal</span><span class="toc-cat-arrow">▾</span></li>
@@ -668,6 +670,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-epigastralgie').scrollIntoView({behavior:'smooth',block:'start'})">🔥 Épigastralgie intense (ulcère/gastrite)</a></li>
         <li><a onclick="document.getElementById('proto-pancreatite').scrollIntoView({behavior:'smooth',block:'start'})">🟠 Pancréatite aiguë</a></li>
         <li><a onclick="document.getElementById('proto-abdomen-aigu').scrollIntoView({behavior:'smooth',block:'start'})">🫃 Douleur abdominale aiguë</a></li>
+        <li><a onclick="document.getElementById('proto-ischemie-mesenterique').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Ischémie mésentérique aiguë</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🩺 Urologie</span><span class="toc-cat-arrow">▾</span></li>
@@ -725,6 +728,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-intubation-difficile').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Intubation difficile / Séquence d'induction rapide</a></li>
         <li><a onclick="document.getElementById('proto-cricothyroidotomie').scrollIntoView({behavior:'smooth',block:'start'})">🔪 Crico-thyroïdotomie (échec d'intubation)</a></li>
         <li><a onclick="document.getElementById('proto-civd').scrollIntoView({behavior:'smooth',block:'start'})">🩸 CIVD — Coagulation intravasculaire disséminée</a></li>
+        <li><a onclick="document.getElementById('proto-transfusion-pratique').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Transfusion sanguine — Indications, groupes et posologies</a></li>
         <li><a onclick="document.getElementById('proto-transfusion-massive').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Protocole de transfusion massive</a></li>
         <li><a onclick="document.getElementById('proto-eer-urgente').scrollIntoView({behavior:'smooth',block:'start'})">🧪 Indications d'épuration extra-rénale en urgence</a></li>
         <li><a onclick="document.getElementById('proto-delirium-reanimation').scrollIntoView({behavior:'smooth',block:'start'})">🧠 Delirium de réanimation (CAM-ICU)</a></li>
@@ -1707,6 +1711,52 @@ function renderProtocoles(){
     </ol>
   </div>
 
+  <div class="card" id="proto-fasciite-necrosante">
+    <h3>🦠 Fasciite nécrosante / Infections nécrosantes des tissus mous</h3>
+    <div class="warn-box">⚠️ Urgence chirurgicale absolue — le délai avant débridement conditionne directement la survie (mortalité ~4% si chirurgie &lt;12h vs jusqu'à 38% en cas de retard). Ne jamais attendre l'imagerie ou la biologie en cas de forte suspicion clinique.</div>
+    <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Signes cliniques évocateurs (à rechercher activement, souvent frustres au stade précoce) :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Douleur disproportionnée</strong> par rapport à l'aspect cutané initial — signe le plus précoce et le plus sensible</li>
+      <li><strong>Induration sous-cutanée "en bois"</strong> s'étendant au-delà des limites visibles de l'érythème cutané</li>
+      <li>Œdème tendu, bulles hémorragiques, taches cyaniques/nécrotiques cutanées (signes tardifs)</li>
+      <li>Crépitation sous-cutanée (gaz) — évocatrice mais inconstante, absente dans de nombreux cas confirmés</li>
+      <li>Fièvre élevée, tachycardie disproportionnée, altération rapide de l'état général, signes de sepsis/choc septique</li>
+      <li><strong>Absence d'amélioration après 24-48h d'antibiothérapie</strong> bien conduite pour une infection cutanée présumée simple — doit faire reconsidérer le diagnostic</li>
+      <li>Terrain à risque : diabète, immunodépression, plaie/morsure/injection récente, chirurgie récente, toxicomanie IV — mais peut survenir sur peau apparemment saine</li>
+      <li><strong>Gangrène de Fournier</strong> : forme périnéale/génitale, souvent chez l'homme diabétique, point de départ ano-rectal ou urogénital — même urgence chirurgicale</li>
+    </ul>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Score LRINEC (Laboratory Risk Indicator for Necrotizing Fasciitis) — outil d'aide, ne remplace jamais le jugement clinique :</p>
+    <table>
+      <tr><th>Paramètre</th><th>Points</th></tr>
+      <tr><td>CRP ≥150 mg/L</td><td>4</td></tr>
+      <tr><td>Leucocytes 15 000-25 000/mm³ / &gt;25 000/mm³</td><td>1 / 2</td></tr>
+      <tr><td>Hémoglobine 11-13,5 g/dL / &lt;11 g/dL</td><td>1 / 2</td></tr>
+      <tr><td>Natrémie &lt;135 mmol/L</td><td>2</td></tr>
+      <tr><td>Créatinine &gt;141 µmol/L</td><td>2</td></tr>
+      <tr><td>Glycémie &gt;10 mmol/L (1,80 g/L)</td><td>1</td></tr>
+    </table>
+    <p style="font-size:13.5px; margin-top:6px;">Score ≥6 : suspicion à prendre au sérieux (VPP ~92%) ; score ≥8 : risque élevé. <strong>Un score bas n'élimine pas le diagnostic</strong> (sensibilité imparfaite, environ 40% des fasciites confirmées ont un score &lt;6) — la décision opératoire reste avant tout clinique.</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Prise en charge :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Appel chirurgical immédiat</strong> dès la suspicion clinique — le débridement chirurgical radical est le seul traitement curatif, l'imagerie (TDM/échographie) ne doit jamais retarder l'intervention en cas de suspicion forte</li>
+      <li><strong>Réanimation hémodynamique</strong> — remplissage vasculaire (<strong>Ringer Lactate/NaCl 0,9% — Baxter®</strong>), prise en charge du choc septique associé selon protocole dédié</li>
+      <li><strong>Antibiothérapie probabiliste large spectre immédiate</strong> (avant même le débridement, sans le retarder) :</li>
+    </ol>
+    <table style="margin-top:6px;">
+      <tr><th>Antibiotique</th><th>Posologie</th></tr>
+      <tr><td><strong>Ceftriaxone (Rocéphine®)</strong> ou <strong>Céfotaxime</strong></td><td>2g IV x2/j (couverture des bacilles Gram négatif)</td></tr>
+      <tr><td><strong>Métronidazole (Flagyl®)</strong></td><td>500mg IV toutes les 8h (couverture des anaérobies)</td></tr>
+      <tr><td><strong>Clindamycine (Dalacine®)</strong> — si disponible</td><td>900mg IV toutes les 8h — <strong>essentielle</strong> : inhibe la synthèse des toxines bactériennes (effet anti-toxinique, notamment sur le streptocoque du groupe A)</td></tr>
+      <tr><td>Alternative si Clindamycine indisponible</td><td>Association Pénicilline G (3-4 MUI IV toutes les 4-6h) + Gentamicine (Gentalline®) 5mg/kg/j en 1 injection</td></tr>
+    </table>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
+      <li><strong>Débridement chirurgical radical</strong> de tous les tissus nécrotiques (peau, tissu sous-cutané, fascia atteint) — reprises chirurgicales itératives toutes les 24-36h jusqu'à absence de progression de la nécrose ; amputation parfois salvatrice si atteinte d'un membre avec choc septique réfractaire</li>
+      <li>Prélèvements peropératoires (bactériologie, anatomopathologie) pour adapter l'antibiothérapie et confirmer le diagnostic</li>
+      <li>Surveillance rapprochée en réanimation — le choc septique et la défaillance multiviscérale sont fréquents dans les premières 24-48h</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Flagyl® et Gentalline® sont largement disponibles à tous les niveaux hospitaliers. La Clindamycine (Dalacine®) est disponible principalement en pharmacie hospitalière de CHU/CHRR — en son absence, l'association Pénicilline G/Gentamicine reste une alternative acceptable, sans l'effet anti-toxinique spécifique de la clindamycine. Le plateau chirurgical (bloc opératoire, disponibilité de sang pour transfusion) doit être mobilisé sans délai ; un transfert vers un centre chirurgical de référence ne doit jamais retarder l'antibiothérapie initiale.</p>
+  </div>
+
   <div class="card" style="border-left:4px solid var(--warn);">
     <h3>💊 Note sur les noms commerciaux</h3>
     <p style="font-size:13px; color:var(--muted)">Les noms commerciaux cités ci-dessous (Doliprane®, Profenid®, Augmentin®...) sont les plus répandus en pharmacie francophone (France/Afrique francophone) à titre de repère. La disponibilité réelle varie selon les dépôts, hôpitaux et génériqueurs locaux (Biogaran, Mylan, Micro Labs...) — <strong>le nom en DCI (molécule) reste la référence fiable</strong> pour toute prescription. Vérifier la liste des médicaments enregistrés à Madagascar (AMM.mg) ou l'étiquette du produit disponible sur place.</p>
@@ -1889,6 +1939,31 @@ function renderProtocoles(){
       <li>Antalgie systématique dès la prise en charge, ne pas attendre l'avis chirurgical pour soulager la douleur — <strong>Paracétamol (Perfalgan® IV, Doliprane® PO)</strong> 1 g toutes les 6h en 1ère intention, puis <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur intense non contrôlée (éviter les AINS si suspicion de perforation/ulcère)</li>
       <li>Réévaluation clinique répétée indispensable : un abdomen initialement rassurant peut se dégrader en quelques heures (appendicite débutante, ischémie)</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-ischemie-mesenterique">
+    <h3>🩸 Ischémie mésentérique aiguë</h3>
+    <p class="module-sub" style="margin-bottom:8px;">D'après les recommandations WSES (World Society of Emergency Surgery, 2022) et ESVS. Pathologie rare mais grevée d'une mortalité de 30-70% en cas de retard diagnostique — à évoquer systématiquement devant une douleur abdominale disproportionnée par rapport à l'examen clinique.</p>
+    <div class="warn-box">⚠️ La douleur abdominale intense avec un examen clinique initialement pauvre (ventre souple, sans défense) est le signe le plus évocateur au stade précoce — ne pas être rassuré par la discordance clinico-radiologique.</div>
+    <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Terrain et présentations à évoquer :</p>
+    <table>
+      <tr><th>Mécanisme</th><th>Terrain évocateur</th></tr>
+      <tr><td>Embolique (artère mésentérique supérieure)</td><td>Fibrillation atriale, valvulopathie, thrombus intracardiaque, antécédent embolique — début brutal</td></tr>
+      <tr><td>Thrombotique sur athérome</td><td>Artériopathie connue, angor abdominal préexistant (douleur post-prandiale chronique) — début plus progressif</td></tr>
+      <tr><td>Non occlusive (bas débit — NOMI)</td><td>Patient de réanimation sous vasopresseurs, choc, insuffisance cardiaque sévère, hémodialyse</td></tr>
+      <tr><td>Thrombose veineuse mésentérique</td><td>Thrombophilie, cirrhose/hypertension portale, syndrome myéloprolifératif, contexte post-opératoire</td></tr>
+    </table>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
+      <li><strong>Ne pas retarder l'imagerie</strong> — angioscanner abdominal (angio-TDM) en urgence dès la suspicion clinique, examen de référence (sensibilité et spécificité élevées) ; ne pas se contenter d'une radiographie standard, non contributive</li>
+      <li><strong>Lactates</strong> — un taux normal n'élimine pas le diagnostic au stade précoce (marqueur d'ischémie déjà constituée, pas de l'ischémie débutante) ; leur élévation, associée à une acidose métabolique, est un signe de gravité (souffrance intestinale engagée)</li>
+      <li><strong>Réanimation initiale dès la suspicion</strong> — remplissage vasculaire (<strong>Ringer Lactate/NaCl 0,9% — Baxter®</strong>) pour optimiser la perfusion splanchnique, correction des troubles hydro-électrolytiques, sonde nasogastrique de décompression si distension/vomissements, arrêt de toute alimentation orale</li>
+      <li><strong>Antibiothérapie probabiliste large spectre</strong> dès la suspicion diagnostique (couverture Gram négatif et anaérobies) — <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j + <strong>Métronidazole (Flagyl®)</strong> 500mg IV toutes les 8h</li>
+      <li><strong>Avis chirurgical immédiat</strong> — laparotomie exploratrice en urgence en cas de signes de péritonite/nécrose intestinale constituée (résection des segments nécrosés, revascularisation si possible, laparotomie "damage control" avec réintervention programmée à 24-48h pour réévaluer la viabilité intestinale)</li>
+      <li><strong>Revascularisation</strong> — chirurgie ouverte (embolectomie/pontage) dans la majorité des structures malgaches ; les techniques endovasculaires (thrombolyse in situ, angioplastie) ne sont généralement pas accessibles localement</li>
+      <li><strong>Forme non occlusive (NOMI)</strong> — corriger la cause du bas débit (optimisation hémodynamique, sevrage des vasoconstricteurs si possible), éviter la digoxine et les vasopresseurs purs alpha si évitable (aggravent la vasoconstriction splanchnique)</li>
+      <li><strong>Anticoagulation</strong> — héparine à discuter au cas par cas selon le mécanisme (notamment thrombose veineuse mésentérique) et le risque hémorragique post-opératoire</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'angioscanner et la chirurgie vasculaire de revascularisation ne sont disponibles que dans un nombre restreint de centres (CHU Antananarivo principalement) — un transfert précoce doit être envisagé dès la suspicion chez un patient transportable, en parallèle de la réanimation et de l'antibiothérapie déjà débutées. En l'absence d'imagerie disponible en urgence, une dégradation clinique rapide malgré une réanimation bien conduite doit faire discuter une laparotomie exploratrice à visée diagnostique et thérapeutique.</p>
   </div>
 
   <div class="card" id="proto-colique-nephretique">
@@ -2558,6 +2633,54 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : PFC et plaquettes dépendent de la banque de sang du CHU/CHRR (Centre National de Transfusion Sanguine, CNTS) — disponibilité variable et souvent limitée hors capitale. Le fibrinogène concentré et les cryoprécipités sont rarement disponibles hors CHU. L'Exacyl® (acide tranexamique) est largement disponible, y compris en pharmacie de gros de district.</p>
   </div>
 
+  <div class="card" id="proto-transfusion-pratique">
+    <h3>🩸 Transfusion sanguine — Indications, groupes et posologies</h3>
+    <p class="module-sub" style="margin-bottom:8px;">D'après les recommandations AABB 2023 (seuils transfusionnels érythrocytaires), AABB/ICTMG (transfusion plaquettaire), et l'OMS (Clinical Use of Blood). Principes pratiques pour les concentrés de globules rouges (CGR), le plasma frais congelé (PFC) et les plaquettes, chez l'adulte et l'enfant. Voir aussi les protocoles dédiés : CIVD, Transfusion massive, Accident transfusionnel aigu.</p>
+
+    <p style="font-weight:600; color:var(--accent2);">Compatibilité ABO/Rh — choix du groupe à transfuser :</p>
+    <table>
+      <tr><th>Groupe du receveur</th><th>CGR compatibles</th><th>PFC compatibles</th></tr>
+      <tr><td><strong>O</strong></td><td>O uniquement</td><td>O, A, B, AB</td></tr>
+      <tr><td><strong>A</strong></td><td>A, O</td><td>A, AB</td></tr>
+      <tr><td><strong>B</strong></td><td>B, O</td><td>B, AB</td></tr>
+      <tr><td><strong>AB</strong></td><td>AB, A, B, O</td><td>AB uniquement</td></tr>
+    </table>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9; margin-top:8px;">
+      <li><strong>Urgence vitale immédiate</strong> (avant groupage/RAI disponibles) : culots <strong>O Rh négatif</strong> (donneur universel érythrocytaire) ; plasma <strong>AB</strong> (donneur universel plasmatique) si disponible — dès que le groupage du patient est connu, basculer sur des produits iso-groupe</li>
+      <li><strong>Femme en âge de procréer</strong> : privilégier autant que possible le Rh négatif en situation non vitale, pour limiter le risque d'allo-immunisation anti-D compromettant une grossesse future ; si une receveuse Rh négatif a reçu du sang Rh positif par nécessité, discuter une prophylaxie par <strong>immunoglobulines anti-D</strong> selon disponibilité</li>
+      <li>Toujours réaliser un <strong>groupage/Rh + recherche d'agglutinines irrégulières (RAI)</strong> et, si possible, une épreuve de compatibilité (cross-match) avant transfusion non vitale</li>
+    </ul>
+
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Indications et posologies chez l'adulte :</p>
+    <table>
+      <tr><th>Produit</th><th>Seuil / Indication</th><th>Dose usuelle</th><th>Effet attendu</th></tr>
+      <tr><td><strong>CGR</strong></td><td>Hb &lt;7 g/dL chez le patient stable (seuil restrictif) ; &lt;7,5 g/dL en chirurgie cardiaque ; &lt;8 g/dL en chirurgie orthopédique ou cardiopathie connue ; au-delà de ces seuils si anémie symptomatique (angor, dyspnée, instabilité) ou hémorragie active non contrôlée</td><td>1 culot (~250-300 mL)</td><td>+1 g/dL d'Hb ou +3% d'hématocrite ; réévaluer avant transfusion suivante</td></tr>
+      <tr><td><strong>PFC</strong></td><td>TP/TCA &gt;1,5x la normale avec saignement actif ou avant geste invasif ; correction d'un surdosage en AVK</td><td>10-15 mL/kg (jusqu'à 15-20 mL/kg)</td><td>+15-20% des facteurs de coagulation</td></tr>
+      <tr><td><strong>Plaquettes</strong></td><td>&lt;10 000/mm³ en prophylaxie chez le patient stable afébrile ; &lt;20 000/mm³ si fièvre/sepsis ou avant pose de voie centrale ; &lt;50 000/mm³ avant geste invasif/chirurgie ou saignement actif ; &lt;100 000/mm³ avant neurochirurgie ou chirurgie ophtalmologique</td><td>1 unité d'aphérèse (ou équivalent en mélange de concentrés)</td><td>+30 000 à 50 000/mm³</td></tr>
+    </table>
+
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Posologies en pédiatrie :</p>
+    <table>
+      <tr><th>Produit</th><th>Dose</th><th>Débit / Durée</th></tr>
+      <tr><td><strong>CGR</strong></td><td>10-15 mL/kg (poids &lt;35-40kg) ou 1 unité si poids ≥35-40kg ; réduire à 5 mL/kg par séance si anémie sévère mal tolérée (risque de surcharge)</td><td>Débit usuel ~5 mL/kg/h ; durée totale 2-4h, à ne jamais dépasser 4h par poche</td></tr>
+      <tr><td><strong>PFC</strong></td><td>10-20 mL/kg</td><td>Idem, selon tolérance hémodynamique</td></tr>
+      <tr><td><strong>Plaquettes</strong></td><td>10-15 mL/kg (ou environ 1 unité pour 10 kg)</td><td>Idem</td></tr>
+    </table>
+    <p style="font-size:13.5px; margin-top:8px;">Chez l'enfant hémodynamiquement stable et sans hémoglobinopathie, cardiopathie cyanogène ni hypoxémie sévère, le seuil transfusionnel est également <strong>Hb &lt;7 g/dL</strong> (recommandation AABB 2023, similaire à l'adulte). En contexte de ressources limitées, l'essai <strong>TRACT</strong> (Ouganda/Malawi) a validé la transfusion immédiate de CGR (10-15 mL/kg) chez l'enfant hospitalisé avec anémie sévère (Hb &lt;6 g/dL), sans bénéfice supplémentaire démontré des volumes plus élevés.</p>
+
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Précautions pratiques indispensables :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Contrôle ultime au lit du malade</strong> avant chaque poche : concordance stricte entre l'identité du patient, la carte de groupe sanguin, l'étiquette de la poche et la carte de compatibilité — geste non négociable, y compris en situation d'urgence vitale (c'est la principale cause évitable d'accident hémolytique)</li>
+      <li><strong>Tubulure à filtre</strong> dédiée (170-200 microns) ; aucune administration de médicament ou de soluté glucosé/calcique sur la même voie que le produit sanguin (uniquement du NaCl 0,9% en cas de rinçage)</li>
+      <li><strong>Surveillance clinique rapprochée</strong> : constantes avant transfusion (T0), à 15 minutes puis régulièrement pendant et à la fin de la transfusion (FC, PA, température, SpO2, diurèse) — arrêt immédiat au moindre symptôme suspect (<em>voir protocole Accident transfusionnel aigu</em>)</li>
+      <li><strong>Durée maximale de 4h par poche</strong> (risque de prolifération bactérienne au-delà) — transfusion plus lente chez l'insuffisant cardiaque/rénal ou le sujet âgé (risque de TACO), au contraire accélérée en cas de choc hémorragique</li>
+      <li><strong>Réchauffement du sang</strong> par un réchauffeur dédié, recommandé en cas de transfusion rapide/massive ou d'agglutinines froides connues — ne jamais improviser un réchauffement (bain-marie, micro-ondes), qui provoque une hémolyse du produit</li>
+      <li><strong>Produits irradiés/déleucocytés</strong> à privilégier chez l'immunodéprimé, le nouveau-né ou en contexte d'allogreffe si disponibles (prévention de la réaction du greffon contre l'hôte transfusionnelle)</li>
+      <li>Information du patient et recueil du consentement quand la situation le permet ; traçabilité obligatoire (numéro de poche, carte transfusionnelle) et déclaration de toute réaction selon le circuit d'hémovigilance local</li>
+    </ul>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les produits sanguins labiles (CGR, PFC, plaquettes) proviennent du Centre National de Transfusion Sanguine (CNTS) et de ses antennes régionales — disponibilité et délais très variables selon la région, les plaquettes et le PFC étant les plus limités hors CHU. Les produits irradiés/déleucocytés spécifiques ne sont généralement pas disponibles. Anticiper largement toute commande prévisible (obstétrique, chirurgie, anémie chronique sévère) et privilégier le don dirigé par l'entourage si la banque de sang locale est limitée.</p>
+  </div>
+
   <div class="card" id="proto-transfusion-massive">
     <h3>🩸 Protocole de transfusion massive</h3>
     <p class="module-sub" style="margin-bottom:8px;">Défini par la transfusion de ≥10 CGR en 24h, ou ≥4 CGR en 1h avec instabilité persistante, ou remplacement de la masse sanguine totale.</p>
@@ -2932,6 +3055,23 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'embolisation radiologique interventionnelle n'est pas disponible localement — la prise en charge non opératoire repose donc essentiellement sur la surveillance clinique rapprochée et l'imagerie répétée, avec un seuil d'indication chirurgicale plus bas qu'en contexte de haute technicité.</p>
   </div>
 
+  <div class="card" id="proto-fracture-bassin">
+    <h3>🦴 Fracture du bassin instable / Hémorragie pelvienne</h3>
+    <p class="module-sub" style="margin-bottom:8px;">D'après l'ATLS 10th Ed. et les recommandations WSES/EAST sur l'hémorragie liée aux fractures du bassin. Cause fréquente de choc hémorragique occulte dans le polytraumatisme (traumatisme à haute énergie, chute de hauteur, accident de la route) — l'hémorragie est le plus souvent d'origine veineuse (plexus veineux pelvien) et non artérielle.</p>
+    <div class="warn-box">⚠️ Ne jamais mobiliser le bassin de façon répétée pour rechercher une instabilité clinique (manœuvre de compression/écartement des ailes iliaques) — ce geste peut déloger un caillot stabilisateur et aggraver l'hémorragie. Une seule évaluation prudente suffit ; se fier ensuite à l'imagerie.</div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Suspicion clinique</strong> — mécanisme à haute énergie, douleur/instabilité pelvienne à la palpation douce (une seule fois), raccourcissement d'un membre inférieur, hématome scrotal/périnéal, sang au méat urétral (suspecter une lésion urétrale associée, ne pas sonder à l'aveugle), choc hémorragique sans autre cause évidente</li>
+      <li><strong>Contention pelvienne immédiate</strong> dès la suspicion, avant même la confirmation radiologique — <strong>ceinture pelvienne (pelvic binder)</strong> positionnée au niveau des grands trochanters (et non sur les crêtes iliaques), ou à défaut un drap plié serré autour du bassin et noué (technique de fortune efficace en l'absence de dispositif dédié) ; réduit le volume pelvien et favorise la tamponnade du saignement veineux</li>
+      <li><strong>Réanimation hémodynamique</strong> selon les principes du <em>damage control resuscitation</em> — hypotension permissive (PAS 80-90 mmHg tant que l'hémorragie n'est pas contrôlée), <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> par bolus limités, transfusion précoce si choc hémorragique (<em>voir protocole Transfusion massive</em>), <strong>Exacyl®</strong> 1g IV en 10 min puis 1g sur 8h dans les 3h suivant le traumatisme</li>
+      <li><strong>Imagerie</strong> — radiographie du bassin de face en urgence si angioscanner non immédiatement disponible ; angioscanner corps entier dès que l'état hémodynamique le permet (recherche d'un saignement artériel actif, bilan lésionnel associé)</li>
+      <li><strong>Instabilité hémodynamique persistante malgré ceinture pelvienne et remplissage</strong> — avis chirurgical/orthopédique en urgence absolue pour stabilisation mécanique complémentaire (fixateur externe) et recherche d'une autre source hémorragique associée (thoracique, abdominale, fémorale) souvent responsable du choc en cas de fracture pelvienne isolée non contrôlée par la ceinture</li>
+      <li><strong>Contrôle définitif du saignement pelvien</strong> — selon le plateau technique disponible : packing pelvien préperitonéal chirurgical (technique la plus accessible en l'absence de radiologie interventionnelle), fixateur externe ; l'embolisation artérielle radiologique et le REBOA (occlusion aortique par ballonnet), non disponibles dans la majorité des structures malgaches, restent l'option de référence dans les centres équipés</li>
+      <li>Rechercher systématiquement les lésions associées fréquentes — vessie, urètre (ne pas sonder si sang au méat/hématome scrotal sans avis urologique), rectum, plexus lombo-sacré, vaisseaux fémoraux</li>
+      <li>Prévention des complications de décubitus/escarres liées à l'immobilisation prolongée dès la phase aiguë (<em>voir protocole Prévention des complications de réanimation</em>)</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les ceintures pelviennes dédiées sont rarement disponibles hors CHU — le drap noué reste une alternative de première intention largement applicable. L'embolisation radiologique interventionnelle et le REBOA ne sont pas disponibles ; le contrôle chirurgical (packing préperitonéal, fixateur externe) et un transfert précoce vers un centre disposant d'un plateau chirurgical orthopédique doivent être organisés sans délai en cas d'instabilité persistante.</p>
+  </div>
+
   <div class="card" id="proto-peste">
     <h3>🐀 Peste (bubonique / pulmonaire)</h3>
     <div class="warn-box">⚠️ Maladie à déclaration obligatoire, endémique dans les Hautes Terres malgaches — la forme pulmonaire est hautement contagieuse par voie aérienne (gouttelettes) : isolement respiratoire immédiat de tout cas suspect.</div>
@@ -3147,9 +3287,13 @@ function renderProtocoles(){
       <li>ILAE (International League Against Epilepsy) — Definition and classification of status epilepticus, 2015 ; AES (American Epilepsy Society) Guideline 2016 : Evidence-Based Guideline for the Management of Convulsive Status Epilepticus ; ESETT Trial 2019 (NEJM)</li>
       <li>European Society for Vascular Surgery (ESVS) Clinical Practice Guidelines 2020 — Diagnosis and Management of Acute Limb Ischaemia (classification de Rutherford) ; ESC Guidelines — Venous Thromboembolic Disease</li>
       <li>AABB (Association for the Advancement of Blood & Biotherapies) — Standards and guidance on transfusion reaction recognition and management</li>
+      <li>AABB International Guidelines 2023 — Red Blood Cell Transfusion Thresholds in Adults and Children (JAMA) ; AABB/ICTMG Platelet Transfusion Guideline (2015, actualisée 2025) ; OMS — Clinical Use of Blood ; TRACT Trial (Transfusion and Treatment of African Children) — Volume de transfusion des CGR dans l'anémie sévère de l'enfant en Afrique subsaharienne</li>
       <li>American Thyroid Association (ATA) Guidelines 2016 — Hyperthyroidism and other causes of thyrotoxicosis (thyroid storm, score de Burch-Wartofsky) ; littérature endocrinienne sur le coma myxœdémateux</li>
       <li>American Academy of Ophthalmology — Preferred Practice Pattern: Chemical burns (classification de Roper-Hall), Open Globe Injuries ; ATLS 10th Ed.</li>
       <li>Littérature ORL de référence — Prise en charge de l'épistaxis antérieure et postérieure (tamponnement, cautérisation)</li>
+      <li>Wong CH et al. — The LRINEC Score: a tool for distinguishing necrotizing fasciitis from other soft tissue infections, Crit Care Med 2004 ; littérature chirurgicale de référence sur le débridement précoce des infections nécrosantes des tissus mous</li>
+      <li>WSES (World Society of Emergency Surgery) Guidelines 2022 — Acute Mesenteric Ischemia ; ESVS (European Society for Vascular Surgery) Guidelines — Diseases of the Mesenteric Arteries and Veins</li>
+      <li>ATLS 10th Ed. ; WSES/EAST Guidelines — Management of Hemorrhage in Pelvic Fracture</li>
     </ul>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">⚠️ Ces protocoles sont des repères généraux. Toujours adapter aux ressources locales disponibles et aux protocoles institutionnels en vigueur.</p>
   </div>`;
@@ -3775,7 +3919,7 @@ function renderCalculateurs(){
       <div class="field"><label>Na+ (mmol/L)</label><input type="number" id="ta_na"></div>
       <div class="field"><label>Cl- (mmol/L)</label><input type="number" id="ta_cl"></div>
       <div class="field"><label>HCO3- (mmol/L)</label><input type="number" id="ta_hco3"></div>
-      <div class="field"><label>Albumine (g/L) — optionnel</label><input type="number" id="ta_alb" placeholder="42 si inconnu"></div>
+      <div class="field"><label>Albumine (g/L) — optionnel</label><input type="number" id="ta_alb" placeholder="40 si inconnu"></div>
     </div>
     <button class="btn" onclick="calcTA()">Calculer</button>
     <div class="result-box hidden" id="ta_result"></div>
@@ -3873,7 +4017,7 @@ function calcPedia(){
   const rows = [
     ['ACR — Adrénaline IV/IO', `${(poids*0.01).toFixed(2)} mg (= ${(poids*0.1).toFixed(1)} mL de dilution 1:10 000), max 1 mg/dose`],
     ['ACR — Amiodarone', `${Math.min(poids*5,300).toFixed(0)} mg IV/IO bolus (max 300 mg)`],
-    ['Anaphylaxie — Adrénaline IM', `${Math.min(poids*0.01, poids<20?0.3:0.5).toFixed(2)} mg (1:1000)`],
+    ['Anaphylaxie — Adrénaline IM', `${Math.min(poids*0.01, poids<30?0.3:0.5).toFixed(2)} mg (1:1000)`],
     ['Bradycardie — Atropine', `${Math.max(Math.min(poids*0.02,0.5),0.1).toFixed(2)} mg IV (min 0,1 mg, max 0,5 mg)`],
     ['Convulsions — Diazépam IV', `${Math.min(poids*0.3,10).toFixed(1)} mg (max 10 mg)`],
     ['Convulsions — Midazolam IV', `${Math.min(poids*0.15,10).toFixed(1)} mg (max 10 mg)`],
@@ -4031,7 +4175,7 @@ function calcTA(){
   const na=parseFloat(document.getElementById('ta_na').value);
   const cl=parseFloat(document.getElementById('ta_cl').value);
   const hco3=parseFloat(document.getElementById('ta_hco3').value);
-  const alb=parseFloat(document.getElementById('ta_alb').value)||42;
+  const alb=parseFloat(document.getElementById('ta_alb').value)||40;
   if([na,cl,hco3].some(isNaN)){alert('Remplir Na, Cl et HCO3');return;}
   const warn = plausibilityWarnings([
     {val:na, min:100, max:200, label:'Na+', unit:'mmol/L'},
@@ -4040,7 +4184,7 @@ function calcTA(){
     {val:alb, min:5, max:60, label:'Albumine', unit:'g/L'}
   ]);
   const ta=na-cl-hco3;
-  const taCorr=ta+0.25*(42-alb);
+  const taCorr=ta+0.25*(40-alb);
   let interp,cls;
   if(taCorr<=12){interp="Normal (TA ≤12 mmol/L)";cls="leger";}
   else{interp="TA ÉLEVÉ → acidose métabolique à TA augmenté (lactates, cétones, toxiques, urémie)";cls="grave";}
@@ -4048,7 +4192,7 @@ function calcTA(){
   document.getElementById('ta_result').innerHTML=warn+
     `<strong>TA brut = ${ta.toFixed(0)} mmol/L</strong> | TA corrigé à l'albumine = <strong>${taCorr.toFixed(0)} mmol/L</strong><br>
     <span class="${cls}">${interp}</span><br>
-    <small style="color:var(--muted)">Normale : 8–12 mmol/L. TA corrigé = TA + 0,25 × (42 − albumine g/L)</small>`;
+    <small style="color:var(--muted)">Normale : 8–12 mmol/L. TA corrigé = TA + 0,25 × (40 − albumine g/L)</small>`;
 }
 
 /* ===================== MODULE ABRÉVIATIONS ===================== */
