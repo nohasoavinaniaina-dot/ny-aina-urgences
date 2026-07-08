@@ -193,6 +193,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
     <div class="brand">
       <h1>🫀 Ny Aina Med's</h1>
       <p>Emergency & Intensive Care</p>
+      <p style="font-size:11px; color:var(--muted); margin-top:2px;">Rédacteur : Ny Aina Med's</p>
     </div>
     <div id="search-box">
       <input type="text" id="nav-search" placeholder="Rechercher (ex. atropine, hyperkaliémie...)">
@@ -396,7 +397,7 @@ function calcQSOFA(){
 function renderIonique(){
   return `
   <h2 class="module-title">⚗️ Correction des troubles ioniques</h2>
-  <p class="module-sub">Reconnaissance et conduite à tenir en urgence. Vérifier la fonction rénale avant toute correction.</p>
+  <p class="module-sub">Reconnaissance et conduite à tenir en urgence. Vérifier la fonction rénale avant toute correction. Toute correction d'un trouble sévère impose un scope ECG continu.</p>
 
   <nav class="toc" id="ionique-toc" aria-label="Sommaire des troubles ioniques">
     <div class="toc-head" onclick="toggleIoniqueToc()">
@@ -411,6 +412,7 @@ function renderIonique(){
       <li><a onclick="document.getElementById('ion-hypocalcemie').scrollIntoView({behavior:'smooth',block:'start'})">🟡 Hypocalcémie</a></li>
       <li><a onclick="document.getElementById('ion-hypercalcemie').scrollIntoView({behavior:'smooth',block:'start'})">🟡 Hypercalcémie</a></li>
       <li><a onclick="document.getElementById('ion-hypomagnesemie').scrollIntoView({behavior:'smooth',block:'start'})">🟡 Hypomagnésémie</a></li>
+      <li><a onclick="document.getElementById('ion-hypophosphatemie').scrollIntoView({behavior:'smooth',block:'start'})">🟡 Hypophosphatémie</a></li>
       <li><a onclick="document.getElementById('ion-principes').scrollIntoView({behavior:'smooth',block:'start'})">⚠️ Principes généraux</a></li>
     </ul>
   </nav>
@@ -419,16 +421,18 @@ function renderIonique(){
     <h3>🔴 Hyperkaliémie (K+ &gt; 5,0 mmol/L)</h3>
     <table>
       <tr><th>Gravité</th><th>Seuils / signes</th></tr>
-      <tr><td class="modere">Modérée</td><td>K+ 5,5–6,5 mmol/L, ECG normal</td></tr>
-      <tr><td class="grave">Sévère</td><td>K+ &gt; 6,5 mmol/L et/ou signes ECG (ondes T amples pointues, QRS élargi, disparition onde P, BAV, troubles du rythme ventriculaire)</td></tr>
+      <tr><td class="leger">Légère</td><td>K+ 5,0–5,4 mmol/L, ECG normal, le plus souvent asymptomatique</td></tr>
+      <tr><td class="modere">Modérée</td><td>K+ 5,5–6,4 mmol/L, ECG normal ou discrètement anormal</td></tr>
+      <tr><td class="grave">Sévère</td><td>K+ ≥ 6,5 mmol/L et/ou signes ECG (ondes T amples pointues, QRS élargi, disparition onde P, BAV, troubles du rythme ventriculaire) — <strong>tout ECG anormal impose un traitement en urgence quel que soit le chiffre</strong></td></tr>
     </table>
-    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir (si signes ECG ou K+ > 6,5) :</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir (si signes ECG et/ou K+ ≥ 6,5 mmol/L) :</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li><strong>Stabilisation membranaire :</strong> Gluconate de calcium 10% — 10 mL IVL en 2-3 min (à répéter si ECG inchangé après 5 min). Ne corrige pas la kaliémie.</li>
-      <li><strong>Transfert intracellulaire :</strong> Insuline rapide 10 UI + Glucosé 30% 250-500 mL (ou G10% 500mL) en 15-30 min (surveiller glycémie). Salbutamol nébulisé 10-20 mg (effet additif).</li>
-      <li><strong>Bicarbonate de sodium</strong> 8,4% 50-100 mL IVL si acidose métabolique associée.</li>
-      <li><strong>Élimination du potassium :</strong> Furosémide IV si diurèse conservée. Résines échangeuses d'ions (Kayexalate) par voie orale/rectale (action lente, non urgente). Épuration extra-rénale si insuffisance rénale sévère ou échec du traitement médical.</li>
-      <li>Arrêt de tout apport de K+ et des médicaments hyperkaliémiants (IEC, ARA2, épargneurs de K+, AINS).</li>
+      <li><strong>Stabilisation membranaire (si signes ECG) :</strong> Gluconate de calcium 10% — 10 mL (1 g) IVL en 2-3 min sous scope ; répéter à 5-10 min si ECG toujours anormal (jusqu'à 2-3 injections). Ne corrige pas la kaliémie, agit en quelques minutes pour 30-60 min. Chlorure de calcium 10% (10 mL) est une alternative équivalente en mmol de calcium, à réserver à la voie veineuse centrale (plus caustique en périphérique). Prudence/dose fractionnée diluée si patient digitalisé.</li>
+      <li><strong>Transfert intracellulaire :</strong> Insuline rapide 10 UI + Glucosé 30% 250 mL (ou G10% 500 mL, ou G50% 50 mL) IVL en 15-30 min ; réduire à 5 UI si insuffisant rénal, dénutri ou poids faible (risque d'hypoglycémie iatrogène = principale complication évitable). Surveiller la glycémie capillaire à 15, 30, 60, 90 min puis toutes les heures pendant 6h. Salbutamol nébulisé 10-20 mg en complément (effet additif, ne pas utiliser seul).</li>
+      <li><strong>Bicarbonate de sodium</strong> 8,4% 50-100 mL IVL sur 20-30 min <strong>uniquement</strong> si acidose métabolique associée (pas de bénéfice démontré en son absence).</li>
+      <li><strong>Élimination du potassium :</strong> Furosémide IV si diurèse conservée et volémie correcte. Résines échangeuses d'ions (Kayexalate/Kalimate) par voie orale ou en lavement : action lente (&gt; 4h), efficacité clinique faiblement démontrée et risque de nécrose colique (notamment associées au sorbitol) — à ne pas utiliser en urgence vitale. Épuration extra-rénale (hémodialyse) en urgence si insuffisance rénale sévère/anurie, hyperkaliémie menaçante réfractaire au traitement médical, ou K+ &gt; 6,5 mmol/L avec signes ECG persistants.</li>
+      <li>Arrêt de tout apport de K+ et des médicaments hyperkaliémiants (IEC, ARA2, épargneurs de K+, AINS, triméthoprime).</li>
+      <li>Surveillance : kaliémie à 1h, 2h, 4h, 6h et 24h après le traitement ; scope ECG continu jusqu'à normalisation.</li>
     </ol>
   </div>
 
@@ -436,15 +440,15 @@ function renderIonique(){
     <h3>🟡 Hypokaliémie (K+ &lt; 3,5 mmol/L)</h3>
     <table>
       <tr><th>Gravité</th><th>Seuils / signes</th></tr>
-      <tr><td class="modere">Modérée</td><td>K+ 3,0–3,5 mmol/L, peu/pas de symptômes</td></tr>
-      <tr><td class="grave">Sévère</td><td>K+ &lt; 2,5 mmol/L et/ou signes ECG (sous-décalage ST, onde U, aplatissement onde T, troubles du rythme), faiblesse musculaire marquée</td></tr>
+      <tr><td class="modere">Modérée</td><td>K+ 3,0–3,4 mmol/L, peu/pas de symptômes</td></tr>
+      <tr><td class="grave">Sévère</td><td>K+ &lt; 2,5 mmol/L et/ou signes ECG (sous-décalage ST, onde U, aplatissement onde T, torsade de pointes, troubles du rythme), faiblesse musculaire marquée voire paralysie</td></tr>
     </table>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li>Voie orale si possible et trouble modéré : sels de potassium per os.</li>
-      <li>Voie IV si sévère/signes ECG : KCl dilué, débit max <strong>≤ 15 mmol/h</strong> sur voie périphérique (≤ 20 mmol/h sur VVC avec scope), jamais en bolus direct (risque d'arrêt cardiaque).</li>
-      <li>Rechercher et corriger une hypomagnésémie associée (résistance au traitement si Mg non corrigé).</li>
-      <li>Surveillance ECG continue si correction IV rapide ou trouble sévère.</li>
+      <li>Voie orale si possible et trouble modéré/bien toléré : sels de potassium per os, 40-100 mmol/j en plusieurs prises selon le déficit.</li>
+      <li>Voie IV si sévère, signes ECG ou impossibilité de la voie orale : KCl dilué, jamais en bolus direct (risque d'arrêt cardiaque). Débit maximal <strong>≤ 10 mmol/h</strong> sur voie périphérique en dehors d'un scope continu, jusqu'à <strong>≤ 20 mmol/h</strong> sur voie veineuse centrale avec surveillance ECG continue en soins intensifs. Concentration périphérique généralement ≤ 40 mmol/L (veinotoxicité), jusqu'à 60-80 mmol/L possible sur VVC. Ne pas dépasser environ 200 mmol/24h sauf situation exceptionnelle en réanimation.</li>
+      <li>Rechercher et corriger systématiquement une hypomagnésémie associée (l'hypokaliémie reste réfractaire tant que le magnésium n'est pas normalisé).</li>
+      <li>Surveillance ECG continue et kaliémie répétée (toutes les 4-6h) si correction IV rapide ou trouble sévère.</li>
     </ul>
   </div>
 
@@ -452,16 +456,18 @@ function renderIonique(){
     <h3>🔴 Hyponatrémie (Na+ &lt; 135 mmol/L)</h3>
     <table>
       <tr><th>Gravité</th><th>Seuils / signes</th></tr>
-      <tr><td class="modere">Modérée</td><td>Na+ 125–134 mmol/L, asymptomatique ou symptômes légers (nausées, céphalées)</td></tr>
-      <tr><td class="grave">Sévère / symptomatique</td><td>Na+ &lt; 125 mmol/L et/ou troubles neurologiques (confusion, convulsions, coma) — urgence vitale</td></tr>
+      <tr><td class="modere">Modérée (symptômes modérés)</td><td>Nausées sans vomissement, confusion légère, céphalées — quel que soit le chiffre de natrémie</td></tr>
+      <tr><td class="grave">Sévère (symptômes sévères)</td><td>Vomissements, détresse cardio-respiratoire, somnolence anormale/profonde, convulsions, coma (Glasgow ≤ 8) — urgence vitale, hospitalisation en soins intensifs</td></tr>
     </table>
-    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir :</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir (d'après le guideline européen ESE/ERA — Spasovski et al., 2014) :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li><strong>Règle d'or : ne jamais corriger trop vite</strong> — risque de myélinolyse centropontine. Maximum <strong>8-10 mmol/L par 24h</strong> (idéalement ≤ 8).</li>
-      <li>Si symptomatique sévère (convulsions, coma) : NaCl hypertonique 3% — bolus 100-150 mL IVL en 10-20 min, répétable 1-2 fois selon évolution clinique, objectif d'élévation rapide initiale de 4-6 mmol/L puis ralentir.</li>
-      <li>Si chronique et peu symptomatique : restriction hydrique ± correction très progressive selon étiologie (SIADH, hypovolémie, insuffisance surrénalienne...).</li>
-      <li>Identifier la cause : évaluer le statut volémique (hypovolémique / euvolémique / hypervolémique) avant de choisir le traitement.</li>
-      <li>Surveillance ionogramme rapprochée (toutes les 2-4h en phase aiguë).</li>
+      <li><strong>Symptômes sévères :</strong> NaCl hypertonique 3% — bolus de <strong>150 mL IVL en 20 min</strong>, à répéter jusqu'à 2 fois (toutes les 20 min) jusqu'à obtenir une élévation de la natrémie de <strong>5 mmol/L</strong> ou une amélioration clinique nette. Contrôler la natrémie après chaque bolus.</li>
+      <li><strong>Symptômes modérés :</strong> un bolus unique de NaCl 3% 150 mL IVL en 20 min, objectif d'élévation d'au moins 5 mmol/L sur 24h ; réévaluer avant tout bolus supplémentaire.</li>
+      <li><strong>Règle d'or — ne jamais corriger trop vite :</strong> risque de syndrome de démyélinisation osmotique (myélinolyse centropontine). Cible de correction totale ≤ <strong>10 mmol/L par 24h</strong>, à limiter à ≤ <strong>8 mmol/L par 24h</strong> chez les patients à haut risque : hypokaliémie associée, dénutrition/alcoolisme, hépatopathie sévère, natrémie initiale &lt; 105 mmol/L, femme (surtout âgée) sous diurétique thiazidique.</li>
+      <li><strong>En cas de surcorrection</strong> (dépassement de la cible sur 24h) : ralentir/interrompre le NaCl hypertonique, reperfuser avec du Glucosé 5% (3-10 mL/kg IV) et discuter la Desmopressine 2-4 µg IV/SC (« clamp DDAVP ») pour réinduire une hyponatrémie contrôlée, en lien avec un avis spécialisé si possible.</li>
+      <li><strong>Forme chronique peu symptomatique :</strong> restriction hydrique en première intention ± traitement étiologique spécifique (SIADH, hypovolémie, insuffisance surrénalienne...) — pas de sérum salé hypertonique hors symptômes.</li>
+      <li>Identifier la cause : évaluer le statut volémique (hypovolémique / euvolémique / hypervolémique) avant de choisir le traitement de fond.</li>
+      <li>Surveillance ionogramme rapprochée (toutes les 2-4h en phase aiguë sous NaCl 3%, puis toutes les 6-12h).</li>
     </ul>
   </div>
 
@@ -469,21 +475,21 @@ function renderIonique(){
     <h3>🟡 Hypernatrémie (Na+ &gt; 145 mmol/L)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Traduit le plus souvent un déficit en eau libre (déshydratation, diabète insipide, apports insuffisants).</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li>Correction <strong>progressive</strong> : baisse maximale de <strong>10-12 mmol/L par 24h</strong> (risque d'œdème cérébral si correction trop rapide).</li>
+      <li>Correction <strong>progressive</strong> : baisse maximale de <strong>8-10 mmol/L par 24h</strong> (soit environ 0,5 mmol/L/h), plus lente encore si hypernatrémie chronique/ancienne — risque d'œdème cérébral si correction trop rapide.</li>
       <li>Réhydratation par eau libre (per os/SNG si possible) ou Glucosé 5% IV si voie orale impossible.</li>
-      <li>Calculer le déficit en eau libre : Déficit (L) ≈ 0,6 × Poids(kg) × [(Na actuel / 140) − 1] (0,5 chez la femme/personne âgée).</li>
-      <li>Si hypovolémie associée : corriger d'abord la volémie avec NaCl 0,9%, puis eau libre.</li>
-      <li>Surveillance ionogramme toutes les 4-6h.</li>
+      <li>Calculer le déficit en eau libre : Déficit (L) ≈ 0,6 × Poids(kg) × [(Na actuel / 140) − 1] (coefficient 0,5 chez la femme/personne âgée, 0,6 chez l'homme, 0,7-0,8 chez l'enfant/nourrisson).</li>
+      <li>Si hypovolémie associée (choc, déshydratation extracellulaire) : corriger d'abord la volémie avec NaCl 0,9%, puis compléter par de l'eau libre une fois l'hémodynamique stabilisée.</li>
+      <li>Surveillance ionogramme toutes les 4-6h en phase de correction active.</li>
     </ul>
   </div>
 
   <div class="card" id="ion-hypocalcemie">
     <h3>🟡 Hypocalcémie (Ca2+ corrigé &lt; 2,20 mmol/L)</h3>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li>Signes de gravité : tétanie, laryngospasme, convulsions, allongement QT, troubles du rythme.</li>
-      <li>Forme symptomatique/sévère : Gluconate de calcium 10% 10-20 mL dans 100 mL G5%, IVL en 10-20 min, sous scope (risque de troubles du rythme si injection rapide), à répéter/relayer en perfusion continue si besoin.</li>
-      <li>Corriger une hypomagnésémie associée (fréquente, entretient l'hypocalcémie).</li>
-      <li>Forme chronique peu symptomatique : calcium et vitamine D par voie orale.</li>
+      <li>Signes de gravité : tétanie, laryngospasme, convulsions, allongement du QT (risque de torsade de pointes), troubles du rythme, insuffisance cardiaque aiguë.</li>
+      <li>Forme symptomatique/sévère : Gluconate de calcium 10% 10-20 mL (1-2 g) dilué dans 100 mL de G5%, IVL en 10-20 min, sous scope (risque de troubles du rythme si injection trop rapide) ; répéter ou relayer en perfusion continue (souvent 1-2 mg/kg/h de calcium élément) si les symptômes persistent ou si la cause n'est pas rapidement corrigible.</li>
+      <li>Corriger systématiquement une hypomagnésémie associée (fréquente, entretient l'hypocalcémie et la rend réfractaire au calcium seul).</li>
+      <li>Forme chronique peu symptomatique : calcium et vitamine D (ou calcitriol si hypoparathyroïdie/insuffisance rénale) par voie orale.</li>
     </ul>
   </div>
 
@@ -491,38 +497,69 @@ function renderIonique(){
     <h3>🟡 Hypercalcémie (Ca2+ corrigé &gt; 2,60 mmol/L)</h3>
     <table>
       <tr><th>Gravité</th><th>Seuils</th></tr>
-      <tr><td class="modere">Modérée</td><td>2,6–3,0 mmol/L</td></tr>
-      <tr><td class="grave">Sévère (urgence)</td><td>&gt; 3,5 mmol/L et/ou troubles de conscience, signes ECG (QT court)</td></tr>
+      <tr><td class="leger">Légère</td><td>2,60–3,00 mmol/L, souvent asymptomatique</td></tr>
+      <tr><td class="modere">Modérée</td><td>3,00–3,50 mmol/L</td></tr>
+      <tr><td class="grave">Sévère (urgence)</td><td>&gt; 3,50 mmol/L et/ou troubles de conscience, signes ECG (QT court, troubles du rythme), insuffisance rénale aiguë</td></tr>
     </table>
-    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir si sévère :</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir si modérée-sévère :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li><strong>Réhydratation</strong> NaCl 0,9% — pierre angulaire du traitement, 2-4 L/24h selon tolérance cardiaque, à adapter chez le sujet âgé/insuffisant cardiaque.</li>
-      <li>Furosémide uniquement après correction volémique, si besoin de favoriser la diurèse (jamais en première intention).</li>
-      <li>Bisphosphonates IV (selon disponibilité) pour les hypercalcémies malignes ou sévères persistantes.</li>
-      <li>Arrêt des apports calciques, vitamine D, diurétiques thiazidiques.</li>
-      <li>Épuration extra-rénale si forme menaçante avec insuffisance rénale ou cardiaque empêchant la réhydratation.</li>
+      <li><strong>Réhydratation</strong> NaCl 0,9% — pierre angulaire du traitement, 200-300 mL/h initialement (soit environ 2-4 L/24h), objectif de diurèse ~100-150 mL/h, à adapter chez le sujet âgé/insuffisant cardiaque ou rénal.</li>
+      <li><strong>Calcitonine</strong> (salmon) 4-8 UI/kg SC/IM toutes les 12h — action rapide (quelques heures) mais courte durée avec tachyphylaxie en 48h : utile en « pont » le temps que les biphosphonates agissent, ne pas utiliser seule.</li>
+      <li><strong>Biphosphonate IV</strong> (dès que possible, effet maximal en 2-4 jours — ne pas attendre pour l'administrer) : <strong>Acide zolédronique 4 mg IV en perfusion ≥ 15 min</strong> (privilégié, durée d'action 3-4 semaines) ; alternative <strong>Pamidronate 60-90 mg IV sur 2-4h</strong> si zolédronate indisponible ou insuffisance rénale sévère (moins néphrotoxique). Contrôler la créatinine avant chaque dose.</li>
+      <li>Furosémide uniquement après correction volémique complète, si besoin de favoriser la diurèse en cas de surcharge (jamais en première intention, ne corrige pas la déshydratation).</li>
+      <li><strong>Dénosumab</strong> 120 mg SC en option si insuffisance rénale sévère (clairance &lt; 30-35 mL/min) contre-indiquant les biphosphonates.</li>
+      <li>Corticoïdes (prednisone/prednisolone) si hypercalcémie liée à un excès de vitamine D, un lymphome ou une pathologie granulomateuse (sarcoïdose...).</li>
+      <li>Arrêt des apports calciques, de la vitamine D et des diurétiques thiazidiques.</li>
+      <li>Épuration extra-rénale (hémodialyse à bain pauvre en calcium) si forme menaçante avec insuffisance rénale sévère ou insuffisance cardiaque empêchant une réhydratation efficace.</li>
     </ul>
   </div>
 
   <div class="card" id="ion-hypomagnesemie">
     <h3>🟡 Hypomagnésémie (Mg2+ &lt; 0,65 mmol/L)</h3>
+    <table>
+      <tr><th>Gravité</th><th>Seuils / signes</th></tr>
+      <tr><td class="modere">Modérée</td><td>Mg2+ 0,50–0,65 mmol/L, peu/pas de symptômes</td></tr>
+      <tr><td class="grave">Sévère</td><td>Mg2+ &lt; 0,50 mmol/L et/ou symptomatique (tétanie, convulsions, torsade de pointes, troubles du rythme, hypokaliémie/hypocalcémie réfractaires)</td></tr>
+    </table>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li>Souvent associée à hypokaliémie/hypocalcémie réfractaires — toujours doser et corriger en premier.</li>
-      <li>Forme sévère/symptomatique (convulsions, torsade de pointes) : Sulfate de magnésium 1-2 g IVL en 10-15 min, puis relais en perfusion continue (ex. 4-6 g/24h) selon contexte.</li>
-      <li>Surveillance : réflexes ostéotendineux, fréquence respiratoire (risque de dépression respiratoire si surdosage), fonction rénale.</li>
-      <li>Forme légère : supplémentation orale.</li>
+      <li>Souvent associée à une hypokaliémie/hypocalcémie réfractaires — toujours doser et corriger le magnésium en premier, elles ne répondront pas tant qu'il reste bas.</li>
+      <li><strong>Forme sévère/symptomatique</strong> (convulsions, torsade de pointes, arythmie menaçante) : Sulfate de magnésium <strong>1-2 g (8-16 mmol) IVL en 15 min</strong> en bolus, puis relais en perfusion continue de <strong>4-6 g (32-48 mmol) sur 12-24h</strong> selon la profondeur du déficit et la fonction rénale, jusqu'à normalisation (objectif &gt; 0,8 mmol/L).</li>
+      <li><strong>Forme modérée :</strong> 1-2 g IV sur 3h, ou supplémentation orale si bien tolérée digestivement (effet laxatif fréquent).</li>
+      <li>Réduire les doses de 25-50% si clairance de la créatinine &lt; 30 mL/min ; ne pas dépasser un débit de 150 mg/min en IV.</li>
+      <li>Surveillance : réflexes ostéotendineux, fréquence respiratoire (risque de dépression respiratoire si surdosage/insuffisance rénale), scope ECG, kaliémie et calcémie associées. Antidote en cas de surdosage symptomatique : gluconate de calcium IV.</li>
+    </ul>
+  </div>
+
+  <div class="card" id="ion-hypophosphatemie">
+    <h3>🟡 Hypophosphatémie (Phosphore &lt; 0,80 mmol/L)</h3>
+    <table>
+      <tr><th>Gravité</th><th>Seuils / signes</th></tr>
+      <tr><td class="modere">Modérée</td><td>0,30–0,80 mmol/L, souvent asymptomatique</td></tr>
+      <tr><td class="grave">Sévère</td><td>&lt; 0,30 mmol/L — risque de faiblesse musculaire/insuffisance respiratoire, rhabdomyolyse, dysfonction myocardique, hémolyse, troubles de conscience</td></tr>
+    </table>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Conduite à tenir :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Forme sévère ou symptomatique :</strong> phosphate IV — Phosphate de potassium ou phosphate de sodium, <strong>0,3-0,6 mmol/kg IV sur 6-12h</strong> (choisir la forme potassique si kaliémie basse/normale, la forme sodique si hyperkaliémie ou restriction potassique nécessaire), sans dépasser environ 40-60 mmol/24h ; réduire les doses de 50% si insuffisance rénale.</li>
+      <li><strong>Forme modérée asymptomatique :</strong> supplémentation orale (500-1000 mg de phosphore élément/j en plusieurs prises).</li>
+      <li>Surveiller la calcémie pendant la perfusion (risque d'hypocalcémie/précipitation phosphocalcique si correction trop rapide), la fonction rénale et la kaliémie.</li>
+      <li><strong>Contexte typique à ne pas manquer : syndrome de renutrition inappropriée</strong> (refeeding syndrome) chez le patient dénutri — prévention systématique par supplémentation en phosphore, magnésium, potassium et vitamine B1 <em>avant/dès</em> la reprise de la nutrition, avec réintroduction calorique progressive.</li>
     </ul>
   </div>
 
   <div class="card" id="ion-principes">
     <h3>⚠️ Principes généraux</h3>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li>Toujours confirmer un trouble ionique sévère par un second dosage avant correction agressive (sauf urgence vitale avec signes ECG/cliniques).</li>
-      <li>Corriger un trouble ionique sévère = scope ECG continu.</li>
-      <li>Rechercher systématiquement la cause sous-jacente en parallèle de la correction symptomatique.</li>
-      <li>Adapter les volumes de perfusion à la fonction cardiaque et rénale du patient.</li>
-      <li>Les corrections trop rapides de Na+ sont aussi dangereuses que l'absence de correction — la prudence prime sur la vitesse.</li>
+      <li>Toujours confirmer un trouble ionique sévère par un second dosage avant correction agressive (sauf urgence vitale avec signes ECG/cliniques francs).</li>
+      <li>Corriger un trouble ionique sévère = scope ECG continu et surveillance biologique rapprochée.</li>
+      <li>Rechercher systématiquement la cause sous-jacente en parallèle de la correction symptomatique — la correction seule sans traitement étiologique expose à la récidive.</li>
+      <li>Adapter les volumes de perfusion à la fonction cardiaque et rénale du patient, en particulier chez le sujet âgé.</li>
+      <li>Les corrections trop rapides de Na+ sont aussi dangereuses que l'absence de correction — la prudence prime sur la vitesse ; la même logique s'applique à la calcémie et à la magnésémie.</li>
+      <li>Les troubles ioniques sont fréquemment associés entre eux (K+/Mg2+/Ca2+ notamment) : corriger le magnésium en premier améliore souvent la réponse au traitement des autres troubles.</li>
     </ul>
+    <div class="warn-box" style="margin-top:12px;">
+      Repères posologiques établis à partir de sources actuelles : Renal Association (UK), <em>Treatment of Acute Hyperkalaemia in Adults</em> (2020, réaffirmée 2022) ; Spasovski et al., <em>Clinical practice guideline on diagnosis and treatment of hyponatraemia</em>, European Society of Endocrinology/European Renal Association, Intensive Care Med 2014 ; KDIGO 2024 Clinical Practice Guideline for CKD ; recommandations d'usage de l'acide zolédronique et de la calcitonine dans l'hypercalcémie maligne. Ces posologies restent des repères généraux : elles doivent toujours être adaptées au poids, à la fonction rénale, au terrain cardiaque et au contexte clinique du patient, et confrontées aux protocoles/formulaires localement en vigueur.
+    </div>
   </div>`;
 }
 renderers.ionique = renderIonique;
@@ -750,7 +787,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-sources').scrollIntoView({behavior:'smooth',block:'start'})">📚 Sources</a></li>
       </ul></li>
 
-    </ul>    </ul>
+    </ul>
   </nav>
 
   <div class="card" id="proto-acr-adulte">
@@ -2134,7 +2171,7 @@ function renderProtocoles(){
       <li><strong>Dégagement des épaules</strong> : traction douce vers le bas pour dégager l'épaule antérieure, puis vers le haut pour l'épaule postérieure — ne jamais tirer sur la tête</li>
       <li>Une fois né, sécher et réchauffer immédiatement le nouveau-né (peau à peau si possible), stimuler tactilement s'il ne crie pas — <strong>évaluer le score d'Apgar à 1 et 5 min</strong> et débuter la réanimation néonatale si nécessaire (cf. protocoles pédiatriques)</li>
       <li><strong>Clampage du cordon</strong> : après 1-3 min si nouveau-né vigoureux (bénéfice démontré du clampage retardé), immédiatement si réanimation néonatale nécessaire — clamper à 2 endroits et couper entre les clamps</li>
-      <li><strong>Délivrance</strong ("3e phase du travail") : ne pas tirer sur le cordon ; attendre le décollement placentaire spontané (signes : allongement du cordon, saignement, utérus qui se globalise) — <strong>Oxytocine (Syntocinon®)</strong> 10 UI IM dès la naissance de l'épaule antérieure si disponible, réduit significativement le risque d'hémorragie du post-partum</li>
+      <li><strong>Délivrance</strong> ("3e phase du travail") : ne pas tirer sur le cordon ; attendre le décollement placentaire spontané (signes : allongement du cordon, saignement, utérus qui se globalise) — <strong>Oxytocine (Syntocinon®)</strong> 10 UI IM dès la naissance de l'épaule antérieure si disponible, réduit significativement le risque d'hémorragie du post-partum</li>
       <li>Après la délivrance : massage utérin, surveillance des saignements — cf. protocole HPP si hémorragie</li>
       <li>Transfert mère et enfant vers une structure obstétricale/pédiatrique dès que possible pour surveillance post-natale complète, même si l'accouchement s'est bien déroulé</li>
     </ol>
@@ -3345,6 +3382,7 @@ function renderDrogues(){
       <tr><td><strong>Noradrénaline</strong></td><td>Choc septique (1ère ligne), choc distributif</td><td>0,01–3 µg/kg/min IV (titrer par paliers)</td><td>8 mg dans 50 mL G5% → 160 µg/mL<br>Pour 70 kg : 1 µg/kg/min = 26 mL/h</td></tr>
       <tr><td><strong>Dobutamine</strong></td><td>Choc cardiogénique, bas débit cardiaque</td><td>2–20 µg/kg/min IV (débuter à 2-5)</td><td>250 mg dans 50 mL G5% → 5 mg/mL<br>Pour 70 kg : 5 µg/kg/min ≈ 2,1 mL/h</td></tr>
       <tr><td><strong>Dopamine</strong></td><td>Alternative si norad indisponible</td><td>5–20 µg/kg/min IV</td><td>200 mg dans 50 mL G5% → 4 mg/mL</td></tr>
+      <tr><td><strong>Vasopressine</strong></td><td>Choc septique réfractaire, en add-on à la noradrénaline</td><td>Dose fixe <strong>0,03 UI/min</strong> (indépendante du poids), à débuter quand la noradrénaline atteint ≈ 0,25–0,5 µg/kg/min, pour limiter l'escalade en catécholamines — pas d'usage en monothérapie</td><td>20 UI dans 50 mL NaCl 0,9% → 0,4 UI/mL</td></tr>
       <tr><td><strong>Éphédrine</strong></td><td>Hypotension peranesthésique, bradycardie</td><td>3–9 mg IV bolus (max 30 mg/h)</td><td>30 mg dans 10 mL NaCl 0,9% → 3 mg/mL</td></tr>
     </table>
   </div>
@@ -3354,9 +3392,9 @@ function renderDrogues(){
     <table>
       <tr><th>Drogue</th><th>Indication</th><th>Posologie</th><th>Remarques</th></tr>
       <tr><td><strong>Midazolam</strong></td><td>Sédation continue, induction, état de mal</td><td>Induction : 0,05–0,1 mg/kg IV lent<br>Entretien : 0,02–0,1 mg/kg/h SE</td><td>Accumulatif si prolongé</td></tr>
-      <tr><td><strong>Propofol</strong></td><td>Sédation courte durée, induction</td><td>Induction : 1–2 mg/kg IV lent<br>Entretien : 0,3–4 mg/kg/h SE</td><td>Hypotension, PRIS si &gt;4 mg/kg/h prolongé</td></tr>
+      <tr><td><strong>Propofol</strong></td><td>Sédation courte durée, induction</td><td>Induction : 1–2 mg/kg IV lent<br>Entretien : 0,3–4 mg/kg/h SE</td><td>Hypotension. Risque de syndrome de perfusion au propofol (PRIS) si débit &gt;4 mg/kg/h maintenu &gt;48h : surveiller CPK, triglycérides, lactates et équilibre acido-basique en cas de sédation prolongée à haute dose</td></tr>
       <tr><td><strong>Kétamine</strong></td><td>ISR, analgésie, terrain précaire</td><td>Induction : 1–2 mg/kg IV (4–6 mg/kg IM)<br>Analgésie : 0,1–0,5 mg/kg IV</td><td>Bronchodilatateur, maintien des réflexes, prudence si HTIC</td></tr>
-      <tr><td><strong>Étomidate</strong></td><td>ISR, terrain hémodynamique instable</td><td>0,3 mg/kg IV lent</td><td>Inhibe cortisol 6-8h — éviter si sepsis</td></tr>
+      <tr><td><strong>Étomidate</strong></td><td>ISR, terrain hémodynamique instable</td><td>0,3 mg/kg IV lent</td><td>Inhibe la synthèse de cortisol pendant 6-12h après une dose unique ; la pertinence clinique de cet effet reste débattue mais la prudence reste de mise en cas de choc septique — discuter un autre agent (kétamine) si alternative disponible</td></tr>
       <tr><td><strong>Fentanyl</strong></td><td>Analgésie, prémédication intubation</td><td>1–3 µg/kg IV lent<br>Entretien : 0,5–2 µg/kg/h SE</td><td>Rigidité thoracique si injection rapide</td></tr>
       <tr><td><strong>Morphine</strong></td><td>Analgésie, OAP</td><td>0,05–0,1 mg/kg IV lent (titration 2 mg)</td><td>Histaminolibération, prudence si bronchospasme</td></tr>
     </table>
@@ -3372,15 +3410,18 @@ function renderDrogues(){
       <tr><td><strong>Atracurium</strong></td><td>Non dépolarisant (IRC/IHC)</td><td>0,5 mg/kg IV</td><td>20-35 min (élimination Hofmann)</td></tr>
     </table>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">CI succinylcholine : hyperkaliémie, brûlures étendues, crush syndrome, immobilisation prolongée, myopathies.</p>
+    <p style="margin-top:6px; font-size:13px; color:var(--muted);"><strong>Réversion du rocuronium/vécuronium par Sugammadex</strong> (si disponible) : 2 mg/kg si réapparition de 2 réponses au train-de-quatre (bloc modéré), 4 mg/kg si bloc profond (post-tétanique 1-2), <strong>16 mg/kg pour une réversion immédiate</strong> (~3 min après une dose d'induction de rocuronium 1,2 mg/kg) — utile en cas d'échec d'intubation/ISR nécessitant un retour rapide à la ventilation spontanée. Sans efficacité sur la succinylcholine ou les curares non stéroïdiens (atracurium).</p>
   </div>
 
   <div class="card">
     <h3>💊 Médicaments cardio-actifs</h3>
     <table>
       <tr><th>Drogue</th><th>Indication</th><th>Posologie</th></tr>
-      <tr><td><strong>Amiodarone</strong></td><td>FV/TV réfractaire, FA rapide</td><td>ACR : 300 mg IV bolus, puis 150 mg. FA/TSV : 5 mg/kg IVL en 1h, relais 10-15 mg/kg/24h</td></tr>
-      <tr><td><strong>Atropine</strong></td><td>Bradycardie symptomatique</td><td>0,5–1 mg IV, répétable toutes 3-5 min, max 3 mg</td></tr>
-      <tr><td><strong>Adénosine</strong></td><td>TSV jonctionnelle</td><td>6 mg IV bolus rapide, si échec 12 mg × 2</td></tr>
+      <tr><td><strong>Amiodarone</strong></td><td>FV/TV sans pouls réfractaire (ACR), FA rapide, TV stable</td><td>ACR : 300 mg IV/IO bolus après le 3ᵉ choc, puis 150 mg si récidive après le 5ᵉ choc. Hors ACR (FA/TV stable) : charge 150-300 mg IV en 10-20 min, puis perfusion continue <strong>900 mg/24h</strong> (300 mg sur 6h puis 600 mg sur 18h), dose max habituelle 1200 mg/24h — voie veineuse centrale préférable pour la perfusion prolongée (veinotoxique)</td></tr>
+      <tr><td><strong>Atropine</strong></td><td>Bradycardie symptomatique</td><td>0,5–1 mg IV, répétable toutes 3-5 min, max 3 mg (dose totale d'atropinisation complète)</td></tr>
+      <tr><td><strong>Isoprénaline</strong></td><td>Bradycardie symptomatique réfractaire à l'atropine, en attente d'entraînement électrosystolique</td><td>2ᵉ ligne après atropine (avant/pendant la pose d'un pacing) : perfusion 2-10 µg/min IV, titrer sur la fréquence cardiaque ; alternative : entraînement électrosystolique externe</td></tr>
+      <tr><td><strong>Adénosine</strong></td><td>TSV jonctionnelle (à QRS fin régulier)</td><td>6 mg IV bolus rapide suivi d'un flush, si échec 12 mg × 2 (max 3 doses au total)</td></tr>
+      <tr><td><strong>Milrinone</strong></td><td>Choc cardiogénique/bas débit, notamment sous bêtabloquant (inotrope non catécholaminergique)</td><td>0,375–0,75 µg/kg/min IV continu (dose de charge 50 µg/kg généralement omise en réanimation, risque d'hypotension) — réduire en cas d'insuffisance rénale</td></tr>
       <tr><td><strong>Furosémide</strong></td><td>OAP, surcharge</td><td>OAP : 40–80 mg IV direct, titrer selon réponse</td></tr>
       <tr><td><strong>Dérivés nitrés</strong></td><td>OAP, SCA avec PA conservée</td><td>TNT sublingual 0,4 mg × 1-3 ; IV si disponible</td></tr>
     </table>
@@ -3397,7 +3438,12 @@ function renderDrogues(){
       <tr><td>AVK</td><td>Vitamine K1 + PPSB si urgence</td><td>Vit K1 5-10 mg IV lent ; PPSB 25 UI/kg IV si hémorragie grave</td></tr>
       <tr><td>CO</td><td>O2 100%</td><td>Masque haute concentration 15 L/min ; discuter caisson hyperbare</td></tr>
       <tr><td>Cyanures</td><td>Hydroxocobalamine</td><td>5 g IV en 15 min (70 mg/kg enfant)</td></tr>
+      <tr><td>Anesthésiques locaux (LAST — toxicité systémique)</td><td>Émulsion lipidique 20% (Intralipid®)</td><td>Bolus 1,5 mL/kg IV en 2-3 min (≈100 mL si &gt;70 kg), puis perfusion continue 0,25 mL/kg/min ; bolus répétable 1-2 fois si instabilité persistante, dose cumulée max ≈ 12 mL/kg — poursuivre la RCP standard si ACR associé, éviter/limiter vasopressine et anti-arythmiques classiques</td></tr>
+      <tr><td>Méthanol / Éthylène glycol</td><td>Fomépizole</td><td>15 mg/kg IV en 30 min (dose de charge), puis 10 mg/kg/12h × 4 doses, puis 15 mg/kg/12h si poursuite (induction enzymatique) — adapter la fréquence si hémodialyse associée ; à défaut, éthanol IV/PO en alternative</td></tr>
+      <tr><td>Bêtabloquants / Inhibiteurs calciques (choc réfractaire)</td><td>Glucagon</td><td>Bolus 5-10 mg IV en 5 min (50-150 µg/kg), puis perfusion 2-5 mg/h si réponse — associer insulinothérapie à haute dose euglycémique (avis réanimation/centre antipoison) en cas d'échec</td></tr>
+      <tr><td>Curarisation résiduelle (rocuronium/vécuronium)</td><td>Sugammadex</td><td>2-4 mg/kg selon la profondeur du bloc, 16 mg/kg si réversion immédiate — cf. carte Curares ci-dessus</td></tr>
     </table>
+    <p style="margin-top:8px; font-size:13px; color:var(--muted);">Un avis auprès d'un centre antipoison reste recommandé dès que possible pour toute intoxication grave ou atypique, en complément de ce tableau.</p>
   </div>
 
   <div class="card" id="drogues-gravite">
@@ -3455,6 +3501,9 @@ function renderDrogues(){
       <li>Propofol : changer flacon et tubulure toutes les 12h.</li>
       <li>Tracer systématiquement heure, dose, opérateur pour chaque médicament.</li>
     </ul>
+    <div class="warn-box" style="margin-top:12px;">
+      Repères posologiques établis à partir de sources actuelles : ERC/AHA Guidelines for Resuscitation (arrêt cardiaque, amiodarone/adrénaline) ; Surviving Sepsis Campaign 2021 (vasopresseurs, vasopressine) ; RCP/Vidal des spécialités citées (Cordarone®, Bridion®) ; ASRA Guidelines 2020 pour la toxicité systémique des anesthésiques locaux (émulsion lipidique) ; littérature sur le fomépizole dans les intoxications au méthanol/éthylène glycol. Ces posologies restent des repères généraux à adapter au poids, à la fonction rénale/hépatique, au terrain hémodynamique et aux protocoles/formulaires localement en vigueur.
+    </div>
   </div>`;
 }
 renderers.drogues = renderDrogues;
@@ -4527,10 +4576,11 @@ window.init_abreviations = function(){
 
 /* ——— Mise à jour badge accueil ——— */
 function renderAccueil(){
-  const done=['scores','protocoles','drogues','ventilation','abords','surveillance','fiches','calculateurs','ionique'];
+  const done=['scores','protocoles','drogues','ventilation','abords','surveillance','fiches','calculateurs','ionique','abreviations'];
   return `
   <h2 class="module-title">Bienvenue</h2>
   <p class="module-sub">Ny Aina Med's Emergency & Intensive Care — Application de référence rapide pour la réanimation médicale. Usage hors-ligne.</p>
+  <p style="font-size:13px; color:var(--muted); margin-top:-8px; margin-bottom:12px;">Rédacteur : Ny Aina Med's</p>
   <div class="card">
     <h3>⚠️ Avertissement</h3>
     <p style="font-size:13.5px; color:var(--muted)">Cet outil est une aide-mémoire destinée aux professionnels de santé. Il ne remplace pas le jugement clinique ni les protocoles institutionnels. Vérifier systématiquement les posologies avant administration.</p>
