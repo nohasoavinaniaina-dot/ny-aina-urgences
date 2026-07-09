@@ -193,7 +193,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
     <div class="brand">
       <h1>🫀 Ny Aina Med's</h1>
       <p>Emergency & Intensive Care</p>
-      <p style="font-size:11px; color:var(--muted); margin-top:2px;">Rédacteur : Ny Aina Med's</p>
+      <p style="font-size:11px; color:var(--muted); margin-top:2px;">Rédacteur : Dr RANDRIAMBOLOLONIAINA Nohasoavina Tolotra Casimir</p>
     </div>
     <div id="search-box">
       <input type="text" id="nav-search" placeholder="Rechercher (ex. atropine, hyperkaliémie...)">
@@ -207,6 +207,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
       <li><button data-mod="ventilation"><span class="icon">🫁</span> Ventilation & O2</button></li>
       <li><button data-mod="abords"><span class="icon">🩸</span> Voies veineuses / Abords</button></li>
       <li><button data-mod="surveillance"><span class="icon">📈</span> Bilan & Surveillance</button></li>
+      <li><button data-mod="biologie"><span class="icon">🧪</span> Valeurs normales (Biologie)</button></li>
       <li><button data-mod="fiches"><span class="icon">✅</span> Fiches pratiques</button></li>
       <li><button data-mod="calculateurs"><span class="icon">🧮</span> Calculateurs</button></li>
       <li><button data-mod="ionique"><span class="icon">⚗️</span> Troubles ioniques</button></li>
@@ -232,6 +233,7 @@ const MODULES = {
   ventilation: { title:"Ventilation & O2", icon:"🫁" },
   abords: { title:"Voies veineuses / Abords", icon:"🩸" },
   surveillance: { title:"Bilan & Surveillance", icon:"📈" },
+  biologie: { title:"Valeurs normales (Biologie)", icon:"🧪" },
   fiches: { title:"Fiches pratiques", icon:"✅" },
   calculateurs: { title:"Calculateurs", icon:"🧮" },
   ionique: { title:"Troubles ioniques", icon:"⚗️" },
@@ -434,7 +436,7 @@ function renderIonique(){
       <li>Arrêt de tout apport de K+ et des médicaments hyperkaliémiants (IEC, ARA2, épargneurs de K+, AINS, triméthoprime).</li>
       <li>Surveillance : kaliémie à 1h, 2h, 4h, 6h et 24h après le traitement ; scope ECG continu jusqu'à normalisation.</li>
     </ol>
-  </div>
+</div>
 
   <div class="card" id="ion-hypokaliemie">
     <h3>🟡 Hypokaliémie (K+ &lt; 3,5 mmol/L)</h3>
@@ -450,7 +452,7 @@ function renderIonique(){
       <li>Rechercher et corriger systématiquement une hypomagnésémie associée (l'hypokaliémie reste réfractaire tant que le magnésium n'est pas normalisé).</li>
       <li>Surveillance ECG continue et kaliémie répétée (toutes les 4-6h) si correction IV rapide ou trouble sévère.</li>
     </ul>
-  </div>
+</div>
 
   <div class="card" id="ion-hyponatremie">
     <h3>🔴 Hyponatrémie (Na+ &lt; 135 mmol/L)</h3>
@@ -469,7 +471,7 @@ function renderIonique(){
       <li>Identifier la cause : évaluer le statut volémique (hypovolémique / euvolémique / hypervolémique) avant de choisir le traitement de fond.</li>
       <li>Surveillance ionogramme rapprochée (toutes les 2-4h en phase aiguë sous NaCl 3%, puis toutes les 6-12h).</li>
     </ul>
-  </div>
+</div>
 
   <div class="card" id="ion-hypernatremie">
     <h3>🟡 Hypernatrémie (Na+ &gt; 145 mmol/L)</h3>
@@ -481,7 +483,7 @@ function renderIonique(){
       <li>Si hypovolémie associée (choc, déshydratation extracellulaire) : corriger d'abord la volémie avec NaCl 0,9%, puis compléter par de l'eau libre une fois l'hémodynamique stabilisée.</li>
       <li>Surveillance ionogramme toutes les 4-6h en phase de correction active.</li>
     </ul>
-  </div>
+</div>
 
   <div class="card" id="ion-hypocalcemie">
     <h3>🟡 Hypocalcémie (Ca2+ corrigé &lt; 2,20 mmol/L)</h3>
@@ -491,7 +493,7 @@ function renderIonique(){
       <li>Corriger systématiquement une hypomagnésémie associée (fréquente, entretient l'hypocalcémie et la rend réfractaire au calcium seul).</li>
       <li>Forme chronique peu symptomatique : calcium et vitamine D (ou calcitriol si hypoparathyroïdie/insuffisance rénale) par voie orale.</li>
     </ul>
-  </div>
+</div>
 
   <div class="card" id="ion-hypercalcemie">
     <h3>🟡 Hypercalcémie (Ca2+ corrigé &gt; 2,60 mmol/L)</h3>
@@ -512,7 +514,7 @@ function renderIonique(){
       <li>Arrêt des apports calciques, de la vitamine D et des diurétiques thiazidiques.</li>
       <li>Épuration extra-rénale (hémodialyse à bain pauvre en calcium) si forme menaçante avec insuffisance rénale sévère ou insuffisance cardiaque empêchant une réhydratation efficace.</li>
     </ul>
-  </div>
+</div>
 
   <div class="card" id="ion-hypomagnesemie">
     <h3>🟡 Hypomagnésémie (Mg2+ &lt; 0,65 mmol/L)</h3>
@@ -529,7 +531,7 @@ function renderIonique(){
       <li>Réduire les doses de 25-50% si clairance de la créatinine &lt; 30 mL/min ; ne pas dépasser un débit de 150 mg/min en IV.</li>
       <li>Surveillance : réflexes ostéotendineux, fréquence respiratoire (risque de dépression respiratoire si surdosage/insuffisance rénale), scope ECG, kaliémie et calcémie associées. Antidote en cas de surdosage symptomatique : gluconate de calcium IV.</li>
     </ul>
-  </div>
+</div>
 
   <div class="card" id="ion-hypophosphatemie">
     <h3>🟡 Hypophosphatémie (Phosphore &lt; 0,80 mmol/L)</h3>
@@ -545,7 +547,7 @@ function renderIonique(){
       <li>Surveiller la calcémie pendant la perfusion (risque d'hypocalcémie/précipitation phosphocalcique si correction trop rapide), la fonction rénale et la kaliémie.</li>
       <li><strong>Contexte typique à ne pas manquer : syndrome de renutrition inappropriée</strong> (refeeding syndrome) chez le patient dénutri — prévention systématique par supplémentation en phosphore, magnésium, potassium et vitamine B1 <em>avant/dès</em> la reprise de la nutrition, avec réintroduction calorique progressive.</li>
     </ul>
-  </div>
+</div>
 
   <div class="card" id="ion-principes">
     <h3>⚠️ Principes généraux</h3>
@@ -560,13 +562,31 @@ function renderIonique(){
     <div class="warn-box" style="margin-top:12px;">
       Repères posologiques établis à partir de sources actuelles : Renal Association (UK), <em>Treatment of Acute Hyperkalaemia in Adults</em> (2020, réaffirmée 2022) ; Spasovski et al., <em>Clinical practice guideline on diagnosis and treatment of hyponatraemia</em>, European Society of Endocrinology/European Renal Association, Intensive Care Med 2014 ; KDIGO 2024 Clinical Practice Guideline for CKD ; recommandations d'usage de l'acide zolédronique et de la calcitonine dans l'hypercalcémie maligne. Ces posologies restent des repères généraux : elles doivent toujours être adaptées au poids, à la fonction rénale, au terrain cardiaque et au contexte clinique du patient, et confrontées aux protocoles/formulaires localement en vigueur.
     </div>
-  </div>`;
+</div>`;
 }
 renderers.ionique = renderIonique;
 
 function toggleIoniqueToc(){
   const toc=document.getElementById('ionique-toc');
   if(toc) toc.classList.toggle('collapsed');
+}
+
+function init_ionique(){
+  const content = document.getElementById('content');
+  const toc = document.getElementById('ionique-toc');
+  if(!content || !toc) return;
+  content.querySelectorAll('.card[id^="ion-"]').forEach(card=>{
+    if(card.querySelector('.back-to-toc')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'back-to-toc';
+    btn.innerHTML = '↑ Retour au sommaire';
+    btn.onclick = ()=>{
+      toc.classList.remove('collapsed');
+      toc.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    card.appendChild(btn);
+  });
 }
 
 function placeholderModule(key){
@@ -580,7 +600,7 @@ function placeholderModule(key){
 function renderProtocoles(){
   return `
   <h2 class="module-title">🚨 Protocoles d'urgence vitale</h2>
-  <p class="module-sub">Algorithmes pratiques basés sur ERC/ILCOR 2021, Surviving Sepsis Campaign, ATLS. À adapter aux ressources disponibles.</p>
+  <p class="module-sub">Algorithmes pratiques basés sur ERC/ILCOR 2025, Surviving Sepsis Campaign, ATLS. À adapter aux ressources disponibles.</p>
 
   <nav class="toc" id="proto-toc" aria-label="Sommaire des protocoles">
     <div class="toc-head" onclick="toggleProtoToc()">
@@ -791,11 +811,12 @@ function renderProtocoles(){
   </nav>
 
   <div class="card" id="proto-acr-adulte">
-    <h3>💔 Arrêt cardio-respiratoire — Adulte (ERC 2021)</h3>
+    <h3>💔 Arrêt cardio-respiratoire — Adulte (ERC 2025)</h3>
+    <p style="font-size:12.5px; color:var(--muted); margin-bottom:8px;">Pas de changement majeur par rapport à ERC 2021 — l'ERC 2025 renforce surtout l'importance d'une ventilation efficace associée aux compressions, de la défibrillation précoce (&lt;3 min si rythme choquable) et du bon positionnement des électrodes.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Sécurité</strong> → vérifier conscience → appeler à l'aide → libérer voies aériennes → évaluer respiration/pouls (≤10 sec)</li>
       <li><strong>Débuter RCP</strong> immédiatement : 30 compressions / 2 insufflations, 100-120/min, dépression 5-6 cm, relâchement complet</li>
-      <li><strong>Brancher scope/DAE dès que possible</strong> — analyser le rythme</li>
+      <li><strong>Brancher scope/DAE dès que possible</strong> — analyser le rythme ; <strong>positionnement correct des électrodes</strong> (accent renforcé ERC 2025) : électrode latérale/apicale sous l'aisselle, sur la ligne axillaire moyenne (et non plus haut sur le thorax)</li>
     </ol>
     <table style="margin-top:10px;">
       <tr><th>Rythme</th><th>Conduite</th></tr>
@@ -807,19 +828,23 @@ function renderProtocoles(){
       <div>🔹 <strong>Hypoxie</strong><br>🔹 <strong>Hypovolémie</strong><br>🔹 <strong>Hypo/Hyperkaliémie</strong> (+ métabolique)<br>🔹 <strong>Hypothermie</strong></div>
       <div>🔹 <strong>Thrombose</strong> (coronaire/pulmonaire)<br>🔹 <strong>Tamponnade</strong><br>🔹 <strong>Toxiques</strong><br>🔹 <strong>Pneumothorax</strong> compressif</div>
     </div>
-    <p style="margin-top:10px; font-size:13px; color:var(--muted);">Voie d'abord : IV ou intra-osseuse si échec. Capnographie si disponible pour confirmer position de sonde et qualité du MCE. Ne pas interrompre les compressions >10 sec.</p>
+    <p style="margin-top:10px; font-size:13px; color:var(--muted);">Voie d'abord : IV ou intra-osseuse si échec. Capnographie si disponible pour confirmer position de sonde et qualité du MCE. Ne pas interrompre les compressions >10 sec. <strong>Ne pas administrer de façon systématique</strong> calcium, bicarbonate de sodium ou corticoïdes pendant l'arrêt cardiaque (rappel ERC 2025) — réservés à une cause spécifique identifiée (hyperkaliémie, acidose sévère documentée, etc.).</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Adrénaline Aguettant® est disponible à tous les niveaux hospitaliers (LNMEIS) — molécule prioritaire en cas de ressources limitées. Le défibrillateur (DAE ou manuel) et la Cordarone® ne sont généralement disponibles qu'en CHU/CHRR ; en leur absence, la RCP de haute qualité et l'adrénaline restent les seuls leviers d'action et ne doivent jamais être interrompues en attendant un transfert.</p>
   </div>
 
   <div class="card" id="proto-acr-pediatrique">
-    <h3>💔 Arrêt cardio-respiratoire — Pédiatrique (ERC 2021)</h3>
+    <h3>💔 Arrêt cardio-respiratoire — Pédiatrique (ERC 2025)</h3>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>5 insufflations initiales avant de débuter les compressions (si arrêt respiratoire probable)</li>
-      <li>Ratio <strong>15 compressions / 2 insufflations</strong> (2 sauveteurs qualifiés) — dépression 1/3 du diamètre thoracique</li>
+      <li>Ratio <strong>15 compressions / 2 insufflations</strong> (2 sauveteurs qualifiés) — dépression 1/3 du diamètre thoracique ; changer l'opérateur des compressions au moins toutes les 2 min (surveiller la fatigue/dégradation de la qualité)</li>
       <li>RCP 1 min avant d'alerter si seul, puis appeler à l'aide</li>
-      <li>Adrénaline (<strong>Adrénaline Aguettant®</strong>) IV/IO : <strong>10 microgrammes/kg</strong> (0,01 mg/kg), max 1mg, toutes les 3-5 min</li>
-      <li>Énergie de choc (FV/TV) : <strong>4 J/kg</strong></li>
+      <li><strong>Débuter les compressions thoraciques même en présence d'un pouls</strong> si bradycardie &lt;60/min avec signes de mauvaise perfusion, malgré une oxygénation/ventilation optimisées — ne pas attendre l'arrêt circulatoire complet</li>
+      <li>Adrénaline (<strong>Adrénaline Aguettant®</strong>) IV/IO : <strong>10 microgrammes/kg</strong> (0,01 mg/kg), max 1mg, <strong>répétée toutes les 4 min</strong> (soit un cycle de RCP sur deux) en l'absence de signes de vie, sauf guidage par pression artérielle invasive</li>
+      <li>Énergie de choc (FV/TV sans pouls) : <strong>4 J/kg</strong> par choc, jusqu'à un maximum de <strong>120-200 J</strong> ; reprendre la RCP immédiatement après le choc, minimiser la pause péri-choc (&lt;5 sec)</li>
       <li>Rechercher les mêmes causes réversibles (4H/4T) — chez l'enfant, penser surtout hypoxie et hypovolémie</li>
+      <li>Après RCS (retour à une circulation spontanée) : titrer l'oxygène pour éviter l'hyperoxie, traiter la cause, transfert en unité de soins intensifs pédiatriques dès que possible</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Adrénaline Aguettant®, matériel de ventilation pédiatrique (ballon auto-remplisseur avec masques de tailles adaptées) et accès intra-osseux sont à vérifier systématiquement en dotation de tout service accueillant des enfants, y compris en structure de base — l'accès IO reste souvent le geste le plus rapide en cas d'échec de la voie IV chez le petit enfant en arrêt. Le défibrillateur avec palettes/électrodes pédiatriques est généralement limité aux CHU/CHRR ; à défaut de mode pédiatrique dédié, utiliser des électrodes adultes espacées (antéro-postérieur) chez le nourrisson plutôt que de renoncer à la défibrillation si un rythme choquable est identifié.</p>
   </div>
 
   <div class="card" id="proto-etats-choc">
@@ -852,10 +877,11 @@ function renderProtocoles(){
         <td><strong>Tamponnade :</strong> remplissage prudent + péricardiocentèse en urgence — <em>voir <a onclick="document.getElementById('proto-tamponnade').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Tamponnade cardiaque</a></em>. <strong>PNO compressif :</strong> exsufflation à l'aiguille puis drainage thoracique, sans attendre l'imagerie — <em>voir <a onclick="document.getElementById('proto-pneumothorax').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Pneumothorax</a></em>. <strong>EP massive avec choc :</strong> thrombolyse IV (<strong>Altéplase — Actilyse®</strong>) si pas de contre-indication majeure, sinon embolectomie si disponible ; anticoagulation efficace dans tous les cas</td>
       </tr>
     </table>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : cristalloïdes (Ringer Lactate/NaCl 0,9%), Adrénaline et Noradrénaline Aguettant® sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Actilyse® pour l'EP massive n'est disponible qu'en pharmacie de CHU — en son absence, la réanimation symptomatique et un transfert rapide restent l'option principale. Le CNTS doit être contacté sans délai en cas de choc hémorragique nécessitant une transfusion.</p>
   </div>
 
   <div class="card" id="proto-troubles-rythme">
-    <h3>⚡ Tachycardie et Bradycardie instables (ERC 2021)</h3>
+    <h3>⚡ Tachycardie et Bradycardie instables (ERC 2025)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Algorithmes ERC/ILCOR pour les troubles du rythme aigus, en dehors de l'arrêt cardiaque. La conduite dépend avant tout de la présence de <strong>signes d'instabilité</strong>, pas uniquement de la fréquence cardiaque.</p>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">A. Tachycardie</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
@@ -878,6 +904,7 @@ function renderProtocoles(){
       <li>Alternatives si disponibles : <strong>Aminophylline</strong> si bradycardie sur infarctus inférieur ou lésion médullaire, <strong>Glucagon</strong> si bêtabloquant/inhibiteur calcique en cause, <strong>entraînement électrosystolique transveineux</strong> en relais dès que possible si la cause n'est pas réversible</li>
       <li><strong>Si stable sans risque d'asystolie</strong> : surveillance scopée continue, rechercher et traiter la cause (iatrogène, ischémique, métabolique — hyperkaliémie, hypothyroïdie, hypothermie)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Atropine, Cordarone® et Sulfate de magnésium sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Adénosine et l'entraînement électrosystolique (transcutané ou transveineux) sont d'accès limité aux CHU/CHRR disposant d'un plateau de cardiologie/réanimation — en leur absence pour une bradycardie instable réfractaire à l'atropine, l'Adrénaline ou l'Isoprénaline IVSE (si disponibles) restent les options de recours en attendant un transfert.</p>
   </div>
 
   <div class="card" id="proto-anaphylaxie">
@@ -895,6 +922,7 @@ function renderProtocoles(){
       <li><strong>Surveillance de la réaction biphasique</strong> : récidive des symptômes sans nouvelle exposition, généralement dans les <strong>4-12h</strong> (jusqu'à 24-72h décrit) — observation minimale de <strong>4-6h</strong> après résolution complète pour une réaction non sévère, à prolonger à <strong>8-24h</strong> si : réaction sévère/hypoTA initiale, bronchospasme sévère ou asthme sous-jacent, nécessité de plusieurs doses d'adrénaline, antécédent de réaction biphasique, ou accès aux soins d'urgence limité en cas de récidive</li>
       <li><strong>À la sortie</strong> : prescription d'un stylo auto-injecteur d'adrénaline si disponible avec éducation à son utilisation, plan d'action écrit, éviction de l'allergène identifié, orientation vers une consultation d'allergologie</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Adrénaline Aguettant® (ampoule injectable, à diluer/préparer soi-même) est disponible à tous les niveaux hospitaliers (LNMEIS) — les stylos auto-injecteurs pré-remplis (type Anapen®/EpiPen®) sont quasi inexistants sur le marché malgache ; la préparation manuelle d'une seringue d'adrénaline diluée reste donc la méthode de référence en pratique locale. Le Glucagon (GlucaGen®) est réservé aux pharmacies hospitalières de CHU.</p>
   </div>
 
   <div class="card" id="proto-angioedeme-bradykinique">
@@ -927,16 +955,18 @@ function renderProtocoles(){
   </div>
 
   <div class="card" id="proto-sca">
-    <h3>🫀 Syndrome coronarien aigu (SCA / IDM)</h3>
-    <p style="font-size:13.5px; margin-bottom:8px;">Douleur thoracique constrictive &gt;20 min, irradiation typique, souvent associée à dyspnée/sueurs/nausées. ECG 18 dérivations dans les 10 min suivant le premier contact médical.</p>
+    <h3>🫀 Syndrome coronarien aigu (SCA / IDM) — ESC 2023</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Douleur thoracique constrictive &gt;20 min, irradiation typique, souvent associée à dyspnée/sueurs/nausées. ECG 18 dérivations dans les 10 min suivant le premier contact médical. Les recommandations ESC 2023 unifient la prise en charge STEMI/NSTEMI en un seul référentiel.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>MONA-BASH</strong> à l'admission : <strong>Aspirine (Aspégic®, Kardégic®)</strong> 300 mg PO/IV à croquer (dose de charge) + 2ème antiagrégant (<strong>Clopidogrel — Plavix®</strong> 300-600 mg ou <strong>Ticagrélor — Brilique®</strong> 180 mg selon protocole local) ; Oxygène uniquement si SpO2&lt;90% (pas d'O2 systématique) ; <strong>Nitrés (Risordan® IV, Natispray® sublingual)</strong> si douleur persistante et TA systolique &gt;90 mmHg (contre-indiqués si suspicion d'IDM du VD) ; <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur réfractaire ; Bêtabloquant précoce (<strong>Bisoprolol — Cardensiel®</strong>) si pas de contre-indication (insuffisance cardiaque aiguë, choc, bloc AV)</li>
+      <li><strong>MONA-BASH</strong> à l'admission : <strong>Aspirine (Aspégic®, Kardégic®)</strong> 300 mg PO/IV à croquer (dose de charge) ; Oxygène uniquement si SpO2&lt;90% (pas d'O2 systématique) ; <strong>Nitrés (Risordan® IV, Natispray® sublingual)</strong> si douleur persistante et TA systolique &gt;90 mmHg (contre-indiqués si suspicion d'IDM du VD) ; <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur réfractaire ; Bêtabloquant précoce (<strong>Bisoprolol — Cardensiel®</strong>) si pas de contre-indication (insuffisance cardiaque aiguë, choc, bloc AV)</li>
+      <li><strong>2e antiagrégant (Clopidogrel — Plavix® 300-600 mg, ou Ticagrélor — Brilique® 180 mg) :</strong> à administrer sans délai en cas de <strong>STEMI</strong> avec reperfusion prévue. En cas de <strong>NSTEMI</strong> avec stratégie invasive précoce disponible (&lt;24h) et coronarographie planifiée, l'<strong>ESC 2023 déconseille le prétraitement systématique</strong> par P2Y12 avant l'angiographie (à administrer plutôt au moment du geste) — en pratique à Madagascar, où l'accès à la coronarographie précoce reste très limité (cf. note ci-dessous), l'administration du 2e antiagrégant dès l'admission reste une option raisonnable en l'absence de stratégie invasive rapide accessible</li>
       <li><strong>STEMI</strong> (sus-décalage ST ≥1mm en 2 dérivations contiguës ou BBG nouveau) : reperfusion en urgence — <strong>angioplastie primaire</strong> si réalisable &lt;120 min depuis le premier contact médical (idéal &lt;90 min), sinon <strong>thrombolyse IV (Altéplase — Actilyse®)</strong> schéma accéléré : 15 mg IV bolus, puis 0,75 mg/kg (max 50 mg) sur 30 min, puis 0,5 mg/kg (max 35 mg) sur 60 min — dose totale max 100 mg — (si &lt;12h depuis le début des symptômes et pas de contre-indication) suivie de transfert vers un centre avec plateau technique</li>
-      <li><strong>NSTEMI/angor instable</strong> (sous-décalage ST, inversion T, troponine élevée) : anticoagulation (héparine), double antiagrégation, stratification du risque (score GRACE), coronarographie précoce (&lt;24-72h) selon le niveau de risque, sans thrombolyse</li>
+      <li><strong>NSTEMI/angor instable</strong> (sous-décalage ST, inversion T, troponine élevée) : anticoagulation (héparine), double antiagrégation, stratification du risque (score GRACE 2.0), coronarographie précoce (&lt;24-72h selon le niveau de risque) si accessible, sans thrombolyse</li>
       <li>Anticoagulation : Héparine non fractionnée ou HBPM selon stratégie de reperfusion choisie et disponibilité</li>
       <li>Surveillance scope continue — risque de trouble du rythme ventriculaire dans les premières heures ; DAE/défibrillateur à proximité immédiate</li>
       <li>Statine à forte dose dès l'admission ; IEC si dysfonction VG ; traiter les complications précoces (choc cardiogénique, trouble du rythme, rupture septale/pariétale)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'angioplastie primaire (salle de cathétérisme) n'existe que de façon très limitée sur le territoire — la thrombolyse IV (Actilyse®, disponible en pharmacie hospitalière de CHU) reste l'option de reperfusion la plus réaliste en 1ère intention. Aspégic®, Plavix®, Cardensiel® et les statines génériques sont largement disponibles (LNMEIS) ; le Ticagrélor (Brilique®) est d'accès plus limité, réservé aux pharmacies privées des grandes villes.</p>
   </div>
 
   <div class="card" id="proto-oap">
@@ -995,12 +1025,13 @@ function renderProtocoles(){
       <li>ABCDE, glycémie capillaire systématique (une hypo/hyperglycémie peut mimer un AVC), O2 si SpO2&lt;94%, ECG (rechercher une fibrillation atriale)</li>
       <li>Heure exacte de début des symptômes (ou dernière heure vue asymptomatique) — détermine l'éligibilité à la thrombolyse/thrombectomie</li>
       <li>TDM cérébrale sans injection en urgence pour éliminer une hémorragie avant tout traitement</li>
-      <li><strong>AVC ischémique :</strong> thrombolyse IV (<strong>Altéplase — Actilyse®</strong>, 0,9 mg/kg, max 90 mg, 10% en bolus puis le reste sur 1h) possible si &lt;4h30 depuis le début des symptômes et absence de contre-indication (pas d'hémorragie, TA contrôlée, pas de chirurgie/traumatisme récent, pas de trouble de la coagulation) ; thrombectomie mécanique à discuter si occlusion de gros vaisseau prouvée, fenêtre élargie selon l'imagerie de perfusion (jusqu'à 24h dans des centres spécialisés)</li>
+      <li><strong>AVC ischémique :</strong> thrombolyse IV possible si &lt;4h30 depuis le début des symptômes et absence de contre-indication (pas d'hémorragie, TA contrôlée, pas de chirurgie/traumatisme récent, pas de trouble de la coagulation) — <strong>Altéplase (Actilyse®)</strong> 0,9 mg/kg (max 90 mg), 10% en bolus puis le reste sur 1h, <strong>ou Ténectéplase (Metalyse®)</strong> 0,25 mg/kg (max 25 mg) en <strong>bolus IV unique</strong>, désormais recommandée à égalité avec l'Altéplase par les guidelines AHA/ASA les plus récentes — l'administration en bolus unique simplifie nettement la logistique par rapport à la perfusion d'1h, avantage pratique notable en contexte de ressources limitées/transfert. Thrombectomie mécanique à discuter si occlusion de gros vaisseau prouvée, fenêtre élargie selon l'imagerie de perfusion (jusqu'à 24h dans des centres spécialisés, y compris pour certains infarctus de grande taille selon les données récentes)</li>
       <li><strong>Gestion tensionnelle AVC ischémique :</strong> ne pas baisser la TA sauf si &gt;220/120 mmHg (hors thrombolyse) — l'hypertension permissive préserve la perfusion cérébrale. Si thrombolyse envisagée : TA doit être &lt;185/110 mmHg avant, puis maintenue &lt;180/105 mmHg pendant 24h après</li>
       <li><strong>AVC hémorragique :</strong> contrôle tensionnel plus strict (cible TA systolique ≈140 mmHg si toléré), correction urgente de toute anticoagulation en cours, avis neurochirurgical (évacuation si hématome volumineux/engagement), surveillance neurologique rapprochée (aggravation = TDM de contrôle)</li>
       <li>Ne pas donner d'antiagrégant/anticoagulant avant d'avoir éliminé une hémorragie à l'imagerie</li>
       <li>Position tête à 30°, contrôle glycémique strict, prévention des complications (fausses routes — évaluation de la déglutition avant toute alimentation, thromboprophylaxie)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la thrombolyse IV (Actilyse®) et la thrombectomie mécanique ne sont réalisables que dans de très rares centres équipés (essentiellement CHU Antananarivo, sous réserve de délai et de disponibilité) — la majorité des patients malgaches n'ont pas accès à un traitement de reperfusion dans les délais requis. Le Ténectéplase (Metalyse®) n'est pas plus répandu localement à ce jour que l'Altéplase, mais sa simplicité d'administration (bolus unique) en fait un candidat intéressant si son introduction devenait possible, en particulier pour les transferts inter-hospitaliers où la perfusion continue d'Altéplase est difficile à sécuriser. En l'absence de tout thrombolytique, la prise en charge repose sur les mesures générales (contrôle tensionnel, glycémique, prévention des complications) et un transfert rapide vers un centre équipé doit être envisagé dès que l'heure de début des symptômes le permet encore.</p>
   </div>
 
   <div class="card" id="proto-detresse-respiratoire">
@@ -1012,6 +1043,7 @@ function renderProtocoles(){
       <li>Identifier la cause : OAP (<strong>Furosémide — Lasilix®</strong>, dérivés nitrés — <strong>Risordan®</strong>), pneumopathie (ATB), asthme/BPCO décompensée (<strong>Salbutamol — Ventoline®</strong>, corticoïdes — <strong>Solu-Médrol®</strong>), EP (anticoagulation), pneumothorax (drainage)</li>
       <li>Si SDRA confirmé : ventilation protectrice (Vt 6mL/kg de poids idéal théorique, Pplateau &lt;30 cmH2O), PEP adaptée, décubitus ventral précoce si SDRA modéré-sévère (&gt;12h/jour si possible)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la ventilation mécanique invasive avec réglages protecteurs n'est disponible qu'en réanimation de CHU/CHRR — en son absence, la <strong>VNI/CPAP</strong> (si disponible) et le <strong>décubitus ventral en respiration spontanée ("proning éveillé")</strong> chez un patient non intubé sous oxygène/OHD peuvent améliorer l'oxygénation en attendant un transfert, sans remplacer une indication formelle d'intubation en cas d'épuisement respiratoire. Anticiper le transfert précoce dès la suspicion de SDRA modéré-sévère si le plateau technique local ne permet pas la ventilation protectrice.</p>
   </div>
 
   <div class="card" id="proto-asthme">
@@ -1081,6 +1113,7 @@ function renderProtocoles(){
       <li><strong>Surveillance post-drainage :</strong> radiographie thoracique de contrôle, recherche d'un bullage persistant (fuite aérienne continue = évoquer une fistule bronchopleurale), oscillations du liquide dans le système (témoigne de la perméabilité du drain), retrait du drain après résolution complète et épreuve de clampage concluante</li>
       <li>Rechercher et traiter la cause chez le sujet secondaire (BPCO, tuberculose, pneumocystose) ; discuter pleurodèse/chirurgie (bullectomie/thoracoscopie) en prévention de récidive selon le terrain et le nombre d'épisodes</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le matériel d'exsufflation à l'aiguille (cathéter court 14-16G) doit être disponible à tout niveau de soins accueillant des urgences — geste réalisable en CSB2 en attendant le transfert. Le drainage thoracique avec système sous eau ou valve de Heimlich est généralement réservé aux CHRD/CHU ; à défaut de valve de Heimlich commerciale, un doigt de gant percé fixé à l'extrémité du drain peut servir de système valvé de fortune en transport, sans remplacer un système d'aspiration en structure définitive.</p>
   </div>
 
   <div class="card" id="proto-coma">
@@ -1122,6 +1155,7 @@ function renderProtocoles(){
       <tr><td class="grave">Super-réfractaire</td><td>&gt;24h sous anesthésie</td><td>Persistance ou récidive à la décroissance de l'anesthésie générale malgré 24h de traitement adéquat → discuter (selon plateau technique) : <strong>Kétamine</strong> IVSE en complément (antagoniste NMDA, synergique avec les BZD dont l'efficacité décroît avec la durée), <strong>Sulfate de magnésium</strong> si éclampsie/contexte évocateur, régime cétogène, immunothérapie (corticoïdes/immunoglobulines) si suspicion d'encéphalite auto-immune, avis neurochirurgical si lésion focale identifiée</td></tr>
     </table>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Rechercher systématiquement une cause en parallèle du traitement symptomatique : hypoglycémie, hyponatrémie sévère, sevrage (alcool/BZD), éclampsie (si grossesse → <strong>Sulfate de magnésium</strong> en 1ère intention, cf. protocole dédié), neuro-infection (méningite/encéphalite), AVC, intoxication, inobservance chez l'épileptique connu, tumeur cérébrale. <strong>État de mal non convulsif</strong> à évoquer devant une confusion/coma prolongé inexpliqué après contrôle des crises motrices — diagnostic EEG indispensable.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Valium® et Hypnovel® sont disponibles à tous les niveaux hospitaliers (LNMEIS) — les benzodiazépines restent la pierre angulaire accessible partout. La Dépakine® injectable et le Keppra® IV sont réservés aux pharmacies de CHU/CHRR ; la Phénytoïne IV est peu répandue. En l'absence d'agent de 2e ligne et de possibilité d'anesthésie générale/ventilation, un transfert vers un centre équipé doit être organisé sans délai dès l'échec des benzodiazépines, sans jamais interrompre les mesures de réanimation de base.</p>
   </div>
 
   <div class="card" id="proto-hypoglycemie">
@@ -1207,13 +1241,14 @@ function renderProtocoles(){
       <li>Parasitémie ≥5% (P. falciparum)</li>
     </ul>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Artésunate IV (Artesun®)</strong> (traitement de référence) : 2,4 mg/kg à H0, H12, H24, puis une fois par jour jusqu'à ce que la voie orale soit possible (minimum 24h de traitement parentéral)</li>
-      <li>Si Artésunate IV indisponible en attendant le transfert : Artésunate intrarectal en pré-transfert (notamment chez l'enfant &lt;6 ans), ou <strong>Artéméther IM (Paluther®)</strong>, ou <strong>Quinine IV (Quinimax®, Quinine Lafran®)</strong> en alternative</li>
+      <li><strong>Artésunate IV (Artesun®)</strong> (traitement de référence) : <strong>2,4 mg/kg</strong> à H0, H12, H24 puis 1 fois/j chez l'adulte et l'enfant ≥20 kg — <strong>3 mg/kg/dose</strong> (dose plus élevée) chez l'<strong>enfant &lt;20 kg</strong> pour garantir une exposition équivalente (recommandation OMS actualisée, pharmacocinétique pédiatrique), même rythme H0-H12-H24 puis 1 fois/j, jusqu'à ce que la voie orale soit possible (minimum 24h de traitement parentéral)</li>
+      <li>Si Artésunate IV indisponible en attendant le transfert : <strong>Artésunate intrarectal 10 mg/kg dose unique chez l'enfant &lt;6 ans</strong> en pré-transfert (ne pas utiliser chez l'enfant plus âgé ni l'adulte), ou <strong>Artéméther IM (Paluther®)</strong>, ou <strong>Quinine IV (Quinimax®, Quinine Lafran®)</strong> en alternative — l'Artésunate/Artéméther restent préférés à la Quinine dès que disponibles (supériorité en mortalité)</li>
       <li>Dès que le patient tolère la voie orale ET parasitémie ≤1% : relais par une CTA (combinaison thérapeutique à base d'artémisinine) orale complète — ex. <strong>Artéméther-Luméfantrine (Coartem®, Riamet®)</strong> 4 cp (20 mg/120 mg) à H0-H8 puis 4 cp x2/j pendant 2 jours (adulte >35 kg, total 6 prises sur 3 jours) ou <strong>Artésunate-Amodiaquine (Coarsucam®, ASAQ Winthrop®)</strong> 1 cp (100 mg/270 mg)/j pendant 3 jours (adulte >36 kg) — posologie pédiatrique à adapter au poids selon la présentation disponible</li>
       <li>Traitement symptomatique associé : correction de l'hypoglycémie (fréquente, à rechercher systématiquement), transfusion si anémie sévère mal tolérée, gestion des convulsions (benzodiazépines), oxygénothérapie/ventilation si détresse respiratoire, épuration extra-rénale si insuffisance rénale sévère</li>
       <li>Surveillance rapprochée : glycémie répétée (risque d'hypoglycémie sous artésunate/quinine), état neurologique, diurèse</li>
       <li>Surveiller une anémie hémolytique retardée post-artésunate (jusqu'à 4 semaines après traitement) — contrôle NFS à distance</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Artésunate injectable est le traitement de 1ère intention distribué gratuitement via le <strong>Programme National de Lutte contre le Paludisme (PNLP)</strong> à tous les niveaux de soins publics, y compris CSB2/CHRD — vérifier le stock local (ruptures ponctuelles possibles). L'Artésunate intrarectal (pré-transfert) est également fourni par le PNLP pour les formations sanitaires de base sans capacité IV. La Quinine IV reste une alternative de repli si rupture d'Artésunate/Artéméther. Madagascar est une zone de transmission de <em>P. falciparum</em> (majoritaire) et de <em>P. vivax</em> (notamment dans les Hautes Terres) — le test de diagnostic rapide (TDR) combiné ou la goutte épaisse doivent orienter le choix thérapeutique si l'espèce n'est pas d'emblée <em>falciparum</em>.</p>
   </div>
 
   <div class="card" id="proto-eclampsie">
@@ -1228,6 +1263,8 @@ function renderProtocoles(){
       <li>Bilan de gravité : NFS/plaquettes, bilan hépatique, fonction rénale, protéinurie, bilan de coagulation (rechercher un HELLP syndrome)</li>
       <li><strong>Le seul traitement curatif est l'accouchement</strong> — organiser l'extraction fœtale dès stabilisation maternelle, en coordination avec l'équipe obstétricale</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le sulfate de magnésium injectable est largement disponible, y compris au niveau CHRD (LNMEIS) — le schéma Pritchard (IM) reste une alternative fiable en l'absence de pousse-seringue électrique. Trandate® et Loxen® sont disponibles en pharmacie hospitalière ; à défaut, la Nifédipine PO (Adalate®) est l'antihypertenseur le plus largement accessible, y compris en structure de base.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">🩺 <strong>Prévention (à intégrer au suivi prénatal, non un geste d'urgence)</strong> : dans les populations à apport calcique alimentaire bas — situation fréquente à Madagascar (régime à dominante rizicole, pauvre en produits laitiers) — l'OMS recommande une <strong>supplémentation calcique de 1,5 à 2 g/j</strong> (calcium élément, en 3 prises, idéalement à distance du fer) à partir de 20 SA chez toute femme enceinte, réduisant significativement le risque de prééclampsie et d'HTA gravidique. À signaler à l'équipe de consultation prénatale en relais de la prise en charge aiguë.</p>
   </div>
 
   <div class="card" id="proto-hpp">
@@ -1236,20 +1273,21 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Alerte immédiate</strong> — appel à l'aide, 2 VVP de gros calibre, bilan (NFS, coagulation, groupe/Rh, RAI), commander des culots globulaires</li>
       <li><strong>Massage utérin</strong> bimanuel immédiat + vérifier la vacuité vésicale (sondage)</li>
-      <li><strong>Utérotonique de 1ère ligne :</strong> <strong>Oxytocine (Syntocinon®)</strong> 10 UI IM ou IV lente, puis perfusion continue d'entretien. Si inefficace : <strong>Ergométrine (Méthergin®)</strong> IM (contre-indiquée si hypertension/prééclampsie) ou <strong>Misoprostol (Cytotec®, Misotac®)</strong> 800 µg voie sublinguale</li>
-      <li><strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min, dans les 3h suivant l'accouchement (réduit la mortalité) — répétable une fois si saignement persistant après 30 min</li>
+      <li><strong>Utérotonique de 1ère ligne :</strong> <strong>Oxytocine (Syntocinon®)</strong> 10 UI IM ou IV lente, puis perfusion continue d'entretien. Si inefficace : <strong>Ergométrine (Méthergin®)</strong> IM (contre-indiquée si hypertension/prééclampsie) ou <strong>Misoprostol (Cytotec®, Misotac®)</strong> 800 µg voie sublinguale. La <strong>Carbétocine</strong> (analogue thermostable de l'oxytocine, injection unique 100 µg IM/IV sans entretien) est recommandée par l'OMS (Feuille de route mondiale contre l'HPP 2023-2030) comme utérotonique de 1ère ligne alternatif — intérêt particulier en l'absence de chaîne du froid fiable, mais coût et disponibilité restent limitants hors CHU à Madagascar à ce jour</li>
+      <li><strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min, dès le diagnostic d'HPP constituée, dans les 3h suivant l'accouchement (réduit la mortalité par hémorragie) — répétable une fois si saignement persistant après 30 min. <strong>Ne pas utiliser l'acide tranexamique en prophylaxie systématique</strong> chez la femme anémique sans hémorragie constituée : l'essai WOMAN-2 (Lancet 2024, >15 000 femmes) n'a montré aucune réduction du risque d'HPP avec cette stratégie préventive — l'indication reste le traitement curatif d'une hémorragie avérée</li>
       <li>Remplissage vasculaire par cristalloïdes isotoniques ; transfusion précoce si choc hémorragique (ne pas attendre les résultats biologiques si instabilité franche)</li>
       <li>Rechercher et traiter la cause (règle des 4T) : <strong>T</strong>onus (atonie utérine — cause la plus fréquente), <strong>T</strong>issu (rétention placentaire — révision utérine), <strong>T</strong>rauma (déchirure cervico-vaginale — examen sous valves), <strong>T</strong>hrombine (trouble de la coagulation)</li>
       <li>Si hémorragie réfractaire aux utérotoniques : tamponnement par ballonnet intra-utérin (efficace dans &gt;80% des cas s'il est posé avant l'état de choc avancé), sinon geste chirurgical/radiologie interventionnelle selon plateau technique disponible</li>
       <li>Vêtement anti-choc non pneumatique (NASG) si disponible, en attendant/pendant le transfert — réduit la mortalité de près de moitié en ressources limitées</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Oxytocine (Syntocinon®), Misoprostol (Cytotec®/Misotac®, bien plus largement disponible et ne nécessitant pas de chaîne du froid contrairement à l'oxytocine) et Exacyl® sont disponibles jusqu'au niveau CHRD. Le ballonnet intra-utérin dédié étant rare hors CHU, un ballonnet de sonde de Foley gonflé (dispositif de fortune) peut être utilisé en alternative. Le NASG et la banque de sang (CNTS) sont d'accès variable selon la région — anticiper le transfert précoce si l'hémorragie n'est pas rapidement contrôlée.</p>
   </div>
 
   <div class="card" id="proto-reanimation-nn">
     <h3>👶 Réanimation du nouveau-né en salle de naissance</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après l'algorithme NRP (Neonatal Resuscitation Program) / ILCOR 2020. <strong>~90% des nouveau-nés</strong> n'ont besoin d'aucune assistance ; les gestes de réanimation, quand nécessaires, doivent être initiés dans la <strong>1ère minute de vie</strong> ("Golden Minute").</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Évaluation initiale immédiate (3 questions) :</strong> terme atteint ? bon tonus ? respire ou crie ? — si les 3 réponses sont oui : soins de routine (séchage, contact peau à peau, clampage retardé du cordon ≥30-60s). Si une réponse est non : débuter la prise en charge ci-dessous</li>
+      <li><strong>Évaluation initiale immédiate (3 questions) :</strong> terme atteint ? bon tonus ? respire ou crie ? — si les 3 réponses sont oui : soins de routine (séchage, contact peau à peau, <strong>clampage retardé du cordon ≥60s</strong>, recommandation forte ILCOR/AHA 2023 chez le nouveau-né à terme/proche du terme vigoureux). Si une réponse est non : débuter la prise en charge ci-dessous <em>sans attendre</em> — chez le nouveau-né non vigoureux, initier si possible les premières étapes (séchage, stimulation) cordon encore intact plutôt que de clamper immédiatement par principe, si la logistique de la salle le permet ; ne jamais retarder la ventilation en pression positive pour cette raison</li>
       <li><strong>Étapes initiales (30 premières secondes) :</strong> installer sous une source de chaleur radiante, sécher vigoureusement (stimulation tactile essentielle), position neutre de la tête ("sniffing position"), désobstruction des voies aériennes uniquement si sécrétions visibles/obstructives (aspiration douce bouche puis nez, éviter l'aspiration systématique agressive)</li>
       <li><strong>Réévaluation à 30-60s :</strong> fréquence cardiaque (auscultation ou saturomètre/ECG), respiration, tonus, coloration</li>
       <li><strong>Si apnée/gasping ou FC &lt;100/min :</strong> <strong>ventilation en pression positive (VPP)</strong> au masque sans délai — priorité absolue, 40-60 insufflations/min, air ambiant chez le nouveau-né à terme (FiO2 21%), oxygène titré selon SpO2 cible (objectifs différents selon l'âge en minutes de vie — cibles progressivement croissantes de ~60% à 5min jusqu'à ~90% à 10min) chez le prématuré. Vérifier l'efficacité par le soulèvement thoracique et l'amélioration de la FC — si inefficace : repositionner la tête, réaspirer, ouvrir la bouche, augmenter la pression</li>
@@ -1260,6 +1298,7 @@ function renderProtocoles(){
       <li>Score d'<strong>Apgar</strong> à 1, 5 et 10 min — utile pour documenter l'évolution mais ne doit jamais retarder ou guider les gestes de réanimation (l'algorithme se base sur la FC et la respiration en temps réel)</li>
       <li>Après stabilisation : surveillance rapprochée, glycémie (risque d'hypoglycémie post-asphyxie), transfert en néonatologie si réanimation avancée nécessaire (VPP prolongée, intubation, adrénaline)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le matériel de ventilation néonatale (ballon auto-remplisseur avec masques adaptés, aspirateur) doit être vérifié et prêt à chaque accouchement, y compris en structure de base — c'est le geste (VPP précoce) et non la technologie qui sauve la majorité des nouveau-nés. Le saturomètre néonatal est souvent absent hors CHU ; à défaut, se fier à l'auscultation de la fréquence cardiaque et à la coloration/effort respiratoire pour guider la réanimation.</p>
   </div>
 
   <div class="card" id="proto-convulsions-febriles">
@@ -1341,7 +1380,10 @@ function renderProtocoles(){
       <li>Rechercher et corriger une hypoglycémie associée (fréquente chez le jeune enfant déshydraté)</li>
       <li>Réévaluer l'état d'hydratation après chaque phase de traitement et reclasser le plan si besoin</li>
       <li>Chez le nourrisson dénutri sévère : réhydratation plus prudente et plus lente (protocoles spécifiques OMS — risque de surcharge et de décompensation cardiaque)</li>
+      <li><strong>Zinc</strong> (recommandation OMS systématique en cas de diarrhée aiguë, quel que soit le plan de réhydratation) : <strong>10 mg/j</strong> chez le nourrisson &lt;6 mois, <strong>20 mg/j</strong> chez l'enfant ≥6 mois, pendant <strong>10 à 14 jours</strong> — réduit la durée/sévérité de l'épisode en cours et l'incidence des épisodes futurs dans les 2-3 mois suivants ; à débuter dès que l'enfant peut prendre la voie orale (en parallèle du plan A/B, ou après stabilisation du plan C)</li>
+      <li><strong>Poursuite de l'alimentation/allaitement</strong> pendant tout l'épisode diarrhéique (y compris pendant la réhydratation IV dès que possible) — ne jamais mettre l'enfant à jeun par principe, sauf contre-indication chirurgicale</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les sachets de SRO à basse osmolarité (Adiaril®) et les comprimés de zinc dispersibles sont distribués conjointement dans le cadre des programmes PCIME et de l'Office National de Nutrition — vérifier la disponibilité du zinc en stock, sa délivrance systématique associée au SRO à chaque épisode de diarrhée étant une mesure à faible coût et à fort impact, parfois sous-utilisée en pratique de routine.</p>
   </div>
 
   <div class="card" id="proto-liquides-pediatriques">
@@ -1402,6 +1444,16 @@ function renderProtocoles(){
       <tr><td><strong>E</strong> — Exposure / Environnement</td><td>Déshabillage complet, examen corps entier (face postérieure incluse en bloc/log-roll), prévention de l'hypothermie (couverture chauffante)</td></tr>
     </table>
     <p style="margin-top:10px; font-size:13px; color:var(--muted);">Réévaluation continue du A au E à chaque dégradation. La "triade létale" (hypothermie, acidose, coagulopathie) doit être activement prévenue — <em>protocole de réchauffement détaillé (stadification, spécificités de la RCP) : voir <a onclick="document.getElementById('proto-hypothermie').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Hypothermie accidentelle</a></em>. <strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min dans les 3h post-trauma si hémorragie significative, puis 1g sur 8h (CRASH-2).</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Exacyl® est disponible à tous les niveaux hospitaliers (LNMEIS) et doit être administré sans délai dès la suspicion d'hémorragie significative. L'imagerie en coupes (TDM corps entier) n'est accessible que dans un nombre restreint de centres — l'examen clinique répété (FAST écho au lit si disponible) reste l'outil principal de décision dans la majorité des structures malgaches ; ne pas retarder un transfert vers un plateau chirurgical en attendant une imagerie non disponible localement.</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Contrôle d'une hémorragie externe massive de membre (garrot) :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Compression directe manuelle</strong> en 1ère intention (avec ou sans pansement hémostatique si disponible) — souvent suffisante seule ; <strong>garrot d'emblée</strong> si hémorragie massive/amputation traumatique avec mise en jeu du pronostic vital immédiat, ou si la compression est inefficace/impossible (plusieurs blessés, membre inaccessible)</li>
+      <li><strong>Pose du garrot</strong> : large bande (garrot tourniquet à cliquet/vis type CAT si disponible, sinon bande large — jamais de lien fin type corde/fil, trop traumatique et inefficace), placée <strong>5-7 cm au-dessus de la plaie</strong> (jamais sur une articulation), serrage jusqu'à <strong>arrêt complet du saignement et disparition du pouls distal</strong> (un garrot insuffisamment serré aggrave l'hémorragie veineuse sans stopper l'apport artériel)</li>
+      <li><strong>Noter l'heure de pose</strong> de façon visible (marquage direct sur le garrot/le front du patient) — donnée essentielle pour l'équipe receveuse</li>
+      <li><strong>Ne jamais desserrer/retirer</strong> un garrot efficace hors d'un environnement chirurgical préparé à la reperfusion (risque de relargage de potassium/acide lactique et de choc au retrait) — laisser en place jusqu'à la prise en charge chirurgicale définitive ; conversion en pansement compressif seulement si transport très prolongé (&gt;2h) ET saignement contrôlable autrement, par un opérateur formé</li>
+      <li>Analgésie systématique associée (la pose d'un garrot est très douloureuse) — <strong>Morphine (Morphine Aguettant®)</strong> ou <strong>Kétamine</strong> titrée selon disponibilité</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les garrots tourniquets commerciaux (type CAT/SOFTT) sont rarement disponibles hors structures militaires/CHU — un brassard à tension gonflé au-delà de la PAS, ou une bande large serrée à l'aide d'un bâton en garrot espagnol (technique de fortune), peuvent être utilisés en l'absence de dispositif dédié, avec les mêmes principes de pose et de surveillance.</p>
   </div>
 
   <div class="card" id="proto-hemorragie-digestive">
@@ -1418,6 +1470,7 @@ function renderProtocoles(){
       <li>Sonde nasogastrique non systématique mais utile pour évacuer/confirmer un saignement actif si diagnostic incertain</li>
       <li>Si échec du traitement endoscopique ou hémorragie massive incontrôlable : radiologie interventionnelle (embolisation) ou chirurgie selon plateau technique disponible</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Mopral®/Eupantol® IV et Rocéphine® sont disponibles à tous les niveaux hospitaliers. La Terlipressine (Glypressin®) et l'Octréotide (Sandostatine®) sont d'accès plus limité, réservés aux pharmacies de CHU/CHRR — en leur absence, l'IPP, l'antibioprophylaxie et un transfert précoce vers un centre disposant d'une endoscopie digestive restent la conduite prioritaire face à une suspicion de rupture de varices.</p>
   </div>
 
   <div class="card" id="proto-encephalopathie-hepatique">
@@ -1501,6 +1554,7 @@ function renderProtocoles(){
       </tr>
     </table>
     <p style="margin-top:10px; font-size:13px; color:var(--muted);">En l'absence d'antidote spécifique ou de centre antipoison joignable : traitement symptomatique (ABCDE, surveillance scope, correction des troubles ioniques/acido-basiques) reste la base de toute prise en charge toxicologique.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le charbon activé, l'Atropine Aguettant® et le Bicarbonate de sodium Lavoisier® sont disponibles à tous les niveaux hospitaliers (LNMEIS) — les intoxications aux organophosphorés (pesticides agricoles) étant fréquentes en milieu rural, l'atropine à forte dose doit être disponible en quantité suffisante dans les structures de base. La Pralidoxime (Contrathion®), le Flumazénil et la N-acétylcystéine IV sont d'accès plus limité (pharmacie hospitalière de CHU/CHRR) — le paracétamol étant en vente libre à Madagascar, anticiper un transfert précoce en cas d'ingestion massive suspectée si la NAC IV n'est pas disponible localement (la NAC orale peut alors être utilisée en alternative).</p>
   </div>
 
   <div class="card" id="proto-brulures">
@@ -1563,7 +1617,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-hypothermie">
     <h3>🥶 Hypothermie accidentelle</h3>
-    <p style="font-size:13.5px; margin-bottom:8px;">D'après les ERC Guidelines 2021 (arrêt cardiaque en circonstances particulières) et la classification suisse (Durrer). Mesurer la <strong>température centrale</strong> (épitympanique/œsophagienne si disponible — un thermomètre standard sous-estime souvent en dessous de 34°C).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les ERC Guidelines 2025 (arrêt cardiaque en circonstances particulières) et la classification suisse (Durrer). Mesurer la <strong>température centrale</strong> (épitympanique/œsophagienne si disponible — un thermomètre standard sous-estime souvent en dessous de 34°C).</p>
     <table style="margin-bottom:10px;">
       <tr><th>Stade</th><th>Température / Signes</th><th>Réchauffement</th></tr>
       <tr><td class="leger">HT I</td><td>32-35°C — conscient, frissons présents</td><td>Passif externe (vêtements secs, couvertures, environnement chauffé)</td></tr>
@@ -1629,6 +1683,7 @@ function renderProtocoles(){
       <li>Environnement calme, réorientation fréquente, contention physique uniquement si nécessaire pour la sécurité du patient/de l'équipe, en complément (non substitut) du traitement médicamenteux</li>
       <li>Surveillance rapprochée : constantes, état neurologique, glycémie — hospitalisation en unité de surveillance continue si délirium tremens constitué</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Valium® est disponible à tous les niveaux hospitaliers ; le Temesta® est plus limité aux structures de référence. La Vitamine B1 injectable (Vitamine B1 Aguettant®/Bécozyme®) est généralement disponible mais peut faire l'objet de ruptures ponctuelles — dans ce cas, ne jamais administrer de sérum glucosé sans y avoir pensé, et privilégier la voie orale/IM en dépannage plutôt que d'omettre la supplémentation. Le score CIWA-Ar, peu utilisé en pratique courante localement, reste un outil simple à intégrer à la surveillance infirmière si le personnel est formé.</p>
   </div>
 
   <div class="card" id="proto-rhabdomyolyse">
@@ -1674,6 +1729,7 @@ function renderProtocoles(){
       <li>Réévaluation quotidienne de la nécessité de chaque traitement (désescalade antibiotique, sevrage des vasopresseurs, allègement de la sédation) — la prise en charge du sepsis ne s'arrête pas à la 1ère heure, elle se poursuit tout au long du séjour</li>
     </ol>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">⚠️ Pour le choc septique dans le cadre spécifique d'un purpura fulminans (méningococcémie), voir le protocole dédié ci-dessous — l'antibiothérapie y prime sur tout le reste et doit être administrée sur place avant tout transfert.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Ringer Lactate/NaCl 0,9% et Noradrénaline Aguettant® sont disponibles dans les hôpitaux de référence (CHU/CHRR) ; leur absence en structure de base (CSB/CHRD sans réanimation) impose un transfert précoce dès la reconnaissance du choc septique, sans retarder la 1ère dose d'antibiotique ni le remplissage initial. Le dosage des lactates n'est pas disponible partout — l'évaluation clinique (marbrures, temps de recoloration cutanée, diurèse) reste alors l'outil de suivi principal.</p>
   </div>
 
   <div class="card" id="proto-meningite">
@@ -1689,6 +1745,7 @@ function renderProtocoles(){
       <li>Si encéphalite suspectée (confusion, convulsions, signes focaux, contexte) : <strong>Aciclovir IV (Zovirax®)</strong> 10 mg/kg/8h empirique dès la suspicion (herpétique jusqu'à preuve du contraire), sans attendre la PCR</li>
       <li>Surveillance rapprochée : conscience, pupilles, signes d'engagement, convulsions — traiter une HTIC associée si présente (cf. protocole dédié)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®/Claforan®, Clamoxyl® et Soludécadron® sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Aciclovir IV (Zovirax®) est plus limité, généralement disponible en pharmacie hospitalière de CHU/CHRR — anticiper une rupture possible et transférer si suspicion d'encéphalite herpétique dans une structure ne disposant pas du traitement. La TDM cérébrale n'étant pas accessible partout, ne pas la considérer comme un préalable systématique à la PL en l'absence de signe de localisation.</p>
   </div>
 
   <div class="card" id="proto-purpura-fulminans">
@@ -1702,6 +1759,7 @@ function renderProtocoles(){
       <li>Isolement gouttelettes du patient, antibioprophylaxie systématique des sujets contacts proches (<strong>Rifampicine — Rifadine®</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte, 10 mg/kg x2/j chez l'enfant >1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine — Ciflox®</strong> 500 mg PO dose unique ; ou <strong>Ceftriaxone — Rocéphine®</strong> 250 mg IM dose unique chez l'adulte (125 mg chez l'enfant <15 ans) — à privilégier chez la femme enceinte), déclaration obligatoire</li>
       <li>Surveillance étroite : extension du purpura, diurèse, marbrures, lactates, coagulation (risque de CIVD) — orientation en réanimation systématique</li>
     </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Rocéphine® est disponible à tous les niveaux, y compris en CSB — la 1ère dose doit être injectée sur place (IM si pas de voie veineuse) avant même d'attendre le transfert, geste qui prime sur tout le reste dans cette pathologie foudroyante. Les amines vasopressives et la réanimation avancée nécessitent un transfert vers un CHU/CHRR ; ne jamais retarder l'antibiothérapie initiale en attendant les moyens de ce transfert.</p>
   </div>
 
   <div class="card" id="proto-hic">
@@ -1746,6 +1804,7 @@ function renderProtocoles(){
       <li>Vaccination antitétanique à jour à réaliser (le tétanos ne confère pas d'immunité naturelle, le vaccin reste nécessaire même après l'épisode), en un site différent des immunoglobulines</li>
       <li>Prévention avant tout : vérification et mise à jour systématique du statut vaccinal devant toute plaie, selon le type de plaie et l'ancienneté de la dernière dose</li>
     </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le tétanos reste une pathologie non exceptionnelle localement du fait d'une couverture vaccinale incomplète en zone rurale. Le Valium®, le Flagyl® et le Trandate® sont disponibles à tous les niveaux hospitaliers. Le Gammatétanos® (immunoglobulines) est en revanche d'accès limité, généralement disponible seulement en pharmacie hospitalière de CHU/CHRR — son absence ne doit jamais retarder les autres mesures (antibiothérapie, contrôle des spasmes, parage de plaie), qui restent les leviers essentiels en son absence.</p>
   </div>
 
   <div class="card" id="proto-fasciite-necrosante">
@@ -1833,6 +1892,7 @@ function renderProtocoles(){
       <li>Oxygénothérapie selon SpO2, antalgie si douleur pleurétique, éviter le remplissage vasculaire agressif en cas de choc (peut aggraver la défaillance ventriculaire droite) — privilégier un remplissage prudent (250-500 mL) avec réévaluation</li>
       <li>Score de <strong>PESI</strong> (Pulmonary Embolism Severity Index) utile pour évaluer le pronostic et orienter la décision d'hospitalisation vs prise en charge ambulatoire des formes de faible gravité</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Héparine Choay® (HNF) et l'Énoxaparine (Lovenox®) sont disponibles à la plupart des niveaux hospitaliers — l'HNF reste souvent l'option la plus accessible et la moins coûteuse (nécessite une surveillance biologique du TCA, réalisable dans la majorité des laboratoires). Le Rivaroxaban (Xarelto®) et l'Actilyse® (thrombolyse) sont d'accès plus limité, principalement en pharmacie hospitalière de CHU — en cas d'EP à haut risque sans thrombolytique disponible, l'anticoagulation par HNF à dose curative reste indiquée en urgence pendant l'organisation du transfert.</p>
   </div>
 
   <div class="card" id="proto-ischemie-membre">
@@ -2265,7 +2325,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-acr-grossesse">
     <h3>🫀 Arrêt cardio-respiratoire chez la femme enceinte / césarienne périmortem</h3>
-    <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations ERC 2021 (circonstances particulières) et AHA. La RCP chez la femme enceinte (grossesse ≥20 SA, utérus palpable au-dessus de l'ombilic) nécessite des adaptations spécifiques liées à la compression aorto-cave par l'utérus gravide, qui réduit drastiquement le retour veineux et l'efficacité du massage cardiaque.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations ERC 2025 (circonstances particulières) et AHA. La RCP chez la femme enceinte (grossesse ≥20 SA, utérus palpable au-dessus de l'ombilic) nécessite des adaptations spécifiques liées à la compression aorto-cave par l'utérus gravide, qui réduit drastiquement le retour veineux et l'efficacité du massage cardiaque.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>RCP standard immédiate</strong> (algorithme ACR habituel : massage cardiaque, ventilation, DAE/défibrillation dès que possible — aucune contre-indication à la défibrillation ni aux médicaments de l'ACR pendant la grossesse) avec les adaptations suivantes</li>
       <li><strong>Déplacement utérin manuel vers la gauche</strong> par un assistant dédié (une ou deux mains, l'utérus poussé/soulevé vers la gauche du patient) — <strong>à privilégier par rapport à l'inclinaison latérale du corps</strong>, qui diminue l'efficacité du massage cardiaque ; ne jamais utiliser de billot/coussin sous le bassin si cela compromet la qualité des compressions</li>
@@ -2430,6 +2490,7 @@ function renderProtocoles(){
       <li>Mesures d'hygiène et d'isolement : lavage des mains, désinfection des selles/vomissements, points d'eau potable et de SRO dédiés — essentiels pour limiter la transmission en contexte épidémique</li>
       <li>Toute diarrhée aiguë sévère fébrile ou avec rectorragie doit faire reconsidérer un autre diagnostic (shigellose, amibiase) — le choléra classique n'est habituellement pas fébrile</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">⚠️ <strong>Contexte épidémiologique régional</strong> : Madagascar a connu une émergence de souches de <em>V. cholerae</em> résistantes aux tétracyclines/doxycycline lors de précédentes épidémies (Antananarivo, années 2000) ; une souche multirésistante distincte, apparue au Yémen, circule depuis 2023-2024 dans la région (Kenya, Tanzanie, Comores/Mayotte) — en cas d'échec clinique sous Doxycycline, de notion d'importation depuis une zone à souche résistante, ou dès que possible, privilégier/vérifier la sensibilité par antibiogramme local et envisager l'<strong>Azithromycine</strong> en 1ère intention si disponible. Une vigilance frontalière particulière s'applique aux régions côtières du Nord-Ouest (Mahajanga/Boeny) du fait de la proximité avec l'archipel des Comores.</p>
   </div>
 
   <div class="card" id="proto-drepanocytose">
@@ -2555,6 +2616,7 @@ function renderProtocoles(){
       <li><strong>Médicaments contre-indiqués</strong> : morphine, théophylline/aminophylline, phénothiazines (aggravent la toxicité cholinergique et la dépression respiratoire)</li>
       <li><strong>Surveillance prolongée 48-72h minimum</strong> : risque de <strong>syndrome intermédiaire</strong> (faiblesse musculaire proximale et respiratoire retardée, typiquement entre J1 et J4, après amélioration initiale apparente) — surveillance CPK et kaliémie (rhabdomyolyse), fonction rénale</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Atropine Aguettant® est disponible à tous les niveaux de soins (LNMEIS) — s'assurer d'un stock suffisant en zone rurale/agricole où ces intoxications sont fréquentes, les doses cumulées pouvant être très importantes. La Pralidoxime (Contrathion®) est en revanche d'accès limité, généralement seulement en pharmacie hospitalière de CHU/CHRR, voire absente de certains circuits — son indisponibilité ne doit jamais retarder ni limiter les doses d'Atropine, qui reste le traitement déterminant même en monothérapie.</p>
   </div>
 
   <div class="card" id="proto-co">
@@ -2570,6 +2632,7 @@ function renderProtocoles(){
       <li>Informer le patient et l'entourage du risque de <strong>syndrome neurologique post-intervallaire</strong> (troubles cognitifs, de l'humeur ou moteurs) pouvant apparaître entre 3 et 21 jours après une intoxication apparemment résolue — consultation de contrôle recommandée</li>
       <li>En contexte d'incendie en espace clos, <strong>évoquer une intoxication cyanhydrique associée</strong> (fumées de combustion) devant un choc ou une acidose lactique majeure disproportionnée par rapport à l'intoxication au CO seule</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'oxygénothérapie normobare (masque à haute concentration) est réalisable à tous les niveaux — c'est le geste essentiel qui doit être débuté sans délai. L'oxygénothérapie hyperbare n'est pas disponible à Madagascar (absence de caisson) : en cas d'indication formelle (perte de connaissance, grossesse, signes neurologiques/cardiaques), poursuivre l'oxygénothérapie normobare prolongée à haut débit et discuter un transfert international uniquement si le contexte le permet, sans jamais retarder l'oxygénothérapie normobare immédiate qui reste le traitement de base. Les groupes électrogènes et braseros à charbon en espace mal ventilé sont une cause fréquente localement (coupures de courant) — sensibiliser systématiquement à la ventilation lors du counseling de sortie.</p>
   </div>
 
   <div class="card" id="proto-agitation">
@@ -2981,6 +3044,7 @@ function renderProtocoles(){
       <tr><td>3e perfusion</td><td>100 mg/kg dans 1000mL Glucosé 5% en 16h</td></tr>
       <tr><td>Alternative orale (si IV indisponible)</td><td>140 mg/kg dose de charge puis 70 mg/kg toutes les 4h pendant 72h (17 doses au total)</td></tr>
     </table>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Schéma simplifié « 2 poches »</strong> (consensus ACMT/AACT/America's Poison Centers 2023) : <strong>200 mg/kg sur 4h puis 100 mg/kg sur 16h</strong> (dose totale identique, 300 mg/kg) — efficacité comparable au schéma classique à 3 poches avec moins d'erreurs de préparation/administration et moins de réactions anaphylactoïdes ; option à considérer en priorité dans un contexte de ressources limitées où la manipulation de 3 poches à débits différents majore le risque d'erreur.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Fluimucil®/Exomuc® existe surtout en présentation orale (mucolytique) dans les pharmacies malgaches — la <strong>forme injectable est nettement moins répandue</strong> et généralement limitée aux pharmacies hospitalières des CHU. En son absence, la NAC orale (schéma prolongé, 72h ci-dessus) peut être utilisée comme alternative si le patient est capable de la tolérer (moins efficace en cas de vomissements associés). Le Carbomix® est présent en pharmacie hospitalière mais pas systématiquement en stock — le charbon activé générique reste l'option la plus courante.</p>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Surveiller transaminases, TP/INR, fonction rénale, lactates et pH répétés. Critères de gravité (King's College) orientant vers une transplantation hépatique en urgence (non disponible à Madagascar — transfert international à envisager selon les moyens) : pH &lt;7,3, ou association INR &gt;6,5 + créatinine &gt;300µmol/L + encéphalopathie grade III-IV.</p>
   </div>
@@ -3207,7 +3271,8 @@ function renderProtocoles(){
       <li><strong>Renutrition progressive en 2 phases</strong> — phase de stabilisation (<strong>F-75</strong>, 100 kcal/kg/j en 8-12 repas/j) puis phase de récupération (<strong>F-100</strong> ou <strong>ATPE/Plumpy'Nut®</strong>, jusqu'à 150-220 kcal/kg/j) une fois l'enfant stabilisé</li>
       <li><strong>Supplémentation systématique</strong> — <strong>Vitamine A</strong> dose unique (50 000 UI &lt;6 mois, 100 000 UI 6-12 mois, 200 000 UI &gt;12 mois), <strong>acide folique (Spéciafoldine®)</strong> 5mg à J1 puis 1mg/j, zinc et potassium/magnésium via le mix minéral-vitaminique (CMV) intégré au F-75/F-100 ; <strong>éviter le fer en phase aiguë</strong></li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : F-75, F-100, ATPE (Plumpy'Nut®) et ReSoMal sont distribués via l'Office National de Nutrition (ONN) et les programmes UNICEF/PAM dans les Centres de Récupération Nutritionnelle et Éducation (CRENI/CRENA) — disponibilité généralement bonne dans les structures dédiées à la nutrition, mais pouvant faire défaut en zone très enclavée. Clamoxyl® et Gentalline® sont disponibles à tous les niveaux (LNMEIS).</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Mise à jour OMS 2023</strong> (guideline sur la prévention et prise en charge de la malnutrition aiguë, remplaçant la version 2013) : chez le <strong>nourrisson &lt;6 mois</strong> avec malnutrition aiguë, la priorité est le rétablissement/soutien de l'<strong>allaitement maternel exclusif</strong> (avec la mère/nourrice hospitalisée si besoin) plutôt que l'introduction systématique de F-75/F-100 ; l'antibiothérapie orale à large spectre (Amoxicilline) reste recommandée en ambulatoire pour les formes non compliquées. La malnutrition aiguë <strong>modérée</strong> peut également bénéficier d'un ATPE ciblé selon les ressources disponibles, en complément de la prise en charge classique de la forme sévère décrite ci-dessus.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : F-75, F-100, ATPE (Plumpy'Nut®) et ReSoMal sont distribués via l'Office National de Nutrition (ONN) et les programmes UNICEF/PAM dans les Centres de Récupération Nutritionnelle et Éducation (CRENI/CRENA) — disponibilité généralement bonne dans les structures dédiées à la nutrition, mais pouvant faire défaut en zone très enclavée. Clamoxyl® et Gentalline® sont disponibles à tous les niveaux (LNMEIS).</p>
   </div>
 
   <div class="card" id="proto-sepsis-pediatrique">
@@ -3221,7 +3286,8 @@ function renderProtocoles(){
       <li><strong>Corriger l'hypoglycémie</strong> (Glucosé 10% 2-5mL/kg IV lente) <strong>et l'hypocalcémie</strong> (Gluconate de calcium 100mg/kg IV lente sur 10-15 min) — fréquentes et aggravantes chez l'enfant septique</li>
       <li>Réévaluation clinique très fréquente (fréquence cardiaque, TRC, diurèse, état de conscience) — la présentation évolue vite chez l'enfant</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine® et Gentalline® pédiatriques sont disponibles à tous les niveaux hospitaliers. Adrénaline et Noradrénaline Aguettant® sont présentes en réanimation de CHU/CHRR — leur absence en structure de base impose un transfert rapide dès la reconnaissance du choc réfractaire au remplissage.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Repère diagnostique 2024</strong> : le score de Phoenix (Schlapbach et al., JAMA 2024) a remplacé les anciens critères SIRS pour la définition internationale du sepsis pédiatrique — il repose sur la dysfonction d'organe (respiratoire, cardiovasculaire, neurologique, coagulation) plutôt que sur des critères inflammatoires isolés ; il structure surtout la recherche/l'épidémiologie et ne modifie pas la conduite clinique décrite ci-dessus, qui reste fondée sur la reconnaissance clinique précoce.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine® et Gentalline® pédiatriques sont disponibles à tous les niveaux hospitaliers. Adrénaline et Noradrénaline Aguettant® sont présentes en réanimation de CHU/CHRR — leur absence en structure de base impose un transfert rapide dès la reconnaissance du choc réfractaire au remplissage.</p>
   </div>
 
   <div class="card" id="proto-invagination">
@@ -3258,7 +3324,7 @@ function renderProtocoles(){
   <div class="card" id="proto-sources">
     <h3>📚 Sources de référence</h3>
     <ul style="margin-left:18px; font-size:13px; color:var(--muted); line-height:1.9;">
-      <li>European Resuscitation Council (ERC) Guidelines 2021 — Adult & Paediatric Advanced Life Support</li>
+      <li>European Resuscitation Council (ERC) Guidelines 2025 — Adult & Paediatric Advanced/Basic Life Support</li>
       <li>Surviving Sepsis Campaign — International Guidelines for Management of Sepsis and Septic Shock 2021, actualisées 2026 (SCCM/ESICM)</li>
       <li>ATLS — Advanced Trauma Life Support, 10th Edition (American College of Surgeons)</li>
       <li>ADA — Hyperglycemic Crises in Diabetes: Diabetic Ketoacidosis (ACD) and Hyperosmolar Hyperglycemic State (HHS)</li>
@@ -3267,16 +3333,19 @@ function renderProtocoles(){
       <li>ESC Guidelines — Acute Coronary Syndromes (STEMI/NSTEMI management)</li>
       <li>ESC Guidelines — Acute and Chronic Heart Failure (OAP cardiogénique)</li>
       <li>ESC/ESH Guidelines — Arterial Hypertension, urgences et crises hypertensives</li>
-      <li>AHA/ASA Guidelines — Early Management of Acute Ischemic Stroke and Spontaneous Intracerebral Hemorrhage</li>
+      <li>AHA/ASA Guidelines 2026 — Early Management of Acute Ischemic Stroke (ténectéplase, thrombectomie fenêtre élargie) ; AHA/ASA — Spontaneous Intracerebral Hemorrhage</li>
       <li>OMS (WHO) — Guidelines for the Treatment of Malaria (severe malaria, artésunate IV)</li>
-      <li>OMS / FIGO — Recommendations for the Prevention and Treatment of Postpartum Haemorrhage (2023-2025)</li>
-      <li>ACOG / ISSHP — Hypertensive Disorders of Pregnancy: prééclampsie sévère et éclampsie</li>
-      <li>OMS — Prise en charge intégrée des maladies de l'enfant (PCIME) : plans A/B/C de réhydratation</li>
+      <li>OMS / FIGO — Recommendations for the Prevention and Treatment of Postpartum Haemorrhage (2023-2025) ; OMS — Roadmap to Combat Postpartum Haemorrhage 2023-2030 (carbétocine thermostable)</li>
+      <li>WOMAN-2 Trial Collaborators — Effect of tranexamic acid on postpartum bleeding in women with moderate/severe anaemia, The Lancet 2024 (absence de bénéfice en prophylaxie)</li>
+      <li>ACOG / ISSHP — Hypertensive Disorders of Pregnancy: prééclampsie sévère et éclampsie ; OMS — WHO recommendations on antenatal care (supplémentation calcique préventive)</li>
+      <li>ILCOR / AHA-AAP — 2023 Focused Update on Neonatal Resuscitation (gestion du cordon ombilical, nouveau-né non vigoureux)</li>
+      <li>OMS — Prise en charge intégrée des maladies de l'enfant (PCIME) : plans A/B/C de réhydratation ; OMS — Zinc supplementation in the management of diarrhoea</li>
+      <li>OMS — WHO guideline on the prevention and management of wasting and nutritional oedema (acute malnutrition) in infants and children under 5 years, 2023</li>
       <li>CRASH-2 trial — Tranexamic acid in trauma haemorrhage</li>
       <li>ESGE / AASLD / ACG Guidelines — Gestion de l'hémorragie digestive haute et de l'hémorragie variqueuse chez le cirrhotique</li>
       <li>American Academy of Clinical Toxicology, ACMT, America's Poison Centers, CAPCC — Consensus statement on management of acetaminophen poisoning (2023) ; RCP/notice ACETADOTE (acétylcystéine IV)</li>
       <li>ATLS 10th Ed. / ABA (American Burn Association) Advanced Burn Life Support — Formule de Parkland et prise en charge initiale des brûlés</li>
-      <li>ERC Guidelines 2021 — Cardiac arrest in special circumstances (noyade, électrisation, hypothermie)</li>
+      <li>ERC Guidelines 2025 — Cardiac arrest in special circumstances (noyade, électrisation, hypothermie)</li>
       <li>ILCOR — Drowning : recommandations de réanimation spécifiques (insufflations initiales)</li>
       <li>Malignant Hyperthermia Association of the United States (MHAUS) — Protocole Dantrolène et hyperthermie maligne anesthésique</li>
       <li>Endocrine Society Clinical Practice Guideline — Diagnosis and Treatment of Primary Adrenal Insufficiency / Adrenal Crisis</li>
@@ -3296,14 +3365,14 @@ function renderProtocoles(){
       <li>Association Française d'Urologie (AFU) — Prise en charge de la colique néphrétique et de la rétention aiguë d'urine</li>
       <li>European Association of Urology (EAU) Guidelines — Torsion testiculaire, prise en charge de la bourse aiguë</li>
       <li>American Academy of Ophthalmology — Preferred Practice Pattern : Primary Angle Closure</li>
-      <li>ERC Guidelines 2021 — Prise en charge de l'obstruction des voies aériennes par corps étranger</li>
+      <li>ERC Guidelines 2025 — Prise en charge de l'obstruction des voies aériennes par corps étranger</li>
       <li>CNGOF (Collège National des Gynécologues et Obstétriciens Français) — Recommandations pour la pratique clinique : Grossesse extra-utérine, prise en charge thérapeutique des GEU tubaires (2003, mises à jour)</li>
       <li>RCOG (Royal College of Obstetricians and Gynaecologists) — Green-top Guidelines : Antepartum Haemorrhage, Umbilical Cord Prolapse, Shoulder Dystocia</li>
       <li>OMS — Prise en charge des complications de la grossesse et de l'accouchement : guide destiné à la sage-femme et au médecin</li>
       <li>ACOG (American College of Obstetricians and Gynecologists) Practice Bulletin — Placental Abruption, Placenta Previa, Uterine Rupture</li>
       <li>Advanced Life Support in Obstetrics (ALSO) — Protocoles d'urgences obstétricales extra-hospitalières</li>
       <li>Société Française de Médecine d'Urgence (SFMU) / CNGOF — Prise en charge des urgences gynécologiques (torsion d'annexe, fausse couche hémorragique)</li>
-      <li>ERC Guidelines 2021 — Cardiac arrest in special circumstances : arrêt cardiaque chez la femme enceinte et césarienne périmortem</li>
+      <li>ERC Guidelines 2025 — Cardiac arrest in special circumstances : arrêt cardiaque chez la femme enceinte et césarienne périmortem</li>
       <li>AHA Scientific Statement — Cardiac Arrest in Pregnancy (2015, réaffirmé) ; ALSO (Advanced Life Support in Obstetrics) — Maternal Cardiac Arrest</li>
       <li>Sibai BM et al. ; ACOG Practice Bulletin — HELLP Syndrome : diagnostic (critères de Tennessee/Mississippi) et prise en charge</li>
       <li>Society for Maternal-Fetal Medicine (SMFM) / RCOG Green-top Guideline — Amniotic Fluid Embolism : diagnosis and management</li>
@@ -3318,7 +3387,7 @@ function renderProtocoles(){
       <li>ESC Guidelines 2015 — Diagnosis and Management of Pericardial Diseases (tamponnade cardiaque, péricardiocentèse)</li>
       <li>British Thoracic Society (BTS) Pleural Disease Guideline 2023 ; ATLS 10th Ed. — Prise en charge du pneumothorax spontané et suffocant</li>
       <li>ESC Guidelines 2014 — Diagnosis and Treatment of Aortic Diseases (dissection aortique, classification de Stanford)</li>
-      <li>ERC Guidelines 2021 — Cardiac arrest in special circumstances : hypothermie accidentelle (classification suisse de Durrer, RCP adaptée &lt;30°C)</li>
+      <li>ERC Guidelines 2025 — Cardiac arrest in special circumstances : hypothermie accidentelle (classification suisse de Durrer, RCP adaptée &lt;30°C)</li>
       <li>American Heart Association / ILCOR / American Academy of Pediatrics — Neonatal Resuscitation Program (NRP) 8th Edition, 2020</li>
       <li>American Academy of Pediatrics (AAP) — Clinical Practice Guideline: Febrile Seizures ; Clinical Practice Guideline: Diagnosis and Management of Bronchiolitis (NICE Bronchiolitis Guideline, actualisations conjointes)</li>
       <li>ILAE (International League Against Epilepsy) — Definition and classification of status epilepticus, 2015 ; AES (American Epilepsy Society) Guideline 2016 : Evidence-Based Guideline for the Management of Convulsive Status Epilepticus ; ESETT Trial 2019 (NEJM)</li>
@@ -3380,7 +3449,7 @@ function renderDrogues(){
       <tr><th>Drogue</th><th>Indication principale</th><th>Posologie</th><th>Dilution type SE</th></tr>
       <tr><td><strong>Adrénaline</strong></td><td>ACR, choc anaphylactique, choc réfractaire</td><td>ACR : 1 mg IV/IO toutes 3-5 min<br>Anaphylaxie : 0,5 mg IM<br>Choc : 0,01–1 µg/kg/min IV</td><td>5 mg dans 50 mL G5% → 0,1 mg/mL</td></tr>
       <tr><td><strong>Noradrénaline</strong></td><td>Choc septique (1ère ligne), choc distributif</td><td>0,01–3 µg/kg/min IV (titrer par paliers)</td><td>8 mg dans 50 mL G5% → 160 µg/mL<br>Pour 70 kg : 1 µg/kg/min = 26 mL/h</td></tr>
-      <tr><td><strong>Dobutamine</strong></td><td>Choc cardiogénique, bas débit cardiaque</td><td>2–20 µg/kg/min IV (débuter à 2-5)</td><td>250 mg dans 50 mL G5% → 5 mg/mL<br>Pour 70 kg : 5 µg/kg/min ≈ 2,1 mL/h</td></tr>
+      <tr><td><strong>Dobutamine</strong></td><td>Choc cardiogénique, bas débit cardiaque</td><td>2–20 µg/kg/min IV (débuter à 2-5)</td><td>250 mg dans 50 mL G5% → 5 mg/mL<br>Pour 70 kg : 5 µg/kg/min ≈ 4,2 mL/h</td></tr>
       <tr><td><strong>Dopamine</strong></td><td>Alternative si norad indisponible</td><td>5–20 µg/kg/min IV</td><td>200 mg dans 50 mL G5% → 4 mg/mL</td></tr>
       <tr><td><strong>Vasopressine</strong></td><td>Choc septique réfractaire, en add-on à la noradrénaline</td><td>Dose fixe <strong>0,03 UI/min</strong> (indépendante du poids), à débuter quand la noradrénaline atteint ≈ 0,25–0,5 µg/kg/min, pour limiter l'escalade en catécholamines — pas d'usage en monothérapie</td><td>20 UI dans 50 mL NaCl 0,9% → 0,4 UI/mL</td></tr>
       <tr><td><strong>Éphédrine</strong></td><td>Hypotension peranesthésique, bradycardie</td><td>3–9 mg IV bolus (max 30 mg/h)</td><td>30 mg dans 10 mL NaCl 0,9% → 3 mg/mL</td></tr>
@@ -3472,7 +3541,7 @@ function renderDrogues(){
     </table>
     <table>
       <tr><th>Situation</th><th>Drogue</th><th>Dose pédiatrique</th></tr>
-      <tr><td class="grave">ACR</td><td><strong>Adrénaline</strong> IV/IO</td><td>0,01 mg/kg (dilution 1:10 000 → 0,1 mL/kg), répétable toutes les 3-5 min, max 1 mg/dose</td></tr>
+      <tr><td class="grave">ACR</td><td><strong>Adrénaline</strong> IV/IO</td><td>0,01 mg/kg (dilution 1:10 000 → 0,1 mL/kg), répétable toutes les 4 min (un cycle de RCP sur deux — ERC 2025), max 1 mg/dose</td></tr>
       <tr><td class="grave">ACR</td><td><strong>Amiodarone</strong></td><td>5 mg/kg IV/IO bolus (max 300 mg), répétable ×2 si FV/TV réfractaire</td></tr>
       <tr><td class="grave">Anaphylaxie</td><td><strong>Adrénaline</strong> IM (1:1000)</td><td>0,01 mg/kg (max 0,3 mg &lt;6 ans, 0,5 mg au-delà), face antéro-latérale de cuisse, répétable /5-15 min</td></tr>
       <tr><td class="modere">Bradycardie symptomatique</td><td><strong>Atropine</strong></td><td>0,02 mg/kg IV (dose min 0,1 mg pour éviter une bradycardie paradoxale, max 0,5 mg/dose enfant — 1 mg ado)</td></tr>
@@ -3733,6 +3802,307 @@ function renderSurveillance(){
 }
 renderers.surveillance = renderSurveillance;
 
+/* ===================== MODULE VALEURS NORMALES (BIOLOGIE) ===================== */
+function renderBiologie(){
+  return `
+  <h2 class="module-title">🧪 Valeurs normales — Biologie (Adulte)</h2>
+  <p class="module-sub">Valeurs de référence usuelles chez l'adulte, à titre indicatif. Les intervalles varient selon le laboratoire, l'analyseur, la méthode de dosage, l'âge, le sexe et la grossesse — toujours se référer aux normes propres au laboratoire ayant réalisé l'analyse.</p>
+
+  <div class="warn-box">⚠️ Ces valeurs sont des repères de pratique courante, pas des seuils absolus. En cas de doute ou de résultat limite, interpréter dans le contexte clinique et comparer aux normes du laboratoire local.</div>
+
+  <nav class="toc" id="bio-toc" aria-label="Sommaire des valeurs normales">
+    <div class="toc-head" onclick="toggleBioToc()">
+      <h3>📑 Sommaire — accès rapide</h3>
+      <button type="button" class="toc-toggle" aria-label="Afficher/masquer le sommaire" onclick="event.stopPropagation(); toggleBioToc();">▾</button>
+    </div>
+    <ul class="toc-list">
+      <li><a onclick="document.getElementById('bio-nfs').scrollIntoView({behavior:'smooth',block:'start'})">🩸 NFS — Hémogramme</a></li>
+      <li><a onclick="document.getElementById('bio-inflam').scrollIntoView({behavior:'smooth',block:'start'})">🔥 CRP / PCT / VS — Inflammation</a></li>
+      <li><a onclick="document.getElementById('bio-ionogramme').scrollIntoView({behavior:'smooth',block:'start'})">⚗️ Ionogramme sanguin</a></li>
+      <li><a onclick="document.getElementById('bio-renal').scrollIntoView({behavior:'smooth',block:'start'})">🫘 Fonction rénale</a></li>
+      <li><a onclick="document.getElementById('bio-hepatique').scrollIntoView({behavior:'smooth',block:'start'})">🫀 Bilan hépatique</a></li>
+      <li><a onclick="document.getElementById('bio-glucido').scrollIntoView({behavior:'smooth',block:'start'})">🍬 Glycémie / HbA1c</a></li>
+      <li><a onclick="document.getElementById('bio-lipides').scrollIntoView({behavior:'smooth',block:'start'})">🧈 Bilan lipidique</a></li>
+      <li><a onclick="document.getElementById('bio-coag').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Coagulation</a></li>
+      <li><a onclick="document.getElementById('bio-gds').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Gaz du sang artériel</a></li>
+      <li><a onclick="document.getElementById('bio-cardiaque').scrollIntoView({behavior:'smooth',block:'start'})">🫀 Bilan cardiaque</a></li>
+      <li><a onclick="document.getElementById('bio-thyroide').scrollIntoView({behavior:'smooth',block:'start'})">🦋 Bilan thyroïdien</a></li>
+      <li><a onclick="document.getElementById('bio-martial').scrollIntoView({behavior:'smooth',block:'start'})">🧬 Bilan martial</a></li>
+      <li><a onclick="document.getElementById('bio-hemolyse').scrollIntoView({behavior:'smooth',block:'start'})">💥 Marqueurs d'hémolyse</a></li>
+      <li><a onclick="document.getElementById('bio-hormonal').scrollIntoView({behavior:'smooth',block:'start'})">🧬 Bilan hormonal (surrénale / parathyroïde)</a></li>
+      <li><a onclick="document.getElementById('bio-autres').scrollIntoView({behavior:'smooth',block:'start'})">🧪 Autres dosages utiles en urgence</a></li>
+      <li><a onclick="document.getElementById('bio-toxico').scrollIntoView({behavior:'smooth',block:'start'})">☠️ Dosages toxicologiques</a></li>
+      <li><a onclick="document.getElementById('bio-urinaire').scrollIntoView({behavior:'smooth',block:'start'})">🚰 Bilan urinaire de base</a></li>
+      <li><a onclick="document.getElementById('bio-sources').scrollIntoView({behavior:'smooth',block:'start'})">📚 Sources</a></li>
+    </ul>
+  </nav>
+
+  <div class="card" id="bio-nfs">
+    <h3>🩸 NFS — Hémogramme</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale (adulte)</th><th>Commentaire</th></tr>
+      <tr><td>Hémoglobine (Hb)</td><td>Homme 13–17 g/dL · Femme 12–15,5 g/dL</td><td>Anémie si en dessous ; polyglobulie si au-dessus</td></tr>
+      <tr><td>Hématocrite (Ht)</td><td>Homme 40–52% · Femme 36–48%</td><td>&nbsp;</td></tr>
+      <tr><td>Globules rouges (GR)</td><td>Homme 4,5–5,9 T/L · Femme 4,0–5,2 T/L</td><td>&nbsp;</td></tr>
+      <tr><td>VGM (volume globulaire moyen)</td><td>80–100 fL</td><td>&lt;80 = microcytose, &gt;100 = macrocytose</td></tr>
+      <tr><td>TCMH</td><td>27–32 pg</td><td>&nbsp;</td></tr>
+      <tr><td>CCMH</td><td>32–36 g/dL</td><td>&nbsp;</td></tr>
+      <tr><td>Leucocytes (GB)</td><td>4,0–10,0 G/L</td><td>Hyperleucocytose si &gt;10, leucopénie si &lt;4</td></tr>
+      <tr><td>&nbsp;&nbsp;• Polynucléaires neutrophiles</td><td>1,5–7,0 G/L (40–75%)</td><td>Neutropénie sévère si &lt;0,5 G/L</td></tr>
+      <tr><td>&nbsp;&nbsp;• Lymphocytes</td><td>1,0–4,0 G/L (20–45%)</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;&nbsp;• Monocytes</td><td>0,2–1,0 G/L (2–10%)</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;&nbsp;• Éosinophiles</td><td>0,04–0,4 G/L (1–6%)</td><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;&nbsp;• Basophiles</td><td>0–0,1 G/L (&lt;2%)</td><td>&nbsp;</td></tr>
+      <tr><td>Plaquettes</td><td>150–450 G/L</td><td>Thrombopénie si &lt;150, risque hémorragique spontané si &lt;20-30</td></tr>
+      <tr><td>Réticulocytes</td><td>25–100 G/L (0,5–2,5%)</td><td>Reflète la régénération médullaire</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-inflam">
+    <h3>🔥 CRP / Procalcitonine / VS — Marqueurs inflammatoires</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>CRP (protéine C-réactive)</td><td>&lt; 5 mg/L</td><td>Cinétique rapide (montée/baisse en 24-48h) — utile pour suivre l'évolution</td></tr>
+      <tr><td>Procalcitonine (PCT)</td><td>&lt; 0,05 ng/mL</td><td>&gt;0,5 ng/mL évoque une infection bactérienne systémique ; typiquement &gt;2 ng/mL si sepsis</td></tr>
+      <tr><td>VS (vitesse de sédimentation, 1h)</td><td>Homme &lt; 15 mm · Femme &lt; 20 mm (approx. âge/2 chez l'homme, (âge+10)/2 chez la femme)</td><td>Cinétique lente — moins utile en urgence que la CRP</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-ionogramme">
+    <h3>⚗️ Ionogramme sanguin</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Sodium (Na+)</td><td>135–145 mmol/L</td><td>&nbsp;</td></tr>
+      <tr><td>Potassium (K+)</td><td>3,5–5,0 mmol/L</td><td>Risque de troubles du rythme si &lt;2,5 ou &gt;6,5</td></tr>
+      <tr><td>Chlore (Cl-)</td><td>98–107 mmol/L</td><td>&nbsp;</td></tr>
+      <tr><td>Bicarbonates (HCO3-)</td><td>22–26 mmol/L</td><td>Reflète l'équilibre acido-basique métabolique</td></tr>
+      <tr><td>Calcium total</td><td>2,20–2,60 mmol/L</td><td>À corriger selon l'albuminémie (cf. calculateur)</td></tr>
+      <tr><td>Calcium ionisé</td><td>1,15–1,30 mmol/L</td><td>Fraction active — non dépendante de l'albumine</td></tr>
+      <tr><td>Magnésium</td><td>0,65–1,05 mmol/L</td><td>&nbsp;</td></tr>
+      <tr><td>Phosphore</td><td>0,80–1,45 mmol/L</td><td>&nbsp;</td></tr>
+      <tr><td>Trou anionique (TA)</td><td>8–12 mmol/L</td><td>Sans le potassium dans le calcul (cf. calculateur)</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-renal">
+    <h3>🫘 Fonction rénale</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Urée</td><td>2,5–7,5 mmol/L</td><td>S'élève aussi en cas de déshydratation, hémorragie digestive haute, catabolisme</td></tr>
+      <tr><td>Créatinine</td><td>Homme 62–106 µmol/L · Femme 44–80 µmol/L</td><td>Varie avec la masse musculaire — interpréter avec la clairance (cf. Cockcroft-Gault)</td></tr>
+      <tr><td>DFG estimé (CKD-EPI)</td><td>&gt; 90 mL/min/1,73m²</td><td>Stades IRC : G1 ≥90, G2 60-89, G3a 45-59, G3b 30-44, G4 15-29, G5 &lt;15</td></tr>
+      <tr><td>Acide urique</td><td>Homme 200–420 µmol/L · Femme 140–360 µmol/L</td><td>&nbsp;</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-hepatique">
+    <h3>🫀 Bilan hépatique</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>ASAT (SGOT)</td><td>10–40 UI/L</td><td>&nbsp;</td></tr>
+      <tr><td>ALAT (SGPT)</td><td>10–45 UI/L</td><td>Plus spécifique du foie que l'ASAT</td></tr>
+      <tr><td>GGT</td><td>Homme 10–71 UI/L · Femme 6–42 UI/L</td><td>Sensible à la cholestase et à l'alcool</td></tr>
+      <tr><td>Phosphatases alcalines (PAL)</td><td>40–130 UI/L</td><td>Élevées en contexte de cholestase ou pathologie osseuse</td></tr>
+      <tr><td>Bilirubine totale</td><td>3–17 µmol/L</td><td>Ictère clinique généralement si &gt;35-50 µmol/L</td></tr>
+      <tr><td>Bilirubine conjuguée (directe)</td><td>0–5 µmol/L</td><td>Élevée = cholestase/obstruction</td></tr>
+      <tr><td>Albumine</td><td>35–50 g/L</td><td>Marqueur de synthèse hépatique (demi-vie longue ~20j)</td></tr>
+      <tr><td>Protides totaux</td><td>60–80 g/L</td><td>&nbsp;</td></tr>
+      <tr><td>TP (taux de prothrombine)</td><td>70–100%</td><td>Marqueur de synthèse hépatique à cinétique rapide</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-glucido">
+    <h3>🍬 Glycémie / HbA1c</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Glycémie à jeun</td><td>3,9–5,5 mmol/L (0,70–1,00 g/L)</td><td>Diabète si ≥7,0 mmol/L (1,26 g/L) à jeun sur 2 prélèvements</td></tr>
+      <tr><td>Glycémie post-prandiale</td><td>&lt; 7,8 mmol/L (1,40 g/L)</td><td>&nbsp;</td></tr>
+      <tr><td>HbA1c</td><td>&lt; 6,0% (42 mmol/mol)</td><td>Objectif usuel &lt;7% chez le diabétique (individualisé selon terrain)</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-lipides">
+    <h3>🧈 Bilan lipidique</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale / objectif</th><th>Commentaire</th></tr>
+      <tr><td>Cholestérol total</td><td>&lt; 5,2 mmol/L (2,00 g/L) souhaitable</td><td>&nbsp;</td></tr>
+      <tr><td>LDL-cholestérol</td><td>Objectif variable selon risque cardiovasculaire (SCORE2)</td><td>Plus le risque est élevé, plus la cible est basse</td></tr>
+      <tr><td>HDL-cholestérol</td><td>Homme &gt; 0,40 g/L · Femme &gt; 0,50 g/L</td><td>Facteur protecteur</td></tr>
+      <tr><td>Triglycérides</td><td>&lt; 1,7 mmol/L (1,50 g/L)</td><td>Risque de pancréatite aiguë si &gt;10 mmol/L (~ 8,8 g/L)</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-coag">
+    <h3>🩸 Coagulation</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>TP</td><td>70–100%</td><td>&nbsp;</td></tr>
+      <tr><td>INR</td><td>0,8–1,2 (sujet non anticoagulé)</td><td>Cible 2-3 sous AVK (2,5-3,5 si valve mécanique)</td></tr>
+      <tr><td>TCA (aPTT)</td><td>25–35 sec (ratio patient/témoin &lt; 1,2)</td><td>&nbsp;</td></tr>
+      <tr><td>Fibrinogène</td><td>2–4 g/L</td><td>Effondré en CIVD, hémorragie massive</td></tr>
+      <tr><td>D-dimères</td><td>&lt; 500 µg/L</td><td>Seuil ajusté à l'âge si &gt;50 ans : âge × 10 µg/L. Bonne VPN, faible spécificité</td></tr>
+      <tr><td>Plaquettes</td><td>150–450 G/L</td><td>Cf. NFS</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-gds">
+    <h3>🫁 Gaz du sang artériel</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>pH</td><td>7,35–7,45</td><td>&nbsp;</td></tr>
+      <tr><td>PaO2</td><td>80–100 mmHg (11–13,3 kPa) en air ambiant</td><td>Diminue physiologiquement avec l'âge</td></tr>
+      <tr><td>PaCO2</td><td>35–45 mmHg (4,7–6,0 kPa)</td><td>&nbsp;</td></tr>
+      <tr><td>HCO3- (calculé)</td><td>22–26 mmol/L</td><td>&nbsp;</td></tr>
+      <tr><td>SaO2</td><td>95–100%</td><td>&nbsp;</td></tr>
+      <tr><td>Base excess (BE)</td><td>-2 à +2 mmol/L</td><td>&nbsp;</td></tr>
+      <tr><td>Lactates</td><td>0,5–2,2 mmol/L (artériel) · veineux souvent un peu plus élevé</td><td>Hyperlactatémie si &gt;2, choc/hypoperfusion sévère si &gt;4 mmol/L</td></tr>
+    </table>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);"><strong>Gaz du sang veineux (GDSv)</strong> — utile si ponction artérielle difficile/non indispensable : pH veineux ≈ 0,03–0,04 unité plus bas que l'artériel (≈ 7,32–7,38) ; PvCO2 ≈ 4–8 mmHg plus élevée que la PaCO2 (≈ 41–51 mmHg) ; HCO3- veineux proche du taux artériel (bonne corrélation) ; SvO2 mêlée normale ≈ 65–75%. Le GDSv ne remplace pas le GDSa pour évaluer l'oxygénation (PaO2/SaO2).</p>
+</div>
+
+  <div class="card" id="bio-cardiaque">
+    <h3>🫀 Bilan cardiaque</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Troponine hs (Tn Ic/Tc)</td><td>Généralement &lt; 14 ng/L (seuil variable selon le kit du laboratoire)</td><td>Cinétique en dosages répétés (H0-H1/H0-H3) pour le diagnostic de SCA</td></tr>
+      <tr><td>BNP</td><td>&lt; 100 pg/mL</td><td>Insuffisance cardiaque peu probable si bas ; seuils ajustés à l'âge et à la fonction rénale</td></tr>
+      <tr><td>NT-proBNP</td><td>&lt; 125 pg/mL (&lt;75 ans) — seuil plus élevé après 75 ans</td><td>&nbsp;</td></tr>
+      <tr><td>CPK (CK) totale</td><td>Homme 30–200 UI/L · Femme 30–150 UI/L</td><td>Rhabdomyolyse évoquée si &gt;5x la normale (souvent seuil pratique &gt;1000 UI/L)</td></tr>
+      <tr><td>CK-MB</td><td>&lt; 25 UI/L (ou &lt;6% de la CK totale)</td><td>Moins utilisée depuis la généralisation de la troponine</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-thyroide">
+    <h3>🦋 Bilan thyroïdien</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>TSH</td><td>0,4–4,0 mUI/L</td><td>Test de première intention</td></tr>
+      <tr><td>T4 libre</td><td>10–20 pmol/L (0,8–1,8 ng/dL)</td><td>&nbsp;</td></tr>
+      <tr><td>T3 libre</td><td>3,5–6,5 pmol/L</td><td>&nbsp;</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-martial">
+    <h3>🧬 Bilan martial</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Fer sérique</td><td>Homme 11–28 µmol/L · Femme 7–26 µmol/L</td><td>Variable dans la journée — moins fiable isolément</td></tr>
+      <tr><td>Ferritine</td><td>Homme 30–300 µg/L · Femme 15–150 µg/L</td><td>Marqueur de réserve en fer, mais aussi protéine de l'inflammation (élevée à tort si inflammation)</td></tr>
+      <tr><td>Transferrine</td><td>2–3,6 g/L</td><td>&nbsp;</td></tr>
+      <tr><td>Coefficient de saturation de la transferrine</td><td>20–40%</td><td>Bas dans la carence martiale, élevé dans la surcharge en fer</td></tr>
+      <tr><td>Vitamine B12 (cobalamine)</td><td>200–900 pg/mL (145–660 pmol/L)</td><td>Carence probable si &lt;200 pg/mL ; cause d'anémie macrocytaire, atteinte neurologique possible</td></tr>
+      <tr><td>Folates sériques (vitamine B9)</td><td>3–17 ng/mL (7–40 nmol/L)</td><td>Carence si &lt;3 ng/mL ; folates érythrocytaires (réserve tissulaire) : 150–450 ng/mL</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-hemolyse">
+    <h3>💥 Marqueurs d'hémolyse</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Haptoglobine</td><td>0,3–2,0 g/L</td><td>Effondrée (souvent &lt;0,1 g/L) en cas d'hémolyse intravasculaire — élément clé du diagnostic</td></tr>
+      <tr><td>LDH</td><td>120–250 UI/L</td><td>Élevée en cas d'hémolyse — associée à la baisse de l'haptoglobine et à l'hyperbilirubinémie libre</td></tr>
+      <tr><td>Bilirubine libre (non conjuguée)</td><td>&lt; 12–15 µmol/L (≈ bilirubine totale − bilirubine conjuguée)</td><td>Augmentée en hémolyse (avec bilirubine conjuguée normale)</td></tr>
+      <tr><td>Réticulocytes</td><td>25–100 G/L (0,5–2,5%)</td><td>Élevés = régénération médullaire réactionnelle à l'hémolyse (hémolyse régénérative)</td></tr>
+      <tr><td>Schizocytes (frottis sanguin)</td><td>&lt; 1% des globules rouges</td><td>Présence significative (&gt;1%) évocatrice de microangiopathie thrombotique (SHU, PTT, CIVD)</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-hormonal">
+    <h3>🧬 Bilan hormonal (surrénale / parathyroïde)</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Cortisol plasmatique (8h du matin)</td><td>140–690 nmol/L (5–25 µg/dL)</td><td>Rythme circadien (pic matinal) ; à interpréter avec le contexte clinique (insuffisance surrénalienne aiguë si effondré en situation de stress)</td></tr>
+      <tr><td>PTH (parathormone intacte)</td><td>15–65 pg/mL (1,6–6,9 pmol/L)</td><td>À interpréter avec la calcémie : PTH élevée + hypercalcémie = hyperparathyroïdie ; PTH basse + hypercalcémie = cause non parathyroïdienne</td></tr>
+    </table>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Ces dosages hormonaux ne sont pas des examens de première intention en urgence immédiate mais peuvent orienter le diagnostic étiologique (troubles du calcium, suspicion d'insuffisance surrénalienne).</p>
+</div>
+
+  <div class="card" id="bio-autres">
+    <h3>🧪 Autres dosages utiles en urgence</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Amylase</td><td>30–110 UI/L</td><td>&nbsp;</td></tr>
+      <tr><td>Lipase</td><td>10–60 UI/L</td><td>Pancréatite aiguë si &gt;3x la normale — plus spécifique que l'amylase</td></tr>
+      <tr><td>LDH</td><td>120–250 UI/L</td><td>Marqueur non spécifique de cytolyse/hémolyse</td></tr>
+      <tr><td>Ammoniémie</td><td>15–45 µmol/L</td><td>Souvent &gt;100 µmol/L en encéphalopathie hépatique symptomatique</td></tr>
+      <tr><td>Osmolarité plasmatique calculée</td><td>275–295 mOsm/kg</td><td>Formule : 2×Na + Glycémie + Urée (mmol/L) — cf. calculateur</td></tr>
+      <tr><td>Myoglobine sérique</td><td>Homme 19–92 µg/L · Femme 12–76 µg/L (varie selon le kit)</td><td>Rhabdomyolyse probable si très élevée, corrélée aux CPK ; risque rénal (tubulopathie) si CPK &gt;5000-10000 UI/L</td></tr>
+      <tr><td>β-hCG plasmatique (test de grossesse)</td><td>&lt; 5 UI/L = négatif</td><td>Positif dès 5–10 UI/L (grossesse débutante) ; taux normalement multiplié par ≥1,6-2 toutes les 48h en début de grossesse évolutive — cinétique anormale évocatrice de GEU ou fausse couche</td></tr>
+      <tr><td>Pré-albumine (transthyrétine)</td><td>0,20–0,40 g/L</td><td>Marqueur nutritionnel à cinétique rapide (demi-vie ~2j), utile en réanimation/dénutrition</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-toxico">
+    <h3>☠️ Dosages toxicologiques</h3>
+    <p style="font-size:12.5px; color:var(--muted); margin-bottom:8px;">Seuils indicatifs — variables selon le contexte clinique, la cinétique d'ingestion/exposition et le laboratoire. Toujours coupler au tableau clinique.</p>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale / seuil</th><th>Commentaire</th></tr>
+      <tr><td>Carboxyhémoglobine (CO-Hb)</td><td>Non-fumeur &lt; 3% · Fumeur &lt; 10%</td><td>Intoxication CO confirmée si &gt;3% (non-fumeur) ou &gt;10% (fumeur) ; symptômes francs souvent dès 20-30% ; coma/décès possible &gt;40-50%. Dosage veineux fiable, pas besoin d'artériel</td></tr>
+      <tr><td>Méthémoglobine (Met-Hb)</td><td>&lt; 1–2%</td><td>Symptomatique (cyanose, dyspnée) si &gt;10-15% ; sévère (troubles neuro, choc) si &gt;50-70%</td></tr>
+      <tr><td>Éthanolémie</td><td>0 g/L (référence)</td><td>Ivresse franche généralement &gt;1,5-2 g/L ; coma éthylique possible &gt;3 g/L ; risque vital &gt;4-5 g/L (variable selon tolérance)</td></tr>
+      <tr><td>Paracétamolémie</td><td>Toxicité évaluée selon le nomogramme de Rumack-Matthew (à partir de H4 post-ingestion)</td><td>Ligne de traitement si ≥150 mg/L à H4 (ou équivalent horaire sur le nomogramme) — indication à la N-acétylcystéine</td></tr>
+      <tr><td>Salicylémie</td><td>Zone thérapeutique 150–300 mg/L</td><td>Toxique si &gt;300 mg/L, sévère si &gt;500-700 mg/L — corréler à la gazométrie (alcalose respiratoire puis acidose métabolique)</td></tr>
+      <tr><td>Digoxinémie</td><td>Zone thérapeutique 0,8–2,0 ng/mL (1,0–2,6 nmol/L)</td><td>Toxicité possible dès &gt;2,0-2,5 ng/mL, surtout si hypokaliémie associée — doser à distance de la prise (≥6-8h)</td></tr>
+      <tr><td>Lithiémie</td><td>Zone thérapeutique 0,6–1,2 mmol/L (mEq/L)</td><td>Toxique si &gt;1,5 mmol/L, sévère si &gt;2,5-3,5 mmol/L — prélever à distance de la prise (résiduelle, ~12h)</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-urinaire">
+    <h3>🚰 Bilan urinaire de base</h3>
+    <table>
+      <tr><th>Paramètre</th><th>Valeur normale</th><th>Commentaire</th></tr>
+      <tr><td>Protéinurie des 24h</td><td>&lt; 150 mg/24h</td><td>Protéinurie significative en pré-éclampsie si &gt;300 mg/24h</td></tr>
+      <tr><td>Bandelette urinaire — protéines</td><td>Négatif</td><td>&nbsp;</td></tr>
+      <tr><td>Bandelette urinaire — leucocytes/nitrites</td><td>Négatif</td><td>Positifs = orientent vers une infection urinaire</td></tr>
+      <tr><td>Densité urinaire</td><td>1,005–1,030</td><td>&nbsp;</td></tr>
+      <tr><td>Diurèse des 24h</td><td>800–2000 mL/24h</td><td>Oligurie si &lt;400 mL/24h (ou &lt;0,5 mL/kg/h)</td></tr>
+      <tr><td>Sodium urinaire (échantillon)</td><td>Variable selon apports (souvent 20–150 mmol/L)</td><td>Utile dans le bilan d'une hyponatrémie/IRA : Na+U &lt;20-30 mmol/L évoque une cause pré-rénale, &gt;40 mmol/L une cause rénale</td></tr>
+      <tr><td>Potassium urinaire (échantillon)</td><td>Variable selon apports (souvent 20–80 mmol/L)</td><td>Utile dans le bilan d'une hypokaliémie (origine rénale vs extra-rénale)</td></tr>
+      <tr><td>Osmolalité urinaire</td><td>300–900 mOsm/kg (grande variabilité selon l'hydratation, 50–1400 possible)</td><td>Utile dans le bilan d'une hypo/hypernatrémie et le diagnostic différentiel du diabète insipide</td></tr>
+    </table>
+</div>
+
+  <div class="card" id="bio-sources">
+    <h3>📚 Sources</h3>
+    <ul style="margin-left:18px; font-size:13px; color:var(--muted); line-height:1.9;">
+      <li>Le Manuel MSD (Merck Manual), édition professionnelle — Valeurs de référence en biologie clinique</li>
+      <li>Harrison's Principles of Internal Medicine — Appendix: Laboratory Values of Clinical Importance</li>
+      <li>Haute Autorité de Santé (HAS) — Fiches de bon usage des examens biologiques</li>
+      <li>Guides de biologie médicale des laboratoires de référence francophones (ex. Biomnis/Cerba, Eurofins) — intervalles usuels adulte</li>
+      <li>KDIGO — Clinical Practice Guideline for the Evaluation and Management of Chronic Kidney Disease (stades du DFG)</li>
+      <li>ESC Guidelines — Dyslipidaemias (objectifs LDL selon le risque cardiovasculaire, SCORE2)</li>
+      <li>UpToDate / StatPearls (NIH) — Carbon monoxide poisoning, methemoglobinemia (seuils de carboxyhémoglobine et méthémoglobine)</li>
+      <li>Rumack B.H., Matthew H. — Acetaminophen poisoning and toxicity (nomogramme de référence, Pediatrics 1975, actualisé par les centres antipoison)</li>
+      <li>Centres antipoison et de toxicovigilance francophones — seuils indicatifs salicylémie, lithiémie, digoxinémie, éthanolémie</li>
+    </ul>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Ces intervalles sont ceux le plus couramment retenus en pratique clinique courante ; ils ne remplacent pas les normes spécifiques indiquées sur le compte-rendu du laboratoire ayant réalisé l'analyse (variables selon la technique de dosage, l'analyseur et la population de référence locale).</p>
+  </div>`;
+}
+renderers.biologie = renderBiologie;
+
+function toggleBioToc(){
+  const toc=document.getElementById('bio-toc');
+  if(toc) toc.classList.toggle('collapsed');
+}
+
+function init_biologie(){
+  const content = document.getElementById('content');
+  const toc = document.getElementById('bio-toc');
+  if(!content || !toc) return;
+  content.querySelectorAll('.card[id^="bio-"]').forEach(card=>{
+    if(card.querySelector('.back-to-toc')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'back-to-toc';
+    btn.innerHTML = '↑ Retour au sommaire';
+    btn.onclick = ()=>{
+      toc.classList.remove('collapsed');
+      toc.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    card.appendChild(btn);
+  });
+}
+
 /* ===================== MODULE FICHES PRATIQUES ===================== */
 function renderFiches(){
   return `
@@ -3804,7 +4174,7 @@ function renderFiches(){
       <tr><td>Méningite bactérienne (adulte)</td><td>Ceftriaxone 4g/j IV + Dexaméthasone 10mg/6h × 4j (concomitant ou avant ATB)</td></tr>
       <tr><td>Urosepsis / PNA grave</td><td>Ceftriaxone IV (carbapénème si BLSE connue)</td></tr>
       <tr><td>Péritonite secondaire</td><td>Pipéracilline-tazobactam OU Ceftriaxone + Métronidazole</td></tr>
-      <tr><td class="modere">Paludisme grave (Madagascar)</td><td>Artésunate IV 2,4 mg/kg à H0-H12-H24 puis /24h (1ère ligne OMS). Si indisponible : Quinine IV en perfusion continue</td></tr>
+      <tr><td class="modere">Paludisme grave (Madagascar)</td><td>Artésunate IV 2,4 mg/kg à H0-H12-H24 puis /24h (3 mg/kg/dose si enfant &lt;20 kg). Si indisponible : Quinine IV en perfusion continue</td></tr>
     </table>
     <p style="margin-top:8px; font-size:12.5px; color:var(--danger);">⚠️ Toujours prélever hémocultures AVANT l'ATB. Adapter selon antibiogramme. Vérifier les allergies documentées.</p>
   </div>
@@ -3917,7 +4287,7 @@ function renderCalculateurs(){
     <h3>🧂 Déficit en eau libre (Hypernatrémie)</h3>
     <div class="row2">
       <div class="field"><label>Sexe / terrain</label>
-        <select id="del_sex"><option value="M">Homme adulte (coeff 0,6)</option><option value="F">Femme / Personée âgée (coeff 0,5)</option></select>
+        <select id="del_sex"><option value="M">Homme adulte (coeff 0,6)</option><option value="F">Femme / Personne âgée (coeff 0,5)</option></select>
       </div>
       <div class="field"><label>Poids (kg)</label><input type="number" id="del_poids"></div>
       <div class="field"><label>Na+ actuel (mmol/L)</label><input type="number" id="del_na"></div>
@@ -3972,6 +4342,75 @@ function renderCalculateurs(){
     </div>
     <button class="btn" onclick="calcTA()">Calculer</button>
     <div class="result-box hidden" id="ta_result"></div>
+  </div>
+
+  <div class="card">
+    <h3>🔥 Formule de Parkland — Remplissage brûlures graves</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Volume de Ringer Lactate sur 24h, décompté depuis l'heure de la brûlure (pas l'heure d'arrivée). Ne compter que les brûlures du 2e et 3e degré.</p>
+    <div class="row2">
+      <div class="field"><label>Poids du patient (kg)</label><input type="number" id="park_poids"></div>
+      <div class="field"><label>Surface brûlée — TBSA (%) — 2e/3e degré uniquement</label><input type="number" id="park_tbsa"></div>
+      <div class="field"><label>Terrain</label>
+        <select id="park_terrain"><option value="adulte">Adulte</option><option value="enfant">Enfant</option></select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcParkland()">Calculer</button>
+    <div class="result-box hidden" id="park_result"></div>
+  </div>
+
+  <div class="card">
+    <h3>🫁 Score de Wells simplifié — Probabilité clinique d'embolie pulmonaire</h3>
+    <div class="row2">
+      <div class="field"><label>Signes cliniques de TVP (jambe gonflée/douloureuse à la palpation profonde) ?</label>
+        <select id="wells_tvp"><option value="0">Non</option><option value="3">Oui (+3)</option></select></div>
+      <div class="field"><label>Diagnostic alternatif moins probable que l'EP ?</label>
+        <select id="wells_alt"><option value="0">Non</option><option value="3">Oui (+3)</option></select></div>
+      <div class="field"><label>Fréquence cardiaque &gt; 100/min ?</label>
+        <select id="wells_fc"><option value="0">Non</option><option value="1.5">Oui (+1,5)</option></select></div>
+      <div class="field"><label>Immobilisation ≥3j ou chirurgie &lt;4 semaines ?</label>
+        <select id="wells_immo"><option value="0">Non</option><option value="1.5">Oui (+1,5)</option></select></div>
+      <div class="field"><label>Antécédent de TVP/EP ?</label>
+        <select id="wells_atcd"><option value="0">Non</option><option value="1.5">Oui (+1,5)</option></select></div>
+      <div class="field"><label>Hémoptysie ?</label>
+        <select id="wells_hemo"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Cancer actif (traité &lt;6 mois ou palliatif) ?</label>
+        <select id="wells_cancer"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcWells()">Calculer</button>
+    <div class="result-box hidden" id="wells_result"></div>
+  </div>
+
+  <div class="card">
+    <h3>🫀 CHA₂DS₂-VASc — Risque thromboembolique en FA</h3>
+    <div class="row2">
+      <div class="field"><label>Insuffisance cardiaque / dysfonction VG ?</label>
+        <select id="cha_ic"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>HTA ?</label>
+        <select id="cha_hta"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Âge</label>
+        <select id="cha_age"><option value="0">&lt;65 ans</option><option value="1">65-74 ans (+1)</option><option value="2">≥75 ans (+2)</option></select></div>
+      <div class="field"><label>Diabète ?</label>
+        <select id="cha_diab"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>AVC/AIT/thromboembolie antérieur ?</label>
+        <select id="cha_avc"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Maladie vasculaire (IDM, AOMI, plaque aortique) ?</label>
+        <select id="cha_vasc"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Sexe</label>
+        <select id="cha_sexe"><option value="M">Homme</option><option value="F">Femme (+1)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcCHA()">Calculer</button>
+    <div class="result-box hidden" id="cha_result"></div>
+  </div>
+
+  <div class="card">
+    <h3>⚡ Shock Index (Index de choc)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">FC / PA systolique — utile pour détecter précocement un choc hémorragique (traumatisme, HPP, hémorragie digestive) avant que la PA ne chute franchement.</p>
+    <div class="row2">
+      <div class="field"><label>Fréquence cardiaque (/min)</label><input type="number" id="si_fc"></div>
+      <div class="field"><label>PA systolique (mmHg)</label><input type="number" id="si_pas"></div>
+    </div>
+    <button class="btn" onclick="calcSI()">Calculer</button>
+    <div class="result-box hidden" id="si_result"></div>
   </div>`;
 }
 renderers.calculateurs = renderCalculateurs;
@@ -4070,7 +4509,7 @@ function calcPedia(){
     ['Bradycardie — Atropine', `${Math.max(Math.min(poids*0.02,0.5),0.1).toFixed(2)} mg IV (min 0,1 mg, max 0,5 mg)`],
     ['Convulsions — Diazépam IV', `${Math.min(poids*0.3,10).toFixed(1)} mg (max 10 mg)`],
     ['Convulsions — Midazolam IV', `${Math.min(poids*0.15,10).toFixed(1)} mg (max 10 mg)`],
-    ['Hypoglycémie — Glucose G10%', `${(poids*2).toFixed(0)} mL IV lente (= ${(poids*200).toFixed(0)} mg/kg)`],
+    ['Hypoglycémie — Glucose G10%', `${(poids*2).toFixed(0)} mL IV lente (= ${(poids*200).toFixed(0)} mg au total, soit 200 mg/kg)`],
     ['Opiacés — Naloxone', `${Math.min(poids*0.01,2).toFixed(2)} mg IV/IM/IN (max 2 mg)`],
     ['ISR — Kétamine IV', `${(poids*1).toFixed(1)}–${(poids*2).toFixed(1)} mg`],
     ['ISR — Succinylcholine IV', `${(poids*1.5).toFixed(1)}–${(poids*2).toFixed(1)} mg`],
@@ -4242,6 +4681,85 @@ function calcTA(){
     `<strong>TA brut = ${ta.toFixed(0)} mmol/L</strong> | TA corrigé à l'albumine = <strong>${taCorr.toFixed(0)} mmol/L</strong><br>
     <span class="${cls}">${interp}</span><br>
     <small style="color:var(--muted)">Normale : 8–12 mmol/L. TA corrigé = TA + 0,25 × (40 − albumine g/L)</small>`;
+}
+
+function calcParkland(){
+  const p=parseFloat(document.getElementById('park_poids').value);
+  const tbsa=parseFloat(document.getElementById('park_tbsa').value);
+  const terrain=document.getElementById('park_terrain').value;
+  if([p,tbsa].some(isNaN)){alert('Remplir tous les champs');return;}
+  const warn = plausibilityWarnings([
+    {val:p, min:1, max:300, label:'Poids', unit:'kg'},
+    {val:tbsa, min:1, max:100, label:'TBSA brûlée', unit:'%'}
+  ]);
+  const vol24=4*p*tbsa;
+  const vol8=vol24/2;
+  const vol16=vol24/2;
+  const debit8=vol8/8;
+  const debit16=vol16/16;
+  const diureseCible = terrain==='enfant' ? '1 mL/kg/h' : '0,5 mL/kg/h';
+  let seuilWarn='';
+  if(tbsa<15 && terrain==='adulte' || tbsa<10 && terrain==='enfant'){
+    seuilWarn = `<div class="warn-box">⚠️ TBSA sous le seuil habituel de remplissage formalisé selon Parkland (≥15-20% adulte, ≥10% enfant). Une hydratation orale ou un remplissage simple peut suffire selon le contexte clinique.</div>`;
+  }
+  document.getElementById('park_result').classList.remove('hidden');
+  document.getElementById('park_result').innerHTML = warn + seuilWarn +
+    `<strong>Volume total sur 24h = ${vol24.toFixed(0)} mL de Ringer Lactate</strong> (4 mL × ${p} kg × ${tbsa}% TBSA)<br>
+    • 8 premières heures (depuis l'heure de la brûlure) : <strong>${vol8.toFixed(0)} mL</strong> soit ≈ ${debit8.toFixed(0)} mL/h<br>
+    • 16h suivantes : <strong>${vol16.toFixed(0)} mL</strong> soit ≈ ${debit16.toFixed(0)} mL/h<br>
+    <small style="color:var(--muted)">Volumes de départ indicatifs — titrer strictement sur la diurèse horaire (objectif ${diureseCible}, 1-2 mL/kg/h si brûlure électrique/rhabdomyolyse). Risque de "fluid creep" si sur-remplissage : certains protocoles démarrent à 2 mL/kg/%TBSA.</small>`;
+}
+
+function calcWells(){
+  const ids=['wells_tvp','wells_alt','wells_fc','wells_immo','wells_atcd','wells_hemo','wells_cancer'];
+  const total = ids.reduce((s,id)=> s+parseFloat(document.getElementById(id).value), 0);
+  let niveau, classe, conduite;
+  if(total>6){niveau="PROBABILITÉ FORTE"; classe="grave"; conduite="Envisager angio-TDM thoracique d'emblée (ou D-dimères peu contributifs à ce niveau de probabilité) ; discuter anticoagulation empirique si délai d'imagerie important et pas de contre-indication.";}
+  else if(total>=2){niveau="PROBABILITÉ MODÉRÉE"; classe="modere"; conduite="D-dimères si disponibles ; si positifs ou non disponibles → angio-TDM thoracique.";}
+  else {niveau="PROBABILITÉ FAIBLE"; classe="leger"; conduite="D-dimères pour écarter le diagnostic (bonne valeur prédictive négative à ce niveau) ; si positifs → imagerie.";}
+  document.getElementById('wells_result').classList.remove('hidden');
+  document.getElementById('wells_result').innerHTML =
+    `<strong>Score de Wells = ${total}</strong> — <span class="${classe}">${niveau}</span><br>${conduite}<br>
+    <small style="color:var(--muted)">Version dichotomisée : ≤4 = EP peu probable, &gt;4 = EP probable. Score clinique seul, ne remplace pas le jugement clinique global.</small>`;
+}
+
+function calcCHA(){
+  const ids=['cha_ic','cha_hta','cha_age','cha_diab','cha_avc','cha_vasc'];
+  let total = ids.reduce((s,id)=> s+parseFloat(document.getElementById(id).value), 0);
+  const sexe = document.getElementById('cha_sexe').value;
+  if(sexe==='F') total += 1;
+  let niveau, classe, conduite;
+  const seuilAnticoag = sexe==='F' ? 2 : 1;
+  if(total===0 || (sexe==='F' && total===1)){
+    niveau="RISQUE FAIBLE"; classe="leger"; conduite="Anticoagulation non recommandée (bénéfice ne dépassant pas le risque hémorragique).";
+  } else if(total===seuilAnticoag){
+    niveau="RISQUE INTERMÉDIAIRE"; classe="modere"; conduite="Anticoagulation à discuter au cas par cas selon préférence du patient et risque hémorragique (score HAS-BLED).";
+  } else {
+    niveau="RISQUE ÉLEVÉ"; classe="grave"; conduite="Anticoagulation recommandée (AOD en 1re intention sauf contre-indication).";
+  }
+  document.getElementById('cha_result').classList.remove('hidden');
+  document.getElementById('cha_result').innerHTML =
+    `<strong>CHA₂DS₂-VASc = ${total}</strong> — <span class="${classe}">${niveau}</span><br>${conduite}<br>
+    <small style="color:var(--muted)">Score utile uniquement en cas de FA non valvulaire confirmée. Évaluer aussi le risque hémorragique (HAS-BLED) avant toute décision.</small>`;
+}
+
+function calcSI(){
+  const fc=parseFloat(document.getElementById('si_fc').value);
+  const pas=parseFloat(document.getElementById('si_pas').value);
+  if([fc,pas].some(isNaN) || pas<=0){alert('Remplir tous les champs (PA systolique doit être &gt; 0)');return;}
+  const warn = plausibilityWarnings([
+    {val:fc, min:20, max:250, label:'Fréquence cardiaque', unit:'/min'},
+    {val:pas, min:40, max:300, label:'PA systolique', unit:'mmHg'}
+  ]);
+  const si=fc/pas;
+  let interp,cls;
+  if(si<0.7){interp="Normal";cls="leger";}
+  else if(si<=0.9){interp="Limite — surveillance rapprochée";cls="modere";}
+  else{interp="ÉLEVÉ — évoquer un choc hémorragique/hypovolémique débutant même si PA encore conservée";cls="grave";}
+  document.getElementById('si_result').classList.remove('hidden');
+  document.getElementById('si_result').innerHTML = warn +
+    `<strong>Shock Index = ${si.toFixed(2)}</strong> — <span class="${cls}">${interp}</span><br>
+    <small style="color:var(--muted)">Normal : 0,5-0,7. &gt;0,9-1 associé à une mortalité accrue en contexte hémorragique (trauma, HPP, hémorragie digestive) — se méfie du piège d'une PA normale masquant une hypovolémie compensée.</small>`;
 }
 
 /* ===================== MODULE ABRÉVIATIONS ===================== */
@@ -4576,11 +5094,11 @@ window.init_abreviations = function(){
 
 /* ——— Mise à jour badge accueil ——— */
 function renderAccueil(){
-  const done=['scores','protocoles','drogues','ventilation','abords','surveillance','fiches','calculateurs','ionique','abreviations'];
+  const done=['scores','protocoles','drogues','ventilation','abords','surveillance','biologie','fiches','calculateurs','ionique','abreviations'];
   return `
   <h2 class="module-title">Bienvenue</h2>
   <p class="module-sub">Ny Aina Med's Emergency & Intensive Care — Application de référence rapide pour la réanimation médicale. Usage hors-ligne.</p>
-  <p style="font-size:13px; color:var(--muted); margin-top:-8px; margin-bottom:12px;">Rédacteur : Ny Aina Med's</p>
+  <p style="font-size:13px; color:var(--muted); margin-top:-8px; margin-bottom:12px;">Rédacteur : Dr RANDRIAMBOLOLONIAINA Nohasoavina Tolotra Casimir</p>
   <div class="card">
     <h3>⚠️ Avertissement</h3>
     <p style="font-size:13.5px; color:var(--muted)">Cet outil est une aide-mémoire destinée aux professionnels de santé. Il ne remplace pas le jugement clinique ni les protocoles institutionnels. Vérifier systématiquement les posologies avant administration.</p>
