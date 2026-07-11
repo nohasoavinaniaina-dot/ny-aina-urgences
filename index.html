@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ny Aina Med's Emergency & Intensive Care</title>
 <style>
 :root{
@@ -10,6 +10,12 @@
   --border:#26323f; --text:#e8edf2; --muted:#8a99a8; --accent:#2dd4bf;
   --accent2:#38bdf8; --danger:#f87171; --warn:#fbbf24; --ok:#4ade80;
   --grave:#dc2626; --modere:#f59e0b; --leger:#22c55e;
+}
+html[data-theme="light"]{
+  --bg:#f4f6f8; --bg2:#ffffff; --panel:#ffffff; --panel2:#eef1f5;
+  --border:#d3dae1; --text:#111827; --muted:#5b6b7a; --accent:#0d9488;
+  --accent2:#0369a1; --danger:#dc2626; --warn:#b45309; --ok:#15803d;
+  --grave:#dc2626; --modere:#b45309; --leger:#15803d;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 body{
@@ -181,6 +187,38 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
   #topbar{display:flex;}
   #overlay.show{display:block;}
 }
+
+/* Theme toggle + version badge */
+#theme-toggle{
+  background:var(--panel2); border:1px solid var(--border); color:var(--text);
+  border-radius:8px; padding:7px 10px; font-size:13px; cursor:pointer;
+  display:flex; align-items:center; gap:6px; white-space:nowrap;
+}
+#theme-toggle:hover{border-color:var(--accent);}
+#app-version{
+  font-size:10.5px; color:var(--muted); padding:6px 16px 12px; line-height:1.4;
+}
+
+/* Favorites star */
+.fav-star{
+  background:none; border:none; cursor:pointer; font-size:16px; line-height:1;
+  color:var(--muted); padding:2px 4px; vertical-align:middle;
+}
+.fav-star.active{color:var(--warn);}
+.card h3{display:flex; align-items:center; gap:8px; justify-content:space-between;}
+.card h3 .h3-label{flex:1;}
+#favoris-empty{color:var(--muted); font-size:13.5px; padding:10px 0;}
+#favoris-list .card{cursor:default;}
+
+/* Print */
+@media print{
+  #sidebar, #topbar, #overlay, #theme-toggle, .fav-star, .toc, #search-box{display:none !important;}
+  #app{display:block;}
+  #main{width:100%;}
+  body{background:#fff; color:#000; font-size:12px;}
+  .card{border:1px solid #999; page-break-inside:avoid; margin-bottom:10px; background:#fff; color:#000;}
+  a{color:#000 !important; text-decoration:none !important;}
+}
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -194,6 +232,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
       <h1>🫀 Ny Aina Med's</h1>
       <p>Emergency & Intensive Care</p>
       <p style="font-size:11px; color:var(--muted); margin-top:2px;">Rédacteur : Dr RANDRIAMBOLOLONIAINA Nohasoavina Tolotra Casimir</p>
+      <button id="theme-toggle" onclick="toggleTheme()" style="margin-top:10px;" aria-label="Changer de thème clair/sombre"><span id="theme-icon">🌙</span> <span id="theme-label">Mode sombre</span></button>
     </div>
     <div id="search-box">
       <input type="text" id="nav-search" placeholder="Rechercher (ex. atropine, hyperkaliémie...)">
@@ -201,6 +240,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
     <ul id="search-results"></ul>
     <ul id="nav-list">
       <li><button data-mod="accueil" class="active"><span class="icon">🏠</span> Accueil</button></li>
+      <li><button data-mod="favoris"><span class="icon">⭐</span> Favoris</button></li>
       <li><button data-mod="scores"><span class="icon">📊</span> Scores cliniques</button></li>
       <li><button data-mod="protocoles"><span class="icon">🚨</span> Protocoles d'urgence</button></li>
       <li><button data-mod="drogues"><span class="icon">💉</span> Drogues de réanimation</button></li>
@@ -213,6 +253,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
       <li><button data-mod="ionique"><span class="icon">⚗️</span> Troubles ioniques</button></li>
       <li><button data-mod="abreviations"><span class="icon">🔤</span> Abréviations</button></li>
     </ul>
+    <div id="app-version"></div>
   </aside>
   <div id="overlay"></div>
   <main id="main">
@@ -227,6 +268,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
 <script>
 const MODULES = {
   accueil: { title:"Accueil", icon:"🏠" },
+  favoris: { title:"Favoris", icon:"⭐" },
   scores: { title:"Scores cliniques", icon:"📊" },
   protocoles: { title:"Protocoles d'urgence", icon:"🚨" },
   drogues: { title:"Drogues de réanimation", icon:"💉" },
@@ -241,6 +283,106 @@ const MODULES = {
 };
 
 const renderers = {}; // mod -> function() -> html string
+
+/* ——— Version de l'application ——— */
+const APP_VERSION = "2026.07.11";
+document.addEventListener('DOMContentLoaded', ()=>{});
+(function initVersionBadge(){
+  const el = document.getElementById('app-version');
+  if(el){
+    const nbModules = Object.keys(MODULES).filter(k=>k!=='accueil' && k!=='favoris').length;
+    el.innerHTML = `Édition ${APP_VERSION}<br>${nbModules} modules · usage hors-ligne`;
+  }
+})();
+
+/* ——— Thème clair / sombre ——— */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t==='light' ? 'light' : 'dark');
+  const icon = document.getElementById('theme-icon');
+  const label = document.getElementById('theme-label');
+  if(icon) icon.textContent = t==='light' ? '☀️' : '🌙';
+  if(label) label.textContent = t==='light' ? 'Mode clair' : 'Mode sombre';
+}
+function toggleTheme(){
+  const current = document.documentElement.getAttribute('data-theme')==='light' ? 'light' : 'dark';
+  const next = current==='light' ? 'dark' : 'light';
+  try{ localStorage.setItem('nam_theme', next); }catch(e){}
+  applyTheme(next);
+}
+(function initTheme(){
+  let saved = 'dark';
+  try{ saved = localStorage.getItem('nam_theme') || 'dark'; }catch(e){}
+  applyTheme(saved);
+})();
+
+/* ——— Favoris (accès rapide) ——— */
+function getFavorites(){
+  try{ return JSON.parse(localStorage.getItem('nam_favorites') || '[]'); }catch(e){ return []; }
+}
+function saveFavorites(list){
+  try{ localStorage.setItem('nam_favorites', JSON.stringify(list)); }catch(e){}
+}
+function isFavorite(moduleKey, id){
+  return getFavorites().some(f=>f.module===moduleKey && f.id===id);
+}
+function toggleFavorite(moduleKey, id, title, btn){
+  const list = getFavorites();
+  const idx = list.findIndex(f=>f.module===moduleKey && f.id===id);
+  if(idx>=0){
+    list.splice(idx,1);
+    if(btn){ btn.classList.remove('active'); btn.textContent='☆'; }
+  } else {
+    list.push({module:moduleKey, id:id, title:title||id, moduleTitle:(MODULES[moduleKey]?MODULES[moduleKey].title:moduleKey)});
+    if(btn){ btn.classList.add('active'); btn.textContent='★'; }
+  }
+  saveFavorites(list);
+}
+function removeFavoriteAndRefresh(moduleKey, id){
+  toggleFavorite(moduleKey, id, null, null);
+  showModule('favoris');
+}
+function injectFavStars(container, moduleKey){
+  if(moduleKey==='favoris' || moduleKey==='accueil') return;
+  container.querySelectorAll('.card').forEach(card=>{
+    const h3 = card.querySelector('h3');
+    if(!h3 || !card.id || h3.querySelector('.fav-star')) return;
+    const label = document.createElement('span');
+    label.className = 'h3-label';
+    label.innerHTML = h3.innerHTML;
+    const cardTitle = h3.textContent.trim();
+    const fav = isFavorite(moduleKey, card.id);
+    const star = document.createElement('button');
+    star.type = 'button';
+    star.className = 'fav-star' + (fav ? ' active' : '');
+    star.setAttribute('aria-label','Ajouter ou retirer des favoris');
+    star.textContent = fav ? '★' : '☆';
+    star.onclick = (e)=>{ e.stopPropagation(); toggleFavorite(moduleKey, card.id, cardTitle, star); };
+    h3.innerHTML = '';
+    h3.appendChild(label);
+    h3.appendChild(star);
+  });
+}
+function renderFavoris(){
+  const list = getFavorites();
+  if(!list.length){
+    return `<h2 class="module-title">⭐ Favoris</h2>
+    <p class="module-sub">Vos fiches épinglées pour un accès rapide.</p>
+    <p id="favoris-empty">Aucun favori pour l'instant. Ouvrez une fiche (protocole, drogue, score...) et cliquez sur l'étoile ☆ à côté de son titre pour l'ajouter ici.</p>`;
+  }
+  const byModule = {};
+  list.forEach(f=>{ (byModule[f.moduleTitle] = byModule[f.moduleTitle] || []).push(f); });
+  const sections = Object.entries(byModule).map(([modTitle, items])=>`
+    <h3 style="margin:16px 0 8px; color:var(--accent2); font-size:14px;">${modTitle}</h3>
+    ${items.map(f=>`
+      <div class="card" style="cursor:pointer;" onclick="showModule('${f.module}','${f.id}')">
+        <h3><span class="h3-label">${f.title}</span><button type="button" class="fav-star active" onclick="event.stopPropagation(); removeFavoriteAndRefresh('${f.module}','${f.id}')" aria-label="Retirer des favoris">★</button></h3>
+      </div>`).join('')}
+  `).join('');
+  return `<h2 class="module-title">⭐ Favoris</h2>
+  <p class="module-sub">Vos fiches épinglées pour un accès rapide (${list.length}).</p>
+  ${sections}`;
+}
+renderers.favoris = renderFavoris;
 
 /* ancienne renderAccueil remplacée plus bas */
 
@@ -859,12 +1001,12 @@ function renderProtocoles(){
       <tr>
         <td class="grave">Septique</td>
         <td>Fièvre/hypothermie, hypoTA, confusion, lactates élevés (Sepsis-3 / Surviving Sepsis Campaign)</td>
-        <td><strong>Bundle 1h :</strong> hémocultures avant ATB, lactates, ATB probabiliste large spectre dans l'heure, remplissage 30mL/kg cristalloïdes en 3h si hypoTA/lactates&gt;4, vasopresseur (<strong>Noradrénaline — Noradrénaline Aguettant®</strong>) si hypoTA persistante après remplissage — <em>protocole détaillé (posologies, choc réfractaire) : voir <a onclick="document.getElementById('proto-sepsis').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Sepsis / Choc septique</a></em></td>
+        <td><strong>Bundle 1h :</strong> hémocultures avant ATB, lactates, ATB probabiliste large spectre dans l'heure, remplissage 30mL/kg cristalloïdes en 3h si hypoTA/lactates&gt;4, vasopresseur (<strong>Noradrénaline (Noradrénaline Aguettant®)</strong>) si hypoTA persistante après remplissage — <em>protocole détaillé (posologies, choc réfractaire) : voir <a onclick="document.getElementById('proto-sepsis').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Sepsis / Choc septique</a></em></td>
       </tr>
       <tr>
         <td class="grave">Cardiogénique</td>
         <td>hypoTA + signes de congestion (crépitants, turgescence jugulaire), froideur des extrémités</td>
-        <td><strong>Prudence sur le remplissage</strong> (risque OAP) — petits bolus 100-250mL si suspicion hypovolémie associée. Inotrope (<strong>Dobutamine — Dobutrex®</strong>) ± vasopresseur si hypoTA sévère. Traiter la cause (SCA, trouble du rythme, EP)</td>
+        <td><strong>Prudence sur le remplissage</strong> (risque OAP) — petits bolus 100-250mL si suspicion hypovolémie associée. Inotrope (<strong>Dobutamine (Dobutrex®)</strong>) ± vasopresseur si hypoTA sévère. Traiter la cause (SCA, trouble du rythme, EP)</td>
       </tr>
       <tr>
         <td class="grave">Anaphylactique</td>
@@ -874,7 +1016,7 @@ function renderProtocoles(){
       <tr>
         <td class="grave">Obstructif</td>
         <td>Turgescence jugulaire + hypoTA + polypnée, sans râles. 3 causes principales : tamponnade (bruits du cœur assourdis, pouls paradoxal), pneumothorax compressif (abolition unilatérale MV, déviation trachéale), embolie pulmonaire massive (contexte thrombo-embolique, choc brutal)</td>
-        <td><strong>Tamponnade :</strong> remplissage prudent + péricardiocentèse en urgence — <em>voir <a onclick="document.getElementById('proto-tamponnade').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Tamponnade cardiaque</a></em>. <strong>PNO compressif :</strong> exsufflation à l'aiguille puis drainage thoracique, sans attendre l'imagerie — <em>voir <a onclick="document.getElementById('proto-pneumothorax').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Pneumothorax</a></em>. <strong>EP massive avec choc :</strong> thrombolyse IV (<strong>Altéplase — Actilyse®</strong>) si pas de contre-indication majeure, sinon embolectomie si disponible ; anticoagulation efficace dans tous les cas</td>
+        <td><strong>Tamponnade :</strong> remplissage prudent + péricardiocentèse en urgence — <em>voir <a onclick="document.getElementById('proto-tamponnade').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Tamponnade cardiaque</a></em>. <strong>PNO compressif :</strong> exsufflation à l'aiguille puis drainage thoracique, sans attendre l'imagerie — <em>voir <a onclick="document.getElementById('proto-pneumothorax').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Pneumothorax</a></em>. <strong>EP massive avec choc :</strong> thrombolyse IV (<strong>Altéplase (Actilyse®)</strong>) si pas de contre-indication majeure, sinon embolectomie si disponible ; anticoagulation efficace dans tous les cas</td>
       </tr>
     </table>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : cristalloïdes (Ringer Lactate/NaCl 0,9%), Adrénaline et Noradrénaline Aguettant® sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Actilyse® pour l'EP massive n'est disponible qu'en pharmacie de CHU — en son absence, la réanimation symptomatique et un transfert rapide restent l'option principale. Le CNTS doit être contacté sans délai en cas de choc hémorragique nécessitant une transfusion.</p>
@@ -958,9 +1100,9 @@ function renderProtocoles(){
     <h3>🫀 Syndrome coronarien aigu (SCA / IDM) — ESC 2023</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Douleur thoracique constrictive &gt;20 min, irradiation typique, souvent associée à dyspnée/sueurs/nausées. ECG 18 dérivations dans les 10 min suivant le premier contact médical. Les recommandations ESC 2023 unifient la prise en charge STEMI/NSTEMI en un seul référentiel.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>MONA-BASH</strong> à l'admission : <strong>Aspirine (Aspégic®, Kardégic®)</strong> 300 mg PO/IV à croquer (dose de charge) ; Oxygène uniquement si SpO2&lt;90% (pas d'O2 systématique) ; <strong>Nitrés (Risordan® IV, Natispray® sublingual)</strong> si douleur persistante et TA systolique &gt;90 mmHg (contre-indiqués si suspicion d'IDM du VD) ; <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur réfractaire ; Bêtabloquant précoce (<strong>Bisoprolol — Cardensiel®</strong>) si pas de contre-indication (insuffisance cardiaque aiguë, choc, bloc AV)</li>
-      <li><strong>2e antiagrégant (Clopidogrel — Plavix® 300-600 mg, ou Ticagrélor — Brilique® 180 mg) :</strong> à administrer sans délai en cas de <strong>STEMI</strong> avec reperfusion prévue. En cas de <strong>NSTEMI</strong> avec stratégie invasive précoce disponible (&lt;24h) et coronarographie planifiée, l'<strong>ESC 2023 déconseille le prétraitement systématique</strong> par P2Y12 avant l'angiographie (à administrer plutôt au moment du geste) — en pratique à Madagascar, où l'accès à la coronarographie précoce reste très limité (cf. note ci-dessous), l'administration du 2e antiagrégant dès l'admission reste une option raisonnable en l'absence de stratégie invasive rapide accessible</li>
-      <li><strong>STEMI</strong> (sus-décalage ST ≥1mm en 2 dérivations contiguës ou BBG nouveau) : reperfusion en urgence — <strong>angioplastie primaire</strong> si réalisable &lt;120 min depuis le premier contact médical (idéal &lt;90 min), sinon <strong>thrombolyse IV (Altéplase — Actilyse®)</strong> schéma accéléré : 15 mg IV bolus, puis 0,75 mg/kg (max 50 mg) sur 30 min, puis 0,5 mg/kg (max 35 mg) sur 60 min — dose totale max 100 mg — (si &lt;12h depuis le début des symptômes et pas de contre-indication) suivie de transfert vers un centre avec plateau technique</li>
+      <li><strong>MONA-BASH</strong> à l'admission : <strong>Aspirine (Aspégic®, Kardégic®)</strong> 300 mg PO/IV à croquer (dose de charge) ; Oxygène uniquement si SpO2&lt;90% (pas d'O2 systématique) ; <strong>Nitrés (Risordan® IV, Natispray® sublingual)</strong> si douleur persistante et TA systolique &gt;90 mmHg (contre-indiqués si suspicion d'IDM du VD) ; <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur réfractaire ; Bêtabloquant précoce (<strong>Bisoprolol (Cardensiel®)</strong>) si pas de contre-indication (insuffisance cardiaque aiguë, choc, bloc AV)</li>
+      <li><strong>2e antiagrégant : Clopidogrel (Plavix®) 300-600 mg, ou Ticagrélor (Brilique®) 180 mg</strong> à administrer sans délai en cas de <strong>STEMI</strong> avec reperfusion prévue. En cas de <strong>NSTEMI</strong> avec stratégie invasive précoce disponible (&lt;24h) et coronarographie planifiée, l'<strong>ESC 2023 déconseille le prétraitement systématique</strong> par P2Y12 avant l'angiographie (à administrer plutôt au moment du geste) — en pratique à Madagascar, où l'accès à la coronarographie précoce reste très limité (cf. note ci-dessous), l'administration du 2e antiagrégant dès l'admission reste une option raisonnable en l'absence de stratégie invasive rapide accessible</li>
+      <li><strong>STEMI</strong> (sus-décalage ST ≥1mm en 2 dérivations contiguës ou BBG nouveau) : reperfusion en urgence — <strong>angioplastie primaire</strong> si réalisable &lt;120 min depuis le premier contact médical (idéal &lt;90 min), sinon <strong>Thrombolyse IV : Altéplase (Actilyse®)</strong> schéma accéléré : 15 mg IV bolus, puis 0,75 mg/kg (max 50 mg) sur 30 min, puis 0,5 mg/kg (max 35 mg) sur 60 min — dose totale max 100 mg — (si &lt;12h depuis le début des symptômes et pas de contre-indication) suivie de transfert vers un centre avec plateau technique</li>
       <li><strong>NSTEMI/angor instable</strong> (sous-décalage ST, inversion T, troponine élevée) : anticoagulation (héparine), double antiagrégation, stratification du risque (score GRACE 2.0), coronarographie précoce (&lt;24-72h selon le niveau de risque) si accessible, sans thrombolyse</li>
       <li>Anticoagulation : Héparine non fractionnée ou HBPM selon stratégie de reperfusion choisie et disponibilité</li>
       <li>Surveillance scope continue — risque de trouble du rythme ventriculaire dans les premières heures ; DAE/défibrillateur à proximité immédiate</li>
@@ -1040,7 +1182,7 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>Position demi-assise, O2 pour SpO2 cible 92-96% (88-92% si BPCO connue)</li>
       <li>Évaluer signes de gravité : FR&gt;30, tirage, sueurs, cyanose, troubles de conscience, épuisement respiratoire → discuter ventilation non invasive ou intubation sans délai</li>
-      <li>Identifier la cause : OAP (<strong>Furosémide — Lasilix®</strong>, dérivés nitrés — <strong>Risordan®</strong>), pneumopathie (ATB), asthme/BPCO décompensée (<strong>Salbutamol — Ventoline®</strong>, corticoïdes — <strong>Solu-Médrol®</strong>), EP (anticoagulation), pneumothorax (drainage)</li>
+      <li>Identifier la cause : OAP (<strong>Furosémide (Lasilix®)</strong>, dérivés nitrés — <strong>Isosorbide dinitrate (Risordan®)</strong>), pneumopathie (ATB), asthme/BPCO décompensée (<strong>Salbutamol (Ventoline®)</strong>, corticoïdes — <strong>Méthylprednisolone (Solu-Médrol®)</strong>), EP (anticoagulation), pneumothorax (drainage)</li>
       <li>Si SDRA confirmé : ventilation protectrice (Vt 6mL/kg de poids idéal théorique, Pplateau &lt;30 cmH2O), PEP adaptée, décubitus ventral précoce si SDRA modéré-sévère (&gt;12h/jour si possible)</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la ventilation mécanique invasive avec réglages protecteurs n'est disponible qu'en réanimation de CHU/CHRR — en son absence, la <strong>VNI/CPAP</strong> (si disponible) et le <strong>décubitus ventral en respiration spontanée ("proning éveillé")</strong> chez un patient non intubé sous oxygène/OHD peuvent améliorer l'oxygénation en attendant un transfert, sans remplacer une indication formelle d'intubation en cas d'épuisement respiratoire. Anticiper le transfert précoce dès la suspicion de SDRA modéré-sévère si le plateau technique local ne permet pas la ventilation protectrice.</p>
@@ -1057,7 +1199,7 @@ function renderProtocoles(){
     </table>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Traitement initial (formes légères à modérées) :</strong> <strong>Salbutamol (Ventoline®)</strong> (SABA) 4-10 bouffées au pMDI + chambre d'inhalation, toutes les 20 min pendant la 1ère heure (3 doses) si besoin ; oxygène contrôlé si disponible, cible SpO2 93-95% chez l'adulte/adolescent (≥94% chez l'enfant)</li>
-      <li><strong>Corticoïdes systémiques</strong> (sauf forme légère isolée) : <strong>Prednisolone (Solupred®)</strong> PO 40-50 mg/j chez l'adulte, 1-2 mg/kg/j (max 40 mg) chez l'enfant, pendant 5-7 jours (3-5 jours chez l'enfant). Voie IV (<strong>Méthylprednisolone — Solu-Médrol®</strong>) si vomissements/impossibilité de prise orale, sans supériorité démontrée sur la voie orale</li>
+      <li><strong>Corticoïdes systémiques</strong> (sauf forme légère isolée) : <strong>Prednisolone (Solupred®)</strong> PO 40-50 mg/j chez l'adulte, 1-2 mg/kg/j (max 40 mg) chez l'enfant, pendant 5-7 jours (3-5 jours chez l'enfant). Voie IV (<strong>Méthylprednisolone (Solu-Médrol®)</strong>) si vomissements/impossibilité de prise orale, sans supériorité démontrée sur la voie orale</li>
       <li><strong>Formes sévères/pronostic vital engagé — transfert en structure de soins aigus :</strong> associer d'emblée <strong>Salbutamol (Ventoline®)</strong> nébulisé + <strong>Ipratropium bromide (Atrovent®)</strong> nébulisé + oxygène + corticoïdes systémiques, dans l'attente du transfert</li>
       <li><strong>Sulfate de magnésium (Magnésium Sulfate Lavoisier®)</strong> IV (2g en 20 min chez l'adulte) à envisager en soins aigus si réponse insuffisante au traitement initial intensif (FEV1/DEP restant bas après bronchodilatateurs répétés)</li>
       <li><strong>Ne pas faire</strong> en routine : radiographie thoracique, gaz du sang, antibiotiques (sauf infection bactérienne documentée), sédatifs (contre-indiqués — risque de dépression respiratoire)</li>
@@ -1174,7 +1316,7 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin-bottom:8px;">Critères diagnostiques : glycémie &gt;2,5 g/L (14 mmol/L), cétonémie ≥3 mmol/L (ou cétonurie ≥2+), pH veineux &lt;7,30 et/ou bicarbonates &lt;18 mmol/L. Sévérité selon pH/bicar : légère (pH 7,25-7,30 / HCO3 15-18), modérée (pH 7,00-7,24 / HCO3 10-15), sévère (pH&lt;7,00 / HCO3&lt;10).</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Réhydratation</strong> en premier (avant insuline) : NaCl 0,9% — 1 000 mL en 1h IVL, ET 1 000 mL en 2h, ET 1 000 mL en 2h, PUIS 1 000 mL de soluté en 4h en fonction de la glycémie (dextro &gt;14 mmol/L : NaCl 0,9% ; dextro &lt;14 mmol/L : NaCl 0,9% et G5% en Y). Poursuivre ensuite selon l'état hémodynamique et la fonction cardiaque. Chez l'enfant : débit plus prudent, à calculer selon le poids (risque d'œdème cérébral en cas de correction trop rapide)</li>
-      <li><strong>Insulinothérapie</strong> : débuter après ≥1h de réhydratation (sauf choc) — objectif glycémique 11 mM si cétonémie &gt;0,5 mM. <strong>Insuline rapide (Novorapid®/Apidra®/Humalog®)</strong> IVSE 0,1 UI/kg/h, sans dépasser 10 UI/h, tant que la cétonémie reste &gt;0,5 mM. Objectif de correction de la cétonémie : diminution de 0,5 mmol/L/h — augmenter le débit de perfusion si cet objectif n'est pas atteint au bout de quelques heures. Dès que cétonémie &lt;0,5 mM : relais protocole insuline classique (F11). Pas de bolus initial, surtout chez l'enfant (risque d'œdème cérébral)</li>
+      <li><strong>Insulinothérapie</strong> : débuter après ≥1h de réhydratation (sauf choc) — objectif glycémique 11 mM si cétonémie &gt;0,5 mM. <strong>Insuline rapide (Novorapid®, Apidra®, Humalog®)</strong> IVSE 0,1 UI/kg/h, sans dépasser 10 UI/h, tant que la cétonémie reste &gt;0,5 mM. Objectif de correction de la cétonémie : diminution de 0,5 mmol/L/h — augmenter le débit de perfusion si cet objectif n'est pas atteint au bout de quelques heures. Dès que cétonémie &lt;0,5 mM : relais protocole insuline classique (F11). Pas de bolus initial, surtout chez l'enfant (risque d'œdème cérébral)</li>
       <li><strong>Recharge potassique :</strong> si signe électrique d'hyperkaliémie ou K+ &gt;5,5 mmol/L → pas de KCl dans les perfusions. Sinon : 2 g de KCl par litre de NaCl 0,9%, à partir du 3ᵉ litre perfusé. Si kaliémie &lt;3 mmol/L → arrêt de l'insuline et KCl 1 g/h IVSE, reprise de l'insuline une fois la kaliémie corrigée</li>
       <li>Rechercher et traiter le facteur déclenchant : infection/sepsis (voir protocole Sepsis), diarrhée, inobservance thérapeutique, IDM, corticoïdes, grossesse...</li>
       <li>Bicarbonates : non recommandés en routine, à discuter uniquement si acidose extrême (pH&lt;6,9) avec retentissement hémodynamique</li>
@@ -1280,7 +1422,7 @@ function renderProtocoles(){
       <li>Si hémorragie réfractaire aux utérotoniques : tamponnement par ballonnet intra-utérin (efficace dans &gt;80% des cas s'il est posé avant l'état de choc avancé), sinon geste chirurgical/radiologie interventionnelle selon plateau technique disponible</li>
       <li>Vêtement anti-choc non pneumatique (NASG) si disponible, en attendant/pendant le transfert — réduit la mortalité de près de moitié en ressources limitées</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Oxytocine (Syntocinon®), Misoprostol (Cytotec®/Misotac®, bien plus largement disponible et ne nécessitant pas de chaîne du froid contrairement à l'oxytocine) et Exacyl® sont disponibles jusqu'au niveau CHRD. Le ballonnet intra-utérin dédié étant rare hors CHU, un ballonnet de sonde de Foley gonflé (dispositif de fortune) peut être utilisé en alternative. Le NASG et la banque de sang (CNTS) sont d'accès variable selon la région — anticiper le transfert précoce si l'hémorragie n'est pas rapidement contrôlée.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Oxytocine (Syntocinon®), Misoprostol (Cytotec®, Misotac®, bien plus largement disponible et ne nécessitant pas de chaîne du froid contrairement à l'oxytocine) et Exacyl® sont disponibles jusqu'au niveau CHRD. Le ballonnet intra-utérin dédié étant rare hors CHU, un ballonnet de sonde de Foley gonflé (dispositif de fortune) peut être utilisé en alternative. Le NASG et la banque de sang (CNTS) sont d'accès variable selon la région — anticiper le transfert précoce si l'hémorragie n'est pas rapidement contrôlée.</p>
   </div>
 
   <div class="card" id="proto-reanimation-nn">
@@ -1368,7 +1510,7 @@ function renderProtocoles(){
     <h3>🍼 Déshydratation sévère de l'enfant (OMS)</h3>
     <table style="margin-bottom:10px;">
       <tr><th>Plan</th><th>Signes</th><th>Conduite</th></tr>
-      <tr><td class="leger">Plan A (aucune déshydratation)</td><td>Pas de signe de déshydratation</td><td>Réhydratation orale (<strong>SRO — Adiaril®</strong>, sachets OMS) après chaque selle, poursuite de l'alimentation/allaitement</td></tr>
+      <tr><td class="leger">Plan A (aucune déshydratation)</td><td>Pas de signe de déshydratation</td><td>Réhydratation orale (<strong>SRO (Adiaril®)</strong>, sachets OMS) après chaque selle, poursuite de l'alimentation/allaitement</td></tr>
       <tr><td class="modere">Plan B (déshydratation modérée)</td><td>Soif, yeux creux, pli cutané qui s'efface lentement, agitation</td><td><strong>SRO (Adiaril®)</strong> 75 mL/kg sur 4h sous surveillance, réévaluer ensuite</td></tr>
       <tr><td class="grave">Plan C (déshydratation sévère)</td><td>Léthargie/inconscience, yeux très creux, pli cutané persistant &gt;2s, incapacité à boire</td><td>Réhydratation IV en urgence (voir ci-dessous)</td></tr>
     </table>
@@ -1463,14 +1605,14 @@ function renderProtocoles(){
       <li><strong>Évaluation de gravité</strong> : FC, TA, marbrures, TRC, état de conscience — un score de Glasgow-Blatchford ou de Rockall peut aider à stratifier le risque</li>
       <li><strong>2 VVP de gros calibre</strong>, bilan (NFS, groupe/Rh/RAI, coagulation, fonction rénale, lactates), commander des culots globulaires si instabilité</li>
       <li>Remplissage cristalloïdes prudent ; transfusion si Hb &lt;7 g/dL (seuil restrictif recommandé, hors coronaropathie/instabilité sévère où le seuil peut être &lt;8-9 g/dL) — objectif TA systolique ~90-100 mmHg, éviter la sur-transfusion (risque de resaignement des varices)</li>
-      <li>Correction d'une coagulopathie : <strong>vitamine K (Vitamine K1 Roche®)</strong>, PFC/CCP si sous AVK, arrêt des anticoagulants/antiagrégants selon la balance bénéfice-risque, transfusion plaquettaire si &lt;50 G/L et saignement actif</li>
-      <li><strong>IPP IV</strong> (<strong>Oméprazole — Mopral®</strong>/<strong>Pantoprazole — Eupantol®, Inipomp®</strong> 80 mg bolus puis 8 mg/h ou 40 mg x2/j) dès suspicion d'HD haute non variqueuse — réduit le risque de resaignement, à débuter avant l'endoscopie</li>
-      <li><strong>Suspicion de rupture de varices œsophagiennes (cirrhotique) :</strong> <strong>Terlipressine (Glypressin®)</strong> 2 mg IV bolus puis 1-2 mg IV toutes les 4h jusqu'au contrôle du saignement (max 3-5 jours) — (ou <strong>Octréotide — Sandostatine®</strong> 50 µg IV bolus puis perfusion continue 25-50 µg/h selon disponibilité) dès l'admission + antibioprophylaxie systématique (Céphalosporine 3G — <strong>Ceftriaxone, Rocéphine®</strong> 1 g IV/j pendant 7 jours max, réduit la mortalité) ; sonde de Blakemore/Sengstaken en tamponnement si hémorragie incontrôlable dans l'attente de l'endoscopie</li>
+      <li>Correction d'une coagulopathie : <strong>Vitamine K (Vitamine K1 Roche®)</strong>, PFC/CCP si sous AVK, arrêt des anticoagulants/antiagrégants selon la balance bénéfice-risque, transfusion plaquettaire si &lt;50 G/L et saignement actif</li>
+      <li><strong>IPP IV</strong> (<strong>Oméprazole (Mopral®)</strong>/<strong>Pantoprazole (Eupantol®, Inipomp®)</strong> 80 mg bolus puis 8 mg/h ou 40 mg x2/j) dès suspicion d'HD haute non variqueuse — réduit le risque de resaignement, à débuter avant l'endoscopie</li>
+      <li><strong>Suspicion de rupture de varices œsophagiennes (cirrhotique) :</strong> <strong>Terlipressine (Glypressin®)</strong> 2 mg IV bolus puis 1-2 mg IV toutes les 4h jusqu'au contrôle du saignement (max 3-5 jours) — (ou <strong>Octréotide (Sandostatine®)</strong> 50 µg IV bolus puis perfusion continue 25-50 µg/h selon disponibilité) dès l'admission + antibioprophylaxie systématique (Céphalosporine 3G — <strong>Ceftriaxone (Rocéphine®)</strong> 1 g IV/j pendant 7 jours max, réduit la mortalité) ; sonde de Blakemore/Sengstaken en tamponnement si hémorragie incontrôlable dans l'attente de l'endoscopie</li>
       <li><strong>Endoscopie digestive</strong> dans les 24h (voire &lt;12h si instabilité hémodynamique persistante ou suspicion de varices) — diagnostique et thérapeutique (clip, sclérose, ligature élastique)</li>
       <li>Sonde nasogastrique non systématique mais utile pour évacuer/confirmer un saignement actif si diagnostic incertain</li>
       <li>Si échec du traitement endoscopique ou hémorragie massive incontrôlable : radiologie interventionnelle (embolisation) ou chirurgie selon plateau technique disponible</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Mopral®/Eupantol® IV et Rocéphine® sont disponibles à tous les niveaux hospitaliers. La Terlipressine (Glypressin®) et l'Octréotide (Sandostatine®) sont d'accès plus limité, réservés aux pharmacies de CHU/CHRR — en leur absence, l'IPP, l'antibioprophylaxie et un transfert précoce vers un centre disposant d'une endoscopie digestive restent la conduite prioritaire face à une suspicion de rupture de varices.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Mopral®, Eupantol® IV et Rocéphine® sont disponibles à tous les niveaux hospitaliers. La Terlipressine (Glypressin®) et l'Octréotide (Sandostatine®) sont d'accès plus limité, réservés aux pharmacies de CHU/CHRR — en leur absence, l'IPP, l'antibioprophylaxie et un transfert précoce vers un centre disposant d'une endoscopie digestive restent la conduite prioritaire face à une suspicion de rupture de varices.</p>
   </div>
 
   <div class="card" id="proto-encephalopathie-hepatique">
@@ -1496,7 +1638,7 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Grade III-IV :</strong> orientation en unité de soins intensifs/réanimation, évaluation systématique du score de Glasgow, <strong>protection des voies aériennes</strong> (position latérale de sécurité, aspiration ; intubation si GCS ≤8 ou réflexes de protection abolis — risque élevé d'inhalation)</li>
       <li><strong>Lactulose (Duphalac®, Lactulose Merck®)</strong> — traitement de 1ère ligne : per os/sonde nasogastrique 20-30 mL toutes les 1-2h jusqu'à l'obtention des premières selles, puis titration pour obtenir <strong>2 à 3 selles molles par jour</strong> (dose d'entretien habituelle 20-30 mL x2-3/j) ; en cas de trouble de conscience empêchant la prise orale (grade III-IV) : <strong>lacet de rétention rectale</strong> — 300 mL de lactulose dilués dans 700 mL d'eau, à conserver 30-60 min, répétable toutes les 4-6h jusqu'à reprise de la voie orale</li>
-      <li>Titrer prudemment : le surdosage (&gt;4-6 selles/j) peut lui-même précipiter une encéphalopathie (déshydratation, hypernatrémie, hypokaliémie) — <strong>polyéthylène glycol (PEG 3350, Macrogol — Forlax®, Movicol®)</strong> en alternative si intolérance/distension abdominale au lactulose</li>
+      <li>Titrer prudemment : le surdosage (&gt;4-6 selles/j) peut lui-même précipiter une encéphalopathie (déshydratation, hypernatrémie, hypokaliémie) — <strong>Macrogol/PEG 3350 (Forlax®, Movicol®)</strong> en alternative si intolérance/distension abdominale au lactulose</li>
       <li><strong>Rifaximine (Rifagut®, Xifaxan®)</strong> 550 mg PO/SNG toutes les 12h en association au lactulose dès l'épisode aigu (bénéfice incrémental démontré par rapport au lactulose seul) — antibiotique non résorbable qui diminue la production intestinale d'ammoniac ; à poursuivre en prévention secondaire après un épisode, surtout en cas de récidive sous lactulose seul</li>
       <li><strong>Proscrire les sédatifs et benzodiazépines</strong> (aggravent l'encéphalopathie) ; en cas d'encéphalopathie précipitée par une benzodiazépine documentée, le <strong>Flumazénil (Anexate®)</strong> 0,2-1 mg IV titré peut apporter une amélioration transitoire (n'agit pas sur la cause hépatique sous-jacente)</li>
       <li><strong>Ne pas restreindre les apports protidiques</strong> (pratique obsolète, aggrave la dénutrition sans bénéfice démontré) : apport protéique cible <strong>1,2-1,5 g/kg/j</strong>, fractionné avec une collation nocturne ; recours aux <strong>acides aminés ramifiés (BCAA)</strong> si les besoins ne peuvent être couverts par l'alimentation standard, notamment en cas d'intolérance protéique</li>
@@ -1566,7 +1708,7 @@ function renderProtocoles(){
       <li><strong>Formule de Parkland :</strong> volume total de Ringer Lactate sur 24h = <strong>4 mL × poids (kg) × %TBSA brûlée</strong> (2e/3e degré uniquement) — calcul à partir de l'heure de la brûlure (non de l'arrivée). La moitié du volume sur les 8 premières heures, l'autre moitié sur les 16h suivantes</li>
       <li>Indiqué si TBSA ≥15-20% chez l'adulte (≥10% chez l'enfant) ; volumes de départ souvent revus à la baisse (2 mL/kg/%TBSA) avec titration stricte pour limiter le risque de "fluid creep" (œdèmes, syndrome des loges)</li>
       <li><strong>Titration sur la diurèse</strong> (objectif principal, à réévaluer horairement) : 0,5 mL/kg/h chez l'adulte, 1 mL/kg/h chez l'enfant — objectif plus élevé (1-2 mL/kg/h) si brûlure électrique/rhabdomyolyse associée</li>
-      <li>Analgésie systématique (<strong>morphine — Morphine Aguettant®</strong> titrée IV), prévention de l'hypothermie, pansements non circonférentiels si possible (sinon surveiller un syndrome des loges → escarrotomie)</li>
+      <li>Analgésie systématique (<strong>Morphine (Morphine Aguettant®)</strong> titrée IV), prévention de l'hypothermie, pansements non circonférentiels si possible (sinon surveiller un syndrome des loges → escarrotomie)</li>
       <li>Antalgie, prévention antitétanique, pas d'antibioprophylaxie systématique (seulement si signes d'infection)</li>
       <li>Transfert vers un centre de brûlés si critères de gravité réunis (TBSA élevée, localisations à risque, terrain fragile, brûlure électrique/chimique)</li>
     </ol>
@@ -1677,13 +1819,13 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>Évaluation de la sévérité par un score clinique type <strong>CIWA-Ar</strong> si disponible, pour guider et adapter le traitement</li>
       <li><strong>Benzodiazépines</strong> — traitement de référence : <strong>Diazépam (Valium®)</strong> PO/IV (10-20 mg répétés selon réponse) ou <strong>Lorazépam (Temesta®)</strong> (préféré si insuffisance hépatique sévère, pas de métabolite actif) — titration selon la symptomatologie, doses parfois élevées nécessaires (tolérance croisée avec l'alcool)</li>
-      <li><strong>Vitamine B1 (Thiamine — Vitamine B1 Aguettant®) systématique</strong> 200-500 mg IV, à administrer <strong>avant tout apport glucosé</strong> — prévention de l'encéphalopathie de Gayet-Wernicke (confusion, ataxie, troubles oculomoteurs), risque majoré si perfusion de glucosé sans thiamine préalable</li>
+      <li><strong>Thiamine/Vitamine B1 (Vitamine B1 Aguettant®) systématique</strong> 200-500 mg IV, à administrer <strong>avant tout apport glucosé</strong> — prévention de l'encéphalopathie de Gayet-Wernicke (confusion, ataxie, troubles oculomoteurs), risque majoré si perfusion de glucosé sans thiamine préalable</li>
       <li>Correction des troubles hydro-électrolytiques fréquemment associés : hypokaliémie, hypomagnésémie, hypophosphorémie (surveiller et corriger, la magnésémie basse favorise la persistance des convulsions)</li>
       <li>Si convulsions : benzodiazépines en 1ère intention (pas d'antiépileptique spécifique nécessaire en général) ; éliminer une autre cause de convulsions (hypoglycémie, traumatisme crânien associé, trouble ionique sévère)</li>
       <li>Environnement calme, réorientation fréquente, contention physique uniquement si nécessaire pour la sécurité du patient/de l'équipe, en complément (non substitut) du traitement médicamenteux</li>
       <li>Surveillance rapprochée : constantes, état neurologique, glycémie — hospitalisation en unité de surveillance continue si délirium tremens constitué</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Valium® est disponible à tous les niveaux hospitaliers ; le Temesta® est plus limité aux structures de référence. La Vitamine B1 injectable (Vitamine B1 Aguettant®/Bécozyme®) est généralement disponible mais peut faire l'objet de ruptures ponctuelles — dans ce cas, ne jamais administrer de sérum glucosé sans y avoir pensé, et privilégier la voie orale/IM en dépannage plutôt que d'omettre la supplémentation. Le score CIWA-Ar, peu utilisé en pratique courante localement, reste un outil simple à intégrer à la surveillance infirmière si le personnel est formé.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Valium® est disponible à tous les niveaux hospitaliers ; le Temesta® est plus limité aux structures de référence. La Vitamine B1 injectable (Vitamine B1 Aguettant®, Bécozyme®) est généralement disponible mais peut faire l'objet de ruptures ponctuelles — dans ce cas, ne jamais administrer de sérum glucosé sans y avoir pensé, et privilégier la voie orale/IM en dépannage plutôt que d'omettre la supplémentation. Le score CIWA-Ar, peu utilisé en pratique courante localement, reste un outil simple à intégrer à la surveillance infirmière si le personnel est formé.</p>
   </div>
 
   <div class="card" id="proto-rhabdomyolyse">
@@ -1740,12 +1882,12 @@ function renderProtocoles(){
       <li>TDM cérébrale <strong>avant PL</strong> uniquement si signe de localisation, trouble de conscience sévère (GCS &lt;12), crise convulsive récente, immunodépression ou signe d'engagement — sinon PL directe</li>
       <li><strong>Antibiothérapie probabiliste IV immédiate :</strong> <strong>Ceftriaxone (Rocéphine®)</strong> 2g x2/j (4g/j) ou <strong>Céfotaxime (Claforan®)</strong> — associer <strong>Amoxicilline (Clamoxyl®)</strong> si suspicion de Listeria (sujet &gt;50 ans, immunodépression, signes de rhombencéphalite)</li>
       <li><strong>Dexaméthasone (Soludécadron®)</strong> 10 mg IV toutes les 6h × 4 jours, à débuter <strong>en même temps ou juste avant</strong> la 1ère dose d'antibiotique (inefficace si donnée après) — réduit les séquelles auditives et neurologiques, surtout si pneumocoque</li>
-      <li>Isolement gouttelettes systématique jusqu'à 24h d'antibiothérapie efficace si suspicion de méningocoque ; déclaration obligatoire et antibioprophylaxie des sujets contacts proches (<strong>Rifampicine — Rifadine®</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte — 10 mg/kg x2/j chez l'enfant >1 mois, 5 mg/kg x2/j chez le nourrisson <1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine — Ciflox®</strong> 500 mg PO dose unique chez l'adulte, 20 mg/kg PO dose unique chez l'enfant ≥2 ans, max 500 mg)</li>
+      <li>Isolement gouttelettes systématique jusqu'à 24h d'antibiothérapie efficace si suspicion de méningocoque ; déclaration obligatoire et antibioprophylaxie des sujets contacts proches (<strong>Rifampicine (Rifadine®)</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte — 10 mg/kg x2/j chez l'enfant >1 mois, 5 mg/kg x2/j chez le nourrisson <1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine (Ciflox®)</strong> 500 mg PO dose unique chez l'adulte, 20 mg/kg PO dose unique chez l'enfant ≥2 ans, max 500 mg)</li>
       <li>Analyse du LCR : cytologie, protéinorachie, glycorachie (rapport glycorachie/glycémie &lt;0,4 évocateur de bactérien), examen direct, culture, PCR selon disponibilité (méningocoque, pneumocoque, herpès si encéphalite)</li>
       <li>Si encéphalite suspectée (confusion, convulsions, signes focaux, contexte) : <strong>Aciclovir IV (Zovirax®)</strong> 10 mg/kg/8h empirique dès la suspicion (herpétique jusqu'à preuve du contraire), sans attendre la PCR</li>
       <li>Surveillance rapprochée : conscience, pupilles, signes d'engagement, convulsions — traiter une HTIC associée si présente (cf. protocole dédié)</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®/Claforan®, Clamoxyl® et Soludécadron® sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Aciclovir IV (Zovirax®) est plus limité, généralement disponible en pharmacie hospitalière de CHU/CHRR — anticiper une rupture possible et transférer si suspicion d'encéphalite herpétique dans une structure ne disposant pas du traitement. La TDM cérébrale n'étant pas accessible partout, ne pas la considérer comme un préalable systématique à la PL en l'absence de signe de localisation.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Claforan®, Clamoxyl® et Soludécadron® sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Aciclovir IV (Zovirax®) est plus limité, généralement disponible en pharmacie hospitalière de CHU/CHRR — anticiper une rupture possible et transférer si suspicion d'encéphalite herpétique dans une structure ne disposant pas du traitement. La TDM cérébrale n'étant pas accessible partout, ne pas la considérer comme un préalable systématique à la PL en l'absence de signe de localisation.</p>
   </div>
 
   <div class="card" id="proto-purpura-fulminans">
@@ -1756,7 +1898,7 @@ function renderProtocoles(){
       <li>Appel immédiat du SAMU/réanimation, transfert médicalisé en urgence absolue vers un centre disposant d'une réanimation</li>
       <li>Prise en charge du choc septique associé en parallèle : remplissage vasculaire rapide (cristalloïdes 20 mL/kg en bolus, répétable), amines vasopressives précoces si non-réponse au remplissage (cf. protocole états de choc)</li>
       <li>Hémocultures si possible sans retarder l'antibiothérapie ; PL contre-indiquée en phase de choc (à différer)</li>
-      <li>Isolement gouttelettes du patient, antibioprophylaxie systématique des sujets contacts proches (<strong>Rifampicine — Rifadine®</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte, 10 mg/kg x2/j chez l'enfant >1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine — Ciflox®</strong> 500 mg PO dose unique ; ou <strong>Ceftriaxone — Rocéphine®</strong> 250 mg IM dose unique chez l'adulte (125 mg chez l'enfant <15 ans) — à privilégier chez la femme enceinte), déclaration obligatoire</li>
+      <li>Isolement gouttelettes du patient, antibioprophylaxie systématique des sujets contacts proches (<strong>Rifampicine (Rifadine®)</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte, 10 mg/kg x2/j chez l'enfant >1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine (Ciflox®)</strong> 500 mg PO dose unique ; ou <strong>Ceftriaxone (Rocéphine®)</strong> 250 mg IM dose unique chez l'adulte (125 mg chez l'enfant <15 ans) — à privilégier chez la femme enceinte), déclaration obligatoire</li>
       <li>Surveillance étroite : extension du purpura, diurèse, marbrures, lactates, coagulation (risque de CIVD) — orientation en réanimation systématique</li>
     </ol>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Rocéphine® est disponible à tous les niveaux, y compris en CSB — la 1ère dose doit être injectée sur place (IM si pas de voie veineuse) avant même d'attendre le transfert, geste qui prime sur tout le reste dans cette pathologie foudroyante. Les amines vasopressives et la réanimation avancée nécessitent un transfert vers un CHU/CHRR ; ne jamais retarder l'antibiothérapie initiale en attendant les moyens de ce transfert.</p>
@@ -1783,7 +1925,7 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Arrêt immédiat</strong> du/des médicament(s) en cause — geste le plus important dans les deux tableaux</li>
       <li>ABCDE, refroidissement actif si hyperthermie significative (cf. protocole coup de chaleur), remplissage vasculaire, correction des troubles ioniques</li>
-      <li>Benzodiazépines en 1ère intention dans les deux syndromes pour l'agitation, les myoclonies et la rigidité (<strong>Diazépam — Valium®</strong> 5-10 mg IV lent, répétable, ou <strong>Lorazépam — Temesta®</strong> 1-4 mg IV titré)</li>
+      <li>Benzodiazépines en 1ère intention dans les deux syndromes pour l'agitation, les myoclonies et la rigidité (<strong>Diazépam (Valium®)</strong> 5-10 mg IV lent, répétable, ou <strong>Lorazépam (Temesta®)</strong> 1-4 mg IV titré)</li>
       <li><strong>Syndrome sérotoninergique modéré à sévère :</strong> <strong>Cyproheptadine (Périactine®)</strong> (antagoniste sérotoninergique, uniquement per os ou par sonde nasogastrique — pas de forme injectable) : dose de charge 12 mg PO/SNG, puis 2 mg toutes les 2h tant que les symptômes persistent, jusqu'à un maximum de 32 mg/24h ; dose d'entretien 8 mg toutes les 6h une fois amélioré — en complément des benzodiazépines, évolution habituellement favorable en 24-72h après arrêt du médicament causal</li>
       <li><strong>Syndrome malin des neuroleptiques sévère :</strong> <strong>Dantrolène IV (Dantrium®)</strong> 1-2,5 mg/kg (jusqu'à 10 mg/kg/j) si rigidité majeure/hyperthermie sévère ; <strong>Bromocriptine (Parlodel®)</strong> (agoniste dopaminergique) PO/SNG 2,5 mg 2 à 3 fois/jour, à augmenter progressivement selon la réponse jusqu'à 45 mg/j au total si nécessaire, en complément selon disponibilité</li>
       <li>Surveillance rapprochée : CK (rhabdomyolyse fréquente dans les deux tableaux — cf. protocole dédié), fonction rénale, coagulation, température, conscience</li>
@@ -1835,7 +1977,7 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Prise en charge :</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Appel chirurgical immédiat</strong> dès la suspicion clinique — le débridement chirurgical radical est le seul traitement curatif, l'imagerie (TDM/échographie) ne doit jamais retarder l'intervention en cas de suspicion forte</li>
-      <li><strong>Réanimation hémodynamique</strong> — remplissage vasculaire (<strong>Ringer Lactate/NaCl 0,9% — Baxter®</strong>), prise en charge du choc septique associé selon protocole dédié</li>
+      <li><strong>Réanimation hémodynamique</strong> — remplissage vasculaire (<strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong>), prise en charge du choc septique associé selon protocole dédié</li>
       <li><strong>Antibiothérapie probabiliste large spectre immédiate</strong> (avant même le débridement, sans le retarder) :</li>
     </ol>
     <table style="margin-top:6px;">
@@ -2010,9 +2152,9 @@ function renderProtocoles(){
       <li><strong>À jeun</strong> tant que le diagnostic n'est pas éclairci (au cas où un geste chirurgical ou endoscopique serait nécessaire)</li>
       <li><strong>Antisécrétoire — IPP IV :</strong> <strong>Oméprazole ou Pantoprazole (Inipomp®, Eupantol®)</strong> 80 mg IV en bolus lent (si disponible), sinon 40 mg IV, puis relais 40 mg IV/12h ou en perfusion continue selon disponibilité — traitement de référence, à débuter précocement même avant confirmation endoscopique en cas de suspicion d'ulcère ou d'hémorragie</li>
       <li><strong>Antiacide/pansement gastrique</strong> en complément pour soulagement symptomatique rapide si disponible (hydroxyde d'alumine/magnésium) — effet immédiat mais transitoire, n'attendre que sur la douleur, pas sur la cicatrisation</li>
-      <li><strong>Antispasmodique</strong> (<strong>Phloroglucinol — Spasfon®</strong>) 40-80 mg IV/IM (1-2 ampoules) ou 80 mg PO, répétable jusqu'à 3-4 fois/jour, si composante spasmodique associée</li>
+      <li><strong>Antispasmodique</strong> (<strong>Phloroglucinol (Spasfon®)</strong>) 40-80 mg IV/IM (1-2 ampoules) ou 80 mg PO, répétable jusqu'à 3-4 fois/jour, si composante spasmodique associée</li>
       <li><strong>Antalgie :</strong> <strong>Paracétamol (Perfalgan® IV, Doliprane® PO)</strong> 1 g toutes les 6h en 1ère intention — <strong>proscrire les AINS et l'aspirine</strong> (aggravent la lésion muqueuse et le risque hémorragique) ; si douleur réfractaire, titration de Morphine possible sans retarder le diagnostic</li>
-      <li><strong>Antiémétique</strong> si nausées/vomissements associés (<strong>Métoclopramide — Primpéran®</strong> 10 mg IV/IM/PO, jusqu'à 3 fois/jour, max 30 mg/j)</li>
+      <li><strong>Antiémétique</strong> si nausées/vomissements associés (<strong>Métoclopramide (Primpéran®)</strong> 10 mg IV/IM/PO, jusqu'à 3 fois/jour, max 30 mg/j)</li>
       <li><strong>Arrêt impératif du(des) facteur(s) déclenchant(s) :</strong> AINS, aspirine, corticoïdes, alcool, tabac — cause majeure et souvent réversible de gastrite/ulcère</li>
       <li><strong>Rechercher une prise d'AINS/aspirine au long cours</strong> et évaluer l'indication d'une protection gastrique définitive (IPP au long cours) si le traitement causal ne peut être arrêté</li>
       <li>Bilan biologique : NFS (anémie évocatrice de saignement chronique/aigu), CRP, groupe sanguin/RAI si doute hémorragique, lipase (éliminer pancréatite)</li>
@@ -2053,7 +2195,7 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
       <li><strong>Ne pas retarder l'imagerie</strong> — angioscanner abdominal (angio-TDM) en urgence dès la suspicion clinique, examen de référence (sensibilité et spécificité élevées) ; ne pas se contenter d'une radiographie standard, non contributive</li>
       <li><strong>Lactates</strong> — un taux normal n'élimine pas le diagnostic au stade précoce (marqueur d'ischémie déjà constituée, pas de l'ischémie débutante) ; leur élévation, associée à une acidose métabolique, est un signe de gravité (souffrance intestinale engagée)</li>
-      <li><strong>Réanimation initiale dès la suspicion</strong> — remplissage vasculaire (<strong>Ringer Lactate/NaCl 0,9% — Baxter®</strong>) pour optimiser la perfusion splanchnique, correction des troubles hydro-électrolytiques, sonde nasogastrique de décompression si distension/vomissements, arrêt de toute alimentation orale</li>
+      <li><strong>Réanimation initiale dès la suspicion</strong> — remplissage vasculaire (<strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong>) pour optimiser la perfusion splanchnique, correction des troubles hydro-électrolytiques, sonde nasogastrique de décompression si distension/vomissements, arrêt de toute alimentation orale</li>
       <li><strong>Antibiothérapie probabiliste large spectre</strong> dès la suspicion diagnostique (couverture Gram négatif et anaérobies) — <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j + <strong>Métronidazole (Flagyl®)</strong> 500mg IV toutes les 8h</li>
       <li><strong>Avis chirurgical immédiat</strong> — laparotomie exploratrice en urgence en cas de signes de péritonite/nécrose intestinale constituée (résection des segments nécrosés, revascularisation si possible, laparotomie "damage control" avec réintervention programmée à 24-48h pour réévaluer la viabilité intestinale)</li>
       <li><strong>Revascularisation</strong> — chirurgie ouverte (embolectomie/pontage) dans la majorité des structures malgaches ; les techniques endovasculaires (thrombolyse in situ, angioplastie) ne sont généralement pas accessibles localement</li>
@@ -2099,7 +2241,7 @@ function renderProtocoles(){
         <strong>Acétazolamide (Diamox®)</strong> 500 mg IV lente (ou PO si voie orale possible) puis 250 mg PO toutes les 6-8h ;
         <strong>Timolol collyre (Timoptol® 0,5%)</strong> 1 goutte dans l'œil atteint, à répéter selon protocole local ;
         <strong>Apraclonidine collyre (Iopidine® 0,5-1%)</strong> 1 goutte en complément ;
-        <strong>Mannitol 20% (Mannitol Aguettant®/Baxter®)</strong> 1-2 g/kg IV en perfusion sur 30-60 min si pression très élevée et échec du traitement précédent —
+        <strong>Mannitol 20% (Mannitol Aguettant®, Baxter®)</strong> 1-2 g/kg IV en perfusion sur 30-60 min si pression très élevée et échec du traitement précédent —
         puis <strong>iridotomie au laser</strong> ou iridectomie chirurgicale en traitement définitif dès que possible ;
         une fois la pression abaissée, <strong>Pilocarpine collyre 2%</strong> 1 goutte peut être ajoutée (myotique, inefficace tant que la pression reste très élevée)</li>
       <li>Antalgiques (<strong>Paracétamol</strong> IV/PO, voire morphine titrée si douleur intense) et antiémétiques (<strong>Métoclopramide (Primpéran®)</strong> 10 mg IV) associés</li>
@@ -2186,7 +2328,7 @@ function renderProtocoles(){
       <li><strong>GEU rompue avec choc/hémopéritoine :</strong> chirurgie en urgence absolue (cœlioscopie ou laparotomie selon stabilité et plateau technique) — salpingectomie (trompe détruite) ou salpingotomie conservatrice selon l'état tubaire et le désir de fertilité ultérieure, remplissage vasculaire et transfusion en parallèle sans attendre</li>
       <li><strong>GEU non compliquée, asymptomatique, β-hCG bas et décroissants :</strong> abstention/surveillance biologique possible (β-hCG répétés) — option uniquement si patiente compliante et suivi assuré</li>
       <li><strong>Traitement médical par Méthotrexate</strong> (si GEU non rompue, non active, β-hCG &lt;5000 UI/L, absence d'activité cardiaque embryonnaire, patiente stable et compliante au suivi) : 1-1,5 mg/kg ou 50 mg/m² en injection IM unique — surveillance de la décroissance des β-hCG à J4 et J7, répétable si décroissance insuffisante</li>
-      <li>Vérifier systématiquement le <strong>groupe Rhésus</strong> : si Rhésus négatif, administrer des <strong>immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM en prévention de l'allo-immunisation (dose réduite possible si <12 SA selon le produit disponible), quel que soit le traitement choisi, idéalement dans les 72h</li>
+      <li>Vérifier systématiquement le <strong>groupe Rhésus</strong> : si Rhésus négatif, administrer des <strong>Immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM en prévention de l'allo-immunisation (dose réduite possible si <12 SA selon le produit disponible), quel que soit le traitement choisi, idéalement dans les 72h</li>
       <li>Soutien psychologique — toute perte de grossesse, y compris ectopique, nécessite une prise en charge empathique en plus du traitement médical</li>
     </ol>
   </div>
@@ -2200,7 +2342,7 @@ function renderProtocoles(){
       <li>Échographie pelvienne pour préciser le type (complète/incomplète/rétention), éliminer une GEU associée (toujours possible même avec grossesse intra-utérine visible en cas de grossesse hétérotopique, rare mais à garder en tête)</li>
       <li><strong>Hémorragie abondante/mal tolérée avec rétention :</strong> évacuation utérine en urgence (aspiration endo-utérine) — ne pas différer si instabilité hémodynamique</li>
       <li>2 VVP si saignement important, bilan (NFS, groupe/Rh/RAI), remplissage/transfusion selon tolérance</li>
-      <li>Vérifier le <strong>groupe Rhésus</strong> : <strong>immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM si Rhésus négatif, quel que soit le terme, idéalement dans les 72h</li>
+      <li>Vérifier le <strong>groupe Rhésus</strong> : <strong>Immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM si Rhésus négatif, quel que soit le terme, idéalement dans les 72h</li>
       <li>Antalgie adaptée — <strong>Paracétamol</strong> 1 g PO/IV toutes les 6h (max 4 g/j), voire <strong>Morphine</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleurs intenses type contractions</li>
       <li>Fausse couche non hémorragique/peu symptomatique : abstention, traitement médical (misoprostol) ou chirurgical selon le choix éclairé de la patiente — pas d'urgence si bien tolérée</li>
     </ol>
@@ -2215,7 +2357,7 @@ function renderProtocoles(){
       <li><strong>HRP avec retentissement materno-fœtal (souffrance fœtale, choc maternel, mort fœtale in utero suspectée)</strong> : <strong>extraction fœtale en urgence</strong> (césarienne en urgence absolue le plus souvent), quel que soit le terme si viable — ne pas retarder pour compléter le bilan si gravité franche</li>
       <li><strong>Placenta praevia hémorragique :</strong> césarienne en urgence si saignement massif/mal toléré ou souffrance fœtale ; expectative sous surveillance stricte (hospitalisation, corticothérapie de maturation pulmonaire fœtale si prématurité) si saignement modéré et bien toléré</li>
       <li>Correction de la coagulopathie : PFC, fibrinogène, culots plaquettaires selon le bilan — risque de CIVD notable en cas d'HRP étendu</li>
-      <li>Vérifier le groupe Rhésus : <strong>immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM si Rhésus négatif, idéalement dans les 72h</li>
+      <li>Vérifier le groupe Rhésus : <strong>Immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM si Rhésus négatif, idéalement dans les 72h</li>
       <li><strong>Ne jamais réaliser de toucher vaginal</strong> avant d'avoir éliminé un placenta praevia par l'échographie (risque d'aggraver une hémorragie sur placenta bas inséré)</li>
       <li>Rechercher un facteur de risque/déclenchant d'HRP : HTA/prééclampsie, traumatisme abdominal, tabac, cocaïne, antécédent d'HRP</li>
     </ol>
@@ -2287,7 +2429,7 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Ne pas retarder l'avis chirurgical/gynécologique</strong> en attendant une confirmation d'imagerie si la présentation clinique est fortement évocatrice — le diagnostic reste avant tout clinique, l'imagerie peut être faussement rassurante (un flux doppler conservé n'élimine pas une torsion, notamment intermittente)</li>
       <li>Échographie pelvienne (idéalement endovaginale) avec doppler si disponible rapidement, sans retarder la prise en charge chirurgicale en cas de forte suspicion clinique — recherche d'une masse annexielle volumineuse, d'un ovaire augmenté de volume, d'un épanchement</li>
-      <li>À jeun strict dès la suspicion, VVP, antalgie (<strong>Paracétamol — Perfalgan®</strong> 1 g IV toutes les 6h, voire <strong>Morphine — Morphine Aguettant®</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur intense), préparation à une exploration chirurgicale en urgence (cœlioscopie en 1ère intention) — détorsion ± kystectomie si kyste responsable, conservation ovarienne privilégiée chaque fois que possible même en cas d'aspect ischémique (viabilité souvent meilleure que l'aspect macroscopique ne le suggère)</li>
+      <li>À jeun strict dès la suspicion, VVP, antalgie (<strong>Paracétamol (Perfalgan®)</strong> 1 g IV toutes les 6h, voire <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur intense), préparation à une exploration chirurgicale en urgence (cœlioscopie en 1ère intention) — détorsion ± kystectomie si kyste responsable, conservation ovarienne privilégiée chaque fois que possible même en cas d'aspect ischémique (viabilité souvent meilleure que l'aspect macroscopique ne le suggère)</li>
       <li>β-hCG systématique (éliminer une grossesse, y compris ectopique, avant toute décision chirurgicale)</li>
       <li>Diagnostics différentiels à évoquer : GEU, appendicite, torsion d'hydatide, rupture de kyste hémorragique, infection génitale haute — en cas de doute diagnostique persistant, privilégier l'exploration chirurgicale rapide plutôt que la temporisation</li>
     </ol>
@@ -2465,7 +2607,7 @@ function renderProtocoles(){
       <li><strong>Ne pas suturer d'emblée</strong> la plaie (favorise la diffusion du virus le long des trajets nerveux), sauf nécessité hémostatique/esthétique impérative — si suture indispensable, réaliser après infiltration des immunoglobulines et attendre si possible</li>
       <li><strong>Vaccination antirabique (Verorab®)</strong> — schéma recommandé par l'OMS depuis 2018 : <strong>schéma Essen à 4 doses IM</strong> (J0-J3-J7-J14), qui remplace désormais le schéma classique à 5 doses ; alternative acceptée : schéma Zagreb 2-1-1 (2 doses J0, puis 1 dose J7 et 1 dose J21)</li>
       <li><strong>Catégorie III :</strong> <strong>Immunoglobulines antirabiques (Imogam Rage® humaines ou Favirab® équines)</strong> — 20 UI/kg (humaines) ou 40 UI/kg (équines), infiltrées autour et dans la plaie autant que le volume le permette, le reste en IM à distance ; <strong>toujours en un site différent</strong> du vaccin, administrées idéalement le jour J0 (possible jusqu'à J7 après la 1ère dose de vaccin si non disponible initialement)</li>
-      <li><strong>Prévention antitétanique</strong> systématique selon le statut vaccinal, et antibioprophylaxie (<strong>Amoxicilline-Acide clavulanique — Augmentin®</strong>) pour les morsures à risque infectieux élevé</li>
+      <li><strong>Prévention antitétanique</strong> systématique selon le statut vaccinal, et antibioprophylaxie (<strong>Amoxicilline-Acide clavulanique (Augmentin®)</strong>) pour les morsures à risque infectieux élevé</li>
       <li><strong>Ne jamais différer la PPE</strong> dans l'attente d'observation de l'animal, sauf exception : un chien ou chat domestique apparemment sain, identifiable et observable peut être surveillé 10 jours — si l'animal reste vivant et asymptomatique à J10, la PPE peut être interrompue ; en cas de doute ou d'animal errant/sauvage/non retrouvé, la PPE complète doit être menée à son terme</li>
       <li><strong>Une fois les symptômes rabiques déclarés</strong> (agitation, hydrophobie, paralysie) : aucun traitement curatif disponible, prise en charge exclusivement palliative — isolement du patient et précautions contact/gouttelettes pour protéger le personnel soignant (salive hautement contaminante)</li>
     </ol>
@@ -2510,7 +2652,7 @@ function renderProtocoles(){
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li><strong>MEOPA</strong> (protoxyde d'azote) le plus tôt possible si disponible — équipement souvent limité hors grands centres à Madagascar</li>
       <li><strong>Morphine</strong> IVD titrée : 0,1 mg/kg puis 3 mg toutes les 5 min IVD jusqu'à EVA &lt;4. Si pompe PCA disponible : 2 mg/mL, bolus 2 mg, période réfractaire 10 min (puis 2 min si besoin), dose maximale 45 mg/4h et 270 mg/24h — à défaut de PCA, poursuivre la titration IV répétée avec réévaluation toutes les 30-60 min</li>
-      <li>En cas d'échec : <strong>kétamine (Ketalar®)</strong> IVSE 0,15 mg/kg/h, sans dépasser 1 mg/kg/h</li>
+      <li>En cas d'échec : <strong>Kétamine (Ketalar®)</strong> IVSE 0,15 mg/kg/h, sans dépasser 1 mg/kg/h</li>
       <li>Douleur modérée : <strong>paracétamol</strong> 1 g toutes les 6h ± AINS si pas de contre-indication (insuffisance rénale fréquente sur ce terrain — à vérifier avant prescription)</li>
     </ul>
     <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Hydratation :</strong></p>
@@ -2524,7 +2666,7 @@ function renderProtocoles(){
       <li><strong>Oxygénothérapie</strong> systématique 3 L/min, à adapter selon la SpO2 (non systématique si saturation normale, mais large marge en pratique)</li>
       <li><strong>Hydroxyzine (Atarax®)</strong> 25 à 100 mg/j PO si anxiété</li>
       <li>Fièvre sans point d'appel : <strong>amoxicilline</strong> 1 g/8h IVL (antibiothérapie probabiliste couvrant les germes encapsulés — asplénie fonctionnelle)</li>
-      <li>Anticoagulation préventive : <strong>énoxaparine (Lovenox®)</strong> 0,4 mL/j SC</li>
+      <li>Anticoagulation préventive : <strong>Énoxaparine (Lovenox®)</strong> 0,4 mL/j SC</li>
     </ul>
     <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Surveillance :</strong> TA, FC, SpO2 toutes les 8h ; réévaluation de l'EVA</p>
     <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Transfusion :</strong> pas de transfusion en urgence sauf avis spécialisé — non systématique dans la CVO simple non compliquée</p>
@@ -2549,7 +2691,7 @@ function renderProtocoles(){
       <li>Sérum physiologique : 1,5 L/j sur la 1ère heure</li>
       <li>Puis G5% + 4 g NaCl/L + 2 g KCl/L (ne pas dépasser 2 L/j par voie IV)</li>
     </ul>
-    <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Analgésie</strong> (idem CVO — MEOPA, morphine titrée ± PCA) ; si échec : associer <strong>kétamine (Ketalar®)</strong> 0,15 mg/kg IVSE</p>
+    <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Analgésie</strong> (idem CVO — MEOPA, morphine titrée ± PCA) ; si échec : associer <strong>Kétamine (Ketalar®)</strong> 0,15 mg/kg IVSE</p>
     <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Autres traitements :</strong></p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li>Acide folique 5 mg/j PO</li>
@@ -2579,7 +2721,7 @@ function renderProtocoles(){
       <li><strong>Mise en condition :</strong> voie veineuse (sérum physiologique 500 mL/24h), scope, PANI</li>
       <li><strong>De 1ère intention (entre 30 min et 4h) — petits moyens :</strong> exercice musculaire (flexion-extension des cuisses, montée-descente d'escalier) pour induire un vol vasculaire, douche froide, application de glace</li>
       <li><strong>Si échec ou après 4h :</strong> appel urologue en urgence ; gazométrie sur sang intracaverneux (souffrance anoxique si PaO2 &lt;30 mmHg, PaCO2 &gt;60 mmHg, pH &lt;7,25) ; ponction caverneuse (perpendiculaire et latérale à la verge, seringue de 50 mL, après anesthésie locale) avec évacuation du sang noir jusqu'à retour de sang rouge</li>
-      <li><strong>Injection intracaverneuse d'un vasoconstricteur</strong> — <strong>étiléfrine (Effortil®)</strong> 2 mg (1 ampoule de 1 mL = 10 mg, diluer dans une seringue à insuline), répétable toutes les 10 min pendant la 1ère heure si échec, dose maximale 10 mg (après avis urologue). Si étiléfrine non disponible : <strong>adrénaline</strong> fortement diluée (10-20 µg par injection intracaverneuse) peut être utilisée en alternative selon avis urologique, sous surveillance tensionnelle/ECG</li>
+      <li><strong>Injection intracaverneuse d'un vasoconstricteur</strong> — <strong>Étiléfrine (Effortil®)</strong> 2 mg (1 ampoule de 1 mL = 10 mg, diluer dans une seringue à insuline), répétable toutes les 10 min pendant la 1ère heure si échec, dose maximale 10 mg (après avis urologue). Si étiléfrine non disponible : <strong>adrénaline</strong> fortement diluée (10-20 µg par injection intracaverneuse) peut être utilisée en alternative selon avis urologique, sous surveillance tensionnelle/ECG</li>
       <li><strong>Si échec :</strong> chirurgie urologique — shunt uni ou bilatéral</li>
     </ol>
 
@@ -2594,9 +2736,9 @@ function renderProtocoles(){
       <li><strong>Vérifier immédiatement la concordance</strong> : identité du patient, groupe sanguin/Rh, numéro de poche, compatibilité — la cause la plus fréquente et la plus grave (hémolyse aiguë) résulte d'une erreur d'attribution de poche</li>
       <li><strong>Réaction hémolytique aiguë</strong> (incompatibilité ABO) : fièvre/frissons brutaux, douleur lombaire, douleur au point de perfusion, hypotension/choc, hémoglobinurie (urines rouge-brun), CIVD, insuffisance rénale aiguë — <strong>urgence vitale</strong> : arrêt immédiat et définitif de la poche, remplissage vasculaire pour maintenir une diurèse &gt;100 mL/h (protection rénale), alcalinisation des urines si disponible, renvoyer la poche + un tube de sang du patient au laboratoire (groupage, RAI, test de Coombs direct, recherche d'hémolyse), traitement du choc/CIVD associé</li>
       <li><strong>Réaction fébrile non hémolytique</strong> (la plus fréquente, bénigne) : fièvre/frissons isolés sans signe de gravité — arrêter transitoirement la transfusion, <strong>Paracétamol</strong> 1g, éliminer une réaction plus grave avant de reprendre prudemment (souvent poursuivie à débit ralenti sous surveillance après avis médical)</li>
-      <li><strong>Réaction allergique/anaphylactique</strong> : urticaire isolée légère → antihistaminique (<strong>Déxchlorphéniramine — Polaramine®</strong> 5 mg IV/IM) et reprise prudente possible ; si bronchospasme/angio-œdème/hypoTA → arrêt définitif, prise en charge complète de l'anaphylaxie (<em>voir protocole dédié</em> — adrénaline IM sans délai si critères remplis)</li>
+      <li><strong>Réaction allergique/anaphylactique</strong> : urticaire isolée légère → antihistaminique (<strong>Déxchlorphéniramine (Polaramine®)</strong> 5 mg IV/IM) et reprise prudente possible ; si bronchospasme/angio-œdème/hypoTA → arrêt définitif, prise en charge complète de l'anaphylaxie (<em>voir protocole dédié</em> — adrénaline IM sans délai si critères remplis)</li>
       <li><strong>TRALI</strong> (Transfusion-Related Acute Lung Injury) : détresse respiratoire aiguë hypoxémiante brutale pendant ou dans les 6h suivant la transfusion, infiltrats pulmonaires bilatéraux à la radiographie, <strong>sans surcharge volémique</strong> (distinct du TACO) — traitement symptomatique : oxygénothérapie/ventilation selon sévérité (proche de la prise en charge du SDRA), arrêt définitif de la poche en cause, signalement pour traçabilité du donneur</li>
-      <li><strong>TACO</strong> (surcharge volémique post-transfusionnelle) : dyspnée, orthopnée, crépitants, hypertension, distension jugulaire, souvent chez un patient âgé/insuffisant cardiaque ou après transfusion trop rapide — traitement identique à l'OAP cardiogénique (<strong>Furosémide — Lasilix®</strong>, position demi-assise, oxygène) ; prévention par un débit de transfusion ralenti chez les sujets à risque</li>
+      <li><strong>TACO</strong> (surcharge volémique post-transfusionnelle) : dyspnée, orthopnée, crépitants, hypertension, distension jugulaire, souvent chez un patient âgé/insuffisant cardiaque ou après transfusion trop rapide — traitement identique à l'OAP cardiogénique (<strong>Furosémide (Lasilix®)</strong>, position demi-assise, oxygène) ; prévention par un débit de transfusion ralenti chez les sujets à risque</li>
       <li><strong>Contamination bactérienne de la poche</strong> (rare, surtout concentrés plaquettaires) : fièvre élevée brutale, frissons, choc septique précoce — arrêt immédiat, hémocultures (patient + poche), antibiothérapie probabiliste large spectre sans délai (cf. protocole sepsis)</li>
       <li><strong>Toute réaction transfusionnelle doit être déclarée</strong> selon le circuit d'hémovigilance local, avec conservation de la poche et de la tubulure pour analyse</li>
     </ol>
@@ -2612,7 +2754,7 @@ function renderProtocoles(){
       <li><strong>Reconnaître le syndrome cholinergique</strong> : myosis serré, hypersécrétions (bronchorrhée, sialorrhée, sueurs profuses, larmoiement), bradycardie, fasciculations musculaires, diarrhée, confusion, convulsions</li>
       <li><strong>Atropine IV (Atropine Aguettant®)</strong> : 1-2 mg (enfant : 0,02 mg/kg), <strong>doses doublées toutes les 5 minutes</strong> jusqu'à assèchement des sécrétions bronchiques et disparition du bronchospasme (pas de cible de fréquence cardiaque) — les doses cumulées nécessaires peuvent être très élevées (plusieurs dizaines de mg), sans plafond fixe</li>
       <li><strong>Pralidoxime (Contrathion®)</strong> si disponible : bolus initial 1-2 g IV lent (15-30 min), puis perfusion continue 400-600 mg/h chez l'adulte (10-20 mg/kg/h chez l'enfant) — d'autant plus efficace si débuté précocement (idéalement &lt;24-48h), à poursuivre tant que les signes cholinergiques/besoins en atropine persistent ; toujours associé à l'atropine, jamais en monothérapie</li>
-      <li><strong>Benzodiazépines (Diazépam — Valium®)</strong> en cas de convulsions ou d'agitation associée</li>
+      <li><strong>Benzodiazépines — Diazépam (Valium®)</strong> en cas de convulsions ou d'agitation associée</li>
       <li><strong>Médicaments contre-indiqués</strong> : morphine, théophylline/aminophylline, phénothiazines (aggravent la toxicité cholinergique et la dépression respiratoire)</li>
       <li><strong>Surveillance prolongée 48-72h minimum</strong> : risque de <strong>syndrome intermédiaire</strong> (faiblesse musculaire proximale et respiratoire retardée, typiquement entre J1 et J4, après amélioration initiale apparente) — surveillance CPK et kaliémie (rhabdomyolyse), fonction rénale</li>
     </ol>
@@ -2787,10 +2929,10 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Activer le protocole précocement</strong> — score ABC (Assessment of Blood Consumption) ou score de Shock Index (FC/PAS &gt;1) comme aide à la décision</li>
       <li><strong>Contrôle de l'hémorragie en parallèle</strong> — chirurgie/radiologie interventionnelle/tamponnement, garrot si hémorragie de membre</li>
-      <li><strong>Réanimation hémostatique</strong> — objectif <em>damage control resuscitation</em> : hypotension permissive (PAS 80-90 mmHg tant que non contrôlée), limiter les cristalloïdes (<strong>Ringer Lactate/NaCl 0,9% — Baxter®</strong>, 500mL-1L maximum avant produits sanguins)</li>
+      <li><strong>Réanimation hémostatique</strong> — objectif <em>damage control resuscitation</em> : hypotension permissive (PAS 80-90 mmHg tant que non contrôlée), limiter les cristalloïdes (<strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong>, 500mL-1L maximum avant produits sanguins)</li>
       <li><strong>Ratio transfusionnel cible 1:1:1</strong> — Concentrés érythrocytaires : Plasma frais congelé : Plaquettes, pour éviter la coagulopathie de dilution</li>
       <li><strong>Acide tranexamique (Exacyl®)</strong> — 1g IV en 10 min puis 1g IV sur 8h, dans les 3h suivant le traumatisme (protocole CRASH-2)</li>
-      <li><strong>Calcium ionisé</strong> — surveiller et corriger systématiquement (chélation par le citrate des produits sanguins) ; <strong>gluconate de calcium (Calcium Sandoz®)</strong> 1-2g IV lente (sur 10-15min) si hypocalcémie, répétable</li>
+      <li><strong>Calcium ionisé</strong> — surveiller et corriger systématiquement (chélation par le citrate des produits sanguins) ; <strong>Gluconate de calcium (Calcium Sandoz®)</strong> 1-2g IV lente (sur 10-15min) si hypocalcémie, répétable</li>
       <li><strong>Prévenir la triade létale</strong> — hypothermie (réchauffement actif, objectif &gt;36°C), acidose, coagulopathie</li>
       <li>Réévaluer biologie toutes les 30-60 min : NFS, TP/TCA, fibrinogène, gaz du sang, calcium ionisé, lactates</li>
     </ol>
@@ -2856,10 +2998,10 @@ function renderProtocoles(){
       <tr><td><strong>S</strong>edation</td><td><strong>Midazolam (Hypnovel®)</strong> 0,03-0,1 mg/kg/h IVSE et/ou <strong>Fentanyl/Morphine</strong>, objectif RASS défini, fenêtre d'arrêt quotidienne</td></tr>
       <tr><td><strong>T</strong>hromboembolic prophylaxis</td><td><strong>HBPM (Lovenox®)</strong> 4000 UI (40mg) SC/j en prophylaxie, ou compression pneumatique intermittente si contre-indication</td></tr>
       <tr><td><strong>H</strong>ead of bed elevated</td><td>Décubitus semi-assis 30-45° (prévention des pneumopathies d'inhalation/PAVM)</td></tr>
-      <tr><td><strong>U</strong>lcer prevention</td><td><strong>Oméprazole (Mopral®)</strong> 40mg/j IV ou <strong>Pantoprazole (Eupantol®/Inipomp®)</strong> 40mg/j IV si facteurs de risque (ventilation &gt;48h, coagulopathie)</td></tr>
-      <tr><td><strong>G</strong>lycemic control</td><td>Contrôle glycémique cible 140-180 mg/dL avec <strong>insuline rapide (Actrapid®)</strong> en IVSE selon protocole de titration horaire (glycémies capillaires répétées)</td></tr>
+      <tr><td><strong>U</strong>lcer prevention</td><td><strong>Oméprazole (Mopral®)</strong> 40mg/j IV ou <strong>Pantoprazole (Eupantol®, Inipomp®)</strong> 40mg/j IV si facteurs de risque (ventilation &gt;48h, coagulopathie)</td></tr>
+      <tr><td><strong>G</strong>lycemic control</td><td>Contrôle glycémique cible 140-180 mg/dL avec <strong>Insuline rapide (Actrapid®)</strong> en IVSE selon protocole de titration horaire (glycémies capillaires répétées)</td></tr>
     </table>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Lovenox®, Mopral®/Eupantol®, Doliprane®/Perfalgan®, Actrapid® et Hypnovel® figurent parmi les molécules les plus couramment disponibles dans les pharmacies hospitalières malgaches.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Lovenox®, Mopral®, Eupantol®, Doliprane®, Perfalgan®, Actrapid® et Hypnovel® figurent parmi les molécules les plus couramment disponibles dans les pharmacies hospitalières malgaches.</p>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Autres mesures essentielles :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li>Prévention des escarres — changements de position réguliers, matelas adapté, inspection cutanée quotidienne</li>
@@ -2895,7 +3037,7 @@ function renderProtocoles(){
       <li><strong>Suspicion clinique</strong> — homme &gt;60 ans, douleur abdominale/lombaire intense brutale, syncope, choc hémorragique, antécédent d'AAA connu ou de tabagisme/HTA</li>
       <li><strong>Ne pas retarder la prise en charge par des examens complémentaires</strong> si patient instable et suspicion forte — appel chirurgical vasculaire immédiat</li>
       <li><strong>Réanimation hémodynamique prudente</strong> — hypotension permissive (PAS cible 80-100 mmHg) avec <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> par bolus de 250-500mL réévalués, éviter le remplissage agressif qui majore le saignement avant contrôle chirurgical</li>
-      <li><strong>Groupe sanguin, commande de culots</strong> en urgence auprès du CNTS, activer le protocole de transfusion massive si besoin (<strong>Exacyl®</strong> 1g IV en 10 min puis 1g IV sur 8h)</li>
+      <li><strong>Groupe sanguin, commande de culots</strong> en urgence auprès du CNTS, activer le protocole de transfusion massive si besoin (<strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min puis 1g IV sur 8h)</li>
       <li>Échographie abdominale au lit (FAST) si disponible pour confirmation rapide ; angioscanner uniquement si patient stabilisé transportable</li>
       <li><strong>Transfert immédiat au bloc</strong> — chirurgie ouverte (seule option réaliste dans la majorité des structures malgaches, l'endoprothèse/EVAR n'étant disponible que dans de très rares centres équipés)</li>
     </ol>
@@ -2915,7 +3057,7 @@ function renderProtocoles(){
       <li><strong>Sulfate de magnésium (Sulfate de magnésium Lavoisier®)</strong> — 2g IV en 10-15 min (même si magnésémie normale), répétable une fois, puis entretien 1-2g/h IVSE pendant plusieurs heures</li>
       <li><strong>Corriger la kaliémie</strong> — cible haute normale (4,5-5 mmol/L), chlorure de potassium 1-1,5g dilué IVSE sur 1h (jamais en bolus direct)</li>
       <li><strong>Accélérer la fréquence cardiaque</strong> si torsades pause-dépendantes — <strong>Isoprénaline (Isuprel®)</strong> 0,5-10 µg/min IVSE, titrée pour objectif FC 90-110/min, ou entraînement électrosystolique (pacing) temporaire</li>
-      <li>Éviter les antiarythmiques de classe Ia/III (procaïnamide, <strong>Amiodarone/Cordarone®</strong>) qui allongent davantage le QT</li>
+      <li>Éviter les antiarythmiques de classe Ia/III (procaïnamide, <strong>Amiodarone (Cordarone®)</strong>) qui allongent davantage le QT</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le sulfate de magnésium injectable est très largement disponible (également utilisé en obstétrique pour l'éclampsie — présent jusqu'au niveau CHRD). L'Isoprénaline (Isuprel®) et le matériel d'entraînement électrosystolique sont réservés aux CHU disposant d'une unité de cardiologie/réanimation.</p>
   </div>
@@ -2972,7 +3114,7 @@ function renderProtocoles(){
     </table>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Péricardite aiguë simple, non compliquée :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li><strong>Ibuprofène (Brufen®/Nurofen®)</strong> 600-800mg x3/j per os <em>ou</em> <strong>Aspirine (Aspégic®)</strong> 750-1000mg x3/j per os, pendant 1-2 semaines puis décroissance</li>
+      <li><strong>Ibuprofène (Brufen®, Nurofen®)</strong> 600-800mg x3/j per os <em>ou</em> <strong>Aspirine (Aspégic®)</strong> 750-1000mg x3/j per os, pendant 1-2 semaines puis décroissance</li>
       <li>+ <strong>Colchicine (Colchicine Opocalcium®)</strong> 0,5mg x2/j (0,5mg/j si &lt;70kg) pendant 3 mois — réduction du risque de récidive</li>
       <li>Repos, éviter l'effort physique jusqu'à résolution des symptômes et normalisation biologique</li>
       <li>Rechercher un épanchement associé par échocardiographie — surveiller le risque de tamponnade</li>
@@ -2994,8 +3136,8 @@ function renderProtocoles(){
       <li><strong>Surveillance rapprochée de la fonction respiratoire</strong> — mesure répétée de la capacité vitale (CV) ; hospitalisation en réanimation si CV &lt;20 mL/kg, baisse rapide, ou troubles de la déglutition</li>
       <li><strong>Surveillance cardiovasculaire</strong> — dysautonomie fréquente : variations tensionnelles majeures, troubles du rythme, risque d'arrêt cardiaque brutal</li>
       <li><strong>Ponction lombaire</strong> — dissociation albumino-cytologique typique (protéinorachie élevée, cellularité normale), peut être normale la 1re semaine</li>
-      <li><strong>Traitement spécifique précoce</strong> — <strong>Immunoglobulines IV (Tegeline®/Privigen®)</strong> 0,4g/kg/j en perfusion IV sur 5 jours (dose totale 2g/kg) <em>ou</em> échanges plasmatiques (4-6 séances), à débuter idéalement dans les 2 semaines suivant le début des symptômes</li>
-      <li><strong>Prévention systématique</strong> — thromboprophylaxie (<strong>HBPM/Lovenox®</strong> 4000 UI SC/j), prévention des escarres, kinésithérapie précoce, prise en charge de la douleur neuropathique (<strong>Gabapentine/Neurontin®</strong> 300mg x3/j en titration progressive ou <strong>Amitriptyline/Laroxyl®</strong> 10-25mg au coucher)</li>
+      <li><strong>Traitement spécifique précoce</strong> — <strong>Immunoglobulines IV (Tegeline®, Privigen®)</strong> 0,4g/kg/j en perfusion IV sur 5 jours (dose totale 2g/kg) <em>ou</em> échanges plasmatiques (4-6 séances), à débuter idéalement dans les 2 semaines suivant le début des symptômes</li>
+      <li><strong>Prévention systématique</strong> — thromboprophylaxie (<strong>HBPM (Lovenox®)</strong> 4000 UI SC/j), prévention des escarres, kinésithérapie précoce, prise en charge de la douleur neuropathique (<strong>Gabapentine (Neurontin®)</strong> 300mg x3/j en titration progressive ou <strong>Amitriptyline (Laroxyl®)</strong> 10-25mg au coucher)</li>
       <li>Anticiper une intubation élective avant l'épuisement respiratoire plutôt qu'en urgence sur décompensation brutale</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les Immunoglobulines IV et les échanges plasmatiques ne sont <strong>pas disponibles en pratique courante</strong> à Madagascar — leur obtention nécessite une importation spécifique (coût très élevé) ou un transfert vers un centre de La Réunion/Maurice si les moyens du patient le permettent. En leur absence, la prise en charge repose sur les soins de support (surveillance respiratoire rapprochée, prévention des complications de décubitus, kinésithérapie), qui restent le déterminant principal du pronostic en contexte de ressources limitées. Lovenox® et Laroxyl® sont largement disponibles.</p>
@@ -3007,8 +3149,8 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Rechercher un facteur déclenchant</strong> — infection intercurrente, chirurgie récente, arrêt/sous-dosage du traitement, certains médicaments contre-indiqués (aminoglycosides, bêtabloquants, magnésium IV, curares)</li>
       <li><strong>Évaluation respiratoire répétée</strong> — mesure de la capacité vitale, surveillance de la toux et de la déglutition ; intubation élective précoce si épuisement respiratoire prévisible</li>
-      <li><strong>Distinguer crise myasthénique vs crise cholinergique</strong> (surdosage en anticholinestérasiques — <strong>Pyridostigmine/Mestinon®</strong> habituellement 60mg x3-6/j per os) — la crise cholinergique associe des signes muscariniques (myosis, hypersialorrhée, diarrhée, bradycardie, sueurs) : dans le doute, suspendre les anticholinestérasiques</li>
-      <li><strong>Traitement spécifique</strong> — Immunoglobulines IV 0,4g/kg/j x5j ou échanges plasmatiques (efficacité comparable), corticothérapie (<strong>Prednisolone/Cortancyl®</strong> 1mg/kg/j per os) à distancer de la phase aiguë (risque d'aggravation transitoire)</li>
+      <li><strong>Distinguer crise myasthénique vs crise cholinergique</strong> (surdosage en anticholinestérasiques — <strong>Pyridostigmine (Mestinon®)</strong> habituellement 60mg x3-6/j per os) — la crise cholinergique associe des signes muscariniques (myosis, hypersialorrhée, diarrhée, bradycardie, sueurs) : dans le doute, suspendre les anticholinestérasiques</li>
+      <li><strong>Traitement spécifique</strong> — Immunoglobulines IV 0,4g/kg/j x5j ou échanges plasmatiques (efficacité comparable), corticothérapie (<strong>Prednisolone (Cortancyl®)</strong> 1mg/kg/j per os) à distancer de la phase aiguë (risque d'aggravation transitoire)</li>
       <li>Éviter formellement les curares non dépolarisants à dose standard (sensibilité accrue) et la succinylcholine (résistance relative) si intubation nécessaire — avis anesthésique spécialisé</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Mestinon® (pyridostigmine) est le traitement de fond, généralement importé/commandé en pharmacie privée à Antananarivo — anticiper les ruptures de stock chez les patients connus. Comme pour le Guillain-Barré, les immunoglobulines IV et les échanges plasmatiques ne sont pas disponibles localement ; la corticothérapie (Cortancyl®) est largement accessible et reste souvent la seule option immunomodulatrice réalisable sur place.</p>
@@ -3021,11 +3163,11 @@ function renderProtocoles(){
       <li><strong>Signes d'alerte</strong> — douleur rachidienne intense, déficit moteur des membres progressif, niveau sensitif net, troubles sphinctériens (rétention urinaire, incontinence), syndrome de la queue de cheval (anesthésie en selle, troubles génito-sphinctériens bilatéraux)</li>
       <li><strong>Étiologies à rechercher</strong> — métastase vertébrale (cancer connu), abcès épidural (fièvre, terrain à risque, tuberculose vertébrale/mal de Pott fréquente à Madagascar), hématome épidural (anticoagulation, geste récent), hernie discale volumineuse</li>
       <li><strong>IRM médullaire en urgence</strong> (séquence de choix, disponible uniquement dans quelques centres à Antananarivo) — scanner si IRM non disponible/contre-indiquée</li>
-      <li><strong>Corticothérapie IV à forte dose</strong> si compression tumorale suspectée — <strong>Dexaméthasone (Dectancyl®/Soludécadron®)</strong> 10mg IV en bolus puis 4mg IV toutes les 6h, en concertation avec le neurochirurgien</li>
+      <li><strong>Corticothérapie IV à forte dose</strong> si compression tumorale suspectée — <strong>Dexaméthasone (Dectancyl®, Soludécadron®)</strong> 10mg IV en bolus puis 4mg IV toutes les 6h, en concertation avec le neurochirurgien</li>
       <li><strong>Contact neurochirurgical immédiat</strong> — décompression chirurgicale en urgence si déficit progressif ; radiothérapie en urgence si compression tumorale non chirurgicale (disponibilité très limitée à Madagascar)</li>
       <li>Si abcès épidural suspecté (notamment tuberculeux) : <strong>antibiothérapie/antituberculeux probabiliste</strong> après hémocultures/prélèvements (quadrithérapie antituberculeuse standard : Rifampicine 10mg/kg/j + Isoniazide 5mg/kg/j + Pyrazinamide 25mg/kg/j + Éthambutol 15mg/kg/j), sans retarder l'imagerie ni la décompression</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Dectancyl®/Soludécadron® sont disponibles à tous les niveaux hospitaliers. Le mal de Pott (spondylodiscite tuberculeuse) est une cause fréquente sous ces latitudes — les antituberculeux de 1re ligne sont distribués gratuitement via le Programme National de lutte contre la Tuberculose et doivent être considérés précocement dans ce contexte.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Dectancyl®, Soludécadron® sont disponibles à tous les niveaux hospitaliers. Le mal de Pott (spondylodiscite tuberculeuse) est une cause fréquente sous ces latitudes — les antituberculeux de 1re ligne sont distribués gratuitement via le Programme National de lutte contre la Tuberculose et doivent être considérés précocement dans ce contexte.</p>
   </div>
 
   <div class="card" id="proto-paracetamol">
@@ -3045,7 +3187,7 @@ function renderProtocoles(){
       <tr><td>Alternative orale (si IV indisponible)</td><td>140 mg/kg dose de charge puis 70 mg/kg toutes les 4h pendant 72h (17 doses au total)</td></tr>
     </table>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Schéma simplifié « 2 poches »</strong> (consensus ACMT/AACT/America's Poison Centers 2023) : <strong>200 mg/kg sur 4h puis 100 mg/kg sur 16h</strong> (dose totale identique, 300 mg/kg) — efficacité comparable au schéma classique à 3 poches avec moins d'erreurs de préparation/administration et moins de réactions anaphylactoïdes ; option à considérer en priorité dans un contexte de ressources limitées où la manipulation de 3 poches à débits différents majore le risque d'erreur.</p>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Fluimucil®/Exomuc® existe surtout en présentation orale (mucolytique) dans les pharmacies malgaches — la <strong>forme injectable est nettement moins répandue</strong> et généralement limitée aux pharmacies hospitalières des CHU. En son absence, la NAC orale (schéma prolongé, 72h ci-dessus) peut être utilisée comme alternative si le patient est capable de la tolérer (moins efficace en cas de vomissements associés). Le Carbomix® est présent en pharmacie hospitalière mais pas systématiquement en stock — le charbon activé générique reste l'option la plus courante.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Fluimucil®, Exomuc® existe surtout en présentation orale (mucolytique) dans les pharmacies malgaches — la <strong>forme injectable est nettement moins répandue</strong> et généralement limitée aux pharmacies hospitalières des CHU. En son absence, la NAC orale (schéma prolongé, 72h ci-dessus) peut être utilisée comme alternative si le patient est capable de la tolérer (moins efficace en cas de vomissements associés). Le Carbomix® est présent en pharmacie hospitalière mais pas systématiquement en stock — le charbon activé générique reste l'option la plus courante.</p>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Surveiller transaminases, TP/INR, fonction rénale, lactates et pH répétés. Critères de gravité (King's College) orientant vers une transplantation hépatique en urgence (non disponible à Madagascar — transfert international à envisager selon les moyens) : pH &lt;7,3, ou association INR &gt;6,5 + créatinine &gt;300µmol/L + encéphalopathie grade III-IV.</p>
   </div>
 
@@ -3090,10 +3232,10 @@ function renderProtocoles(){
       <li><strong>ECG répété</strong> — quasiment tout trouble du rythme est possible ("l'arythmie qui ressemble à toutes les autres")</li>
       <li><strong>Bradycardie/BAV symptomatique</strong> — <strong>Atropine</strong> 0,5-1mg IV, répétable (max 3mg)</li>
       <li><strong>Corriger la kaliémie avec prudence</strong> — hypokaliémie à corriger progressivement par voie IVSE (aggrave la toxicité si trop rapide), <strong>ne jamais administrer de calcium IV</strong> en cas d'hyperkaliémie associée à une intoxication digitalique (risque de majoration de l'arythmie)</li>
-      <li><strong>Antidote spécifique : anticorps anti-digoxine (fragments Fab, ex. Digidot®/DigiFab®)</strong> — 1 flacon neutralise ~0,5mg de digoxine, dose calculée selon la digoxinémie ou empiriquement 5-10 flacons si intoxication aiguë massive — indiqué si trouble du rythme grave, hyperkaliémie sévère associée, ou choc</li>
+      <li><strong>Antidote spécifique : anticorps anti-digoxine (fragments Fab, ex. Digidot®, DigiFab®)</strong> — 1 flacon neutralise ~0,5mg de digoxine, dose calculée selon la digoxinémie ou empiriquement 5-10 flacons si intoxication aiguë massive — indiqué si trouble du rythme grave, hyperkaliémie sévère associée, ou choc</li>
       <li>Éviter la cardioversion électrique si possible (risque de fibrillation ventriculaire réfractaire sur cœur digitalisé) sauf arrêt cardiaque</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les anticorps anti-digoxine (Digidot®/DigiFab®) ne sont <strong>pas disponibles</strong> sur le territoire malgache — antidote à commander en urgence auprès d'un centre antipoison international si les moyens le permettent. En son absence, le traitement repose sur le traitement symptomatique du trouble du rythme (Atropine, entraînement électrosystolique si disponible en CHU) et la correction prudente de la kaliémie, dans l'attente d'une élimination spontanée. La Digoxine Nativelle® elle-même est largement disponible et utilisée, ce qui rend cette intoxication iatrogène possible en pratique courante.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les anticorps anti-digoxine (Digidot®, DigiFab®) ne sont <strong>pas disponibles</strong> sur le territoire malgache — antidote à commander en urgence auprès d'un centre antipoison international si les moyens le permettent. En son absence, le traitement repose sur le traitement symptomatique du trouble du rythme (Atropine, entraînement électrosystolique si disponible en CHU) et la correction prudente de la kaliémie, dans l'attente d'une élimination spontanée. La Digoxine Nativelle® elle-même est largement disponible et utilisée, ce qui rend cette intoxication iatrogène possible en pratique courante.</p>
   </div>
 
   <div class="card" id="proto-trauma-rachis">
@@ -3101,12 +3243,12 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Immobilisation rachidienne dès la prise en charge</strong> — collier cervical rigide, matelas-coquille/plan dur, retrait précoce dès que possible (risque d'escarres et de difficultés d'intubation si maintenue trop longtemps)</li>
       <li><strong>Examen neurologique complet et daté</strong> — cotation motrice par myotome, niveau sensitif, réflexes, tonus du sphincter anal (référentiel ASIA/ISNCSCI si disponible)</li>
-      <li><strong>Rechercher un choc spinal / choc neurogénique</strong> — hypotension avec bradycardie paradoxale (perte du tonus sympathique) : remplissage prudent (<strong>Ringer Lactate/Baxter®</strong> 250-500mL réévalués), <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE titrée pour PAM &gt;85-90 mmHg si besoin plutôt que remplissage massif ; <strong>Atropine</strong> 0,5-1mg IV si bradycardie symptomatique associée</li>
+      <li><strong>Rechercher un choc spinal / choc neurogénique</strong> — hypotension avec bradycardie paradoxale (perte du tonus sympathique) : remplissage prudent (<strong>Ringer Lactate (Baxter®)</strong> 250-500mL réévalués), <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE titrée pour PAM &gt;85-90 mmHg si besoin plutôt que remplissage massif ; <strong>Atropine</strong> 0,5-1mg IV si bradycardie symptomatique associée</li>
       <li><strong>Imagerie</strong> — scanner rachidien en urgence si suspicion clinique (critères NEXUS/Canadian C-Spine pour le rachis cervical) ; IRM si déficit neurologique pour évaluer les parties molles/moelle (accès limité hors Antananarivo)</li>
       <li><strong>Maintenir une pression de perfusion médullaire adéquate</strong> — objectif PAM &gt;85-90 mmHg dans les traumatismes médullaires aigus (limiter l'ischémie médullaire secondaire) grâce aux vasopresseurs</li>
       <li><strong>Analgésie</strong> — <strong>Paracétamol (Perfalgan®)</strong> 1g x4/j IV + <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3mg IV toutes les 5-10 min selon l'intensité douloureuse</li>
       <li><strong>Avis neurochirurgical/orthopédique urgent</strong> si instabilité rachidienne ou déficit neurologique — décompression chirurgicale précoce si compression documentée</li>
-      <li>Prévention systématique des complications de décubitus (escarres, thrombose veineuse par <strong>HBPM/Lovenox®</strong> 4000 UI SC/j dès que l'hémostase le permet, rétention urinaire) dès la phase initiale</li>
+      <li>Prévention systématique des complications de décubitus (escarres, thrombose veineuse par <strong>HBPM (Lovenox®)</strong> 4000 UI SC/j dès que l'hémostase le permet, rétention urinaire) dès la phase initiale</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Noradrénaline Aguettant®, Morphine Aguettant® et Lovenox® sont disponibles dans les hôpitaux de référence (CHU/CHRR). La corticothérapie à forte dose (méthylprednisolone) n'est plus recommandée en routine (bénéfice non démontré, risque infectieux/hémorragique) et n'est donc pas à privilégier même si disponible.</p>
   </div>
@@ -3147,7 +3289,7 @@ function renderProtocoles(){
       <li><strong>Évaluation ABCDE</strong> — l'abdomen peut être une source de choc hémorragique occulte majeur sans signe externe évident</li>
       <li><strong>FAST écho (Focused Assessment with Sonography for Trauma)</strong> au lit dès l'arrivée si disponible — recherche d'épanchement péritonéal libre (poches de Morrison, péri-splénique, pelvienne)</li>
       <li><strong>Organes les plus fréquemment lésés</strong> — rate (souvent isolée), foie, mésentère/intestin (moins visible en FAST, y penser si douleur persistante malgré imagerie initiale normale)</li>
-      <li><strong>Réanimation initiale</strong> — <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> par bolus de 500mL réévalués, transfusion selon besoin (protocole transfusion massive si instabilité majeure), <strong>Exacyl®</strong> 1g IV en 10 min puis 1g sur 8h selon protocole</li>
+      <li><strong>Réanimation initiale</strong> — <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> par bolus de 500mL réévalués, transfusion selon besoin (protocole transfusion massive si instabilité majeure), <strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min puis 1g sur 8h selon protocole</li>
       <li><strong>Instabilité hémodynamique + FAST positif</strong> → laparotomie exploratrice en urgence sans délai pour scanner</li>
       <li><strong>Patient stable</strong> → angioscanner abdominal avec injection pour bilan lésionnel précis, grading des lésions spléniques/hépatiques</li>
       <li><strong>Prise en charge non opératoire possible</strong> (surveillance en réanimation, embolisation radiologique si saignement actif localisé — non disponible dans la plupart des structures malgaches) si patient stable ou stabilisé</li>
@@ -3163,7 +3305,7 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Suspicion clinique</strong> — mécanisme à haute énergie, douleur/instabilité pelvienne à la palpation douce (une seule fois), raccourcissement d'un membre inférieur, hématome scrotal/périnéal, sang au méat urétral (suspecter une lésion urétrale associée, ne pas sonder à l'aveugle), choc hémorragique sans autre cause évidente</li>
       <li><strong>Contention pelvienne immédiate</strong> dès la suspicion, avant même la confirmation radiologique — <strong>ceinture pelvienne (pelvic binder)</strong> positionnée au niveau des grands trochanters (et non sur les crêtes iliaques), ou à défaut un drap plié serré autour du bassin et noué (technique de fortune efficace en l'absence de dispositif dédié) ; réduit le volume pelvien et favorise la tamponnade du saignement veineux</li>
-      <li><strong>Réanimation hémodynamique</strong> selon les principes du <em>damage control resuscitation</em> — hypotension permissive (PAS 80-90 mmHg tant que l'hémorragie n'est pas contrôlée), <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> par bolus limités, transfusion précoce si choc hémorragique (<em>voir protocole Transfusion massive</em>), <strong>Exacyl®</strong> 1g IV en 10 min puis 1g sur 8h dans les 3h suivant le traumatisme</li>
+      <li><strong>Réanimation hémodynamique</strong> selon les principes du <em>damage control resuscitation</em> — hypotension permissive (PAS 80-90 mmHg tant que l'hémorragie n'est pas contrôlée), <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> par bolus limités, transfusion précoce si choc hémorragique (<em>voir protocole Transfusion massive</em>), <strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min puis 1g sur 8h dans les 3h suivant le traumatisme</li>
       <li><strong>Imagerie</strong> — radiographie du bassin de face en urgence si angioscanner non immédiatement disponible ; angioscanner corps entier dès que l'état hémodynamique le permet (recherche d'un saignement artériel actif, bilan lésionnel associé)</li>
       <li><strong>Instabilité hémodynamique persistante malgré ceinture pelvienne et remplissage</strong> — avis chirurgical/orthopédique en urgence absolue pour stabilisation mécanique complémentaire (fixateur externe) et recherche d'une autre source hémorragique associée (thoracique, abdominale, fémorale) souvent responsable du choc en cas de fracture pelvienne isolée non contrôlée par la ceinture</li>
       <li><strong>Contrôle définitif du saignement pelvien</strong> — selon le plateau technique disponible : packing pelvien préperitonéal chirurgical (technique la plus accessible en l'absence de radiologie interventionnelle), fixateur externe ; l'embolisation artérielle radiologique et le REBOA (occlusion aortique par ballonnet), non disponibles dans la majorité des structures malgaches, restent l'option de référence dans les centres équipés</li>
@@ -3190,7 +3332,7 @@ function renderProtocoles(){
       <tr><th>Antibiotique</th><th>Posologie</th></tr>
       <tr><td><strong>Streptomycine</strong> (référence historique OMS)</td><td>1g x2/j IM, pendant 10 jours (15mg/kg x2/j chez l'enfant)</td></tr>
       <tr><td><strong>Gentamicine (Gentalline®)</strong> — alternative plus disponible</td><td>5mg/kg/j IM/IV en 1 injection, pendant 10 jours</td></tr>
-      <tr><td><strong>Doxycycline (Doxypalu®/Vibramycine®)</strong></td><td>100mg x2/j per os, pendant 10 jours (formes non graves)</td></tr>
+      <tr><td><strong>Doxycycline (Doxypalu®, Vibramycine®)</strong></td><td>100mg x2/j per os, pendant 10 jours (formes non graves)</td></tr>
       <tr><td><strong>Ciprofloxacine (Ciflox®)</strong></td><td>500-750mg x2/j per os ou 400mg x2/j IV, pendant 10 jours</td></tr>
     </table>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
@@ -3213,10 +3355,10 @@ function renderProtocoles(){
     </table>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
       <li><strong>Surveillance biologique répétée</strong> — NFS/hématocrite toutes les 6-12h en phase critique, ionogramme, bilan hépatique</li>
-      <li><strong>Antipyrétique : Paracétamol (Doliprane®/Efferalgan®) uniquement</strong> — 15mg/kg toutes les 6h chez l'enfant (max 60mg/kg/j), 1g x4/j chez l'adulte (max 4g/j) — contre-indication formelle de l'aspirine (Aspégic®) et des AINS</li>
+      <li><strong>Antipyrétique : Paracétamol (Doliprane®, Efferalgan®) uniquement</strong> — 15mg/kg toutes les 6h chez l'enfant (max 60mg/kg/j), 1g x4/j chez l'adulte (max 4g/j) — contre-indication formelle de l'aspirine (Aspégic®) et des AINS</li>
       <li>Phase critique (défervescence) = période de plus haut risque, même si le patient semble s'améliorer cliniquement sur le plan fébrile</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Doliprane®/Efferalgan® et les solutés de remplissage (Baxter®) sont disponibles à tous les niveaux. Aucun traitement antiviral spécifique n'existe — la prise en charge repose entièrement sur la surveillance et le remplissage titré, réalisables même en structure de base à condition d'une évaluation clinique répétée rigoureuse.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Doliprane®, Efferalgan® et les solutés de remplissage (Baxter®) sont disponibles à tous les niveaux. Aucun traitement antiviral spécifique n'existe — la prise en charge repose entièrement sur la surveillance et le remplissage titré, réalisables même en structure de base à condition d'une évaluation clinique répétée rigoureuse.</p>
   </div>
 
   <div class="card" id="proto-leptospirose">
@@ -3231,7 +3373,7 @@ function renderProtocoles(){
       <tr><th>Forme</th><th>Antibiotique</th><th>Posologie</th></tr>
       <tr><td>Sévère (hospitalisée)</td><td>Pénicilline G</td><td>1,5 MUI IV toutes les 6h, pendant 7 jours</td></tr>
       <tr><td></td><td>ou Ceftriaxone (Rocéphine®)</td><td>1-2g/j IV en 1 injection, pendant 7 jours</td></tr>
-      <tr><td>Non compliquée</td><td>Doxycycline (Doxypalu®/Vibramycine®)</td><td>100mg x2/j per os, pendant 7 jours</td></tr>
+      <tr><td>Non compliquée</td><td>Doxycycline (Doxypalu®, Vibramycine®)</td><td>100mg x2/j per os, pendant 7 jours</td></tr>
     </table>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
       <li><strong>Support d'organe selon les défaillances</strong> — épuration extra-rénale si insuffisance rénale aiguë sévère (accès limité, cf protocole EER), ventilation mécanique si hémorragie pulmonaire/SDRA</li>
@@ -3269,7 +3411,7 @@ function renderProtocoles(){
       <li><strong>Réhydratation prudente si déshydratation</strong> — soluté de réhydratation spécifique <strong>ReSoMal</strong> (formule OMS pour enfant malnutri) 5mL/kg toutes les 30 min pendant 2h, puis 5-10mL/kg/h, distribué via les programmes nationaux de nutrition</li>
       <li><strong>Antibiothérapie systématique à large spectre</strong> — <strong>Amoxicilline (Clamoxyl®)</strong> 25mg/kg x2/j per os en 1re ligne pendant 5 jours ; <strong>Ampicilline 50mg/kg IV toutes les 6h + Gentamicine (Gentalline®) 7,5mg/kg/j IV/IM</strong> si forme compliquée/choc</li>
       <li><strong>Renutrition progressive en 2 phases</strong> — phase de stabilisation (<strong>F-75</strong>, 100 kcal/kg/j en 8-12 repas/j) puis phase de récupération (<strong>F-100</strong> ou <strong>ATPE/Plumpy'Nut®</strong>, jusqu'à 150-220 kcal/kg/j) une fois l'enfant stabilisé</li>
-      <li><strong>Supplémentation systématique</strong> — <strong>Vitamine A</strong> dose unique (50 000 UI &lt;6 mois, 100 000 UI 6-12 mois, 200 000 UI &gt;12 mois), <strong>acide folique (Spéciafoldine®)</strong> 5mg à J1 puis 1mg/j, zinc et potassium/magnésium via le mix minéral-vitaminique (CMV) intégré au F-75/F-100 ; <strong>éviter le fer en phase aiguë</strong></li>
+      <li><strong>Supplémentation systématique</strong> — <strong>Vitamine A</strong> dose unique (50 000 UI &lt;6 mois, 100 000 UI 6-12 mois, 200 000 UI &gt;12 mois), <strong>Acide folique (Spéciafoldine®)</strong> 5mg à J1 puis 1mg/j, zinc et potassium/magnésium via le mix minéral-vitaminique (CMV) intégré au F-75/F-100 ; <strong>éviter le fer en phase aiguë</strong></li>
     </ol>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Mise à jour OMS 2023</strong> (guideline sur la prévention et prise en charge de la malnutrition aiguë, remplaçant la version 2013) : chez le <strong>nourrisson &lt;6 mois</strong> avec malnutrition aiguë, la priorité est le rétablissement/soutien de l'<strong>allaitement maternel exclusif</strong> (avec la mère/nourrice hospitalisée si besoin) plutôt que l'introduction systématique de F-75/F-100 ; l'antibiothérapie orale à large spectre (Amoxicilline) reste recommandée en ambulatoire pour les formes non compliquées. La malnutrition aiguë <strong>modérée</strong> peut également bénéficier d'un ATPE ciblé selon les ressources disponibles, en complément de la prise en charge classique de la forme sévère décrite ci-dessus.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : F-75, F-100, ATPE (Plumpy'Nut®) et ReSoMal sont distribués via l'Office National de Nutrition (ONN) et les programmes UNICEF/PAM dans les Centres de Récupération Nutritionnelle et Éducation (CRENI/CRENA) — disponibilité généralement bonne dans les structures dédiées à la nutrition, mais pouvant faire défaut en zone très enclavée. Clamoxyl® et Gentalline® sont disponibles à tous les niveaux (LNMEIS).</p>
@@ -3280,7 +3422,7 @@ function renderProtocoles(){
     <p class="module-sub" style="margin-bottom:8px;">La reconnaissance précoce diffère de l'adulte — l'hypotension est un signe <strong>tardif</strong> chez l'enfant, qui compense longtemps par la tachycardie et la vasoconstriction.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Reconnaître précocement</strong> — altération de la conscience, tachycardie, temps de recoloration cutanée allongé (&gt;2-3 sec), extrémités froides ou au contraire choc chaud vasoplégique, oligurie</li>
-      <li><strong>Objectif : antibiothérapie dans l'heure</strong> après reconnaissance du sepsis, précédée si possible d'hémocultures sans retarder le traitement — <strong>Ceftriaxone (Rocéphine®)</strong> 50-100mg/kg/j IV en 1 injection, associée à un aminoside (<strong>Gentamicine/Gentalline®</strong> 5-7mg/kg/j IV en 1 injection) selon le foyer suspecté</li>
+      <li><strong>Objectif : antibiothérapie dans l'heure</strong> après reconnaissance du sepsis, précédée si possible d'hémocultures sans retarder le traitement — <strong>Ceftriaxone (Rocéphine®)</strong> 50-100mg/kg/j IV en 1 injection, associée à un aminoside (<strong>Gentamicine (Gentalline®)</strong> 5-7mg/kg/j IV en 1 injection) selon le foyer suspecté</li>
       <li><strong>Remplissage vasculaire titré</strong> — bolus de 10-20 mL/kg de <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> en 5-10 min, réévaluation après chaque bolus (signes de surcharge : hépatomégalie, crépitants, galop) — prudence accrue par rapport à l'adulte, risque de surcharge rapide</li>
       <li><strong>Vasopresseurs précoces si choc réfractaire au remplissage</strong> (après 40-60 mL/kg) — <strong>Adrénaline (Adrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE en 1re intention dans le choc froid pédiatrique, <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE si choc chaud vasoplégique ; accès veineux périphérique ou intra-osseux acceptable en urgence en attendant une voie centrale</li>
       <li><strong>Corriger l'hypoglycémie</strong> (Glucosé 10% 2-5mL/kg IV lente) <strong>et l'hypocalcémie</strong> (Gluconate de calcium 100mg/kg IV lente sur 10-15 min) — fréquentes et aggravantes chez l'enfant septique</li>
@@ -3297,9 +3439,9 @@ function renderProtocoles(){
       <li><strong>Triade classique</strong> (souvent incomplète) — douleurs abdominales paroxystiques avec accès de pleurs et pâleur, vomissements, rectorragies "gelée de groseille" (signe tardif)</li>
       <li><strong>Signe caractéristique entre les crises</strong> — enfant apathique, prostré, contrastant avec les crises douloureuses paroxystiques</li>
       <li><strong>Échographie abdominale</strong> — examen de référence, image en "cocarde"/"cible" en coupe transversale, sensibilité et spécificité élevées</li>
-      <li><strong>Réduction par lavement</strong> (hydrostatique échoguidé, au sérum physiologique — <strong>NaCl 0,9%/Baxter®</strong> réchauffé à 37°C, colonne de 1m de hauteur) — traitement de 1re intention en l'absence de signe de gravité (perforation, péritonite, choc)</li>
+      <li><strong>Réduction par lavement</strong> (hydrostatique échoguidé, au sérum physiologique — <strong>NaCl 0,9% (Baxter®)</strong> réchauffé à 37°C, colonne de 1m de hauteur) — traitement de 1re intention en l'absence de signe de gravité (perforation, péritonite, choc)</li>
       <li><strong>Chirurgie en urgence</strong> si échec du lavement, signes de perforation/péritonite, ou choc associé</li>
-      <li><strong>Réanimation hydro-électrolytique</strong> (Ringer Lactate 10-20mL/kg si déshydratation) <strong>et antalgie</strong> (<strong>Paracétamol IV/Perfalgan®</strong> 15mg/kg/6h, éviter les morphiniques qui peuvent masquer une aggravation) avant et pendant la procédure de réduction</li>
+      <li><strong>Réanimation hydro-électrolytique</strong> (Ringer Lactate 10-20mL/kg si déshydratation) <strong>et antalgie</strong> (<strong>Paracétamol IV (Perfalgan®)</strong> 15mg/kg/6h, éviter les morphiniques qui peuvent masquer une aggravation) avant et pendant la procédure de réduction</li>
       <li>Surveillance post-réduction — récidive possible dans les heures suivantes (jusqu'à 10% des cas)</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le lavement hydrostatique échoguidé (sérum physiologique) est réalisable dans les centres disposant d'une échographie et d'un pédiatre/chirurgien pédiatrique formé (principalement CHU) ; en son absence, un transfert rapide est préférable dès la suspicion clinique forte, le risque de nécrose intestinale augmentant avec le délai.</p>
@@ -5125,6 +5267,7 @@ function ensureCardIds(container, key){
 function showModule(key, focusId){
   document.getElementById('content').innerHTML = renderers[key] ? renderers[key]() : placeholderModule(key);
   ensureCardIds(document.getElementById('content'), key);
+  injectFavStars(document.getElementById('content'), key);
   document.querySelectorAll('#nav-list button').forEach(b=>b.classList.toggle('active', b.dataset.mod===key));
   document.getElementById('topbar-title').textContent = MODULES[key].title;
   document.getElementById('sidebar').classList.remove('open');

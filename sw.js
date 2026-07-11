@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ny-aina-urgences-v7';
+const CACHE_NAME = 'ny-aina-urgences-v9';
 const BASE = '/ny-aina-urgences';
 const ASSETS = [BASE+'/',BASE+'/index.html',BASE+'/manifest.json',BASE+'/icon-192.png',BASE+'/icon-512.png',BASE+'/apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())); });
