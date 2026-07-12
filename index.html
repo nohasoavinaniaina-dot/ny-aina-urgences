@@ -301,7 +301,7 @@ const MODULES = {
 const renderers = {}; // mod -> function() -> html string
 
 /* ——— Version de l'application ——— */
-const APP_VERSION = "2026.07.11";
+const APP_VERSION = "2026.07.12";
 document.addEventListener('DOMContentLoaded', ()=>{});
 (function initVersionBadge(){
   const el = document.getElementById('app-version');
@@ -769,17 +769,20 @@ function renderProtocoles(){
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🏥 Organisation des soins</span><span class="toc-cat-arrow">▾</span></li>
       <li class="toc-group collapsed"><ul class="toc-sub">
         <li><a onclick="document.getElementById('proto-triage').scrollIntoView({behavior:'smooth',block:'start'})">🏥 Triage à l'arrivée</a></li>
+        <li><a onclick="document.getElementById('proto-triage-masse').scrollIntoView({behavior:'smooth',block:'start'})">🚨 Triage de masse / Afflux massif de victimes</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫀 Cardiovasculaire</span><span class="toc-cat-arrow">▾</span></li>
       <li class="toc-group collapsed"><ul class="toc-sub">
         <li><a onclick="document.getElementById('proto-acr-adulte').scrollIntoView({behavior:'smooth',block:'start'})">💔 ACR Adulte</a></li>
+        <li><a onclick="document.getElementById('proto-post-rosc').scrollIntoView({behavior:'smooth',block:'start'})">💗 Soins post-arrêt cardiaque</a></li>
         <li><a onclick="document.getElementById('proto-acr-pediatrique').scrollIntoView({behavior:'smooth',block:'start'})">💔 ACR Pédiatrique</a></li>
         <li><a onclick="document.getElementById('proto-etats-choc').scrollIntoView({behavior:'smooth',block:'start'})">🩸 États de choc</a></li>
         <li><a onclick="document.getElementById('proto-anaphylaxie').scrollIntoView({behavior:'smooth',block:'start'})">🐝 Choc anaphylactique / Anaphylaxie</a></li>
         <li><a onclick="document.getElementById('proto-tamponnade').scrollIntoView({behavior:'smooth',block:'start'})">🫀 Tamponnade cardiaque</a></li>
         <li><a onclick="document.getElementById('proto-sca').scrollIntoView({behavior:'smooth',block:'start'})">🫀 SCA / IDM</a></li>
         <li><a onclick="document.getElementById('proto-oap').scrollIntoView({behavior:'smooth',block:'start'})">💧 OAP cardiogénique</a></li>
+        <li><a onclick="document.getElementById('proto-choc-cardiogenique').scrollIntoView({behavior:'smooth',block:'start'})">🫀 Choc cardiogénique</a></li>
         <li><a onclick="document.getElementById('proto-hta-urgence').scrollIntoView({behavior:'smooth',block:'start'})">📈 Urgence hypertensive</a></li>
         <li><a onclick="document.getElementById('proto-dissection-aortique').scrollIntoView({behavior:'smooth',block:'start'})">💔 Dissection aortique</a></li>
         <li><a onclick="document.getElementById('proto-embolie-pulmonaire').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Embolie pulmonaire</a></li>
@@ -807,7 +810,9 @@ function renderProtocoles(){
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫁 Respiratoire</span><span class="toc-cat-arrow">▾</span></li>
       <li class="toc-group collapsed"><ul class="toc-sub">
-        <li><a onclick="document.getElementById('proto-detresse-respiratoire').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Détresse respiratoire / SDRA</a></li>
+        <li><a onclick="document.getElementById('proto-detresse-respiratoire').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Détresse respiratoire aiguë (triage)</a></li>
+        <li><a onclick="document.getElementById('proto-sdra').scrollIntoView({behavior:'smooth',block:'start'})">🫁 SDRA (ventilation protectrice)</a></li>
+        <li><a onclick="document.getElementById('proto-grippe-grave').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Grippe grave / Détresse respiratoire virale sévère</a></li>
         <li><a onclick="document.getElementById('proto-asthme').scrollIntoView({behavior:'smooth',block:'start'})">🌬️ Crise d'asthme aiguë</a></li>
         <li><a onclick="document.getElementById('proto-pneumothorax').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Pneumothorax (spontané / suffocant)</a></li>
         <li><a onclick="document.getElementById('proto-corps-etranger').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Corps étranger voies aériennes</a></li>
@@ -827,11 +832,13 @@ function renderProtocoles(){
       <li class="toc-group collapsed"><ul class="toc-sub">
         <li><a onclick="document.getElementById('proto-paludisme').scrollIntoView({behavior:'smooth',block:'start'})">🦟 Paludisme grave</a></li>
         <li><a onclick="document.getElementById('proto-sepsis').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Sepsis / Choc septique</a></li>
+        <li><a onclick="document.getElementById('proto-pac-grave').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Pneumopathie aiguë communautaire grave</a></li>
         <li><a onclick="document.getElementById('proto-meningite').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Méningite / Encéphalite aiguë</a></li>
         <li><a onclick="document.getElementById('proto-purpura-fulminans').scrollIntoView({behavior:'smooth',block:'start'})">🟣 Purpura fulminans</a></li>
         <li><a onclick="document.getElementById('proto-tetanos').scrollIntoView({behavior:'smooth',block:'start'})">🦷 Tétanos</a></li>
         <li><a onclick="document.getElementById('proto-cholera').scrollIntoView({behavior:'smooth',block:'start'})">🚱 Choléra / Diarrhée aiguë sévère</a></li>
         <li><a onclick="document.getElementById('proto-fasciite-necrosante').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Fasciite nécrosante / Infections nécrosantes des tissus mous</a></li>
+        <li><a onclick="document.getElementById('proto-neutropenie-febrile').scrollIntoView({behavior:'smooth',block:'start'})">🧬 Neutropénie fébrile / Aplasie fébrile</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🩸 Hématologie</span><span class="toc-cat-arrow">▾</span></li>
@@ -845,6 +852,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-intoxications').scrollIntoView({behavior:'smooth',block:'start'})">☠️ Intoxications aiguës / Antidotes</a></li>
         <li><a onclick="document.getElementById('proto-organophosphores').scrollIntoView({behavior:'smooth',block:'start'})">🌾 Intoxication organophosphorés / carbamates</a></li>
         <li><a onclick="document.getElementById('proto-co').scrollIntoView({behavior:'smooth',block:'start'})">💨 Intoxication au monoxyde de carbone (CO)</a></li>
+        <li><a onclick="document.getElementById('proto-ivresse-aigue').scrollIntoView({behavior:'smooth',block:'start'})">🍺 Intoxication alcoolique aiguë / Coma éthylique</a></li>
         <li><a onclick="document.getElementById('proto-sevrage-alcool').scrollIntoView({behavior:'smooth',block:'start'})">🍺 Sevrage alcoolique / Délirium tremens</a></li>
         <li><a onclick="document.getElementById('proto-envenimations').scrollIntoView({behavior:'smooth',block:'start'})">🦂 Envenimations (scorpion/serpent)</a></li>
         <li><a onclick="document.getElementById('proto-paracetamol').scrollIntoView({behavior:'smooth',block:'start'})">💊 Intoxication au paracétamol</a></li>
@@ -863,6 +871,7 @@ function renderProtocoles(){
       <li class="toc-group collapsed"><ul class="toc-sub">
         <li><a onclick="document.getElementById('proto-polytraumatisme').scrollIntoView({behavior:'smooth',block:'start'})">🚑 Polytraumatisme (ABCDE)</a></li>
         <li><a onclick="document.getElementById('proto-tc-leger').scrollIntoView({behavior:'smooth',block:'start'})">🤕 Traumatisme crânien léger/modéré</a></li>
+        <li><a onclick="document.getElementById('proto-tc-grave').scrollIntoView({behavior:'smooth',block:'start'})">🤕 Traumatisme crânien grave</a></li>
         <li><a onclick="document.getElementById('proto-plaies-morsures').scrollIntoView({behavior:'smooth',block:'start'})">🩹 Plaies et morsures</a></li>
         <li><a onclick="document.getElementById('proto-rage').scrollIntoView({behavior:'smooth',block:'start'})">🐕 Rage — Prise en charge post-exposition</a></li>
         <li><a onclick="document.getElementById('proto-brulures').scrollIntoView({behavior:'smooth',block:'start'})">🔥 Brûlures graves</a></li>
@@ -949,6 +958,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-delirium-reanimation').scrollIntoView({behavior:'smooth',block:'start'})">🧠 Delirium de réanimation (CAM-ICU)</a></li>
         <li><a onclick="document.getElementById('proto-prevention-decubitus').scrollIntoView({behavior:'smooth',block:'start'})">🛏️ Prévention des complications de réanimation (bundles)</a></li>
         <li><a onclick="document.getElementById('proto-mort-encephalique').scrollIntoView({behavior:'smooth',block:'start'})">⚰️ Mort encéphalique — Diagnostic et prise en charge</a></li>
+        <li><a onclick="document.getElementById('proto-lata').scrollIntoView({behavior:'smooth',block:'start'})">🕊️ LATA / Fin de vie en réanimation</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🌍 Maladies tropicales</span><span class="toc-cat-arrow">▾</span></li>
@@ -989,6 +999,49 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-size:13px; color:var(--muted);">Voie d'abord : IV ou intra-osseuse si échec. Capnographie si disponible pour confirmer position de sonde et qualité du MCE.</p>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne pas interrompre les compressions &gt;10 sec. Ne pas administrer de façon systématique calcium, bicarbonate de sodium ou corticoïdes pendant l'arrêt cardiaque (rappel ERC 2025) — réservés à une cause spécifique identifiée (hyperkaliémie, acidose sévère documentée, etc.).</div></div>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Adrénaline Aguettant® est disponible à tous les niveaux hospitaliers (LNMEIS) — molécule prioritaire en cas de ressources limitées. Le défibrillateur (DAE ou manuel) et la Cordarone® ne sont généralement disponibles qu'en CHU/CHRR ; en leur absence, la RCP de haute qualité et l'adrénaline restent les seuls leviers d'action et ne doivent jamais être interrompues en attendant un transfert.</p>
+    <p style="margin-top:8px; font-size:13px; color:var(--muted);">➡️ Dès la reprise de circulation spontanée (ROSC), voir <a onclick="document.getElementById('proto-post-rosc').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Soins post-arrêt cardiaque</a>.</p>
+  </div>
+
+  <div class="card" id="proto-post-rosc">
+    <h3>💗 Soins post-arrêt cardiaque (post-ROSC)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 12/07/2026, sources vérifiées par recherche le 12/07/2026 — ERC/ESICM Post-Resuscitation Care Guidelines <strong>2025</strong> (Nolan et al., Intensive Care Med, DOI 10.1007/s00134-025-08117-3 — remplace la version 2021), AHA Post-Cardiac Arrest Care</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">La période qui suit la reprise de circulation spontanée (ROSC) est à haut risque de récidive d'arrêt et de lésions secondaires (syndrome post-arrêt cardiaque : lésion cérébrale anoxo-ischémique, dysfonction myocardique post-arrêt, réponse inflammatoire systémique, persistance de la cause déclenchante). La prise en charge de cette phase conditionne directement le pronostic neurologique final — elle ne s'arrête pas à la reprise du pouls.</p>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Voies aériennes et respiration :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Maintenir la protection des voies aériennes</strong> (intubation si non déjà fait et persistance de troubles de conscience — GCS ≤8)</li>
+      <li><strong>100% d'oxygène initialement</strong>, puis <strong>titrer la FiO2</strong> pour une <strong>SpO2 cible 94-98%</strong> (ou PaO2 75-100 mmHg) dès que la mesure est fiable — éviter à la fois l'hypoxie et l'hyperoxie. <strong>Nuance 2025 :</strong> la mesure de la SpO2 par oxymètre de pouls peut être moins fiable chez les patients à peau foncée (sur-estimation possible) — se fier à la gazométrie dès que disponible en cas de doute</li>
+      <li><strong>Normocapnie</strong> visée (PaCO2 35-45 mmHg) — l'hypocapnie induit une vasoconstriction cérébrale aggravant l'ischémie, l'hypercapnie augmente la pression intracrânienne. <strong>Nuance 2025 :</strong> prudence particulière chez le patient hypotherme (accidentel ou sous contrôle de température) — l'hypocapnie y survient plus facilement, surveiller la PaCO2 de façon rapprochée</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">2. Hémodynamique et recherche de la cause coronaire :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>ECG 12 dérivations immédiat</strong> — si <strong>sus-décalage ST persistant</strong> : <strong>coronarographie/reperfusion en urgence</strong>, y compris chez le patient comateux (ne pas attendre le réveil neurologique) — cf. <a onclick="document.getElementById('proto-sca').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole SCA</a></li>
+      <li><strong>Sans sus-décalage ST :</strong> mise à jour 2025 — ne plus considérer la coronarographie immédiate comme systématique ; elle reste indiquée en cas de forte suspicion d'occlusion coronaire aiguë (instabilité hémodynamique/électrique), mais peut être <strong>différée</strong> en l'absence d'argument clair, au profit d'un <strong>scanner corps entier en 2 phases</strong> (crâne à bassin, incluant une angio-TDM pulmonaire) pour rechercher une cause alternative (EP, hémorragie cérébrale, cause non cardiaque)</li>
+      <li><strong>PAM cible ≥65 mmHg</strong> (certains experts recommandent ≥80-100 mmHg en cas d'antécédent d'HTA ou de doute sur la perfusion cérébrale, à individualiser) — remplissage prudent puis <strong>Noradrénaline</strong> si besoin, éviter l'hypotension qui aggrave la lésion cérébrale secondaire</li>
+      <li><strong>Échocardiographie précoce</strong> pour évaluer la sidération myocardique post-arrêt (fréquente, régresse habituellement en 24-72h) et guider le support inotrope — cf. <a onclick="document.getElementById('proto-choc-cardiogenique').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Choc cardiogénique</a> si dysfonction sévère</li>
+      <li>Surveillance rythmique continue — une bradycardie sous contrôle de température n'est <strong>plus considérée comme un effet indésirable à corriger systématiquement</strong> (associée à une bonne évolution neurologique dans les études récentes) tant qu'elle est bien tolérée hémodynamiquement</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">3. Contrôle de la température et neuroprotection :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Contrôle ciblé de la température</strong> chez tout patient qui reste comateux après ROSC : <strong>prévention active de la fièvre</strong>, cible ≤37,5°C, pendant <strong>au moins 72h</strong>, avec surveillance continue de la température centrale — recommandation réaffirmée en 2025</li>
+      <li>L'<strong>hypothermie thérapeutique ciblée (32-36°C)</strong> reste une option possible selon les protocoles locaux : les données actuelles ne permettent <strong>ni de la recommander ni de la déconseiller formellement</strong> par rapport au contrôle strict de la normothermie/prévention de la fièvre seule — pas de sur-refroidissement actif systématique en l'absence de protocole local établi</li>
+      <li><strong>Traiter systématiquement les convulsions/myoclonies</strong> si présentes (fréquentes, mauvais pronostic si prolongées) — <strong>Lévétiracétam ou Valproate</strong> en 1ère intention plutôt que les benzodiazépines seules en prévention systématique (pas de bénéfice démontré de l'antiépileptique prophylactique en l'absence de crise)</li>
+      <li>Contrôle glycémique modéré (cible 140-180 mg/dL), éviter l'hypoglycémie</li>
+      <li>Tête surélevée à 30°, éviter toute compression jugulaire (fixation de sonde, collier cervical trop serré)</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">4. Recherche et traitement de la cause :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Reprendre systématiquement la recherche des <strong>4H/4T</strong> non encore explorés pendant la réanimation</li>
+      <li>Bilan biologique complet (ionogramme, lactates, troponine, gaz du sang), imagerie thoracique, échocardiographie</li>
+      <li>Scanner cérébral à discuter si cause neurologique suspectée (hémorragie sous-arachnoïdienne, notamment si céphalée brutale précédant l'arrêt) ou après un traumatisme associé à la chute</li>
+      <li>Si arrêt cardiaque inexpliqué persistant après ce bilan (notamment sujet jeune sans cause évidente) : envisager un bilan étiologique approfondi à distance (test génétique, IRM cardiaque, test aux antiarythmiques de classe I, épreuve d'effort) à la recherche d'une cardiopathie rythmique héréditaire — nouveauté 2025, généralement hors de portée en 1ère ligne à Madagascar mais à mentionner dans le dossier de sortie/orientation</li>
+    </ul>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">5. Pronostic neurologique :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Ne jamais établir de pronostic neurologique avant au moins 72h</strong> après le ROSC (délai plus long si sédation/curares résiduels, hypothermie, insuffisance rénale/hépatique ralentissant l'élimination des sédatifs) — utiliser un faisceau d'arguments multimodal (examen clinique répété, réflexes du tronc, EEG, potentiels évoqués somesthésiques, imagerie), jamais un seul critère isolé</li>
+      <li>Impliquer précocement la famille dans la démarche d'information, avec réévaluation régulière plutôt qu'une annonce pronostique prématurée</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais négliger la phase post-ROSC en considérant l'urgence terminée dès la reprise du pouls — la moitié des patients ayant un ROSC initial décèdent avant la sortie d'hôpital, principalement du fait de la lésion cérébrale post-anoxique et de l'instabilité hémodynamique des premières 24-72h.</div></div>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le contrôle strict de la normothermie est réalisable à tous les niveaux (moyens physiques, paracétamol) sans matériel spécifique de refroidissement — geste prioritaire même en l'absence de plateau technique de réanimation avancée. La coronarographie et l'EEG continu ne sont pas disponibles en dehors de rares centres de référence ; en leur absence, la surveillance clinique rapprochée (constantes, examen neurologique répété, glycémie) reste l'outil principal de suivi, avec transfert vers un CHU dès que la stabilité du transport le permet.</p>
   </div>
 
   <div class="card" id="proto-acr-pediatrique">
@@ -1023,7 +1076,7 @@ function renderProtocoles(){
       <tr>
         <td class="grave">Cardiogénique</td>
         <td>hypoTA + signes de congestion (crépitants, turgescence jugulaire), froideur des extrémités</td>
-        <td><strong>Prudence sur le remplissage</strong> (risque OAP) — petits bolus 100-250mL si suspicion hypovolémie associée. Inotrope (<strong>Dobutamine (Dobutrex®)</strong>) ± vasopresseur si hypoTA sévère. Traiter la cause (SCA, trouble du rythme, EP)</td>
+        <td><strong>Prudence sur le remplissage</strong> (risque OAP) — petits bolus 100-250mL si suspicion hypovolémie associée. Inotrope (<strong>Dobutamine (Dobutrex®)</strong>) ± vasopresseur si hypoTA sévère. Traiter la cause (SCA, trouble du rythme, EP) — <em>protocole détaillé (stades SCAI, escalade thérapeutique, assistance circulatoire) : voir <a onclick="document.getElementById('proto-choc-cardiogenique').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Choc cardiogénique</a></em></td>
       </tr>
       <tr>
         <td class="grave">Anaphylactique</td>
@@ -1141,9 +1194,50 @@ function renderProtocoles(){
       <li><strong>Diurétique de l'anse :</strong> Furosémide IV 40-80 mg (dose plus élevée si insuffisance rénale ou déjà sous furosémide au long cours), répétable selon réponse diurétique</li>
       <li><strong>Dérivés nitrés</strong> IV/sublingual si TA systolique &gt;110 mmHg (vasodilatation, réduction de la précharge) — à éviter si hypoTA ou suspicion de rétrécissement aortique serré</li>
       <li>Rechercher et traiter le facteur déclenchant : SCA (ECG systématique), poussée hypertensive, trouble du rythme, écart thérapeutique/régime</li>
-      <li>Si choc cardiogénique associé (hypoTA, hypoperfusion) : éviter les diurétiques/vasodilatateurs en 1ère intention, privilégier inotrope (Dobutamine) et discuter assistance circulatoire si disponible</li>
+      <li>Si choc cardiogénique associé (hypoTA, hypoperfusion) : éviter les diurétiques/vasodilatateurs en 1ère intention — voir <a onclick="document.getElementById('proto-choc-cardiogenique').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole dédié Choc cardiogénique</a></li>
       <li>Intubation/ventilation mécanique si épuisement respiratoire ou échec de la VNI</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-choc-cardiogenique">
+    <h3>🫀 Choc cardiogénique</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 12/07/2026 — sources : ESC Heart Failure Guidelines 2021 (actualisées 2023), SCAI Cardiogenic Shock Classification 2022, ACC/AHA</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Définition :</strong> hypoperfusion tissulaire d'origine cardiaque primitive, malgré une volémie adéquate — TA systolique &lt;90 mmHg (ou baisse &gt;30 mmHg par rapport à la valeur habituelle) pendant &gt;30 min OU nécessité de vasopresseurs/inotropes pour maintenir une TA systolique ≥90 mmHg, associée à des signes d'hypoperfusion (marbrures, extrémités froides, oligurie, confusion, lactates élevés) et souvent des signes de congestion pulmonaire/systémique.</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Stade SCAI</th><th>Présentation</th></tr>
+      <tr><td class="leger">A — À risque</td><td>Pas d'hypoperfusion actuelle, mais terrain à risque (IDM étendu, insuffisance cardiaque décompensée) — surveillance rapprochée</td></tr>
+      <tr><td class="modere">B — Débutant</td><td>Signes cliniques d'hypoperfusion relative (hypoTA, tachycardie) sans hypoperfusion franche — lactates souvent normaux</td></tr>
+      <tr><td class="grave">C — Classique</td><td>Hypoperfusion franche nécessitant une intervention (inotrope/vasopresseur/assistance) au-delà du simple remplissage — lactates élevés, 1 organe hypoperfusé</td></tr>
+      <tr><td class="grave">D — Détérioration</td><td>Comme le stade C mais s'aggravant malgré les mesures initiales, nécessitant une escalade thérapeutique</td></tr>
+      <tr><td class="grave">E — Extrémis</td><td>Arrêt cardiaque imminent ou en cours malgré la RCP/manœuvres de réanimation — défaillance multiviscérale</td></tr>
+    </table>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Recherche immédiate de la cause — conditionne le traitement spécifique :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>SCA avec sus-décalage (STEMI)</strong> — 1ère cause : <strong>coronarographie/revascularisation en urgence absolue</strong>, quel que soit le délai depuis le début des symptômes — cf. <a onclick="document.getElementById('proto-sca').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole SCA</a></li>
+      <li><strong>Complication mécanique du SCA</strong> (rupture septale, insuffisance mitrale aiguë par rupture de pilier, rupture de paroi libre) — échocardiographie en urgence, avis chirurgical cardiaque immédiat</li>
+      <li><strong>Trouble du rythme</strong> (TV, FA rapide, BAV de haut grade) — cf. <a onclick="document.getElementById('proto-troubles-rythme').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole troubles du rythme</a></li>
+      <li><strong>Myocardite fulminante</strong> — cf. <a onclick="document.getElementById('proto-pericardite-myocardite').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole dédié</a></li>
+      <li><strong>Décompensation terminale d'une cardiopathie chronique</strong> connue (ischémique, valvulaire, dilatée)</li>
+      <li><strong>Tamponnade, embolie pulmonaire massive</strong> (choc obstructif à éliminer — cf. protocoles dédiés)</li>
+      <li>Toxique (bêtabloquant/inhibiteur calcique en surdosage — cf. protocole dédié), post-cardiotomie</li>
+    </ul>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">2. Prise en charge hémodynamique initiale :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Monitorage rapproché</strong> : scope, TA (idéalement invasive dès que possible), SpO2, diurèse horaire, lactates répétés ; échocardiographie au lit dès que possible pour évaluer la fonction ventriculaire et écarter une cause mécanique/obstructive</li>
+      <li><strong>Remplissage prudent</strong> : petits bolus de 100-250 mL de cristalloïdes réévalués si suspicion de composante hypovolémique associée (right ventricle infarction, déshydratation) — <strong>éviter le remplissage massif</strong> qui aggrave la congestion pulmonaire</li>
+      <li><strong>Inotrope de 1ère intention : Dobutamine (Dobutrex®)</strong> IVSE 2-20 µg/kg/min (débuter à 2-5 µg/kg/min) — améliore le débit cardiaque par effet inotrope positif</li>
+      <li>Si hypotension sévère associée (TA systolique &lt;90 mmHg persistante) : ajouter <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> IVSE 0,05-0,5 µg/kg/min pour restaurer une pression de perfusion coronaire/organique adéquate, à privilégier sur la Dopamine (moins d'arythmies)</li>
+      <li><strong>Milrinone</strong> en alternative si le patient est déjà sous bêtabloquant au long cours (inotrope non catécholaminergique, moins dépendant des récepteurs bêta) — prudence sur la dose si insuffisance rénale, effet vasodilatateur pouvant aggraver l'hypotension</li>
+      <li>Oxygénothérapie/VNI/intubation selon tolérance respiratoire — cf. protocole OAP pour la prise en charge congestive une fois l'hémodynamique stabilisée</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">3. Choc réfractaire (stade SCAI D-E) :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Assistance circulatoire mécanique</strong> à discuter précocement avec un centre expert avant l'épuisement des thérapeutiques médicales : ballon de contre-pulsion intra-aortique, Impella, ECMO veino-artérielle selon disponibilité et étiologie — l'escalade ne doit pas être tardive, le pronostic se dégrade avec le délai</li>
+      <li>Réévaluer en continu la cause sous-jacente et sa corrigibilité (revascularisation différée possible, correction chirurgicale d'une complication mécanique)</li>
+      <li>Discussion pluridisciplinaire précoce (cardiologie interventionnelle, chirurgie cardiaque, réanimation) dès le stade C si évolution défavorable sous traitement médical initial</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais traiter un choc cardiogénique comme un choc hypovolémique — un remplissage vasculaire agressif aggrave la congestion pulmonaire et peut précipiter une détresse respiratoire majeure. Toujours évaluer la volémie (échographie, signes de congestion) avant de remplir.</div></div>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Dobutrex® et Noradrénaline Aguettant® sont disponibles en pharmacie hospitalière des CHU/CHRR. La coronarographie et l'assistance circulatoire mécanique (contre-pulsion, ECMO) ne sont pas disponibles sur le territoire — en cas de SCA compliqué de choc cardiogénique, la thrombolyse (cf. protocole SCA) reste l'option de reperfusion disponible localement en l'absence d'angioplastie, et le traitement médical maximal (inotrope/vasopresseur) reste l'unique recours en cas d'échec.</p>
   </div>
 
   <div class="card" id="proto-hta-urgence">
@@ -1201,15 +1295,80 @@ function renderProtocoles(){
   </div>
 
   <div class="card" id="proto-detresse-respiratoire">
-    <h3>🫁 Détresse respiratoire aiguë / SDRA</h3>
-    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Critères de Berlin du SDRA :</strong> début aigu &lt;7j, opacités bilatérales à l'imagerie, non expliquées par insuffisance cardiaque/surcharge, PaO2/FiO2 ≤300 sous PEP≥5 (léger 200-300, modéré 100-200, sévère &lt;100).</p>
+    <h3>🫁 Détresse respiratoire aiguë — triage étiologique</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Devant toute détresse respiratoire aiguë, identifier rapidement la cause pour orienter le traitement spécifique — cf. <a onclick="document.getElementById('proto-sdra').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole SDRA dédié</a> si les critères de Berlin sont réunis.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>Position demi-assise, O2 pour SpO2 cible 92-96% (88-92% si BPCO connue)</li>
       <li>Évaluer signes de gravité : FR&gt;30, tirage, sueurs, cyanose, troubles de conscience, épuisement respiratoire → discuter ventilation non invasive ou intubation sans délai</li>
       <li>Identifier la cause : OAP (<strong>Furosémide (Lasilix®)</strong>, dérivés nitrés — <strong>Isosorbide dinitrate (Risordan®)</strong>), pneumopathie (ATB), asthme/BPCO décompensée (<strong>Salbutamol (Ventoline®)</strong>, corticoïdes — <strong>Méthylprednisolone (Solu-Médrol®)</strong>), EP (anticoagulation), pneumothorax (drainage)</li>
-      <li>Si SDRA confirmé : ventilation protectrice (Vt 6mL/kg de poids idéal théorique, Pplateau &lt;30 cmH2O), PEP adaptée, décubitus ventral précoce si SDRA modéré-sévère (&gt;12h/jour si possible)</li>
+      <li>Si opacités bilatérales non expliquées par une surcharge/insuffisance cardiaque : évoquer un <strong>SDRA</strong>, cf. protocole dédié ci-dessous</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la ventilation mécanique invasive avec réglages protecteurs n'est disponible qu'en réanimation de CHU/CHRR — en son absence, la <strong>VNI/CPAP</strong> (si disponible) et le <strong>décubitus ventral en respiration spontanée ("proning éveillé")</strong> chez un patient non intubé sous oxygène/OHD peuvent améliorer l'oxygénation en attendant un transfert, sans remplacer une indication formelle d'intubation en cas d'épuisement respiratoire. Anticiper le transfert précoce dès la suspicion de SDRA modéré-sévère si le plateau technique local ne permet pas la ventilation protectrice.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'oxygénothérapie et les bronchodilatateurs/diurétiques sont disponibles à tous les niveaux. La VNI/CPAP est réservée aux structures équipées (CHRD/CHU) — anticiper le transfert précoce dès signe de gravité.</p>
+  </div>
+
+  <div class="card" id="proto-sdra">
+    <h3>🫁 SDRA (Syndrome de détresse respiratoire aiguë)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 12/07/2026, sources vérifiées par recherche le 12/07/2026 — définition de Berlin (2012), <strong>nouvelle définition globale de l'ARDS</strong> (Matthay et al., Am J Respir Crit Care Med 2024, DOI 10.1164/rccm.202303-0558WS), ARDSnet, Surviving Sepsis Campaign 2026 (Vt en l'absence de SDRA)</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Critères de Berlin (2012) :</strong> début aigu &lt;7 jours, <strong>opacités bilatérales</strong> à l'imagerie non pleurales/nodulaires/atélectasiques, <strong>insuffisance respiratoire non expliquée</strong> par une insuffisance cardiaque ou une surcharge hydrique, et <strong>PaO2/FiO2 ≤300 mmHg sous PEP/CPAP ≥5 cmH2O</strong> (nécessite donc une ventilation en pression positive et une gazométrie artérielle).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Nouvelle définition globale (2024) — particulièrement adaptée aux ressources limitées :</strong> assouplit 3 critères de Berlin pour élargir le diagnostic — <strong>SpO2/FiO2 ≤315 utilisable à la place du PaO2/FiO2</strong> (si SpO2 ≤97%, évite la gazométrie artérielle systématique), <strong>échographie pulmonaire acceptée</strong> en plus de la radiographie/TDM pour les opacités bilatérales, et <strong>inclusion des patients non intubés sous oxygénothérapie à haut débit ≥30 L/min</strong> (pas seulement sous ventilation en pression positive). Cette définition identifie davantage de patients (jusqu'à 60% de plus que Berlin dans certaines cohortes) et est directement pertinente dans les structures sans gazométrie artérielle facilement disponible.</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Sévérité</th><th>PaO2/FiO2 (sous PEP≥5)</th><th>Mortalité indicative</th></tr>
+      <tr><td class="leger">Léger</td><td>200-300 mmHg</td><td>~27%</td></tr>
+      <tr><td class="modere">Modéré</td><td>100-200 mmHg</td><td>~32%</td></tr>
+      <tr><td class="grave">Sévère</td><td>&lt;100 mmHg</td><td>~45%</td></tr>
+    </table>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Ventilation protectrice — pilier du traitement, bénéfice sur la mortalité solidement démontré :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Volume courant (Vt) 6 mL/kg de poids idéal théorique (PIT)</strong> — PIT homme = 50 + 0,91×(taille en cm − 152,4) ; PIT femme = 45,5 + 0,91×(taille en cm − 152,4). Débuter à 8 mL/kg puis réduire par paliers de 1 mL/kg jusqu'à 6 mL/kg en quelques heures si besoin d'adaptation progressive</li>
+      <li><strong>Pression de plateau &lt;30 cmH2O</strong> (pause inspiratoire pour la mesurer) — réduire le Vt jusqu'à 4 mL/kg si besoin pour respecter ce seuil</li>
+      <li><strong>Driving pressure (Pplateau − PEP) idéalement &lt;15 cmH2O</strong> — meilleur corrélat avec la mortalité que le Vt ou la Pplateau seuls ; ajuster PEP/Vt en conséquence</li>
+      <li><strong>PEP adaptée à la sévérité</strong> selon les tables ARDSnet (bas-PEEP/FiO2 pour les formes légères, haut-PEEP/FiO2 pour les formes modérées-sévères) — objectif SpO2 88-95% ou PaO2 55-80 mmHg avec la FiO2 la plus basse possible</li>
+      <li><strong>Hypercapnie permissive acceptée</strong> (pH cible &gt;7,2) tant que la ventilation protectrice est respectée — ne pas augmenter le Vt pour normaliser la capnie</li>
+      <li><strong>Fréquence respiratoire</strong> 20-35/min ajustée au pH/capnie cible, en respectant un temps expiratoire suffisant (éviter l'auto-PEP)</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">2. SDRA modéré-sévère (PaO2/FiO2 &lt;150) :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Décubitus ventral précoce</strong> — sessions <strong>≥16h/jour</strong>, bénéfice démontré sur la mortalité ; contre-indications : instabilité hémodynamique majeure non contrôlée, plaie faciale/abdominale non stabilisée, hypertension intracrânienne non contrôlée, grossesse avancée, instabilité rachidienne — nécessite une équipe formée au retournement (risque d'extubation accidentelle/désadaptation des dispositifs)</li>
+      <li><strong>Curarisation</strong> (<strong>Cisatracurium (Nimbex®)</strong> IVSE) à discuter en cas d'asynchronisme patient-ventilateur persistant malgré une sédation profonde adaptée, surtout en début de prise en charge — ne pas curariser en routine systématique</li>
+      <li><strong>Monitorage de la mécanique respiratoire</strong> : Pplateau, driving pressure, compliance du système respiratoire à chaque changement de réglage significatif</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">3. Stratégie liquidienne et traitements associés :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Stratégie liquidienne conservatrice</strong> une fois la phase de choc initiale stabilisée (bilan hydrique négatif visé, diurétiques si besoin) — réduit la durée de ventilation sans excès de risque rénal chez le patient non choqué</li>
+      <li><strong>Pas de corticothérapie systémique systématique</strong> en 1ère intention pour le SDRA lui-même (bénéfice incertain, à réserver à des indications spécifiques de la cause sous-jacente — ex. pneumocystose, COVID sévère selon protocole local)</li>
+      <li>Traiter la cause sous-jacente en parallèle : pneumopathie (antibiothérapie précoce), sepsis extra-pulmonaire (cf. protocole sepsis), inhalation, pancréatite aiguë, transfusion massive (TRALI — cf. protocole transfusion), noyade, polytraumatisme</li>
+      <li>Prévention systématique des complications de décubitus (cf. protocole dédié), nutrition entérale précoce, thromboprophylaxie</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">4. SDRA réfractaire :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>ECMO veino-veineuse</strong> à discuter si hypoxémie réfractaire malgré optimisation complète (PaO2/FiO2 &lt;80 persistant, ou acidose respiratoire non gérable malgré Pplateau/driving pressure au maximum acceptable) — indication à évaluer précocement avec un centre expert, avant l'épuisement des autres options</li>
+      <li>Manœuvres de recrutement alvéolaire : bénéfice incertain en routine, à réserver à des équipes entraînées, jamais en 1ère intention</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais utiliser de volume courant standard (8-10 mL/kg) chez un patient SDRA sous prétexte de « faciliter » la ventilation ou de normaliser la capnie — le sur-étirement alvéolaire (volotrauma) aggrave directement la mortalité, contrairement à une hypercapnie permissive bien tolérée.</div></div>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la ventilation mécanique avec réglages protecteurs complets n'est disponible qu'en réanimation de CHU/CHRR. L'ECMO n'existe pas sur le territoire — en cas de SDRA réfractaire, le traitement médical maximal local (décubitus ventral, curarisation si disponible, PEP optimisée) reste la seule option, un transfert international n'étant réaliste que dans de rares contextes. En l'absence de capnographe/gazométrie répétée, surveiller cliniquement la tolérance (FR, SpO2, état hémodynamique) et privilégier la prudence sur les réglages de PEP/FiO2.</p>
+  </div>
+
+  <div class="card" id="proto-grippe-grave">
+    <h3>🦠 Grippe grave / Détresse respiratoire virale sévère (dont COVID-19)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">À évoquer en contexte épidémique saisonnier ou de cluster devant une détresse respiratoire fébrile d'installation rapide, avec ou sans pneumonie virale primitive à l'imagerie. Cadre commun à la grippe grave (influenza A/B), au COVID-19 sévère et aux autres pneumopathies virales sévères (VRS de l'adulte fragile, etc.) — la prise en charge symptomatique et respiratoire est largement superposable, seuls les antiviraux spécifiques diffèrent.</p>
+    <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Signes de gravité à rechercher activement :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Polypnée &gt;30/min, SpO2 &lt;90% en air ambiant, signes de lutte respiratoire, cyanose</li>
+      <li>Instabilité hémodynamique, troubles de conscience, oligurie</li>
+      <li>Douleur thoracique, hémoptysie — décompensation d'une pathologie chronique sous-jacente (BPCO, insuffisance cardiaque, diabète)</li>
+      <li>Terrain à risque de forme grave : âge &gt;65 ans, grossesse, immunodépression, obésité, pathologie cardio-respiratoire chronique, jeune enfant</li>
+    </ul>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
+      <li><strong>Oxygénothérapie</strong> selon SpO2 (objectif ≥92-94%, ≥88-92% si BPCO connue) — <strong>OHD/HFNC</strong> à privilégier en 1ère intention si disponible en cas de détresse marquée, avant la VNI (moins de risque théorique de dispersion virale en circuit ouvert bien filtré, et meilleure tolérance)</li>
+      <li>Si échec de l'oxygénothérapie standard/OHD : <strong>ventilation mécanique protectrice</strong> selon les mêmes principes que le <a onclick="document.getElementById('proto-sdra').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">SDRA</a> (Vt 6 mL/kg de poids idéal théorique, Pplateau &lt;30 cmH2O) — la pneumonie virale sévère évolue fréquemment vers un tableau de SDRA typique</li>
+      <li><strong>Antiviral spécifique si grippe confirmée ou fortement suspectée</strong> : <strong>Oseltamivir (Tamiflu®)</strong> 75 mg PO x2/j — <strong>dose standard maintenue même dans les formes graves/réanimation</strong> (l'absorption orale reste adéquate chez le patient critique et les données actuelles ne montrent pas de bénéfice clinique à doubler la dose à 150 mg x2/j, malgré une pratique historiquement répandue) ; durée prolongée à <strong>7-10 jours</strong> (au lieu de 5 jours) à discuter dans les formes sévères hospitalisées — bénéfice maximal si débuté &lt;48h après le début des symptômes, mais à débuter même au-delà de 48h dans les formes graves hospitalisées (bénéfice démontré sur la réduction de mortalité/durée de séjour même en initiation tardive)</li>
+      <li><strong>Antibiothérapie probabiliste</strong> à associer systématiquement en cas de doute sur une surinfection bactérienne (fréquente et grave, notamment à pneumocoque ou staphylocoque post-grippal) — mêmes molécules que la <a onclick="document.getElementById('proto-pac-grave').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">pneumopathie aiguë communautaire grave</a>, à ne pas différer en cas de doute clinique</li>
+      <li><strong>Corticothérapie</strong> : <strong>Dexaméthasone</strong> 6 mg/j IV ou PO pendant 10 jours (ou équivalent) — bénéfice démontré uniquement chez les patients <strong>nécessitant une oxygénothérapie ou une ventilation</strong> (COVID-19 sévère notamment) ; <strong>à éviter chez le patient sans besoin d'oxygène</strong> (pas de bénéfice, possible retard de clairance virale)</li>
+      <li>Prise en charge symptomatique : antipyrétiques (paracétamol — éviter les AINS en phase fébrile aiguë, risque de majoration des complications), hydratation, prévention thromboembolique (risque accru dans les pneumopathies virales sévères, notamment COVID-19) selon le protocole habituel</li>
+      <li><strong>Isolement respiratoire</strong> (gouttelettes ± air selon l'agent suspecté et les gestes réalisés) — protection du personnel soignant, port de EPI adapté, en particulier lors des gestes générateurs d'aérosols (intubation, aspiration, VNI/OHD)</li>
+      <li>Surveillance rapprochée des formes initialement modérées : l'aggravation peut être rapide (24-72h), notamment dans le COVID-19 où une phase de détresse respiratoire secondaire peut survenir après une période de stabilité apparente</li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le paracétamol et la Dexaméthasone sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Oseltamivir (Tamiflu®) <strong>ne figure pas sur la Liste Nationale des Médicaments Essentiels et Intrants de Santé</strong> — son accès reste exceptionnel en pratique courante, généralement limité à des stocks stratégiques mobilisés par le Ministère de la Santé Publique en période d'épidémie de grippe déclarée ou via une pharmacie privée d'importation ; ne pas compter dessus comme traitement de routine. Son absence ne doit jamais retarder les mesures qui sauvent réellement en contexte de ressources limitées : oxygénothérapie précoce, ventilation protectrice si besoin, et antibiothérapie sans délai en cas de doute sur une surinfection bactérienne (bénéfice bien plus robuste et systématiquement disponible). L'OHD/HFNC n'est disponible que dans certains services de réanimation ; en son absence, l'oxygénothérapie standard à haut débit par masque à haute concentration reste l'alternative de premier recours.</p>
   </div>
 
   <div class="card" id="proto-asthme">
@@ -1667,7 +1826,9 @@ function renderProtocoles(){
       <li><strong>Lactulose (Duphalac®, Lactulose Merck®)</strong> — traitement de 1ère ligne : per os/sonde nasogastrique 20-30 mL toutes les 1-2h jusqu'à l'obtention des premières selles, puis titration pour obtenir <strong>2 à 3 selles molles par jour</strong> (dose d'entretien habituelle 20-30 mL x2-3/j) ; en cas de trouble de conscience empêchant la prise orale (grade III-IV) : <strong>lacet de rétention rectale</strong> — 300 mL de lactulose dilués dans 700 mL d'eau, à conserver 30-60 min, répétable toutes les 4-6h jusqu'à reprise de la voie orale</li>
       <li>Titrer prudemment : le surdosage (&gt;4-6 selles/j) peut lui-même précipiter une encéphalopathie (déshydratation, hypernatrémie, hypokaliémie) — <strong>Macrogol/PEG 3350 (Forlax®, Movicol®)</strong> en alternative si intolérance/distension abdominale au lactulose</li>
       <li><strong>Rifaximine (Rifagut®, Xifaxan®)</strong> 550 mg PO/SNG toutes les 12h en association au lactulose dès l'épisode aigu (bénéfice incrémental démontré par rapport au lactulose seul) — antibiotique non résorbable qui diminue la production intestinale d'ammoniac ; à poursuivre en prévention secondaire après un épisode, surtout en cas de récidive sous lactulose seul</li>
-      <li><strong>Proscrire les sédatifs et benzodiazépines</strong> (aggravent l'encéphalopathie) ; en cas d'encéphalopathie précipitée par une benzodiazépine documentée, le <strong>Flumazénil (Anexate®)</strong> 0,2-1 mg IV titré peut apporter une amélioration transitoire (n'agit pas sur la cause hépatique sous-jacente)</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Médicaments à proscrire ou à utiliser avec prudence : <strong>benzodiazépines</strong> et <strong>opioïdes</strong> (aggravent l'encéphalopathie — potentialisation du tonus GABAergique et effet constipant favorisant l'hyperammoniémie), autres sédatifs (antihistaminiques type hydroxyzine, antipsychotiques sédatifs, barbituriques). <strong>AINS</strong> à éviter (risque de syndrome hépatorénal et d'hémorragie digestive). <strong>Diurétiques</strong> à surveiller étroitement (hypokaliémie/déshydratation, facteurs déclenchants classiques). <strong>Paracétamol</strong> non contre-indiqué mais à réduire à ≤3g/j en cas d'insuffisance hépatique sévère. En cas d'encéphalopathie précipitée par une benzodiazépine documentée, le Flumazénil (Anexate®) 0,2-1 mg IV titré peut apporter une amélioration transitoire (n'agit pas sur la cause hépatique sous-jacente).</div></div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:10px;">
       <li><strong>Ne pas restreindre les apports protidiques</strong> (pratique obsolète, aggrave la dénutrition sans bénéfice démontré) : apport protéique cible <strong>1,2-1,5 g/kg/j</strong>, fractionné avec une collation nocturne ; recours aux <strong>acides aminés ramifiés (BCAA)</strong> si les besoins ne peuvent être couverts par l'alimentation standard, notamment en cas d'intolérance protéique</li>
       <li><strong>Supplémentation en zinc</strong> à discuter si carence documentée et symptômes persistants malgré lactulose + rifaximine bien conduits</li>
       <li>Le dosage de l'<strong>ammoniémie</strong> n'est pas nécessaire au diagnostic (mauvaise corrélation avec la sévérité clinique) — une ammoniémie normale chez un patient confus doit faire rechercher un <strong>diagnostic alternatif</strong> (autre cause métabolique, toxique, structurelle)</li>
@@ -1844,6 +2005,24 @@ function renderProtocoles(){
     </ol>
   </div>
 
+  <div class="card" id="proto-ivresse-aigue">
+    <h3>🍺 Intoxication alcoolique aiguë / Coma éthylique</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 12/07/2026 — sources : approche clinique standard (pas de guideline internationale dédiée unique) — prise en charge symptomatique et sécuritaire</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">À distinguer du <a onclick="document.getElementById('proto-sevrage-alcool').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">sevrage alcoolique</a> (situation inverse, survenant à l'arrêt de la consommation) : ici, intoxication aiguë par excès de consommation, potentiellement grave par dépression respiratoire et neurologique, aggravée par toute co-ingestion (benzodiazépines, opiacés). L'éthanolémie ne prédit pas de façon fiable la gravité clinique (tolérance variable selon le terrain) — se fier avant tout à l'examen clinique.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>ABCDE en priorité</strong> — le risque immédiat est la dépression respiratoire et l'inhalation (perte des réflexes de protection des voies aériennes) : position latérale de sécurité systématique si trouble de conscience, aspiration si besoin, intubation si Glasgow ≤8 ou réflexes de protection abolis</li>
+      <li><strong>Glycémie capillaire systématique</strong> — l'hypoglycémie est fréquente (inhibition de la néoglucogenèse hépatique par l'alcool, jeûne associé) et peut mimer ou aggraver les troubles de conscience — cf. <a onclick="document.getElementById('proto-hypoglycemie').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole hypoglycémie</a> si confirmée</li>
+      <li><strong>Thiamine/Vitamine B1 (Vitamine B1 Aguettant®)</strong> 200-500 mg IV/IM systématique <strong>avant tout apport glucosé</strong> chez le patient alcoolique chronique ou dénutri suspecté — prévention de l'encéphalopathie de Gayet-Wernicke</li>
+      <li><strong>Réchauffement</strong> si hypothermie associée (vasodilatation périphérique induite par l'alcool, exposition au froid) — cf. protocole hypothermie si sévère</li>
+      <li>Surveillance rapprochée continue (constantes, Glasgow, SpO2) jusqu'à récupération d'un état de conscience normal — ne jamais laisser un patient en décubitus dorsal simple sans surveillance en cas de trouble de conscience</li>
+      <li><strong>Rechercher systématiquement une cause alternative ou associée</strong> à l'altération de conscience, surtout si elle ne s'améliore pas avec le temps attendu d'élimination de l'alcool : traumatisme crânien associé (chute fréquente sous alcool — hématome sous-dural), co-ingestion médicamenteuse/toxique, trouble métabolique, infection, AVC</li>
+      <li>Pas d'indication à une épuration digestive (charbon activé inefficace sur l'alcool) ni à un traitement médicamenteux spécifique visant à « dessaoûler » — prise en charge purement symptomatique et de sécurité</li>
+      <li>À la récupération : évaluer une dépendance alcoolique sous-jacente, proposer une orientation addictologique, prévoir la surveillance d'un éventuel <a onclick="document.getElementById('proto-sevrage-alcool').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">syndrome de sevrage</a> dans les heures/jours suivants chez le patient dépendant</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais attribuer d'emblée un trouble de conscience à la seule intoxication alcoolique, même en présence d'une éthanolémie élevée et d'une odeur alcoolique évidente — c'est un piège diagnostique classique qui fait méconnaître une hypoglycémie, un traumatisme crânien ou une autre cause engageant le pronostic vital. Réévaluer si l'évolution n'est pas celle attendue avec le temps d'élimination.</div></div>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Vitamine B1 injectable et le contrôle glycémique capillaire sont réalisables à tous les niveaux de soins — gestes prioritaires et peu coûteux à ne jamais omettre devant un trouble de conscience en contexte d'alcoolisation, avant même d'envisager un transfert.</p>
+  </div>
+
   <div class="card" id="proto-sevrage-alcool">
     <h3>🍺 Sevrage alcoolique sévère / Délirium tremens</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Apparaît typiquement 48-96h après l'arrêt/la réduction de la consommation chez un patient alcoolo-dépendant. Formes de gravité croissante : tremblements/anxiété simples → hallucinose alcoolique → crises convulsives → <strong>délirium tremens</strong> (confusion, agitation, hallucinations, hyperactivité neurovégétative) — mortalité significative si non traité.</p>
@@ -1901,7 +2080,7 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Support respiratoire :</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>En cas de détresse respiratoire liée au sepsis : <strong>oxygénothérapie à haut débit (OHD/HFNC)</strong> à privilégier en 1ère intention si disponible, avant la VNI, avec objectif de SpO2 individualisé (éviter l'hyperoxie) ; ne pas hésiter au décubitus ventral en respiration spontanée si détresse persistante</li>
-      <li>Si intubation/ventilation mécanique nécessaire : ventilation protectrice, <strong>Vt 6-8 mL/kg de poids idéal théorique</strong> en l'absence de lésion pulmonaire associée (6 mL/kg si SDRA associé — cf. protocole dédié), Pplateau &lt;30 cmH2O</li>
+      <li>Si intubation/ventilation mécanique nécessaire : ventilation protectrice, <strong>Vt 6-8 mL/kg de poids idéal théorique</strong> en l'absence de lésion pulmonaire associée (6 mL/kg si <a onclick="document.getElementById('proto-sdra').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">SDRA</a> associé), Pplateau &lt;30 cmH2O</li>
     </ol>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Ce qu'il ne faut plus faire (nouveauté SSC 2026) :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
@@ -1919,6 +2098,34 @@ function renderProtocoles(){
     </ol>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">⚠️ Pour le choc septique dans le cadre spécifique d'un purpura fulminans (méningococcémie), voir le protocole dédié ci-dessous — l'antibiothérapie y prime sur tout le reste et doit être administrée sur place avant tout transfert.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Ringer Lactate/NaCl 0,9% et Noradrénaline Aguettant® sont disponibles dans les hôpitaux de référence (CHU/CHRR) ; leur absence en structure de base (CSB/CHRD sans réanimation) impose un transfert précoce dès la reconnaissance du choc septique, sans retarder la 1ère dose d'antibiotique ni le remplissage initial. <strong>Nouveauté utile en contexte de transfert :</strong> la SSC 2026 recommande, en préhospitalier, de débuter l'antibiothérapie avant l'arrivée à l'hôpital si le délai prévisible avant évaluation médicale hospitalière est ≥60 minutes chez un patient en choc septique probable/certain — pertinent pour les évacuations CSB2/CHRD → CHU à Madagascar si une 1ère dose d'antibiotique IV/IM peut être administrée avant le départ. Le dosage des lactates n'est pas disponible partout — l'évaluation clinique (marbrures, temps de recoloration cutanée, diurèse) reste alors l'outil de suivi principal. L'Hydrocortisone est peu coûteuse et généralement disponible même en structure de base — à ne pas négliger dès qu'un vasopresseur est nécessaire.</p>
+  </div>
+
+  <div class="card" id="proto-pac-grave">
+    <h3>🫁 Pneumopathie aiguë communautaire grave (PAC)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 12/07/2026 — sources : IDSA/ATS Community-Acquired Pneumonia Guidelines (2019, toujours en vigueur), ERS/ESICM, scores CURB-65 et PSI/PORT</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection pulmonaire aiguë acquise en dehors du milieu hospitalier — fièvre, toux, expectoration, douleur thoracique, dyspnée, foyer auscultatoire/radiologique. L'évaluation de la sévérité dès l'accueil conditionne l'orientation (ambulatoire, hospitalisation, réanimation) et l'urgence de l'antibiothérapie.</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Score CURB-65 (1 point/critère)</th><th>Orientation</th></tr>
+      <tr><td><strong>C</strong>onfusion · <strong>U</strong>rée &gt;7 mmol/L · <strong>R</strong>espiration ≥30/min · <strong>B</strong>P (TA) systolique &lt;90 ou diastolique ≤60 mmHg · âge ≥<strong>65</strong> ans</td><td>0-1 : ambulatoire · 2 : hospitalisation courte · ≥3 : hospitalisation, discuter réanimation si ≥4</td></tr>
+    </table>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Critères de PAC grave nécessitant la réanimation (ATS/IDSA — 1 critère majeur OU ≥3 critères mineurs) :</p>
+    <div class="row2" style="font-size:13px; margin-bottom:8px;">
+      <div><strong>Critères majeurs :</strong><br>🔹 Choc septique nécessitant des vasopresseurs<br>🔹 Insuffisance respiratoire nécessitant la ventilation mécanique</div>
+      <div><strong>Critères mineurs (≥3) :</strong><br>🔹 FR≥30/min · PaO2/FiO2≤250 · infiltrats multilobaires<br>🔹 Confusion · urée élevée · leucopénie · thrombopénie · hypothermie · hypotension nécessitant un remplissage agressif</div>
+    </div>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Prise en charge :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Antibiothérapie dans les meilleurs délais</strong> (idéalement &lt;4h, &lt;1h si choc septique associé — cf. <a onclick="document.getElementById('proto-sepsis').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole sepsis</a>) : hémocultures avant si possible sans délai significatif</li>
+      <li><strong>PAC non grave, ambulatoire :</strong> <strong>Amoxicilline (Clamoxyl®)</strong> 1g x3/j PO 5-7 jours (ou <strong>Amoxicilline-Acide clavulanique (Augmentin®)</strong> si comorbidité/terrain à risque)</li>
+      <li><strong>PAC hospitalisée non grave :</strong> <strong>Ceftriaxone (Rocéphine®)</strong> 1-2g/j IV ± macrolide (<strong>Azithromycine</strong>) si suspicion de germe atypique, ou selon disponibilité</li>
+      <li><strong>PAC grave (réanimation) :</strong> bithérapie systématique — <strong>bêta-lactamine anti-pneumococcique IV</strong> (Ceftriaxone 2g/j ou Céfotaxime) <strong>associée à un macrolide</strong> (Azithromycine) ou à une fluoroquinolone respiratoire — couverture élargie au <em>Pseudomonas</em> (Pipéracilline-Tazobactam) si facteur de risque (bronchectasies, corticothérapie au long cours, hospitalisation/antibiothérapie récente)</li>
+      <li>Oxygénothérapie/VNI/OHD selon la tolérance respiratoire — cf. <a onclick="document.getElementById('proto-detresse-respiratoire').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole détresse respiratoire</a>, évoluer vers un <a onclick="document.getElementById('proto-sdra').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">SDRA</a> possible dans les formes sévères</li>
+      <li>Remplissage prudent et vasopresseurs si choc septique associé — cf. protocole sepsis</li>
+      <li>Rechercher une complication : épanchement pleural parapneumonique/empyème (ponction pleurale diagnostique si épanchement significatif), abcédation — drainage si épanchement purulent ou pH pleural &lt;7,2</li>
+      <li>Réévaluation à 48-72h : désescalade antibiotique selon documentation microbiologique, relais oral dès amélioration clinique et stabilité hémodynamique (durée totale habituelle 5-7 jours, plus longue si complication/germe résistant)</li>
+    </ol>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais sous-estimer une PAC apparemment banale chez le sujet âgé ou le patient comorbide — la présentation peut être atypique (confusion isolée, absence de fièvre), et le score CURB-65 sous-estime la gravité chez le sujet jeune sans comorbidité qui décompense brutalement.</div></div>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Clamoxyl®, Augmentin® et Rocéphine® sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Azithromycine et les fluoroquinolones respiratoires sont plus limitées, généralement disponibles en pharmacie hospitalière de CHU/CHRR — en leur absence, une bêta-lactamine seule à dose optimisée reste une alternative raisonnable en attendant le transfert. La ventilation mécanique et la réanimation avancée nécessitent un transfert vers un CHU/CHRR dès les premiers critères de gravité.</p>
   </div>
 
   <div class="card" id="proto-meningite">
@@ -2042,6 +2249,33 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Flagyl® et Gentalline® sont largement disponibles à tous les niveaux hospitaliers. La Clindamycine (Dalacine®) est disponible principalement en pharmacie hospitalière de CHU/CHRR — en son absence, l'association Pénicilline G/Gentamicine reste une alternative acceptable, sans l'effet anti-toxinique spécifique de la clindamycine. Le plateau chirurgical (bloc opératoire, disponibilité de sang pour transfusion) doit être mobilisé sans délai ; un transfert vers un centre chirurgical de référence ne doit jamais retarder l'antibiothérapie initiale.</p>
   </div>
 
+  <div class="card" id="proto-neutropenie-febrile">
+    <h3>🧬 Neutropénie fébrile / Aplasie fébrile</h3>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Urgence oncologique/hématologique — chez un patient sous chimiothérapie récente ou porteur d'une hémopathie, une fièvre ≥38,3°C (ou ≥38°C persistante &gt;1h) avec neutrophiles &lt;500/mm³ (ou &lt;1000/mm³ avec décroissance attendue &lt;500 dans les 48h) impose une antibiothérapie probabiliste dans l'heure — chaque heure de retard augmente la mortalité, comme dans le choc septique. Ne jamais attendre la confirmation de la neutropénie (NFS) pour débuter si le contexte est fortement évocateur et le patient instable.</div></div>
+    <p style="font-size:13.5px; margin-bottom:8px;">Terrain typique : chimiothérapie dans les 7-14 jours précédents, hémopathie maligne, aplasie médullaire, greffe de moelle. La fièvre peut être le seul signe — les signes inflammatoires locaux (pus, érythème marqué) sont souvent atténués ou absents du fait de la neutropénie elle-même (pas assez de polynucléaires pour générer une réponse inflammatoire visible).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>NFS avec formule leucocytaire en urgence</strong> pour confirmer le grade de neutropénie ; ne pas retarder l'antibiothérapie si le résultat n'est pas immédiatement disponible et que le contexte est évocateur</li>
+      <li><strong>Recherche du foyer infectieux</strong> : examen cutané complet (dont points de ponction/cathéters), cavité buccale, région périnéale/anale (proscrire le toucher rectal — risque de translocation bactérienne et de bactériémie), auscultation pulmonaire — mais dans 50% des cas, aucun foyer n'est identifié cliniquement</li>
+      <li><strong>Bilan minimal :</strong> hémocultures périphériques ET sur chaque voie centrale/chambre implantable si présente (avant antibiothérapie, sans la retarder au-delà de 45 min), ECBU, radiographie thoracique, CRP/procalcitonine, ionogramme, bilan hépatique, lactates si signes de choc</li>
+      <li><strong>Antibiothérapie probabiliste large spectre IV dans l'heure</strong>, à visée antipyocyanique systématique (le Pseudomonas aeruginosa est rapidement létal en aplasie) : <strong>Pipéracilline-Tazobactam (Tazocilline®)</strong> 4g x3-4/j IV en 1ère intention ; alternative si allergie/indisponibilité : <strong>Céfépime</strong> ou <strong>Imipénème/Méropénème</strong> selon disponibilité et écologie locale</li>
+      <li>Ajouter un <strong>aminoside (Amikacine ou Gentamicine)</strong> en cas de choc septique associé, de suspicion de foyer pulmonaire ou digestif sévère, ou de résistance locale connue aux bêta-lactamines — élargissement du spectre initial dans les formes graves</li>
+      <li>Ajouter une couverture anti-staphylococcique (<strong>Vancomycine</strong>) uniquement en cas d'indication ciblée : suspicion d'infection de cathéter/chambre implantable, choc septique sans foyer identifié, mucite sévère, colonisation connue à SARM, instabilité hémodynamique — pas en probabiliste systématique</li>
+      <li>Si choc septique associé : prise en charge hémodynamique identique au protocole <a onclick="document.getElementById('proto-sepsis').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Sepsis / Choc septique</a> (remplissage, vasopresseurs, PAM ≥65 mmHg)</li>
+      <li><strong>Facteurs de croissance (G-CSF, filgrastim)</strong> à discuter avec l'hématologue/oncologue référent selon le contexte — n'est pas un geste de première heure et ne remplace jamais l'antibiothérapie</li>
+      <li>Isolement protecteur (chambre seule, hygiène des mains renforcée, limitation des visites, éviction des fleurs/aliments crus) dès que possible ; éviter tout geste invasif non indispensable (sondage urinaire, toucher rectal)</li>
+      <li>Réévaluation à 48-72h : désescalade selon documentation microbiologique ; si fièvre persistante sans documentation à 72-96h malgré antibiothérapie adaptée, évoquer une cause fongique et discuter un traitement antifongique empirique avec l'équipe spécialisée</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Syndrome de lyse tumorale — à rechercher en parallèle si hémopathie à forte masse tumorale ou chimiothérapie récente :</p>
+    <p style="font-size:13.5px; margin-bottom:6px;">Association d'<strong>hyperkaliémie, hyperuricémie, hyperphosphorémie et hypocalcémie</strong> par lyse cellulaire massive, pouvant survenir spontanément ou dans les 12-72h suivant une chimiothérapie sur une tumeur volumineuse/très proliférative (lymphomes agressifs, leucémies aiguës hyperleucocytaires). Risque principal : insuffisance rénale aiguë et troubles du rythme liés à l'hyperkaliémie.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Hyperhydratation IV</strong> par cristalloïdes (NaCl 0,9% ou Ringer Lactate) 2-3 L/j (ou 2500-3000 mL/m²/j chez l'enfant), sans alcalinisation systématique ni potassium ajouté</li>
+      <li>Correction de l'<strong>hyperkaliémie</strong> selon le protocole dédié (cf. module Correction des troubles ioniques) si K+ &gt;6 mmol/L ou signes ECG — surveillance ECG rapprochée</li>
+      <li><strong>Allopurinol</strong> PO (prévention) ou <strong>rasburicase IV</strong> si disponible (traitement curatif de l'hyperuricémie sévère, plus efficace mais coûteux/accès limité) — l'allopurinol reste l'option la plus accessible en ressources limitées</li>
+      <li>Surveillance biologique rapprochée (ionogramme, créatinine, uricémie, calcémie) toutes les 6-8h en phase aiguë ; indication d'épuration extra-rénale en urgence si hyperkaliémie réfractaire ou anurie (cf. protocole dédié)</li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : selon la Liste Nationale des Médicaments Essentiels et Intrants de Santé (LNMEIS 2023), la Tazocilline® n'est référencée qu'au niveau <strong>CHU</strong> (non disponible en CHRR) — anticiper une rupture possible et avoir une alternative (céphalosporine de 3e génération + aminoside, disponibles à la plupart des niveaux) en repli immédiat, plutôt que de retarder la 1ère dose. La Vancomycine est référencée CHU/CHRR ; le Céfépime, les carbapénèmes (Méropénème), la rasburicase et le filgrastim (G-CSF) ne sont référencés qu'au niveau CHU, la rasburicase et le G-CSF relevant spécifiquement du programme national Cancer. L'Allopurinol, à l'inverse, est disponible à tous les niveaux de soins (LNMEIS), ce qui en fait l'option de référence accessible en prophylaxie/traitement de l'hyperuricémie en dehors des grands centres. En l'absence des molécules de 1ère intention, ne jamais retarder l'antibiothérapie de première intention disponible : le geste qui sauve est la première dose large spectre dans l'heure, pas la molécule idéale.</p>
+  </div>
+
   <div class="card" style="border-left:4px solid var(--warn);">
     <h3>💊 Note sur les noms commerciaux</h3>
     <p style="font-size:13px; color:var(--muted)">Les noms commerciaux cités ci-dessous (Doliprane®, Profenid®, Augmentin®...) sont les plus répandus en pharmacie francophone (France/Afrique francophone) à titre de repère. La disponibilité réelle varie selon les dépôts, hôpitaux et génériqueurs locaux (Biogaran, Mylan, Micro Labs...) — <strong>le nom en DCI (molécule) reste la référence fiable</strong> pour toute prescription. Vérifier la liste des médicaments enregistrés à Madagascar (AMM.mg) ou l'étiquette du produit disponible sur place.</p>
@@ -2064,6 +2298,31 @@ function renderProtocoles(){
       <li>Réévaluer un patient en salle d'attente si son état se modifie ou si le délai de triage initial est dépassé — le triage est dynamique, non figé</li>
       <li>Toute femme enceinte avec douleur/saignement, tout nourrisson fébrile &lt;3 mois, toute suspicion d'AVC (délai de thrombolyse) doivent être orientés en priorité même si les constantes semblent rassurantes</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-triage-masse">
+    <h3>🚨 Triage de masse / Afflux massif de victimes</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">S'applique dès que le nombre de victimes dépasse les capacités de prise en charge individuelle immédiate (catastrophe naturelle — cyclone, inondation —, accident collectif, épidémie explosive). Principe fondamental : <strong>basculer d'une logique « tout pour un patient » vers « le maximum de survivants pour le plus grand nombre »</strong> — logique inversée par rapport au triage individuel habituel.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Désigner immédiatement un responsable de site/triage identifiable (chasuble, brassard) avant tout soin individuel — l'absence de commandement clair est la première cause de désorganisation et de surmortalité évitable dans un afflux massif.</div></div>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Méthode START (Simple Triage And Rapid Treatment) — tri en &lt;60 secondes par victime, sans matériel :</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Catégorie</th><th>Couleur</th><th>Critères</th></tr>
+      <tr><td class="grave">Extrême urgence (immédiat)</td><td>🔴 Rouge</td><td>Ne marche pas ET (FR &gt;30/min ou &lt;10/min, OU recoloration capillaire &gt;2s/pouls radial absent, OU ne répond pas à un ordre simple) — geste de sauvetage immédiat possible (libération VAS, compression hémorragie)</td></tr>
+      <tr><td class="modere">Urgence relative (différable)</td><td>🟡 Jaune</td><td>Ne marche pas mais FR 10-30/min, pouls radial présent, obéit aux ordres simples — surveillance rapprochée, réévaluation fréquente (peut évoluer vers rouge)</td></tr>
+      <tr><td class="leger">Urgence légère (marchant)</td><td>🟢 Vert</td><td>Marche seul jusqu'à la zone de tri — blessures mineures, traitement différé sans risque vital</td></tr>
+      <tr><td>Décédé / dépassé</td><td>⚫ Noir</td><td>Absence de ventilation spontanée après une seule tentative de libération des voies aériennes — pas de réanimation entreprise dans ce contexte (contrairement à la pratique individuelle habituelle), les ressources vont aux victimes sauvables</td></tr>
+    </table>
+    <p style="font-size:13.5px; margin-bottom:6px;">Séquence START : (1) tous les blessés qui marchent → vert, triés en dernier ; (2) parmi les non-marchants, évaluer <strong>Respiration</strong> (libérer les VAS si absente — si reprend, rouge ; si toujours absente après une tentative, noir) ; (3) évaluer <strong>Circulation</strong> (pouls radial/recoloration) ; (4) évaluer <strong>État de conscience</strong> (ordre simple). Un seul critère anormal parmi R/C/E suffit à classer en rouge.</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Organisation sur site :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Zonage</strong> : zone de tri (point d'entrée unique si possible), zone rouge (soins immédiats), zone jaune (surveillance), zone verte (attente), zone mortuaire (noir) — séparées physiquement pour éviter la confusion et l'engorgement</li>
+      <li><strong>Ré-évaluation continue</strong> : le tri initial n'est pas figé — un jaune peut devenir rouge ; désigner un responsable de ré-évaluation itinérant dans la zone jaune</li>
+      <li>Ne pas transporter les victimes rouges vers un seul hôpital — répartir selon les capacités réelles de chaque structure (communication radio/téléphonique avec les centres receveurs avant envoi si possible)</li>
+      <li>Gestes de sauvetage autorisés en zone de tri (sans y consacrer plus de quelques secondes) : libération des voies aériennes, compression d'une hémorragie externe, mise en PLS — tout geste plus long est différé à la zone de soins</li>
+      <li>Réserver dès que possible du personnel et du matériel (garrots, pansements compressifs) en quantité pour les hémorragies externes — cause de décès évitable la plus fréquente dans les afflux traumatiques</li>
+      <li>Anticiper la communication vers les autorités sanitaires locales/régionales dès la reconnaissance d'un afflux massif, pour déclencher les renforts et l'ouverture de lits supplémentaires</li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Contexte Madagascar</strong> : les afflux massifs sont ici le plus souvent liés aux cyclones et inondations (traumatismes, noyades, plaies) ou aux épidémies explosives (choléra, peste). En structure à ressources très limitées et sans renfort immédiat disponible, la méthode START reste applicable sans aucun matériel — sa simplicité est un atout dans ce contexte. La règle du « pas de réanimation en catégorie noire » doit être clairement expliquée à l'équipe à l'avance : elle heurte les réflexes habituels de soins individuels mais sauve davantage de vies à l'échelle de l'événement.</p>
   </div>
 
   <div class="card" id="proto-embolie-pulmonaire">
@@ -2147,10 +2406,41 @@ function renderProtocoles(){
       <li><strong>Indications de TDM cérébrale</strong> (règle de Canadian CT Head, à adapter au contexte) : Glasgow &lt;15 à 2h post-traumatisme, suspicion de fracture ouverte/embarrure ou de fracture de la base, vomissements ≥2 épisodes, âge ≥65 ans, amnésie rétrograde &gt;30 min, mécanisme dangereux (chute &gt;1m ou &gt;5 marches, choc à haute cinétique), traitement anticoagulant/antiagrégant, convulsion post-traumatique, céphalée sévère progressive</li>
       <li>En l'absence de ces critères et d'imagerie disponible : <strong>surveillance clinique</strong> plusieurs heures (constantes, Glasgow répété), consignes de surveillance écrites à la sortie si retour à domicile (réveiller pour vérifier la vigilance, reconsulter si vomissements, confusion, céphalée croissante, faiblesse d'un membre)</li>
       <li>Patient sous anticoagulant/antiagrégant : seuil d'imagerie plus bas et surveillance prolongée (risque d'hématome retardé), même pour un traumatisme apparemment mineur</li>
-      <li>Si signes de localisation, Glasgow &lt;13, ou détérioration secondaire → prise en charge comme un traumatisme crânien grave (cf. protocole HIC/engagement cérébral), avis neurochirurgical</li>
+      <li>Si signes de localisation, Glasgow &lt;13, ou détérioration secondaire → prise en charge comme un <a onclick="document.getElementById('proto-tc-grave').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">traumatisme crânien grave</a>, avis neurochirurgical</li>
       <li>Pas d'anti-inflammatoires non stéroïdiens en phase aiguë (risque hémorragique théorique), antalgie par <strong>Paracétamol (Doliprane®, Efferalgan®)</strong> 1 g PO/IV toutes les 6h (max 4 g/j)</li>
       <li>Enfant : mêmes principes avec règles pédiatriques dédiées (PECARN) — seuil de vigilance encore plus bas chez le nourrisson (difficulté de l'examen clinique)</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-tc-grave">
+    <h3>🤕 Traumatisme crânien grave</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 12/07/2026 — sources : Brain Trauma Foundation Guidelines (4e édition, 2016, toujours en vigueur), ATLS 10e édition, essais DECRA/RESCUEicp (craniectomie décompressive)</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Définition :</strong> Glasgow ≤8 après traumatisme crânien, ou détérioration secondaire vers ce seuil. Objectif central de la prise en charge : <strong>prévenir les lésions cérébrales secondaires</strong> (hypoxie, hypotension, hyper/hypocapnie, hyperthermie, hyper/hypoglycémie, hypertension intracrânienne) qui aggravent la lésion primaire irréversible — chaque épisode d'hypotension (TA systolique &lt;90 mmHg) ou d'hypoxie (SpO2 &lt;90%) en phase précoce double approximativement la mortalité.</p>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Prise en charge initiale (préhospitalière et accueil) :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>ABCDE avec priorité absolue à l'oxygénation et à la pression artérielle</strong> — <strong>intubation systématique si Glasgow ≤8</strong> (protection des voies aériennes, contrôle de la ventilation), en séquence rapide avec précaution rachis cervical (immobilisation, cf. <a onclick="document.getElementById('proto-trauma-rachis').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole trauma du rachis</a>)</li>
+      <li><strong>Cible SpO2 &gt;94-98%</strong> (éviter l'hypoxie ET l'hyperoxie) ; <strong>cible normocapnie PaCO2 35-40 mmHg</strong> — pas d'hyperventilation prophylactique systématique (vasoconstriction cérébrale délétère), réservée en mesure temporisatrice à une détérioration aiguë avec signes d'engagement (cf. <a onclick="document.getElementById('proto-hic').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole HIC/engagement cérébral</a>)</li>
+      <li><strong>TA systolique cible ≥100-110 mmHg</strong> (ou PAM adaptée à l'âge) — remplissage par cristalloïdes isotoniques (éviter les solutés hypotoniques/glucosés qui aggravent l'œdème cérébral), vasopresseur si besoin pour maintenir la pression de perfusion cérébrale, ne jamais tolérer d'hypotension même transitoire</li>
+      <li><strong>Score de Glasgow et examen pupillaire répétés</strong> toutes les 15-30 min en phase initiale — toute anisocorie ou mydriase aréactive est une urgence d'engagement, cf. protocole HIC</li>
+      <li>Rechercher systématiquement les lésions associées (polytraumatisme fréquent) — cf. <a onclick="document.getElementById('proto-polytraumatisme').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole polytraumatisme</a></li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">2. Imagerie et indication neurochirurgicale :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>TDM cérébrale en urgence dès stabilisation</strong> — ne doit jamais retarder la correction d'une hypoxie/hypotension active</li>
+      <li><strong>Avis neurochirurgical immédiat</strong> pour toute lésion à effet de masse significatif (hématome extradural, sous-dural aigu, contusion volumineuse) — évacuation chirurgicale en urgence si déviation de la ligne médiane, effacement des citernes de la base, ou détérioration clinique</li>
+      <li>TDM de contrôle à 6-24h si non opéré, ou avant si aggravation clinique (les lésions peuvent évoluer dans les premières 24-48h)</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">3. Réanimation neurologique spécifique :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Osmothérapie</strong> (Mannitol ou sérum salé hypertonique) si signes d'engagement — cf. protocole HIC pour les posologies</li>
+      <li><strong>Correction immédiate de toute coagulopathie</strong> (anticoagulant/antiagrégant préexistant, coagulopathie post-traumatique) — priorité absolue devant toute lésion intracrânienne, cf. protocoles transfusion</li>
+      <li><strong>Prophylaxie anticonvulsivante précoce</strong> (7 jours) à discuter selon le contexte (lésion corticale, hématome sous-dural, embarrure, plaie pénétrante) — <strong>Lévétiracétam</strong> privilégié (moins d'interactions/effets secondaires que la phénytoïne) ; traiter sans délai toute crise clinique</li>
+      <li><strong>Normothermie stricte</strong> (traiter activement toute fièvre) et <strong>contrôle glycémique modéré</strong> (éviter hypo- et hyperglycémie)</li>
+      <li>Sédation/analgésie adaptée pour limiter les pics de pression intracrânienne (agitation, douleur, toux, désadaptation au ventilateur) sans masquer l'examen neurologique de façon prolongée</li>
+      <li><strong>Craniectomie décompressive</strong> à discuter avec l'équipe neurochirurgicale en cas d'hypertension intracrânienne réfractaire au traitement médical maximal — bénéfice sur la survie mais risque accru de séquelles neurologiques sévères chez les survivants (données DECRA/RESCUEicp) : décision au cas par cas, en concertation avec la famille sur les objectifs de soins</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais tolérer d'hypotension ou d'hypoxie, même brève, chez un traumatisé crânien grave — ce sont les deux facteurs évitables qui pèsent le plus lourd sur le pronostic, davantage que la lésion primaire elle-même dans de nombreux cas. Ne jamais utiliser de corticoïdes dans le TC grave (surmortalité démontrée, essai CRASH).</div></div>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Mannitol et le sérum salé hypertonique sont disponibles en pharmacie hospitalière de CHU/CHRR. La neurochirurgie et le monitorage invasif de la pression intracrânienne ne sont disponibles que dans de rares centres de référence — en leur absence, la prévention rigoureuse des agressions cérébrales secondaires (oxygénation, TA, température, glycémie) reste le levier d'action principal et le plus déterminant, à assurer sans délai même avant tout transfert vers un centre neurochirurgical.</p>
   </div>
 
   <div class="card" id="proto-plaies-morsures">
@@ -3088,6 +3378,37 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Maintien hémodynamique du patient en attente de décision (si don d'organes envisagé) :</p>
     <p style="font-size:13.5px;">Support par <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> IVSE, débuté à 0,1 µg/kg/min et titré pour objectif de PAM &gt;65 mmHg ; correction du diabète insipide central si présent par <strong>Desmopressine (Minirin®)</strong> 1-4 µg IV/j selon la diurèse (si disponible) ; maintien de la normothermie et de la normoglycémie.</p>
     <p style="margin-top:10px; font-size:13px; color:var(--muted);">Confirmation par un examen paraclinique (angioscanner cérébral, EEG, doppler transcrânien) selon le cadre réglementaire local. Aborder la question du don d'organes avec la famille selon la législation en vigueur, en préservant l'hémodynamique et l'oxygénation du patient jusqu'à la décision finale.</p>
+  </div>
+
+  <div class="card" id="proto-lata">
+    <h3>🕊️ Limitation et arrêt des thérapeutiques actives (LATA) / Fin de vie en réanimation</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Décision médicale, distincte de l'euthanasie, consistant à ne pas débuter (limitation) ou à interrompre (arrêt) un traitement de suppléance vitale jugé disproportionné au regard du pronostic, lorsque la poursuite des soins curatifs maintient ou prolonge un état sans bénéfice raisonnable pour le patient. Ne concerne jamais l'arrêt des soins de confort, qui restent poursuivis et renforcés dans tous les cas.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Une décision de LATA n'est jamais prise dans l'urgence par un seul soignant isolé — elle engage une procédure collégiale et doit être tracée dans le dossier médical. En cas de doute ou de désaccord dans l'équipe, poursuivre les soins curatifs le temps d'organiser la discussion.</div></div>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Situations amenant à discuter une LATA :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Défaillance multiviscérale réfractaire malgré une prise en charge maximale bien conduite, sans espoir raisonnable de récupération</li>
+      <li>Pronostic neurologique catastrophique établi (au-delà du diagnostic de mort encéphalique, qui est un cadre distinct — cf. protocole dédié) après un délai d'observation suffisant</li>
+      <li>Pathologie terminale sous-jacente (cancer en phase avancée, insuffisance d'organe en phase terminale) pour laquelle l'admission en réanimation ne modifierait pas l'évolution défavorable</li>
+      <li>Volontés du patient connues (directives anticipées si formalisées, ou expression antérieure rapportée par les proches/la personne de confiance) allant dans le sens d'un refus de l'acharnement thérapeutique</li>
+    </ul>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Démarche collégiale — étapes :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Évaluation médicale du pronostic</strong> par le médecin en charge, formalisée avec les éléments cliniques et paracliniques objectifs justifiant la discussion</li>
+      <li><strong>Concertation avec l'équipe soignante</strong> (médecins et infirmiers impliqués dans la prise en charge quotidienne) — recueil de l'avis de chacun</li>
+      <li><strong>Avis d'un médecin extérieur</strong> à l'équipe, sans lien hiérarchique, consulté en tant que second avis indépendant</li>
+      <li><strong>Recherche des volontés du patient</strong> — directives anticipées si elles existent, avis de la personne de confiance ou, à défaut, des proches (leur rôle est de témoigner de ce qu'aurait souhaité le patient, pas de décider à sa place)</li>
+      <li><strong>Décision finale</strong> par le médecin en charge, qui reste seul responsable de la décision médicale, éclairé par la concertation collégiale — décision tracée par écrit dans le dossier (arguments, participants, date)</li>
+      <li><strong>Information de la famille</strong> de la décision et de ses modalités, avec un temps dédié, dans un langage clair, en s'assurant de leur compréhension et en répondant à leurs questions</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Modalités pratiques après décision :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Limitation</strong> : ne pas escalader (pas de nouvelle amine vasopressive, pas de dialyse, pas de réanimation cardio-pulmonaire en cas d'arrêt — statut « ne pas réanimer » clairement tracé et communiqué à toute l'équipe)</li>
+      <li><strong>Arrêt</strong> : interruption progressive ou immédiate des thérapeutiques de suppléance selon la situation (arrêt des amines, extubation terminale ou réduction des paramètres ventilatoires) — toujours accompagné d'une <strong>sédation-analgésie adaptée</strong> pour prévenir tout inconfort ou dyspnée (opiacés titrés, benzodiazépines si besoin), sans intention de hâter le décès mais sans sous-traiter la souffrance par crainte de cet effet secondaire</li>
+      <li><strong>Maintien des soins de confort</strong> dans tous les cas : soins de bouche, prévention des escarres, position antalgique, présence humaine — ne jamais assimiler l'arrêt des thérapeutiques actives à un abandon de soins</li>
+      <li><strong>Accompagnement de la famille</strong> : présence favorisée au chevet, information continue, accompagnement psychologique si besoin et si disponible sur place</li>
+      <li>Réévaluation possible à tout moment si l'évolution clinique remet en question le pronostic initial — une décision de LATA n'est pas irrévocable tant qu'elle n'a pas été appliquée</li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Contexte Madagascar</strong> : la formalisation écrite de directives anticipées reste rare en pratique locale — la discussion avec la personne de confiance/les proches est donc souvent le seul repère disponible sur les volontés du patient, à recueillir avec tact. En l'absence de psychologue ou d'équipe de soins palliatifs dédiée dans de nombreuses structures, l'accompagnement repose largement sur l'équipe soignante elle-même ; s'appuyer sur les ressources communautaires/religieuses locales si la famille le souhaite. La collégialité peut être adaptée aux ressources humaines disponibles (parfois un seul médecin de garde) sans renoncer au principe : à défaut d'un second avis médical immédiat, tracer la réflexion et solliciter un avis a posteriori ou par téléphone si possible.</p>
   </div>
 
   <div class="card" id="proto-aaa-rompu">
@@ -5005,7 +5326,7 @@ const ABBR_DATA = [
   ["FC","Fréquence cardiaque"],
   ["FR","Fréquence respiratoire"],
   ["FV","Fibrillation ventriculaire"],
-  ["G5% / G10% / G30%","Soluté glucosé à 5%, 10% ou 30%"],
+  ["G5% / G10% / G30% / G50%","Soluté glucosé à 5%, 10%, 30% ou 50%"],
   ["GCS","Glasgow Coma Scale — score de Glasgow"],
   ["GDS","Gaz du sang"],
   ["GEU","Grossesse extra-utérine"],
@@ -5055,6 +5376,7 @@ const ABBR_DATA = [
   ["PFC","Plasma frais congelé"],
   ["PL","Ponction lombaire"],
   ["PNI","Pression non invasive"],
+  ["PNN","Polynucléaires neutrophiles"],
   ["PO","Per os (voie orale)"],
   ["PPE","Prophylaxie post-exposition"],
   ["PPSB","Complexe prothrombique (facteurs II, VII, IX, X)"],
@@ -5075,6 +5397,7 @@ const ABBR_DATA = [
   ["SpO2","Saturation pulsée en oxygène"],
   ["SRO","Solution de réhydratation orale"],
   ["SSI","Sérum salé isotonique (NaCl 0,9%)"],
+  ["START","Simple Triage And Rapid Treatment — méthode de triage de masse"],
   ["STEMI","ST-Elevation Myocardial Infarction — IDM avec sus-décalage de ST"],
   ["TA","Tension artérielle / Trou anionique (selon contexte)"],
   ["TAM","Tension artérielle moyenne"],
@@ -5258,6 +5581,83 @@ const ABBR_DATA = [
   ["FiO2","Fraction inspirée en oxygène"],
   ["EtCO2","End-tidal CO2 — CO2 expiré en fin d'expiration (capnographie)"],
   ["mmHg / cmH2O","Millimètre de mercure / centimètre d'eau (unités de pression)"]
+]).concat([
+  ["AACT","American Academy of Clinical Toxicology"],
+  ["ACC","American College of Cardiology"],
+  ["AMBU","Ballon auto-remplisseur à valve unidirectionnelle (dispositif de ventilation manuelle, terme usuel dérivé de la marque Ambu®)"],
+  ["AOD","Anticoagulants oraux directs"],
+  ["AOMI","Artériopathie oblitérante des membres inférieurs"],
+  ["ARDS","Acute Respiratory Distress Syndrome (équivalent anglais de SDRA)"],
+  ["ASIA / ISNCSCI","American Spinal Injury Association / International Standards for Neurological Classification of Spinal Cord Injury — référentiel d'évaluation du traumatisme médullaire"],
+  ["ATPE","Aliment thérapeutique prêt à l'emploi (prise en charge de la malnutrition aiguë sévère)"],
+  ["ATS","American Thoracic Society"],
+  ["BE","Base Excess — excès de base (gaz du sang)"],
+  ["CAT","Combat Application Tourniquet — garrot tourniquet commercial à cliquet"],
+  ["CCMH","Concentration corpusculaire moyenne en hémoglobine"],
+  ["CHA2DS2-VASc","Score de risque thromboembolique dans la fibrillation atriale"],
+  ["CHRD","Centre Hospitalier de Référence de District (Madagascar)"],
+  ["CHRR","Centre Hospitalier de Référence Régional (Madagascar)"],
+  ["CHU","Centre Hospitalier Universitaire"],
+  ["CMV","Complexe Minéralo-Vitaminique (mix minéral-vitaminique, protocoles nutritionnels type F-75/F-100 — à distinguer du cytomégalovirus)"],
+  ["CNTS","Centre National de Transfusion Sanguine (Madagascar)"],
+  ["CO2","Dioxyde de carbone"],
+  ["COVID-19","Coronavirus Disease 2019"],
+  ["CRENA","Centre de Récupération Nutritionnelle Ambulatoire"],
+  ["CRENI","Centre de Récupération Nutritionnelle Intensive"],
+  ["CSB / CSB2","Centre de Santé de Base (niveau 1 ou 2) — structure de soins primaires à Madagascar"],
+  ["CURB-65","Score de gravité de la pneumonie aiguë communautaire"],
+  ["DDAVP","Desmopressine (1-désamino-8-D-arginine vasopressine)"],
+  ["DECRA","Decompressive Craniectomy trial — essai de référence sur la craniectomie décompressive"],
+  ["DFG","Débit de filtration glomérulaire"],
+  ["EAST","Eastern Association for the Surgery of Trauma"],
+  ["ECLS","Extracorporeal Life Support — assistance circulatoire extracorporelle (synonyme d'ECMO)"],
+  ["EER","Épuration extra-rénale"],
+  ["EPI","Équipement de protection individuelle"],
+  ["ETT","Échocardiographie transthoracique"],
+  ["EVAR","Endovascular Aneurysm Repair — réparation endovasculaire d'anévrisme"],
+  ["EZ-IO","Dispositif d'accès intra-osseux automatique (nom commercial)"],
+  ["FAST HUG","Mnémonique de check-list quotidienne en réanimation : Feeding, Analgesia, Sedation, Thromboprophylaxis, Head-of-bed elevated, stress Ulcer prevention, Glycemic control"],
+  ["FEVG","Fraction d'éjection du ventricule gauche"],
+  ["G-CSF","Granulocyte Colony-Stimulating Factor — facteur de croissance des granulocytes"],
+  ["GB","Globules blancs"],
+  ["GR","Globules rouges"],
+  ["HDL","High Density Lipoprotein — lipoprotéines de haute densité"],
+  ["ICTMG","International Collaboration for Transfusion Medicine Guidelines"],
+  ["ICU","Intensive Care Unit (équivalent anglais de réanimation/USI)"],
+  ["JAMA","Journal of the American Medical Association"],
+  ["LDL","Low Density Lipoprotein — lipoprotéines de basse densité"],
+  ["LEMON","Mnémotechnique des critères prédictifs d'intubation difficile : Look, Evaluate 3-3-2, Mallampati, Obstruction, Neck mobility"],
+  ["LNMEIS","Liste Nationale des Médicaments Essentiels et Intrants de Santé (Madagascar)"],
+  ["LRINEC","Laboratory Risk Indicator for Necrotizing Fasciitis"],
+  ["NEXUS","Critères cliniques de décision pour l'imagerie du rachis cervical"],
+  ["NIH","National Institutes of Health"],
+  ["NINO","Ne peut Intuber, Ne peut Oxygéner"],
+  ["ONN","Office National de Nutrition (Madagascar)"],
+  ["P2Y12","Récepteur plaquettaire à l'ADP, cible des antiagrégants (clopidogrel, ticagrélor)"],
+  ["PAL","Phosphatases alcalines"],
+  ["PAVM","Pneumopathie acquise sous ventilation mécanique (synonyme de VAP)"],
+  ["PLS","Position latérale de sécurité"],
+  ["PNLP","Programme National de Lutte contre le Paludisme (Madagascar)"],
+  ["PSI / PORT","Pneumonia Severity Index — score de gravité des pneumonies aiguës communautaires"],
+  ["PTT","Purpura thrombotique thrombocytopénique"],
+  ["REBOA","Resuscitative Endovascular Balloon Occlusion of the Aorta — occlusion aortique par ballonnet"],
+  ["ROSC","Return Of Spontaneous Circulation (équivalent anglais du retour à une circulation spontanée)"],
+  ["RSI","Rapid Sequence Induction/Intubation (équivalent anglais de l'ISR)"],
+  ["SARM","Staphylococcus aureus résistant à la méticilline"],
+  ["SCAI","Society for Cardiovascular Angiography and Interventions"],
+  ["SCORE2","Score européen d'estimation du risque cardiovasculaire"],
+  ["SGOT / SGPT","Anciennes dénominations de l'ASAT / ALAT (transaminases hépatiques)"],
+  ["SHU","Syndrome hémolytique et urémique"],
+  ["SOFTT","Special Operations Forces Tactical Tourniquet — garrot tourniquet tactique commercial"],
+  ["TCMH","Teneur corpusculaire moyenne en hémoglobine"],
+  ["TDR","Test de diagnostic rapide (paludisme)"],
+  ["TRACT","Transfusion and Treatment of severe anaemia in African Children Trial"],
+  ["TSH","Thyroid Stimulating Hormone — hormone thyréostimulante"],
+  ["VAS","Voies aériennes supérieures"],
+  ["VGM","Volume globulaire moyen"],
+  ["VPN","Valeur prédictive négative"],
+  ["WPW","Wolff-Parkinson-White (syndrome de préexcitation)"],
+  ["WSES","World Society of Emergency Surgery"]
 ]).sort((a,b)=>a[0].localeCompare(b[0],'fr',{sensitivity:'base'}));
 
 function renderAbreviations(){
