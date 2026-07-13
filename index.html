@@ -1046,13 +1046,25 @@ function renderProtocoles(){
 
   <div class="card" id="proto-acr-pediatrique">
     <h3>💔 Arrêt cardio-respiratoire — Pédiatrique (ERC 2025)</h3>
+
+    <div class="acr-pedia-calc">
+      <div class="row2" style="align-items:end;">
+        <div class="field" style="margin-bottom:0;">
+          <label>⚖️ Poids de l'enfant (kg) — calcul automatique des doses ci-dessous</label>
+          <input type="number" step="0.1" min="0" id="acrp_poids" placeholder="ex. 12" oninput="calcAcrPedia()">
+        </div>
+        <div class="field" id="acrp_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+      </div>
+      <div class="result-box hidden" id="acrp_result"></div>
+    </div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>5 insufflations initiales avant de débuter les compressions (si arrêt respiratoire probable)</li>
       <li>Ratio <strong>15 compressions / 2 insufflations</strong> (2 sauveteurs qualifiés) — dépression 1/3 du diamètre thoracique ; changer l'opérateur des compressions au moins toutes les 2 min (surveiller la fatigue/dégradation de la qualité)</li>
       <li>RCP 1 min avant d'alerter si seul, puis appeler à l'aide</li>
       <li><strong>Débuter les compressions thoraciques même en présence d'un pouls</strong> si bradycardie &lt;60/min avec signes de mauvaise perfusion, malgré une oxygénation/ventilation optimisées — ne pas attendre l'arrêt circulatoire complet</li>
-      <li>Adrénaline (<strong>Adrénaline Aguettant®</strong>) IV/IO : <strong>10 microgrammes/kg</strong> (0,01 mg/kg), max 1mg, <strong>répétée toutes les 4 min</strong> (soit un cycle de RCP sur deux) en l'absence de signes de vie, sauf guidage par pression artérielle invasive</li>
-      <li>Énergie de choc (FV/TV sans pouls) : <strong>4 J/kg</strong> par choc, jusqu'à un maximum de <strong>120-200 J</strong> ; reprendre la RCP immédiatement après le choc, minimiser la pause péri-choc (&lt;5 sec)</li>
+      <li>Adrénaline (<strong>Adrénaline Aguettant®</strong>) IV/IO : <strong>10 microgrammes/kg</strong> (0,01 mg/kg), max 1mg, <strong>répétée toutes les 4 min</strong> (soit un cycle de RCP sur deux) en l'absence de signes de vie, sauf guidage par pression artérielle invasive — <span id="acrp_inline_adr">saisir le poids ci-dessus pour la dose calculée</span></li>
+      <li>Énergie de choc (FV/TV sans pouls) : <strong>4 J/kg</strong> par choc, jusqu'à un maximum de <strong>120-200 J</strong> ; reprendre la RCP immédiatement après le choc, minimiser la pause péri-choc (&lt;5 sec) — <span id="acrp_inline_j">saisir le poids ci-dessus pour l'énergie calculée</span></li>
       <li>Rechercher les mêmes causes réversibles (4H/4T) — chez l'enfant, penser surtout hypoxie et hypovolémie</li>
       <li>Après RCS (retour à une circulation spontanée) : titrer l'oxygène pour éviter l'hyperoxie, traiter la cause, transfert en unité de soins intensifs pédiatriques dès que possible</li>
     </ol>
@@ -1123,18 +1135,28 @@ function renderProtocoles(){
   <div class="card" id="proto-anaphylaxie">
     <h3>🐝 Choc anaphylactique / Anaphylaxie</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations WAO (World Allergy Organization) 2020 et EAACI. <strong>Diagnostic</strong> : début brutal (minutes à quelques heures) après exposition à un allergène probable, associant atteinte cutanéo-muqueuse (urticaire, angio-œdème, prurit) ET au moins un signe respiratoire (bronchospasme, stridor, dyspnée), cardiovasculaire (hypoTA, collapsus, syncope) ou digestif (vomissements, douleurs abdominales) — <strong>l'atteinte cutanée peut être absente dans 10-20% des cas</strong>, ne pas exclure le diagnostic sur ce seul critère. Causes fréquentes : piqûres d'hyménoptères, aliments (arachide, fruits de mer), médicaments (bêta-lactamines, AINS, curares), latex.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="anaph_poids" placeholder="ex. 70 (adulte) ou 15 (enfant)" oninput="calcAnaphylaxie()">
+      </div>
+      <div class="field" id="anaph_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="anaph_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Retrait immédiat de l'allergène</strong> si identifiable (arrêt de la perfusion en cours, retrait du dard) — ne pas retarder l'adrénaline pour autant</li>
-      <li><strong>Adrénaline IM (Adrénaline Aguettant®)</strong> — traitement de 1ère ligne, à administrer sans délai dès suspicion : <strong>0,5 mg</strong> chez l'adulte (0,01 mg/kg chez l'enfant, max 0,3 mg), face antéro-latérale de la <strong>cuisse</strong>, à répéter toutes les <strong>5-15 min</strong> si absence d'amélioration</li>
+      <li><strong>Adrénaline IM (Adrénaline Aguettant®)</strong> — traitement de 1ère ligne, à administrer sans délai dès suspicion : <strong>0,5 mg</strong> chez l'adulte (0,01 mg/kg chez l'enfant, max 0,3 mg), face antéro-latérale de la <strong>cuisse</strong>, à répéter toutes les <strong>5-15 min</strong> si absence d'amélioration — <span id="anaph_inline_adr">saisir le poids ci-dessus pour la dose calculée</span></li>
       <li><strong>Positionnement</strong> : décubitus dorsal jambes surélevées (Trendelenburg) si hypotension/collapsus ; position semi-assise uniquement si détresse respiratoire prédominante sans hypoTA ; décubitus latéral gauche si vomissements ; femme enceinte en décubitus latéral gauche</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Jamais l'adrénaline dans la fesse (résorption trop lente) ni par voie orale/inhalée ou remplacée par des antihistaminiques/corticoïdes seuls. Jamais laisser le patient debout ou l'asseoir brutalement en cas d'hypotension (risque de syndrome de vidange ventriculaire vide et de mort subite par vasoplégie).</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:10px;">
       <li><strong>Oxygène</strong> haut débit au masque à haute concentration, monitorage continu (scope, SpO2, PA répétée)</li>
-      <li><strong>Remplissage vasculaire</strong> rapide si hypoTA/collapsus : cristalloïdes (NaCl 0,9%, Ringer Lactate) — bolus 500-1000 mL chez l'adulte (20 mL/kg chez l'enfant), à répéter selon réponse hémodynamique</li>
+      <li><strong>Remplissage vasculaire</strong> rapide si hypoTA/collapsus : cristalloïdes (NaCl 0,9%, Ringer Lactate) — bolus 500-1000 mL chez l'adulte (20 mL/kg chez l'enfant), à répéter selon réponse hémodynamique — <span id="anaph_inline_remplissage">saisir le poids ci-dessus pour le bolus calculé</span></li>
       <li>Si bronchospasme persistant malgré l'adrénaline : <strong>Salbutamol (Ventoline®)</strong> nébulisé en complément (n'agit pas sur la composante vasculaire, ne remplace jamais l'adrénaline)</li>
       <li><strong>Anaphylaxie réfractaire</strong> (persistance des signes malgré ≥2-3 injections IM d'adrénaline et remplissage) : <strong>Adrénaline (Adrénaline Aguettant®) IV titrée</strong> en milieu surveillé (scope continu, voie veineuse fiable) — dilution 1 mg dans 100 mL SSI (10 µg/mL), débit initial 30-100 mL/h (5-15 µg/min) à titrer selon la réponse tensionnelle ; si le patient est sous <strong>bêtabloquant</strong> et résiste à l'adrénaline : <strong>Glucagon (GlucaGen®)</strong> 1-2 mg IV bolus lent, répétable, puis relais en perfusion continue si besoin</li>
-      <li><strong>Traitements adjuvants</strong> (n'agissent pas sur l'urgence vitale, jamais en substitut de l'adrénaline) : antihistaminique H1 — <strong>Déxchlorphéniramine (Polaramine®)</strong> 5 mg IV/IM chez l'adulte (0,15-0,25 mg/kg chez l'enfant), et corticoïdes — <strong>Méthylprednisolone (Solu-Médrol®)</strong> 1-2 mg/kg IV (soit environ 40-80 mg chez l'adulte), utiles surtout pour les symptômes cutanés et la prévention théorique d'une réaction biphasique (bénéfice non formellement démontré)</li>
+      <li><strong>Traitements adjuvants</strong> (n'agissent pas sur l'urgence vitale, jamais en substitut de l'adrénaline) : antihistaminique H1 — <strong>Déxchlorphéniramine (Polaramine®)</strong> 5 mg IV/IM chez l'adulte (0,15-0,25 mg/kg chez l'enfant), et corticoïdes — <strong>Méthylprednisolone (Solu-Médrol®)</strong> 1-2 mg/kg IV (soit environ 40-80 mg chez l'adulte), utiles surtout pour les symptômes cutanés et la prévention théorique d'une réaction biphasique (bénéfice non formellement démontré) — <span id="anaph_inline_adjuvants">saisir le poids ci-dessus pour les doses calculées</span></li>
       <li><strong>Surveillance de la réaction biphasique</strong> : récidive des symptômes sans nouvelle exposition, généralement dans les <strong>4-12h</strong> (jusqu'à 24-72h décrit) — observation minimale de <strong>4-6h</strong> après résolution complète pour une réaction non sévère, à prolonger à <strong>8-24h</strong> si : réaction sévère/hypoTA initiale, bronchospasme sévère ou asthme sous-jacent, nécessité de plusieurs doses d'adrénaline, antécédent de réaction biphasique, ou accès aux soins d'urgence limité en cas de récidive</li>
       <li><strong>À la sortie</strong> : prescription d'un stylo auto-injecteur d'adrénaline si disponible avec éducation à son utilisation, plan d'action écrit, éviction de l'allergène identifié, orientation vers une consultation d'allergologie</li>
     </ol>
@@ -1282,6 +1304,21 @@ function renderProtocoles(){
   <div class="card" id="proto-avc">
     <h3>🧠 AVC — Accident vasculaire cérébral (ischémique / hémorragique)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Déficit neurologique focal brutal (FAST : Face/Arm/Speech/Time). Chaque minute compte — "Time is brain". TDM cérébrale en urgence pour différencier ischémique/hémorragique avant tout traitement spécifique.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la dose de thrombolyse IV</label>
+        <input type="number" step="0.1" min="0" id="avc_poids" placeholder="ex. 70" oninput="calcAvc()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Molécule</label>
+        <select id="avc_molecule" onchange="calcAvc()">
+          <option value="alteplase">Altéplase (Actilyse®) — 0,9 mg/kg, max 90 mg</option>
+          <option value="tenecteplase">Ténectéplase (Metalyse®) — 0,25 mg/kg, max 25 mg</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" id="avc_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    <div class="result-box hidden" id="avc_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>ABCDE, glycémie capillaire systématique (une hypo/hyperglycémie peut mimer un AVC), O2 si SpO2&lt;94%, ECG (rechercher une fibrillation atriale)</li>
       <li>Heure exacte de début des symptômes (ou dernière heure vue asymptomatique) — détermine l'éligibilité à la thrombolyse/thrombectomie</li>
@@ -1474,6 +1511,16 @@ function renderProtocoles(){
   <div class="card" id="proto-etat-mal-epileptique">
     <h3>⚡ État de mal épileptique (EME / Status epilepticus)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après la définition opérationnelle ILAE 2015 et les recommandations AES (American Epilepsy Society) 2016. <strong>Temps 1 (t1) — début du traitement :</strong> crise convulsive généralisée &gt;5 min OU crises répétées sans reprise de conscience entre elles. <strong>Temps 2 (t2) — risque de conséquences durables :</strong> &gt;30 min. Urgence neurologique majeure — chaque minute de retard réduit l'efficacité des benzodiazépines (perte des récepteurs GABA-A synaptiques).</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="eme_poids" placeholder="ex. 70 (adulte) ou 15 (enfant)" oninput="calcEme()">
+      </div>
+      <div class="field" id="eme_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="eme_result"></div>
+
     <table>
       <tr><th>Stade</th><th>Délai</th><th>Conduite</th></tr>
       <tr><td class="modere">Précoce (early SE)</td><td>0-5 min</td><td>Sécuriser le patient, position latérale, libérer les voies aériennes, O2, <strong>glycémie capillaire</strong>, voie veineuse, monitorage (scope, SpO2)</td></tr>
@@ -1500,6 +1547,14 @@ function renderProtocoles(){
   <div class="card" id="proto-acd">
     <h3>🩺 Acidocétose diabétique (ACD)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Critères diagnostiques : glycémie &gt;2,5 g/L (14 mmol/L), cétonémie ≥3 mmol/L (ou cétonurie ≥2+), pH veineux &lt;7,30 et/ou bicarbonates &lt;18 mmol/L. Sévérité selon pH/bicar : légère (pH 7,25-7,30 / HCO3 15-18), modérée (pH 7,00-7,24 / HCO3 10-15), sévère (pH&lt;7,00 / HCO3&lt;10).</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du débit d'insuline IVSE</label>
+        <input type="number" step="0.1" min="0" id="acd_poids" placeholder="ex. 70" oninput="calcAcd()">
+      </div>
+      <div class="field" id="acd_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="acd_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Réhydratation</strong> en premier (avant insuline) : NaCl 0,9% — 1 000 mL en 1h IVL, ET 1 000 mL en 2h, ET 1 000 mL en 2h, PUIS 1 000 mL de soluté en 4h en fonction de la glycémie (dextro &gt;14 mmol/L : NaCl 0,9% ; dextro &lt;14 mmol/L : NaCl 0,9% et G5% en Y). Poursuivre ensuite selon l'état hémodynamique et la fonction cardiaque. Chez l'enfant : débit plus prudent, à calculer selon le poids (risque d'œdème cérébral en cas de correction trop rapide)</li>
       <li><strong>Insulinothérapie</strong> : débuter après ≥1h de réhydratation (sauf choc) — objectif glycémique 11 mM si cétonémie &gt;0,5 mM. <strong>Insuline rapide (Novorapid®, Apidra®, Humalog®)</strong> IVSE 0,1 UI/kg/h, sans dépasser 10 UI/h, tant que la cétonémie reste &gt;0,5 mM. Objectif de correction de la cétonémie : diminution de 0,5 mmol/L/h — augmenter le débit de perfusion si cet objectif n'est pas atteint au bout de quelques heures. Dès que cétonémie &lt;0,5 mM : relais protocole insuline classique (F11). Pas de bolus initial, surtout chez l'enfant (risque d'œdème cérébral)</li>
@@ -1568,8 +1623,18 @@ function renderProtocoles(){
       <li>Hémorragie spontanée/CIVD, hémoglobinurie macroscopique</li>
       <li>Parasitémie ≥5% (P. falciparum)</li>
     </ul>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la dose d'Artésunate ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="palu_poids" placeholder="ex. 70 (adulte) ou 15 (enfant)" oninput="calcPaludisme()">
+      </div>
+      <div class="field" id="palu_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="palu_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Artésunate IV (Artesun®)</strong> (traitement de référence) : <strong>2,4 mg/kg</strong> à H0, H12, H24 puis 1 fois/j chez l'adulte et l'enfant ≥20 kg — <strong>3 mg/kg/dose</strong> (dose plus élevée) chez l'<strong>enfant &lt;20 kg</strong> pour garantir une exposition équivalente (recommandation OMS actualisée, pharmacocinétique pédiatrique), même rythme H0-H12-H24 puis 1 fois/j, jusqu'à ce que la voie orale soit possible (minimum 24h de traitement parentéral)</li>
+      <li><strong>Artésunate IV (Artesun®)</strong> (traitement de référence) : <strong>2,4 mg/kg</strong> à H0, H12, H24 puis 1 fois/j chez l'adulte et l'enfant ≥20 kg — <strong>3 mg/kg/dose</strong> (dose plus élevée) chez l'<strong>enfant &lt;20 kg</strong> pour garantir une exposition équivalente (recommandation OMS actualisée, pharmacocinétique pédiatrique), même rythme H0-H12-H24 puis 1 fois/j, jusqu'à ce que la voie orale soit possible (minimum 24h de traitement parentéral) — <span id="palu_inline_artesunate">saisir le poids ci-dessus pour la dose calculée</span></li>
       <li>Si Artésunate IV indisponible en attendant le transfert : <strong>Artésunate intrarectal 10 mg/kg dose unique chez l'enfant &lt;6 ans</strong> en pré-transfert (ne pas utiliser chez l'enfant plus âgé ni l'adulte), ou <strong>Artéméther IM (Paluther®)</strong>, ou <strong>Quinine IV (Quinimax®, Quinine Lafran®)</strong> en alternative — l'Artésunate/Artéméther restent préférés à la Quinine dès que disponibles (supériorité en mortalité)</li>
       <li>Dès que le patient tolère la voie orale ET parasitémie ≤1% : relais par une CTA (combinaison thérapeutique à base d'artémisinine) orale complète — ex. <strong>Artéméther-Luméfantrine (Coartem®, Riamet®)</strong> 4 cp (20 mg/120 mg) à H0-H8 puis 4 cp x2/j pendant 2 jours (adulte >35 kg, total 6 prises sur 3 jours) ou <strong>Artésunate-Amodiaquine (Coarsucam®, ASAQ Winthrop®)</strong> 1 cp (100 mg/270 mg)/j pendant 3 jours (adulte >36 kg) — posologie pédiatrique à adapter au poids selon la présentation disponible</li>
       <li>Traitement symptomatique associé : correction de l'hypoglycémie (fréquente, à rechercher systématiquement), transfusion si anémie sévère mal tolérée, gestion des convulsions (benzodiazépines), oxygénothérapie/ventilation si détresse respiratoire, épuration extra-rénale si insuffisance rénale sévère</li>
@@ -1582,8 +1647,25 @@ function renderProtocoles(){
   <div class="card" id="proto-eclampsie">
     <h3>🤰 Prééclampsie sévère / Éclampsie</h3>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Prééclampsie sévère :</strong> TA ≥160/110 mmHg + protéinurie (ou signe de gravité : céphalées, troubles visuels, douleur épigastrique, œdème pulmonaire, thrombopénie, cytolyse hépatique). <strong>Éclampsie :</strong> convulsions généralisées chez une femme enceinte/post-partum avec prééclampsie — urgence vitale materno-fœtale.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>💧 Concentration de l'ampoule de sulfate de magnésium disponible (%)</label>
+        <input type="number" step="0.1" min="0" id="mgso4_conc" placeholder="ex. 15, 20 ou 50" oninput="calcEclampsie()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Schéma souhaité</label>
+        <select id="mgso4_schema" onchange="calcEclampsie()">
+          <option value="zuspan">Zuspan (IV continu — pousse-seringue)</option>
+          <option value="pritchard">Pritchard (IV + IM — ressources limitées)</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" id="mgso4_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    <div class="result-box hidden" id="mgso4_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Sulfate de magnésium (Sulfate de magnésium Lavoisier®, Cooper®)</strong> (prévention et traitement des convulsions — traitement de référence, OMS) : dose de charge 4 g IV en 15-20 min, puis entretien 1 g/h IV continu (schéma Zuspan) — alternative en ressources limitées (schéma Pritchard) : 4g IV + 10g IM (5g dans chaque fesse), puis 5g IM toutes les 4h</li>
+      <li><strong>Sulfate de magnésium (Sulfate de magnésium Lavoisier®, Cooper®)</strong> (prévention et traitement des convulsions — traitement de référence, OMS) : dose de charge 4 g IV en 15-20 min, puis entretien 1 g/h IV continu (schéma Zuspan) — alternative en ressources limitées (schéma Pritchard) : 4g IV + 10g IM (5g dans chaque fesse), puis 5g IM toutes les 4h — <span id="mgso4_inline">saisir la concentration de l'ampoule ci-dessus pour le volume calculé</span></li>
       <li>Surveillance stricte de la toxicité au magnésium : réflexes ostéotendineux présents, FR &gt;12/min, diurèse conservée (&gt;25 mL/h) — si signe de surdosage : arrêter la perfusion, <strong>Gluconate de calcium 10% (Calcium Gluconate Lavoisier®)</strong> 10 mL IV en antidote</li>
       <li>Si convulsion malgré le traitement : nouveau bolus de 2g de Sulfate de magnésium</li>
       <li><strong>Antihypertenseur</strong> si TA ≥160/110 mmHg : <strong>Labétalol (Trandate®)</strong> IV, ou <strong>Nifédipine (Adalate®)</strong> PO/<strong>Nicardipine (Loxen®)</strong> IV selon disponibilité — objectif TA &lt;160/110 sans chute brutale (préserver la perfusion utéro-placentaire)</li>
@@ -1598,11 +1680,21 @@ function renderProtocoles(){
   <div class="card" id="proto-hpp">
     <h3>🩸 Hémorragie du post-partum (HPP)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Définition : pertes sanguines ≥500 mL après accouchement voie basse ou ≥1000 mL après césarienne. Cause principale : atonie utérine (≈80% des cas). Première cause de mortalité maternelle évitable dans le monde.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de la patiente (kg) — calcul de la dose d'acide tranexamique</label>
+        <input type="number" step="0.5" min="0" id="hpp_poids" placeholder="ex. 65" oninput="calcHpp()">
+      </div>
+      <div class="field" id="hpp_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="hpp_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Alerte immédiate</strong> — appel à l'aide, 2 VVP de gros calibre, bilan (NFS, coagulation, groupe/Rh, RAI), commander des culots globulaires</li>
       <li><strong>Massage utérin</strong> bimanuel immédiat + vérifier la vacuité vésicale (sondage)</li>
       <li><strong>Utérotonique de 1ère ligne :</strong> <strong>Oxytocine (Syntocinon®)</strong> 10 UI IM ou IV lente, puis perfusion continue d'entretien. Si inefficace : <strong>Ergométrine (Méthergin®)</strong> IM (contre-indiquée si hypertension/prééclampsie) ou <strong>Misoprostol (Cytotec®, Misotac®)</strong> 800 µg voie sublinguale. La <strong>Carbétocine</strong> (analogue thermostable de l'oxytocine, injection unique 100 µg IM/IV sans entretien) est recommandée par l'OMS (Feuille de route mondiale contre l'HPP 2023-2030) comme utérotonique de 1ère ligne alternatif — intérêt particulier en l'absence de chaîne du froid fiable, mais coût et disponibilité restent limitants hors CHU à Madagascar à ce jour</li>
-      <li><strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min, dès le diagnostic d'HPP constituée, dans les 3h suivant l'accouchement (réduit la mortalité par hémorragie) — répétable une fois si saignement persistant après 30 min. <strong>Ne pas utiliser l'acide tranexamique en prophylaxie systématique</strong> chez la femme anémique sans hémorragie constituée : l'essai WOMAN-2 (Lancet 2024, >15 000 femmes) n'a montré aucune réduction du risque d'HPP avec cette stratégie préventive — l'indication reste le traitement curatif d'une hémorragie avérée</li>
+      <li><strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min, dès le diagnostic d'HPP constituée, dans les 3h suivant l'accouchement (réduit la mortalité par hémorragie) — répétable une fois si saignement persistant après 30 min. <strong>Ne pas utiliser l'acide tranexamique en prophylaxie systématique</strong> chez la femme anémique sans hémorragie constituée : l'essai WOMAN-2 (Lancet 2024, >15 000 femmes) n'a montré aucune réduction du risque d'HPP avec cette stratégie préventive — l'indication reste le traitement curatif d'une hémorragie avérée — <span id="hpp_inline">saisir le poids ci-dessus pour la dose calculée</span></li>
       <li>Remplissage vasculaire par cristalloïdes isotoniques ; transfusion précoce si choc hémorragique (ne pas attendre les résultats biologiques si instabilité franche)</li>
       <li>Rechercher et traiter la cause (règle des 4T) : <strong>T</strong>onus (atonie utérine — cause la plus fréquente), <strong>T</strong>issu (rétention placentaire — révision utérine), <strong>T</strong>rauma (déchirure cervico-vaginale — examen sous valves), <strong>T</strong>hrombine (trouble de la coagulation)</li>
       <li>Si hémorragie réfractaire aux utérotoniques : tamponnement par ballonnet intra-utérin (efficace dans &gt;80% des cas s'il est posé avant l'état de choc avancé), sinon geste chirurgical/radiologie interventionnelle selon plateau technique disponible</li>
@@ -1614,14 +1706,24 @@ function renderProtocoles(){
   <div class="card" id="proto-reanimation-nn">
     <h3>👶 Réanimation du nouveau-né en salle de naissance</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après l'algorithme NRP (Neonatal Resuscitation Program) / ILCOR 2020. <strong>~90% des nouveau-nés</strong> n'ont besoin d'aucune assistance ; les gestes de réanimation, quand nécessaires, doivent être initiés dans la <strong>1ère minute de vie</strong> ("Golden Minute").</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de naissance estimé (kg) — calcul des doses ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="nn_poids" placeholder="ex. 3.2" oninput="calcReaNN()">
+      </div>
+      <div class="field" id="nn_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="nn_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Évaluation initiale immédiate (3 questions) :</strong> terme atteint ? bon tonus ? respire ou crie ? — si les 3 réponses sont oui : soins de routine (séchage, contact peau à peau, <strong>clampage retardé du cordon ≥60s</strong>, recommandation forte ILCOR/AHA 2023 chez le nouveau-né à terme/proche du terme vigoureux). Si une réponse est non : débuter la prise en charge ci-dessous <em>sans attendre</em> — chez le nouveau-né non vigoureux, initier si possible les premières étapes (séchage, stimulation) cordon encore intact plutôt que de clamper immédiatement par principe, si la logistique de la salle le permet ; ne jamais retarder la ventilation en pression positive pour cette raison</li>
       <li><strong>Étapes initiales (30 premières secondes) :</strong> installer sous une source de chaleur radiante, sécher vigoureusement (stimulation tactile essentielle), position neutre de la tête ("sniffing position"), désobstruction des voies aériennes uniquement si sécrétions visibles/obstructives (aspiration douce bouche puis nez, éviter l'aspiration systématique agressive)</li>
       <li><strong>Réévaluation à 30-60s :</strong> fréquence cardiaque (auscultation ou saturomètre/ECG), respiration, tonus, coloration</li>
       <li><strong>Si apnée/gasping ou FC &lt;100/min :</strong> <strong>ventilation en pression positive (VPP)</strong> au masque sans délai — priorité absolue, 40-60 insufflations/min, air ambiant chez le nouveau-né à terme (FiO2 21%), oxygène titré selon SpO2 cible (objectifs différents selon l'âge en minutes de vie — cibles progressivement croissantes de ~60% à 5min jusqu'à ~90% à 10min) chez le prématuré. Vérifier l'efficacité par le soulèvement thoracique et l'amélioration de la FC — si inefficace : repositionner la tête, réaspirer, ouvrir la bouche, augmenter la pression</li>
       <li><strong>Si FC &lt;60/min malgré 30s de VPP efficace</strong> (voies aériennes libres, thorax se soulevant) : <strong>intuber</strong> (ou masque laryngé) et débuter les <strong>compressions thoraciques</strong> — ratio <strong>3 compressions / 1 insufflation</strong> (90 compressions + 30 insufflations par minute), 2 pouces au tiers inférieur du sternum, technique encerclant le thorax ; ventiler en oxygène pur (FiO2 100%) pendant les compressions</li>
-      <li><strong>Si FC reste &lt;60/min après 60s de compressions + ventilation bien conduites :</strong> <strong>Adrénaline (Adrénaline Aguettant®)</strong> — 0,01-0,03 mg/kg (soit 0,1-0,3 mL/kg d'une dilution à 1:10 000) IV/IO, répétable toutes les 3-5 min ; voie intratrachéale possible en 1ère dose si voie IV/IO non encore disponible (dose plus élevée requise, 0,05-0,1 mg/kg)</li>
-      <li><strong>Rechercher une cause traitable</strong> si absence de réponse : hypovolémie (remplissage NaCl 0,9% ou sang O négatif 10 mL/kg si hémorragie), pneumothorax (transillumination/exsufflation), malformation des voies aériennes</li>
+      <li><strong>Si FC reste &lt;60/min après 60s de compressions + ventilation bien conduites :</strong> <strong>Adrénaline (Adrénaline Aguettant®)</strong> — 0,01-0,03 mg/kg (soit 0,1-0,3 mL/kg d'une dilution à 1:10 000) IV/IO, répétable toutes les 3-5 min ; voie intratrachéale possible en 1ère dose si voie IV/IO non encore disponible (dose plus élevée requise, 0,05-0,1 mg/kg) — <span id="nn_inline_adr">saisir le poids ci-dessus pour la dose calculée</span></li>
+      <li><strong>Rechercher une cause traitable</strong> si absence de réponse : hypovolémie (remplissage NaCl 0,9% ou sang O négatif 10 mL/kg si hémorragie), pneumothorax (transillumination/exsufflation), malformation des voies aériennes — <span id="nn_inline_remplissage">saisir le poids ci-dessus pour le volume calculé</span></li>
       <li><strong>Prévention de l'hypothermie</strong> tout au long de la réanimation (facteur de morbi-mortalité indépendant) : source de chaleur radiante, séchage immédiat, bonnet, sac plastique si grand prématuré</li>
       <li>Score d'<strong>Apgar</strong> à 1, 5 et 10 min — utile pour documenter l'évolution mais ne doit jamais retarder ou guider les gestes de réanimation (l'algorithme se base sur la FC et la respiration en temps réel)</li>
       <li>Après stabilisation : surveillance rapprochée, glycémie (risque d'hypoglycémie post-asphyxie), transfert en néonatologie si réanimation avancée nécessaire (VPP prolongée, intubation, adrénaline)</li>
@@ -1632,6 +1734,16 @@ function renderProtocoles(){
   <div class="card" id="proto-convulsions-febriles">
     <h3>🌡️ Convulsions fébriles de l'enfant</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations AAP (American Academy of Pediatrics). Concerne les enfants de <strong>6 mois à 5 ans</strong>, en contexte fébrile, en l'absence d'infection intracrânienne ou de cause métabolique identifiée, sans antécédent de crise afébrile. Pathologie fréquente et bénigne dans sa forme simple, mais nécessite d'éliminer les diagnostics différentiels graves.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de l'enfant (kg) — calcul des doses ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="cvf_poids" placeholder="ex. 12" oninput="calcConvulsionsFebriles()">
+      </div>
+      <div class="field" id="cvf_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="cvf_result"></div>
+
     <table style="margin-bottom:10px;">
       <tr><th>Type</th><th>Caractéristiques</th></tr>
       <tr><td class="leger">Simple (~70-75% des cas)</td><td>Généralisée, durée &lt;15 min, unique dans les 24h, retour rapide (&lt;1h) à un état neurologique normal</td></tr>
@@ -1639,10 +1751,10 @@ function renderProtocoles(){
     </table>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Gestes immédiats</strong> : position latérale de sécurité, protection contre les traumatismes, ne rien mettre dans la bouche, chronométrer la crise, libérer les voies aériennes</li>
-      <li><strong>Si crise &gt;5 min :</strong> traiter comme un <strong>état de mal épileptique</strong> (<em>voir protocole dédié</em>) — <strong>Diazépam (Valium®) intrarectal</strong> 0,5 mg/kg (max 10 mg) ou <strong>Midazolam (Hypnovel®) buccal/intranasal</strong> 0,3 mg/kg (max 10 mg)</li>
+      <li><strong>Si crise &gt;5 min :</strong> traiter comme un <strong>état de mal épileptique</strong> (<em>voir protocole dédié</em>) — <strong>Diazépam (Valium®) intrarectal</strong> 0,5 mg/kg (max 10 mg) ou <strong>Midazolam (Hypnovel®) buccal/intranasal</strong> 0,3 mg/kg (max 10 mg) — <span id="cvf_inline_bzd">saisir le poids ci-dessus pour la dose calculée</span></li>
       <li><strong>Recherche du foyer infectieux</strong> déclenchant (le plus souvent viral — ORL, virose banale) : examen clinique complet, sans bilan systématique si crise simple et enfant bien portant après la crise</li>
       <li><strong>Ponction lombaire</strong> à discuter (non systématique) si : enfant &lt;12 mois avec état clinique préoccupant, signes méningés, léthargie persistante, antécédent de vaccination anti-Hib/pneumocoque incomplet, ou tout signe d'alarme faisant suspecter une méningite/encéphalite sous-jacente (<em>voir protocole méningite</em>)</li>
-      <li><strong>Antipyrétique</strong> (<strong>Paracétamol (Perfalgan® IV, Doliprane® PO)</strong> 15 mg/kg) pour le confort de l'enfant — ne prévient pas la récidive de convulsion fébrile mais traite l'inconfort lié à la fièvre</li>
+      <li><strong>Antipyrétique</strong> (<strong>Paracétamol (Perfalgan® IV, Doliprane® PO)</strong> 15 mg/kg) pour le confort de l'enfant — ne prévient pas la récidive de convulsion fébrile mais traite l'inconfort lié à la fièvre — <span id="cvf_inline_para">saisir le poids ci-dessus pour la dose calculée</span></li>
       <li><strong>Convulsion fébrile complexe ou signes d'alarme</strong> (léthargie prolongée, déficit focal, âge &lt;6 mois, immunodépression) : bilan complémentaire orienté (NFS, CRP, ionogramme, glycémie, imagerie cérébrale si déficit focal persistant), hospitalisation pour surveillance</li>
       <li><strong>Convulsion fébrile simple :</strong> pas de bilan biologique ni d'imagerie systématique, retour à domicile possible après une période d'observation, avec consignes de surveillance et d'éducation parentale (bon pronostic global, risque de récidive ~30-40% mais risque d'épilepsie ultérieure très faible, à peine supérieur à la population générale)</li>
       <li>Ne pas prescrire de traitement antiépileptique prophylactique au long cours après une convulsion fébrile simple isolée (rapport bénéfice-risque défavorable)</li>
@@ -1673,6 +1785,18 @@ function renderProtocoles(){
 
   <div class="card" id="proto-laryngite-epiglottite">
     <h3>🫁 Laryngite aiguë (croup) / Épiglottite</h3>
+
+    <div class="croup-calc">
+      <div class="row2" style="align-items:end;">
+        <div class="field" style="margin-bottom:0;">
+          <label>⚖️ Poids de l'enfant (kg) — calcul automatique des doses ci-dessous</label>
+          <input type="number" step="0.1" min="0" id="croup_poids" placeholder="ex. 12" oninput="calcCroup()">
+        </div>
+        <div class="field" id="croup_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+      </div>
+      <div class="result-box hidden" id="croup_result"></div>
+    </div>
+
     <p style="font-size:13.5px; margin-bottom:8px;">Deux causes d'obstruction aiguë des voies aériennes supérieures chez l'enfant, à ne pas confondre — l'épiglottite est une urgence vitale extrême nécessitant une prise en charge radicalement différente.</p>
     <table style="margin-bottom:10px;">
       <tr><th>Critère</th><th>Laryngite aiguë (croup)</th><th>Épiglottite</th></tr>
@@ -1687,8 +1811,8 @@ function renderProtocoles(){
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Épiglottite suspectée : ne jamais examiner la gorge/abaisser la langue, ne jamais allonger l'enfant, ne jamais l'agiter ou le séparer des parents — tout geste anxiogène ou stimulant peut précipiter une obstruction complète et un arrêt respiratoire.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:10px;">
       <li><strong>Épiglottite — conduite :</strong> transfert immédiat en milieu équipé pour intubation difficile (bloc opératoire/réanimation), appel anesthésiste/ORL en urgence — l'intubation doit être réalisée par une équipe expérimentée, au bloc, avec matériel de trachéotomie de sauvetage prêt (l'intubation peut être extrêmement difficile du fait de l'œdème épiglottique) ; <strong>antibiothérapie IV</strong> large spectre couvrant <em>Haemophilus influenzae</em> (<strong>Céfotaxime (Claforan®)</strong> 50 mg/kg/8h ou <strong>Ceftriaxone (Rocéphine®)</strong> 50 mg/kg/j en 1 injection, max 2 g/j) dès la sécurisation des voies aériennes, pendant 7 à 10 jours</li>
-      <li><strong>Laryngite aiguë légère</strong> (stridor uniquement à l'agitation/pleurs, pas de détresse au repos) : <strong>Dexaméthasone (Soludécadron®)</strong> PO/IV 0,15-0,6 mg/kg (dose unique, efficace même à faible dose), rassurer et garder l'enfant calme (l'agitation aggrave le stridor), air humidifié non prouvé efficace mais souvent utilisé, retour à domicile possible avec consignes de surveillance</li>
-      <li><strong>Laryngite modérée à sévère</strong> (stridor au repos, tirage) : <strong>Adrénaline (Adrénaline Aguettant®) nébulisée</strong> (1 mg/mL, 0,5 mL/kg dilués, max 5 mL) — effet rapide mais transitoire (1-2h), <strong>surveillance obligatoire ≥3-4h après la nébulisation</strong> (risque de rebond à la levée de l'effet vasoconstricteur), associée systématiquement à la <strong>Dexaméthasone (Soludécadron®)</strong> (effet plus tardif mais prolongé, prévient le rebond)</li>
+      <li><strong>Laryngite aiguë légère</strong> (stridor uniquement à l'agitation/pleurs, pas de détresse au repos) : <strong>Dexaméthasone (Soludécadron®)</strong> PO/IV 0,15-0,6 mg/kg (dose unique, efficace même à faible dose) — <span id="croup_inline_dexa">saisir le poids ci-dessus pour la dose calculée</span>, rassurer et garder l'enfant calme (l'agitation aggrave le stridor), air humidifié non prouvé efficace mais souvent utilisé, retour à domicile possible avec consignes de surveillance</li>
+      <li><strong>Laryngite modérée à sévère</strong> (stridor au repos, tirage) : <strong>Adrénaline (Adrénaline Aguettant®) nébulisée</strong> (1 mg/mL, 0,5 mL/kg dilués, max 5 mL) — <span id="croup_inline_adr">saisir le poids ci-dessus pour la dose calculée</span> — effet rapide mais transitoire (1-2h), <strong>surveillance obligatoire ≥3-4h après la nébulisation</strong> (risque de rebond à la levée de l'effet vasoconstricteur), associée systématiquement à la <strong>Dexaméthasone (Soludécadron®)</strong> (effet plus tardif mais prolongé, prévient le rebond)</li>
       <li><strong>Signes de gravité extrême</strong> (laryngite) : stridor au repos ne s'améliorant pas après nébulisation, épuisement respiratoire, cyanose, troubles de conscience → milieu équipé pour intubation, discuter l'hospitalisation en soins intensifs</li>
       <li>Oxygénothérapie si désaturation, éviter tout examen ou geste anxiogène inutile dans les deux pathologies (l'agitation augmente la demande en oxygène et peut précipiter la décompensation)</li>
       <li>Diagnostic différentiel à garder à l'esprit : corps étranger des voies aériennes (début brutal en pleine santé, syndrome de pénétration — <em>voir protocole dédié</em>), abcès rétropharyngé/périamygdalien, trachéite bactérienne (aspect toxique avec sécrétions purulentes, évolution défavorable sous traitement de croup)</li>
@@ -1697,6 +1821,23 @@ function renderProtocoles(){
 
   <div class="card" id="proto-deshydratation-enfant">
     <h3>🍼 Déshydratation sévère de l'enfant (OMS)</h3>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de l'enfant (kg)</label>
+        <input type="number" step="0.1" min="0" id="deshyd_poids" placeholder="ex. 10" oninput="calcDeshydratation()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>👶 Âge</label>
+        <select id="deshyd_age" onchange="calcDeshydratation()">
+          <option value="moins12">&lt; 12 mois</option>
+          <option value="plus12">≥ 12 mois</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" id="deshyd_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    <div class="result-box hidden" id="deshyd_result"></div>
+
     <table style="margin-bottom:10px;">
       <tr><th>Plan</th><th>Signes</th><th>Conduite</th></tr>
       <tr><td class="leger">Plan A (aucune déshydratation)</td><td>Pas de signe de déshydratation</td><td>Réhydratation orale (<strong>SRO (Adiaril®)</strong>, sachets OMS) après chaque selle, poursuite de l'alimentation/allaitement</td></tr>
@@ -1720,6 +1861,16 @@ function renderProtocoles(){
   <div class="card" id="proto-liquides-pediatriques">
     <h3>💧 Liquides et solutés de perfusion en pédiatrie</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après l'OMS (<em>Pocket Book of Hospital Care for Children</em>, Annexe 4) et les données pharmacologiques françaises (Vidal/ANSM, littérature SFAR). Le choix du soluté dépend de l'objectif : <strong>remplissage</strong> (choc/hypovolémie), <strong>entretien</strong> (besoins de base) ou <strong>correction</strong> d'un trouble hydro-électrolytique spécifique. Règle d'or : ne jamais utiliser un soluté glucosé pur (G5%/G10%) seul comme soluté de perfusion chez l'enfant — il ne contient ni sodium ni chlore et expose à l'hyponatrémie de dilution.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de l'enfant (kg) — calcul du débit d'entretien et du bolus</label>
+        <input type="number" step="0.1" min="0" id="liqp_poids" placeholder="ex. 15" oninput="calcLiquidesPedia()">
+      </div>
+      <div class="field" id="liqp_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="liqp_result"></div>
+
     <table style="margin-bottom:10px; font-size:12.5px;">
       <tr><th>Soluté</th><th>Na⁺ (mmol/L)</th><th>K⁺ (mmol/L)</th><th>Cl⁻ (mmol/L)</th><th>Ca²⁺ (mmol/L)</th><th>Lactate (mmol/L)</th><th>Glucose (g/L)</th></tr>
       <tr><td>NaCl 0,9%</td><td>154</td><td>–</td><td>154</td><td>–</td><td>–</td><td>–</td></tr>
@@ -1893,6 +2044,20 @@ function renderProtocoles(){
   <div class="card" id="proto-brulures">
     <h3>🔥 Brûlures graves — Formule de Parkland</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Brûlure grave si surface &gt;20% TBSA (&gt;10% enfant/sujet âgé), brûlure du visage/mains/périnée, brûlure circulaire, inhalation de fumées suspectée, ou brûlure électrique/chimique. Estimation de la surface par la règle des 9 de Wallace (adulte) ou table de Lund-Browder (enfant), en ne comptant que les brûlures du 2e et 3e degré.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg)</label>
+        <input type="number" step="0.1" min="0" id="brul_poids" placeholder="ex. 70" oninput="calcBrulures()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>🔥 Surface brûlée — %TBSA (2e/3e degré uniquement)</label>
+        <input type="number" step="1" min="0" max="100" id="brul_tbsa" placeholder="ex. 25" oninput="calcBrulures()">
+      </div>
+    </div>
+    <div class="field" id="brul_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    <div class="result-box hidden" id="brul_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>ABCDE</strong> en premier lieu : suspicion d'inhalation (suies dans les narines/bouche, brûlures faciales, voix rauque, toux) → intubation précoce avant l'apparition d'un œdème obstructif des voies aériennes</li>
       <li>Arrêt du processus de brûlure : refroidissement à l'eau tempérée (15-25°C) pendant 10-20 min si &lt;3h post-brûlure — <strong>éviter l'eau glacée</strong> (risque d'hypothermie, surtout si surface étendue)</li>
@@ -2061,6 +2226,14 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Définitions (Sepsis-3, 2016, toujours en vigueur) :</strong> le <strong>sepsis</strong> est une dysfonction d'organe menaçant le pronostic vital, causée par une réponse dérégulée de l'hôte à une infection (augmentation du score SOFA ≥2 points liée à l'infection). Le terme historique <strong>« sepsis sévère »</strong> a été abandonné par Sepsis-3 : il correspond en fait à ce qui est aujourd'hui simplement appelé « sepsis » (le sepsis « non compliqué » sans dysfonction d'organe n'existe plus comme catégorie distincte) — le terme reste toutefois largement utilisé en pratique courante francophone/africaine par habitude. Le <strong>choc septique</strong> est un sous-groupe de sepsis avec anomalies circulatoires et métaboliques profondes : besoin de vasopresseurs pour maintenir une PAM ≥65 mmHg <strong>ET</strong> lactates &gt;2 mmol/L malgré un remplissage vasculaire adéquat.</p>
     <p style="margin-top:8px; font-size:13.5px; margin-bottom:8px;"><strong>Repérage :</strong> le <strong>qSOFA</strong> (FR≥22/min, PAS≤100 mmHg, GCS&lt;15 — cf. module Scores cliniques) est un outil de dépistage au lit du patient hors réanimation, simple et rapide, mais <strong>ne pose pas le diagnostic</strong> de sepsis — il identifie les patients à risque de mauvaise évolution nécessitant une évaluation approfondie (lactates, bilan infectieux, recherche de dysfonction d'organe). Devant toute suspicion clinique d'infection avec signe de gravité, débuter la prise en charge sans attendre la confirmation biologique complète.</p>
     <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Choc septique instable (hypotension sévère, marbrures/teint gris, cyanose/désaturation, tachycardie, confusion) : ne pas attendre l'échec du remplissage pour débuter les vasopresseurs — démarrer le remplissage ET les vasopresseurs simultanément (SSC 2026), au cas par cas selon l'examen clinique.</div></div>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul remplissage et Noradrénaline</label>
+        <input type="number" step="0.1" min="0" id="sepsis_poids" placeholder="ex. 70" oninput="calcSepsis()">
+      </div>
+      <div class="field" id="sepsis_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="sepsis_result"></div>
     <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Bundle de la 1ère heure (SSC 2026) — à débuter dès la reconnaissance, en parallèle :</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Mesurer les lactates</strong> — répéter la mesure si élevés (&gt;2 mmol/L) pour guider la réanimation ; ne pas chercher à normaliser à tout prix mais suivre la clairance (décroissance) associée à la réévaluation clinique et au temps de recoloration cutanée (adjuvant validé, notamment quand le dosage n'est pas disponible)</li>
@@ -2133,14 +2306,24 @@ function renderProtocoles(){
   <div class="card" id="proto-meningite">
     <h3>🦠 Méningite / Encéphalite bactérienne aiguë</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Triade classique (fièvre, raideur de nuque, céphalées) souvent incomplète — méfiance chez le nourrisson (irritabilité, fontanelle bombée) et le sujet âgé (confusion isolée possible). Urgence absolue : chaque heure de retard d'antibiothérapie augmente la mortalité.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids (kg) — pour l'Aciclovir et l'antibioprophylaxie des contacts</label>
+        <input type="number" step="0.1" min="0" id="menin_poids" placeholder="ex. 70 (adulte) ou 15 (enfant)" oninput="calcMeningite()">
+      </div>
+      <div class="field" id="menin_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="menin_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Ne jamais retarder l'antibiothérapie</strong> pour réaliser l'imagerie ou la ponction lombaire — hémocultures avant la 1ère dose d'ATB si possible mais sans délai significatif</li>
       <li>TDM cérébrale <strong>avant PL</strong> uniquement si signe de localisation, trouble de conscience sévère (GCS &lt;12), crise convulsive récente, immunodépression ou signe d'engagement — sinon PL directe</li>
       <li><strong>Antibiothérapie probabiliste IV immédiate :</strong> <strong>Ceftriaxone (Rocéphine®)</strong> 2g x2/j (4g/j) ou <strong>Céfotaxime (Claforan®)</strong> — associer <strong>Amoxicilline (Clamoxyl®)</strong> si suspicion de Listeria (sujet &gt;50 ans, immunodépression, signes de rhombencéphalite)</li>
       <li><strong>Dexaméthasone (Soludécadron®)</strong> 10 mg IV toutes les 6h × 4 jours, à débuter <strong>en même temps ou juste avant</strong> la 1ère dose d'antibiotique (inefficace si donnée après) — réduit les séquelles auditives et neurologiques, surtout si pneumocoque</li>
-      <li>Isolement gouttelettes systématique jusqu'à 24h d'antibiothérapie efficace si suspicion de méningocoque ; déclaration obligatoire et antibioprophylaxie des sujets contacts proches (<strong>Rifampicine (Rifadine®)</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte — 10 mg/kg x2/j chez l'enfant >1 mois, 5 mg/kg x2/j chez le nourrisson <1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine (Ciflox®)</strong> 500 mg PO dose unique chez l'adulte, 20 mg/kg PO dose unique chez l'enfant ≥2 ans, max 500 mg)</li>
+      <li>Isolement gouttelettes systématique jusqu'à 24h d'antibiothérapie efficace si suspicion de méningocoque ; déclaration obligatoire et antibioprophylaxie des sujets contacts proches (<strong>Rifampicine (Rifadine®)</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte — 10 mg/kg x2/j chez l'enfant >1 mois, 5 mg/kg x2/j chez le nourrisson <1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine (Ciflox®)</strong> 500 mg PO dose unique chez l'adulte, 20 mg/kg PO dose unique chez l'enfant ≥2 ans, max 500 mg) — <span id="menin_inline_prophy">saisir le poids ci-dessus pour la dose calculée</span></li>
       <li>Analyse du LCR : cytologie, protéinorachie, glycorachie (rapport glycorachie/glycémie &lt;0,4 évocateur de bactérien), examen direct, culture, PCR selon disponibilité (méningocoque, pneumocoque, herpès si encéphalite)</li>
-      <li>Si encéphalite suspectée (confusion, convulsions, signes focaux, contexte) : <strong>Aciclovir IV (Zovirax®)</strong> 10 mg/kg/8h empirique dès la suspicion (herpétique jusqu'à preuve du contraire), sans attendre la PCR</li>
+      <li>Si encéphalite suspectée (confusion, convulsions, signes focaux, contexte) : <strong>Aciclovir IV (Zovirax®)</strong> 10 mg/kg/8h empirique dès la suspicion (herpétique jusqu'à preuve du contraire), sans attendre la PCR — <span id="menin_inline_aciclovir">saisir le poids ci-dessus pour la dose calculée</span></li>
       <li>Surveillance rapprochée : conscience, pupilles, signes d'engagement, convulsions — traiter une HTIC associée si présente (cf. protocole dédié)</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Claforan®, Clamoxyl® et Soludécadron® sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Aciclovir IV (Zovirax®) est plus limité, généralement disponible en pharmacie hospitalière de CHU/CHRR — anticiper une rupture possible et transférer si suspicion d'encéphalite herpétique dans une structure ne disposant pas du traitement. La TDM cérébrale n'étant pas accessible partout, ne pas la considérer comme un préalable systématique à la PL en l'absence de signe de localisation.</p>
@@ -2148,9 +2331,21 @@ function renderProtocoles(){
 
   <div class="card" id="proto-purpura-fulminans">
     <h3>🟣 Purpura fulminans (méningococcémie grave)</h3>
+
+    <div class="purpura-calc">
+      <div class="row2" style="align-items:end;">
+        <div class="field" style="margin-bottom:0;">
+          <label>⚖️ Poids de l'enfant (kg) — calcul automatique des doses ci-dessous</label>
+          <input type="number" step="0.1" min="0" id="purpura_poids" placeholder="ex. 20" oninput="calcPurpuraFulminans()">
+        </div>
+        <div class="field" id="purpura_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+      </div>
+      <div class="result-box hidden" id="purpura_result"></div>
+    </div>
+
     <p style="font-size:13.5px; margin-bottom:8px;">Extrême urgence : purpura extensif, nécrotique ou ecchymotique (≥1 élément &gt;3mm), fébrile, associé à des signes de choc — mortalité très élevée sans traitement immédiat. Ne pas attendre l'hospitalisation pour traiter.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Antibiothérapie immédiate sur place</strong>, avant tout transfert, dès le diagnostic évoqué (ne pas attendre l'arrivée à l'hôpital ni les prélèvements) : <strong>Ceftriaxone IV/IM (Rocéphine®)</strong> 1-2g (50-100 mg/kg chez l'enfant) — geste qui prime sur tout le reste</li>
+      <li><strong>Antibiothérapie immédiate sur place</strong>, avant tout transfert, dès le diagnostic évoqué (ne pas attendre l'arrivée à l'hôpital ni les prélèvements) : <strong>Ceftriaxone IV/IM (Rocéphine®)</strong> 1-2g (50-100 mg/kg chez l'enfant) — <span id="purpura_inline_atb">saisir le poids ci-dessus pour la dose calculée</span> — geste qui prime sur tout le reste</li>
       <li>Appel immédiat du SAMU/réanimation, transfert médicalisé en urgence absolue vers un centre disposant d'une réanimation</li>
       <li>Prise en charge du choc septique associé en parallèle : remplissage vasculaire rapide (cristalloïdes 20 mL/kg en bolus, répétable), amines vasopressives précoces si non-réponse au remplissage (cf. protocole états de choc)</li>
       <li>Hémocultures si possible sans retarder l'antibiothérapie ; PL contre-indiquée en phase de choc (à différer)</li>
@@ -2163,6 +2358,14 @@ function renderProtocoles(){
   <div class="card" id="proto-hic">
     <h3>🧠 Hypertension intracrânienne aiguë / Engagement cérébral</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">À évoquer devant céphalées intenses, vomissements en jet, troubles de conscience évolutifs, mydriase unilatérale (signe d'engagement temporal — urgence extrême), triade de Cushing (HTA, bradycardie, respiration irrégulière = signe tardif et péjoratif).</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la dose de Mannitol 20%</label>
+        <input type="number" step="0.1" min="0" id="hic_poids" placeholder="ex. 70" oninput="calcHic()">
+      </div>
+      <div class="field" id="hic_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="hic_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>ABCDE, protection des voies aériennes si GCS ≤8 (intubation), <strong>éviter l'hypoxie et l'hypotension</strong> (aggravent les lésions secondaires) — objectif SpO2 &gt;94%, TA moyenne adaptée pour maintenir la pression de perfusion cérébrale</li>
       <li><strong>Positionnement :</strong> tête surélevée à 30°, axe tête-cou droit (éviter la compression jugulaire), éviter toute manœuvre augmentant la pression intrathoracique</li>
@@ -2330,6 +2533,14 @@ function renderProtocoles(){
   <div class="card" id="proto-embolie-pulmonaire">
     <h3>🫁 Embolie pulmonaire (EP)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">À évoquer devant une dyspnée aiguë inexpliquée, une douleur thoracique pleurétique, une tachycardie, ou un malaise/syncope inexpliqué, surtout avec facteur de risque thromboembolique (chirurgie récente, alitement, cancer, grossesse/post-partum, contraception œstroprogestative, antécédent de TVP/EP).</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses d'anticoagulation/thrombolyse</label>
+        <input type="number" step="0.1" min="0" id="ep_poids" placeholder="ex. 70" oninput="calcEp()">
+      </div>
+      <div class="field" id="ep_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="ep_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Évaluer la probabilité clinique</strong> (score de Wells ou de Genève révisé) avant tout examen complémentaire — oriente la stratégie diagnostique</li>
       <li>Probabilité <strong>faible/intermédiaire</strong> : dosage des <strong>D-dimères</strong> — si négatifs, EP exclue (bonne valeur prédictive négative) ; si positifs ou probabilité forte d'emblée → angioscanner thoracique (ou scintigraphie V/Q si CI à l'iode/grossesse)</li>
@@ -2673,7 +2884,21 @@ function renderProtocoles(){
       <li>Échographie pelvienne (idéalement endovaginale) en urgence : recherche d'un hémopéritoine, d'une masse latéro-utérine, absence de grossesse intra-utérine malgré β-hCG positif</li>
       <li><strong>GEU rompue avec choc/hémopéritoine :</strong> chirurgie en urgence absolue (cœlioscopie ou laparotomie selon stabilité et plateau technique) — salpingectomie (trompe détruite) ou salpingotomie conservatrice selon l'état tubaire et le désir de fertilité ultérieure, remplissage vasculaire et transfusion en parallèle sans attendre</li>
       <li><strong>GEU non compliquée, asymptomatique, β-hCG bas et décroissants :</strong> abstention/surveillance biologique possible (β-hCG répétés) — option uniquement si patiente compliante et suivi assuré</li>
-      <li><strong>Traitement médical par Méthotrexate</strong> (si GEU non rompue, non active, β-hCG &lt;5000 UI/L, absence d'activité cardiaque embryonnaire, patiente stable et compliante au suivi) : 1-1,5 mg/kg ou 50 mg/m² en injection IM unique — surveillance de la décroissance des β-hCG à J4 et J7, répétable si décroissance insuffisante</li>
+      <li><strong>Traitement médical par Méthotrexate</strong> (si GEU non rompue, non active, β-hCG &lt;5000 UI/L, absence d'activité cardiaque embryonnaire, patiente stable et compliante au suivi) : 1-1,5 mg/kg ou 50 mg/m² en injection IM unique — surveillance de la décroissance des β-hCG à J4 et J7, répétable si décroissance insuffisante — <span id="geu_inline">saisir poids/taille ci-dessous pour la dose calculée</span>
+
+        <div class="row2" style="align-items:end; margin-top:8px;">
+          <div class="field" style="margin-bottom:0;">
+            <label>⚖️ Poids (kg)</label>
+            <input type="number" step="0.5" min="0" id="geu_poids" placeholder="ex. 60" oninput="calcGeu()">
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label>📏 Taille (cm)</label>
+            <input type="number" step="1" min="0" id="geu_taille" placeholder="ex. 160" oninput="calcGeu()">
+          </div>
+        </div>
+        <div class="field" id="geu_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+        <div class="result-box hidden" id="geu_result"></div>
+      </li>
       <li>Vérifier systématiquement le <strong>groupe Rhésus</strong> : si Rhésus négatif, administrer des <strong>Immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM en prévention de l'allo-immunisation (dose réduite possible si <12 SA selon le produit disponible), quel que soit le traitement choisi, idéalement dans les 72h</li>
       <li>Soutien psychologique — toute perte de grossesse, y compris ectopique, nécessite une prise en charge empathique en plus du traitement médical</li>
     </ol>
@@ -2682,6 +2907,16 @@ function renderProtocoles(){
   <div class="card" id="proto-fausse-couche">
     <h3>🩸 Fausse couche spontanée hémorragique</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Métrorragies ± douleurs pelviennes au 1er trimestre. Distinguer menace de fausse couche (col fermé, grossesse évolutive), fausse couche en cours/incomplète (col ouvert, débris visibles), et fausse couche hémorragique nécessitant un geste en urgence.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de la patiente (kg) — calcul de l'antalgie ci-dessous</label>
+        <input type="number" step="0.5" min="0" id="fc_poids" placeholder="ex. 60" oninput="calcFausseCouche()">
+      </div>
+      <div class="field" id="fc_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="fc_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Évaluer le retentissement hémodynamique</strong> en priorité — une fausse couche peut saigner abondamment, notamment si rétention de débris ovulaires empêchant la rétraction utérine</li>
       <li>Examen au spéculum : quantifier le saignement, rechercher des débris au niveau du col (parfois responsables d'un choc vagal si enclavés — leur ablation à la pince peut être salvatrice et rapidement efficace)</li>
@@ -2689,7 +2924,7 @@ function renderProtocoles(){
       <li><strong>Hémorragie abondante/mal tolérée avec rétention :</strong> évacuation utérine en urgence (aspiration endo-utérine) — ne pas différer si instabilité hémodynamique</li>
       <li>2 VVP si saignement important, bilan (NFS, groupe/Rh/RAI), remplissage/transfusion selon tolérance</li>
       <li>Vérifier le <strong>groupe Rhésus</strong> : <strong>Immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM si Rhésus négatif, quel que soit le terme, idéalement dans les 72h</li>
-      <li>Antalgie adaptée — <strong>Paracétamol (Perfalgan®)</strong> 1 g PO/IV toutes les 6h (max 4 g/j), voire <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleurs intenses type contractions</li>
+      <li>Antalgie adaptée — <strong>Paracétamol (Perfalgan®)</strong> 1 g PO/IV toutes les 6h (max 4 g/j), voire <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleurs intenses type contractions — <span id="fc_inline">saisir le poids ci-dessus pour la dose pondérale calculée</span></li>
       <li>Fausse couche non hémorragique/peu symptomatique : abstention, traitement médical (misoprostol) ou chirurgical selon le choix éclairé de la patiente — pas d'urgence si bien tolérée</li>
     </ol>
   </div>
@@ -2851,7 +3086,7 @@ function renderProtocoles(){
       <li><strong>Prélèvements avant antibiothérapie</strong> si possible sans retarder le traitement : hémocultures, prélèvement vaginal/endocervical, ECBU ; bilan biologique (NFS, CRP, lactates, fonction rénale, bilan de coagulation)</li>
       <li><strong>Antibiothérapie probabiliste précoce (dans l'heure)</strong>, large spectre couvrant germes à Gram négatif, streptocoques et anaérobies : association <strong>Amoxicilline-Acide clavulanique (Augmentin®)</strong> ou <strong>Céphalosporine 3G (Ceftriaxone — Rocéphine®)</strong> + <strong>Métronidazole (Flagyl®)</strong> IV ; ajouter un aminoside (<strong>Gentamicine — Gentalline®</strong>) en cas de sepsis sévère/choc septique — adapter secondairement aux prélèvements</li>
       <li><strong>Recherche et évacuation d'une rétention utérine</strong> (débris placentaires, produits de conception) — cause fréquente d'entretien du sepsis, échographie pelvienne puis évacuation utérine (aspiration/curetage) dès stabilisation hémodynamique, sous couverture antibiotique</li>
-      <li><strong>Prise en charge du choc septique si présent</strong> : remplissage vasculaire par cristalloïdes, <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> si hypotension réfractaire, objectifs identiques au protocole sepsis général (cf. protocole dédié) — orientation en réanimation</li>
+      <li><strong>Prise en charge du choc septique si présent</strong> : remplissage vasculaire par cristalloïdes, <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> si hypotension réfractaire, objectifs identiques au protocole sepsis général — voir le <a onclick="document.querySelector('[data-mod=protocoles]').click(); setTimeout(()=>document.getElementById('proto-sepsis')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole Sepsis / Choc septique</a> (calculateur de remplissage/Noradrénaline selon le poids inclus) — orientation en réanimation</li>
       <li><strong>Si suspicion d'avortement septique :</strong> évacuation utérine en urgence après début de l'antibiothérapie, recherche de complications (perforation utérine, péritonite, CIVD, insuffisance rénale aiguë par nécrose corticale) ; vaccination antitétanique à vérifier/compléter selon le contexte</li>
       <li>Prévention du choc septique gravissime (fasciite nécrosante périnéale, gangrène gazeuse utérine) : réévaluation rapprochée, avis chirurgical si non-amélioration sous 24-48h d'antibiothérapie adaptée ou aggravation locale/systémique</li>
     </ol>
@@ -2902,7 +3137,17 @@ function renderProtocoles(){
         Efficacité comparable entre les deux molécules à 48h ; choix selon disponibilité, tolérance et comorbidités (préférer Atosiban si cardiopathie/mauvaise tolérance hémodynamique à la Nifédipine)
       </li>
       <li><strong>Contre-indications à la tocolyse</strong> (ne pas retarder l'accouchement dans ces situations) : chorioamniotite, HRP, éclampsie/prééclampsie sévère, mort fœtale in utero, anomalie sévère du rythme cardiaque fœtal, hémorragie maternelle sévère, terme &gt;34-36 SA selon les équipes</li>
-      <li><strong>Sulfate de magnésium à visée de neuroprotection fœtale</strong> (et non tocolytique à cette dose) si accouchement prématuré imminent avant 32 SA : schéma de charge puis entretien identique/proche du protocole éclampsie — réduit le risque de paralysie cérébrale chez le prématuré</li>
+      <li><strong>Sulfate de magnésium à visée de neuroprotection fœtale</strong> (et non tocolytique à cette dose) si accouchement prématuré imminent avant 32 SA : schéma de charge puis entretien identique/proche du protocole éclampsie — réduit le risque de paralysie cérébrale chez le prématuré — <span id="map_inline">saisir la concentration de l'ampoule ci-dessous pour le volume calculé</span>
+
+        <div class="row2" style="align-items:end; margin-top:8px;">
+          <div class="field" style="margin-bottom:0;">
+            <label>💧 Concentration de l'ampoule de sulfate de magnésium disponible (%)</label>
+            <input type="number" step="0.1" min="0" id="map_conc" placeholder="ex. 15, 20 ou 50" oninput="calcMapTocolyse()">
+          </div>
+          <div class="field" id="map_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+        </div>
+        <div class="result-box hidden" id="map_result"></div>
+      </li>
       <li><strong>Antibioprophylaxie</strong> si suspicion de rupture prématurée des membranes associée (cf. protocoles spécifiques) — ne pas donner d'antibiotiques systématiques en l'absence de rupture des membranes ou d'infection identifiée</li>
       <li>Repos relatif (l'alitement strict prolongé n'est plus recommandé en routine — risque thromboembolique), surveillance du bien-être fœtal, organisation du transfert in utero vers une maternité de niveau adapté au terme si nécessaire</li>
     </ol>
@@ -2942,6 +3187,25 @@ function renderProtocoles(){
 
   <div class="card" id="proto-rage">
     <h3>🐕 Rage — Prise en charge post-exposition</h3>
+
+    <div class="rage-calc">
+      <div class="row2" style="align-items:end;">
+        <div class="field" style="margin-bottom:0;">
+          <label>⚖️ Poids du patient (kg) — calcul automatique de la dose ci-dessous</label>
+          <input type="number" step="0.1" min="0" id="rage_poids" placeholder="ex. 60" oninput="calcRage()">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>Type d'immunoglobulines</label>
+          <select id="rage_type" onchange="calcRage()">
+            <option value="humaines">Imogam Rage® (humaines, 20 UI/kg)</option>
+            <option value="equines">Favirab® (équines, 40 UI/kg)</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" id="rage_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+      <div class="result-box hidden" id="rage_result"></div>
+    </div>
+
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Contexte Madagascar :</strong> zone d'enzootie rabique canine — toute morsure, griffure ou léchage sur peau lésée/muqueuse par un animal suspect (notamment chien errant) doit être évaluée sans délai. La rage est mortelle à quasi 100% une fois les symptômes déclarés, mais entièrement évitable par une prophylaxie post-exposition (PPE) bien conduite et précoce.</p>
     <table style="margin-bottom:10px;">
       <tr><th>Catégorie OMS</th><th>Type de contact</th><th>Conduite</th></tr>
@@ -2970,6 +3234,21 @@ function renderProtocoles(){
       <tr><td class="modere">B</td><td>Modérée (soif, yeux légèrement enfoncés, pli cutané lent)</td><td>SRO 75 mL/kg sur 4h en structure de soins, réévaluation</td></tr>
       <tr><td class="grave">C</td><td>Sévère (léthargie/inconscience, incapable de boire, pli cutané très lent ≥2 sec, pouls radial faible/absent)</td><td>Réhydratation IV en urgence</td></tr>
     </table>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du volume de Ringer Lactate (Plan C)</label>
+        <input type="number" step="0.1" min="0" id="cholera_poids" placeholder="ex. 60" oninput="calcCholera()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Âge</label>
+        <select id="cholera_age" onchange="calcCholera()">
+          <option value="grand">≥ 1 an (ou adulte)</option>
+          <option value="nourrisson">Nourrisson &lt; 1 an</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" id="cholera_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    <div class="result-box hidden" id="cholera_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Déshydratation sévère (Plan C) :</strong> <strong>Ringer Lactate IV</strong>, 100 mL/kg au total (sérum salé 0,9% en 2e choix si RL indisponible ; jamais de soluté glucosé seul, qui ne corrige pas l'acidose) — schéma adulte/enfant ≥1 an : <strong>30 mL/kg en 30 min</strong> (répéter une fois si le pouls radial reste faible/imperceptible) puis <strong>70 mL/kg sur les 2h30 suivantes</strong> (total 3h) ; nourrisson &lt;1 an : 30 mL/kg en 1h puis 70 mL/kg sur 5h (total 6h)</li>
       <li>Réévaluer toutes les 15-30 minutes jusqu'à obtention d'un pouls radial fort, puis au moins toutes les heures — accélérer le débit si le pouls reste faible</li>
@@ -2986,6 +3265,15 @@ function renderProtocoles(){
     <h3>🔴 Crise vaso-occlusive drépanocytaire</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Douleur osseuse/articulaire intense chez un patient drépanocytaire connu, déclenchée par le froid, la déshydratation, une infection, un effort ou une hypoxie. Pathologie fréquente en Afrique/Océan Indien — la douleur est souvent sous-estimée et sous-traitée. Rechercher systématiquement une complication grave associée : <strong>syndrome thoracique aigu</strong>, <strong>priapisme</strong>, séquestration splénique aiguë (surtout enfant), AVC (surtout enfant — imagerie cérébrale en urgence si déficit, cf. protocole AVC).</p>
 
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="cvo_poids" placeholder="ex. 60" oninput="calcDrepanocytose()">
+      </div>
+      <div class="field" id="cvo_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="cvo_result"></div>
+
     <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Crise vaso-occlusive simple</p>
     <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Bilan :</strong></p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
@@ -2998,8 +3286,8 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Analgésie — priorité absolue</strong> (1ère dose dans les 30-60 min suivant l'arrivée, ne jamais sous-traiter) :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li><strong>MEOPA</strong> (protoxyde d'azote) le plus tôt possible si disponible — équipement souvent limité hors grands centres à Madagascar</li>
-      <li><strong>Morphine (Morphine Aguettant®)</strong> IVD titrée : 0,1 mg/kg puis 3 mg toutes les 5 min IVD jusqu'à EVA &lt;4. Si pompe PCA disponible : 2 mg/mL, bolus 2 mg, période réfractaire 10 min (puis 2 min si besoin), dose maximale 45 mg/4h et 270 mg/24h — à défaut de PCA, poursuivre la titration IV répétée avec réévaluation toutes les 30-60 min</li>
-      <li>En cas d'échec : <strong>Kétamine (Ketalar®)</strong> IVSE 0,15 mg/kg/h, sans dépasser 1 mg/kg/h</li>
+      <li><strong>Morphine (Morphine Aguettant®)</strong> IVD titrée : 0,1 mg/kg puis 3 mg toutes les 5 min IVD jusqu'à EVA &lt;4. Si pompe PCA disponible : 2 mg/mL, bolus 2 mg, période réfractaire 10 min (puis 2 min si besoin), dose maximale 45 mg/4h et 270 mg/24h — à défaut de PCA, poursuivre la titration IV répétée avec réévaluation toutes les 30-60 min — <span id="cvo_inline_morphine">saisir le poids ci-dessus pour la dose de charge calculée</span></li>
+      <li>En cas d'échec : <strong>Kétamine (Ketalar®)</strong> IVSE 0,15 mg/kg/h, sans dépasser 1 mg/kg/h — <span id="cvo_inline_ketamine">saisir le poids ci-dessus pour le débit calculé</span></li>
       <li>Douleur modérée : <strong>Paracétamol (Perfalgan® IV, Doliprane® PO)</strong> 1 g toutes les 6h ± AINS si pas de contre-indication (insuffisance rénale fréquente sur ce terrain — à vérifier avant prescription)</li>
     </ul>
     <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Hydratation :</strong></p>
@@ -3093,13 +3381,25 @@ function renderProtocoles(){
 
   <div class="card" id="proto-organophosphores">
     <h3>🌾 Intoxication aux organophosphorés / carbamates (pesticides)</h3>
+
+    <div class="orga-calc">
+      <div class="row2" style="align-items:end;">
+        <div class="field" style="margin-bottom:0;">
+          <label>⚖️ Poids de l'enfant (kg) — calcul automatique des doses ci-dessous</label>
+          <input type="number" step="0.1" min="0" id="orga_poids" placeholder="ex. 15" oninput="calcOrganophosphores()">
+        </div>
+        <div class="field" id="orga_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+      </div>
+      <div class="result-box hidden" id="orga_result"></div>
+    </div>
+
     <p style="font-size:13.5px; margin-bottom:8px;">Syndrome cholinergique par inhibition de l'acétylcholinestérase, très fréquent en milieu agricole malgache (ingestion volontaire ou accidentelle). Pronostic vital engagé principalement par la détresse respiratoire (bronchorrhée, paralysie des muscles respiratoires).</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Protection du personnel AVANT tout contact</strong> : gants, tablier imperméable, éviter tout contact cutané avec les vêtements souillés, les vomissements ou le liquide gastrique — des cas documentés de contamination secondaire de soignants existent</li>
       <li><strong>Décontamination cutanée immédiate</strong> : retrait complet des vêtements contaminés, lavage abondant à l'eau et au savon ; ne jamais réaliser de lavage gastrique sans protection adaptée</li>
       <li><strong>ABCDE</strong> : aspiration des sécrétions, oxygénothérapie, <strong>intubation précoce</strong> si détresse respiratoire ou trouble de conscience — éviter la <strong>succinylcholine</strong> (métabolisée par les cholinestérases, effet imprévisible et prolongé), préférer un curare non dépolarisant</li>
       <li><strong>Reconnaître le syndrome cholinergique</strong> : myosis serré, hypersécrétions (bronchorrhée, sialorrhée, sueurs profuses, larmoiement), bradycardie, fasciculations musculaires, diarrhée, confusion, convulsions</li>
-      <li><strong>Atropine IV (Atropine Aguettant®)</strong> : 1-2 mg (enfant : 0,02 mg/kg), <strong>doses doublées toutes les 5 minutes</strong> jusqu'à assèchement des sécrétions bronchiques et disparition du bronchospasme (pas de cible de fréquence cardiaque) — les doses cumulées nécessaires peuvent être très élevées (plusieurs dizaines de mg), sans plafond fixe</li>
+      <li><strong>Atropine IV (Atropine Aguettant®)</strong> : 1-2 mg (enfant : 0,02 mg/kg) — <span id="orga_inline_atropine">saisir le poids ci-dessus pour la dose calculée</span>, <strong>doses doublées toutes les 5 minutes</strong> jusqu'à assèchement des sécrétions bronchiques et disparition du bronchospasme (pas de cible de fréquence cardiaque) — les doses cumulées nécessaires peuvent être très élevées (plusieurs dizaines de mg), sans plafond fixe</li>
       <li><strong>Pralidoxime (Contrathion®)</strong> si disponible : bolus initial 1-2 g IV lent (15-30 min), puis perfusion continue 400-600 mg/h chez l'adulte (10-20 mg/kg/h chez l'enfant) — d'autant plus efficace si débuté précocement (idéalement &lt;24-48h), à poursuivre tant que les signes cholinergiques/besoins en atropine persistent ; toujours associé à l'atropine, jamais en monothérapie</li>
       <li><strong>Benzodiazépines — Diazépam (Valium®)</strong> en cas de convulsions ou d'agitation associée</li>
       <li><strong>Médicaments contre-indiqués</strong> : morphine, théophylline/aminophylline, phénothiazines (aggravent la toxicité cholinergique et la dépression respiratoire)</li>
@@ -3172,13 +3472,21 @@ function renderProtocoles(){
       <li><strong>Matériel prêt</strong> — 2 laryngoscopes/lames fonctionnels, sondes de tailles différentes, mandrin long béquillé, dispositif supraglottique, capnographe, aspiration branchée et testée</li>
       <li><strong>Protocole médicamenteux (RSI)</strong> — induction + curarisation quasi simultanées, sans ventilation au masque dans les formes classiques :</li>
     </ol>
+    <div class="row2" style="align-items:end; margin-top:8px;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses ISR ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="isr_poids" placeholder="ex. 70" oninput="calcIsr()">
+      </div>
+      <div class="field" id="isr_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="isr_result"></div>
     <table style="margin-top:6px;">
-      <tr><th>Étape</th><th>Molécule</th><th>Posologie</th></tr>
-      <tr><td rowspan="3">Induction</td><td><strong>Kétamine (Ketalar®)</strong></td><td>1,5-2 mg/kg IV directe (privilégiée en instabilité hémodynamique)</td></tr>
-      <tr><td><strong>Étomidate (Hypnomidate®)</strong></td><td>0,3 mg/kg IV directe</td></tr>
-      <tr><td><strong>Propofol (Diprivan®)</strong></td><td>1,5-2,5 mg/kg IV directe si patient stable</td></tr>
-      <tr><td rowspan="2">Curarisation</td><td><strong>Succinylcholine (Célocurine®)</strong></td><td>1-1,5 mg/kg IV (délai d'action ~45 sec)</td></tr>
-      <tr><td><strong>Rocuronium (Esmeron®)</strong></td><td>1,2 mg/kg IV si contre-indication à la succinylcholine (délai ~60 sec)</td></tr>
+      <tr><th>Étape</th><th>Molécule</th><th>Posologie</th><th id="isr_th_calc" style="display:none;">Dose calculée</th></tr>
+      <tr><td rowspan="3">Induction</td><td><strong>Kétamine (Ketalar®)</strong></td><td>1,5-2 mg/kg IV directe (privilégiée en instabilité hémodynamique)</td><td id="isr_ketamine"></td></tr>
+      <tr><td><strong>Étomidate (Hypnomidate®)</strong></td><td>0,3 mg/kg IV directe</td><td id="isr_etomidate"></td></tr>
+      <tr><td><strong>Propofol (Diprivan®)</strong></td><td>1,5-2,5 mg/kg IV directe si patient stable</td><td id="isr_propofol"></td></tr>
+      <tr><td rowspan="2">Curarisation</td><td><strong>Succinylcholine (Célocurine®)</strong></td><td>1-1,5 mg/kg IV (délai d'action ~45 sec)</td><td id="isr_sux"></td></tr>
+      <tr><td><strong>Rocuronium (Esmeron®)</strong></td><td>1,2 mg/kg IV si contre-indication à la succinylcholine (délai ~60 sec)</td><td id="isr_roc"></td></tr>
     </table>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Kétamine et Diazépam sont les plus largement disponibles, y compris en CHRR/CHRD (agents d'anesthésie de base, LNMEIS). Propofol, Étomidate et Rocuronium sont réservés aux blocs opératoires/réanimations des CHU (Antananarivo, Mahajanga, Toamasina...). La Succinylcholine (Célocurine®) est présente dans la plupart des pharmacies hospitalières disposant d'un bloc opératoire.</p>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Critères prédictifs d'intubation difficile — mnémotechnique LEMON :</p>
@@ -3514,6 +3822,18 @@ function renderProtocoles(){
 
   <div class="card" id="proto-guillain-barre">
     <h3>🧠 Syndrome de Guillain-Barré</h3>
+
+    <div class="gbs-calc">
+      <div class="row2" style="align-items:end;">
+        <div class="field" style="margin-bottom:0;">
+          <label>⚖️ Poids du patient (kg) — calcul automatique de la dose ci-dessous</label>
+          <input type="number" step="0.1" min="0" id="gbs_poids" placeholder="ex. 65" oninput="calcGuillainBarre()">
+        </div>
+        <div class="field" id="gbs_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+      </div>
+      <div class="result-box hidden" id="gbs_result"></div>
+    </div>
+
     <p class="module-sub" style="margin-bottom:8px;">Polyradiculonévrite aiguë auto-immune — faiblesse motrice ascendante souvent précédée d'un épisode infectieux (2-4 semaines avant), risque vital par atteinte respiratoire et dysautonomie.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Surveillance rapprochée de la fonction respiratoire</strong> — mesure répétée de la capacité vitale (CV) ; hospitalisation en réanimation si CV &lt;20 mL/kg, baisse rapide, ou troubles de la déglutition</li>
@@ -3556,20 +3876,30 @@ function renderProtocoles(){
   <div class="card" id="proto-paracetamol">
     <h3>💊 Intoxication au paracétamol (acétaminophène)</h3>
     <p class="module-sub" style="margin-bottom:8px;">Intoxication médicamenteuse la plus fréquente — toxicité hépatique retardée (24-72h), souvent asymptomatique initialement : ne jamais sous-estimer une ingestion rapportée comme "banale".</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg)</label>
+        <input type="number" step="0.1" min="0" id="paraco_poids" placeholder="ex. 70" oninput="calcParacetamol()">
+      </div>
+      <div class="field" id="paraco_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="paraco_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Dater précisément l'heure d'ingestion</strong> — élément indispensable à l'interprétation du dosage plasmatique</li>
       <li><strong>Dosage du paracétamol plasmatique</strong> à H4 minimum après ingestion (dosage plus précoce non interprétable) — report sur le <strong>nomogramme de Rumack-Matthew</strong></li>
-      <li><strong>Charbon activé (Carbomix®)</strong> — 1g/kg per os (max 50g), si ingestion &lt;2h et patient coopérant/voies aériennes protégées</li>
+      <li><strong>Charbon activé (Carbomix®)</strong> — 1g/kg per os (max 50g), si ingestion &lt;2h et patient coopérant/voies aériennes protégées — <span id="paraco_inline_charbon">saisir le poids ci-dessus pour la dose calculée</span></li>
       <li><strong>N-acétylcystéine (NAC)</strong> — antidote spécifique, d'autant plus efficace que débutée précocement (idéalement &lt;8h) :</li>
     </ol>
     <table style="margin-top:6px;">
-      <tr><th>Schéma IV classique (3 perfusions)</th><th>Posologie</th></tr>
-      <tr><td>1re perfusion</td><td>150 mg/kg dans 200mL Glucosé 5% en 1h</td></tr>
-      <tr><td>2e perfusion</td><td>50 mg/kg dans 500mL Glucosé 5% en 4h</td></tr>
-      <tr><td>3e perfusion</td><td>100 mg/kg dans 1000mL Glucosé 5% en 16h</td></tr>
-      <tr><td>Alternative orale (si IV indisponible)</td><td>140 mg/kg dose de charge puis 70 mg/kg toutes les 4h pendant 72h (17 doses au total)</td></tr>
+      <tr><th>Schéma IV classique (3 perfusions)</th><th>Posologie</th><th id="paraco_th_calc1" style="display:none;">Dose calculée</th></tr>
+      <tr><td>1re perfusion</td><td>150 mg/kg dans 200mL Glucosé 5% en 1h</td><td id="paraco_p1"></td></tr>
+      <tr><td>2e perfusion</td><td>50 mg/kg dans 500mL Glucosé 5% en 4h</td><td id="paraco_p2"></td></tr>
+      <tr><td>3e perfusion</td><td>100 mg/kg dans 1000mL Glucosé 5% en 16h</td><td id="paraco_p3"></td></tr>
+      <tr><td>Alternative orale (si IV indisponible)</td><td>140 mg/kg dose de charge puis 70 mg/kg toutes les 4h pendant 72h (17 doses au total)</td><td id="paraco_po"></td></tr>
     </table>
-    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Schéma simplifié « 2 poches »</strong> (consensus ACMT/AACT/America's Poison Centers 2023) : <strong>200 mg/kg sur 4h puis 100 mg/kg sur 16h</strong> (dose totale identique, 300 mg/kg) — efficacité comparable au schéma classique à 3 poches avec moins d'erreurs de préparation/administration et moins de réactions anaphylactoïdes ; option à considérer en priorité dans un contexte de ressources limitées où la manipulation de 3 poches à débits différents majore le risque d'erreur.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Schéma simplifié « 2 poches »</strong> (consensus ACMT/AACT/America's Poison Centers 2023) : <strong>200 mg/kg sur 4h puis 100 mg/kg sur 16h</strong> (dose totale identique, 300 mg/kg) — efficacité comparable au schéma classique à 3 poches avec moins d'erreurs de préparation/administration et moins de réactions anaphylactoïdes ; option à considérer en priorité dans un contexte de ressources limitées où la manipulation de 3 poches à débits différents majore le risque d'erreur. <span id="paraco_inline_2poches">saisir le poids ci-dessus pour les doses calculées</span></p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Fluimucil®, Exomuc® existe surtout en présentation orale (mucolytique) dans les pharmacies malgaches — la <strong>forme injectable est nettement moins répandue</strong> et généralement limitée aux pharmacies hospitalières des CHU. En son absence, la NAC orale (schéma prolongé, 72h ci-dessus) peut être utilisée comme alternative si le patient est capable de la tolérer (moins efficace en cas de vomissements associés). Le Carbomix® est présent en pharmacie hospitalière mais pas systématiquement en stock — le charbon activé générique reste l'option la plus courante.</p>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Surveiller transaminases, TP/INR, fonction rénale, lactates et pH répétés. Critères de gravité (King's College) orientant vers une transplantation hépatique en urgence (non disponible à Madagascar — transfert international à envisager selon les moyens) : pH &lt;7,3, ou association INR &gt;6,5 + créatinine &gt;300µmol/L + encéphalopathie grade III-IV.</p>
   </div>
@@ -3594,6 +3924,14 @@ function renderProtocoles(){
   <div class="card" id="proto-tricycliques">
     <h3>💊 Intoxication aux antidépresseurs tricycliques</h3>
     <div class="warn-box">⚠️ Toxicité cardiaque potentiellement mortelle par effet stabilisant de membrane — surveillance ECG systématique et répétée, même si le patient est initialement asymptomatique.</div>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses (bicarbonate, charbon, Intralipid)</label>
+        <input type="number" step="0.1" min="0" id="tca_poids" placeholder="ex. 70" oninput="calcTca()">
+      </div>
+      <div class="field" id="tca_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="tca_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>ECG systématique dès l'arrivée</strong> — rechercher un élargissement du QRS (&gt;100ms = risque convulsif, &gt;160ms = risque de trouble du rythme ventriculaire grave), une déviation axiale droite, une onde R en aVR</li>
       <li><strong>Surveillance neurologique</strong> — risque convulsif et coma profond avec dépression respiratoire</li>
@@ -3608,6 +3946,26 @@ function renderProtocoles(){
 
   <div class="card" id="proto-digitalique">
     <h3>💊 Intoxication digitalique</h3>
+
+    <div class="digit-calc">
+      <div class="row2" style="align-items:end;">
+        <div class="field" style="margin-bottom:0;">
+          <label>💊 Dose de digoxine ingérée (mg) — si connue</label>
+          <input type="number" step="0.1" min="0" id="digit_dose_ingeree" placeholder="ex. 5" oninput="calcDigitalique()">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>🧪 Digoxinémie (ng/mL) — si connue</label>
+          <input type="number" step="0.1" min="0" id="digit_digoxinemie" placeholder="ex. 4" oninput="calcDigitalique()">
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label>⚖️ Poids (kg) — nécessaire si digoxinémie saisie</label>
+          <input type="number" step="0.1" min="0" id="digit_poids" placeholder="ex. 70" oninput="calcDigitalique()">
+        </div>
+      </div>
+      <div class="field" id="digit_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+      <div class="result-box hidden" id="digit_result"></div>
+    </div>
+
     <p class="module-sub" style="margin-bottom:8px;">Marge thérapeutique étroite — intoxication aiguë (ingestion massive) ou chronique (accumulation sur insuffisance rénale/interaction médicamenteuse), favorisée par l'hypokaliémie.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Signes cliniques</strong> — troubles digestifs (nausées, vomissements), troubles visuels (halos colorés, xanthopsie), confusion, et surtout <strong>troubles du rythme cardiaque variés</strong> (bradycardie, BAV, extrasystoles ventriculaires, tachycardie atriale avec bloc)</li>
@@ -3708,6 +4066,14 @@ function renderProtocoles(){
       <tr><td class="grave">Pulmonaire (primaire ou secondaire)</td><td>Toux, dyspnée, hémoptysie, détresse respiratoire rapidement progressive — mortalité très élevée sans traitement précoce</td></tr>
       <tr><td class="grave">Septicémique</td><td>Choc septique, CIVD, nécroses cutanées ("mort noire")</td></tr>
     </table>
+    <div class="row2" style="align-items:end; margin-top:8px;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses d'antibiothérapie</label>
+        <input type="number" step="0.1" min="0" id="peste_poids" placeholder="ex. 20 (enfant) ou 60 (adulte)" oninput="calcPeste()">
+      </div>
+      <div class="field" id="peste_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="peste_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
       <li><strong>Isolement immédiat</strong> (précautions gouttelettes/air pour la forme pulmonaire) dès la suspicion clinique, avant confirmation</li>
       <li><strong>Antibiothérapie en urgence, sans attendre la confirmation bactériologique</strong> :</li>
@@ -3731,6 +4097,14 @@ function renderProtocoles(){
     <h3>🦟 Dengue grave / Syndrome de choc dengue</h3>
     <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Signes d'alerte (à rechercher activement, en particulier à la défervescence, J3-J7) :</p>
     <p style="font-size:13.5px;">🔹 Douleur abdominale intense 🔹 Vomissements persistants 🔹 Saignements des muqueuses 🔹 Léthargie/agitation 🔹 Hépatomégalie douloureuse 🔹 Élévation de l'hématocrite avec chute rapide des plaquettes</p>
+    <div class="row2" style="align-items:end; margin-top:8px;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du remplissage et du Paracétamol</label>
+        <input type="number" step="0.1" min="0" id="dengue_poids" placeholder="ex. 15 (enfant) ou 60 (adulte)" oninput="calcDengue()">
+      </div>
+      <div class="field" id="dengue_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="dengue_result"></div>
     <table style="margin-top:10px;">
       <tr><th>Forme</th><th>Conduite</th></tr>
       <tr><td class="grave">Choc dengue (fuite plasmatique sévère)</td><td>Remplissage vasculaire prudent et titré — <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> 10-20 mL/kg en 1h puis réévaluation, ajusté selon l'hématocrite et la clinique — risque de surcharge si remplissage excessif car la fuite capillaire peut se résoudre brutalement</td></tr>
@@ -3776,6 +4150,14 @@ function renderProtocoles(){
       <tr><td class="modere">Encéphalopathie typhoïdique</td><td>Confusion, obnubilation ("typhos") → réévaluer la profondeur du sepsis, rechercher une complication associée</td></tr>
       <tr><td class="modere">Choc septique</td><td>Prise en charge selon protocole sepsis/choc septique dédié</td></tr>
     </table>
+    <div class="row2" style="align-items:end; margin-top:8px;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses d'antibiothérapie/corticoïde</label>
+        <input type="number" step="0.1" min="0" id="typhoide_poids" placeholder="ex. 20 (enfant) ou 60 (adulte)" oninput="calcTyphoide()">
+      </div>
+      <div class="field" id="typhoide_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="typhoide_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
       <li><strong>Antibiothérapie adaptée</strong> — <strong>Ceftriaxone (Rocéphine®)</strong> 2g/j IV en 1 injection (50-75mg/kg/j chez l'enfant) en 1re intention dans les formes sévères (résistances aux fluoroquinolones fréquentes), durée 10-14 jours ; <strong>Azithromycine (Zithromax®)</strong> 500mg/j per os (20mg/kg/j chez l'enfant) pendant 5-7 jours en alternative dans les formes non compliquées</li>
       <li><strong>Corticothérapie à discuter</strong> dans les formes les plus sévères avec troubles de conscience — <strong>Dexaméthasone (Soludécadron®)</strong> 3mg/kg en dose de charge puis 1mg/kg toutes les 6h pendant 48h (schéma historique)</li>
@@ -3787,6 +4169,18 @@ function renderProtocoles(){
 
   <div class="card" id="proto-malnutrition">
     <h3>🍼 Malnutrition aiguë sévère de l'enfant (protocole OMS)</h3>
+
+    <div class="malnut-calc">
+      <div class="row2" style="align-items:end;">
+        <div class="field" style="margin-bottom:0;">
+          <label>⚖️ Poids de l'enfant (kg) — calcul automatique des volumes ci-dessous</label>
+          <input type="number" step="0.1" min="0" id="malnut_poids" placeholder="ex. 8" oninput="calcMalnutrition()">
+        </div>
+        <div class="field" id="malnut_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+      </div>
+      <div class="result-box hidden" id="malnut_result"></div>
+    </div>
+
     <div class="warn-box">⚠️ Risque majeur de syndrome de renutrition inappropriée ("refeeding syndrome") — la renutrition doit être prudente et progressive, jamais agressive.</div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Diagnostic</strong> — périmètre brachial &lt;115mm, rapport poids/taille &lt;-3 DS, œdèmes bilatéraux (kwashiorkor) chez l'enfant de 6-59 mois</li>
@@ -3805,12 +4199,22 @@ function renderProtocoles(){
   <div class="card" id="proto-sepsis-pediatrique">
     <h3>🦠 Sepsis / Choc septique de l'enfant</h3>
     <p class="module-sub" style="margin-bottom:8px;">La reconnaissance précoce diffère de l'adulte — l'hypotension est un signe <strong>tardif</strong> chez l'enfant, qui compense longtemps par la tachycardie et la vasoconstriction.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de l'enfant (kg) — calcul des doses ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="sepsisp_poids" placeholder="ex. 15" oninput="calcSepsisPedia()">
+      </div>
+      <div class="field" id="sepsisp_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="sepsisp_result"></div>
+
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Reconnaître précocement</strong> — altération de la conscience, tachycardie, temps de recoloration cutanée allongé (&gt;2-3 sec), extrémités froides ou au contraire choc chaud vasoplégique, oligurie</li>
-      <li><strong>Objectif : antibiothérapie dans l'heure</strong> après reconnaissance du sepsis, précédée si possible d'hémocultures sans retarder le traitement — <strong>Ceftriaxone (Rocéphine®)</strong> 50-100mg/kg/j IV en 1 injection, associée à un aminoside (<strong>Gentamicine (Gentalline®)</strong> 5-7mg/kg/j IV en 1 injection) selon le foyer suspecté</li>
-      <li><strong>Remplissage vasculaire titré</strong> — bolus de 10-20 mL/kg de <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> en 5-10 min, réévaluation après chaque bolus (signes de surcharge : hépatomégalie, crépitants, galop) — prudence accrue par rapport à l'adulte, risque de surcharge rapide</li>
+      <li><strong>Objectif : antibiothérapie dans l'heure</strong> après reconnaissance du sepsis, précédée si possible d'hémocultures sans retarder le traitement — <strong>Ceftriaxone (Rocéphine®)</strong> 50-100mg/kg/j IV en 1 injection, associée à un aminoside (<strong>Gentamicine (Gentalline®)</strong> 5-7mg/kg/j IV en 1 injection) selon le foyer suspecté — <span id="sepsisp_inline_atb">saisir le poids ci-dessus pour la dose calculée</span></li>
+      <li><strong>Remplissage vasculaire titré</strong> — bolus de 10-20 mL/kg de <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> en 5-10 min, réévaluation après chaque bolus (signes de surcharge : hépatomégalie, crépitants, galop) — prudence accrue par rapport à l'adulte, risque de surcharge rapide — <span id="sepsisp_inline_remplissage">saisir le poids ci-dessus pour le bolus calculé</span></li>
       <li><strong>Vasopresseurs précoces si choc réfractaire au remplissage</strong> (après 40-60 mL/kg) — <strong>Adrénaline (Adrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE en 1re intention dans le choc froid pédiatrique, <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE si choc chaud vasoplégique ; accès veineux périphérique ou intra-osseux acceptable en urgence en attendant une voie centrale</li>
-      <li><strong>Corriger l'hypoglycémie</strong> (Glucosé 10% 2-5mL/kg IV lente) <strong>et l'hypocalcémie</strong> (Gluconate de calcium 100mg/kg IV lente sur 10-15 min) — fréquentes et aggravantes chez l'enfant septique</li>
+      <li><strong>Corriger l'hypoglycémie</strong> (Glucosé 10% 2-5mL/kg IV lente) <strong>et l'hypocalcémie</strong> (Gluconate de calcium 100mg/kg IV lente sur 10-15 min) — fréquentes et aggravantes chez l'enfant septique — <span id="sepsisp_inline_hypogly">saisir le poids ci-dessus pour les doses calculées</span></li>
       <li>Réévaluation clinique très fréquente (fréquence cardiaque, TRC, diurèse, état de conscience) — la présentation évolue vite chez l'enfant</li>
     </ol>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Repère diagnostique 2024</strong> : le score de Phoenix (Schlapbach et al., JAMA 2024) a remplacé les anciens critères SIRS pour la définition internationale du sepsis pédiatrique — il repose sur la dysfonction d'organe (respiratoire, cardiovasculaire, neurologique, coagulation) plutôt que sur des critères inflammatoires isolés ; il structure surtout la recherche/l'épidémiologie et ne modifie pas la conduite clinique décrite ci-dessus, qui reste fondée sur la reconnaissance clinique précoce.</p>
@@ -3820,6 +4224,14 @@ function renderProtocoles(){
   <div class="card" id="proto-invagination">
     <h3>🌀 Invagination intestinale aiguë</h3>
     <p class="module-sub" style="margin-bottom:8px;">Cause la plus fréquente d'occlusion intestinale chez le nourrisson (typiquement 3 mois-3 ans) — pénétration d'un segment intestinal dans le segment d'aval.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de l'enfant (kg) — calcul du remplissage et de l'antalgie</label>
+        <input type="number" step="0.1" min="0" id="invag_poids" placeholder="ex. 8" oninput="calcInvagination()">
+      </div>
+      <div class="field" id="invag_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="invag_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Triade classique</strong> (souvent incomplète) — douleurs abdominales paroxystiques avec accès de pleurs et pâleur, vomissements, rectorragies "gelée de groseille" (signe tardif)</li>
       <li><strong>Signe caractéristique entre les crises</strong> — enfant apathique, prostré, contrastant avec les crises douloureuses paroxystiques</li>
@@ -3835,6 +4247,14 @@ function renderProtocoles(){
   <div class="card" id="proto-stt-drepanocytaire">
     <h3>🔴 Syndrome thoracique aigu drépanocytaire</h3>
     <div class="warn-box">⚠️ Complication grave et potentiellement mortelle de la drépanocytose — première cause de décès chez l'adulte drépanocytaire, à différencier d'une simple crise vaso-occlusive.</div>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul des doses (antalgie, antibiothérapie, transfusion)</label>
+        <input type="number" step="0.1" min="0" id="stt_poids" placeholder="ex. 20 (enfant) ou 60 (adulte)" oninput="calcStt()">
+      </div>
+      <div class="field" id="stt_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="stt_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Diagnostic</strong> — nouvelle opacité radiologique/scannographique associée à au moins un signe parmi : douleur thoracique, fièvre, tachypnée, sibilants/crépitants, hypoxémie — chez un patient drépanocytaire connu</li>
       <li><strong>Oxygénothérapie systématique</strong> — objectif SpO2 &gt;95%, à adapter à la valeur de base du patient</li>
@@ -5011,6 +5431,849 @@ function calcGtt(){
     <small style="color:var(--muted)">Facteur de gouttes utilisé : ${facteur} gtt/mL. Recompter le débit réel régulièrement — la gravité seule ne garantit pas la dose exacte.</small>`;
 }
 
+/* Calculateur de doses intégré — fiche ACR pédiatrique (calcul en direct, sans bouton) */
+function calcAcrPedia(){
+  const poidsInput = document.getElementById('acrp_poids');
+  const resultEl = document.getElementById('acrp_result');
+  const noteEl = document.getElementById('acrp_note');
+  const inlineAdr = document.getElementById('acrp_inline_adr');
+  const inlineJ = document.getElementById('acrp_inline_j');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineAdr) inlineAdr.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    if(inlineJ) inlineJ.textContent = "saisir le poids ci-dessus pour l'énergie calculée";
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:1, max:60, label:'Poids saisi', unit:'kg'}]);
+
+  const adrMg = Math.min(poids*0.01, 1);
+  const adrMl = Math.min(poids*0.1, 10); // dilution 1:10 000 (0,1 mg/mL)
+  const amioMg = Math.min(poids*5, 300);
+  const choc1J = Math.min(poids*4, 200);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Situation</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Adrénaline IV/IO (1:10 000)</td><td><strong>${adrMg.toFixed(2)} mg</strong> = <strong>${adrMl.toFixed(1)} mL</strong>${poids*0.01>1?' (plafonné à 1 mg — dose adulte atteinte)':''}, à répéter toutes les 4 min</td></tr>` +
+    `<tr><td>Amiodarone (FV/TV sans pouls)</td><td><strong>${amioMg.toFixed(0)} mg</strong> IV/IO bolus${poids*5>300?' (plafonné à 300 mg)':''}, après le 3e choc</td></tr>` +
+    `<tr><td>Énergie de choc (défibrillation)</td><td><strong>${choc1J.toFixed(0)} J</strong> par choc (4 J/kg)${poids*4>200?" (plafonné à 200 J — vérifier le réglage max de l'appareil)":''}</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration, notamment chez le nourrisson &lt;1 an et en cas de dénutrition sévère (poids réel vs poids attendu pour l'âge).</p>`;
+
+  if(inlineAdr) inlineAdr.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${adrMg.toFixed(2)} mg</strong> (${adrMl.toFixed(1)} mL de dilution 1:10 000)`;
+  if(inlineJ) inlineJ.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${choc1J.toFixed(0)} J</strong> par choc`;
+}
+
+/* Calculateur de doses intégré — fiche Anaphylaxie (adulte et enfant selon le poids saisi) */
+function calcAnaphylaxie(){
+  const poidsInput = document.getElementById('anaph_poids');
+  const resultEl = document.getElementById('anaph_result');
+  const noteEl = document.getElementById('anaph_note');
+  const inlineAdr = document.getElementById('anaph_inline_adr');
+  const inlineRemplissage = document.getElementById('anaph_inline_remplissage');
+  const inlineAdjuvants = document.getElementById('anaph_inline_adjuvants');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineAdr) inlineAdr.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    if(inlineRemplissage) inlineRemplissage.textContent = 'saisir le poids ci-dessus pour le bolus calculé';
+    if(inlineAdjuvants) inlineAdjuvants.textContent = 'saisir le poids ci-dessus pour les doses calculées';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const isEnfant = poids < 40; // seuil pratique pour basculer sur la posologie pédiatrique au poids
+
+  const adrMg = isEnfant ? Math.min(poids*0.01, poids<30?0.3:0.5) : 0.5;
+  const remplissageMin = isEnfant ? poids*20 : 500;
+  const remplissageMax = isEnfant ? poids*20 : 1000;
+  const polaramineMg = isEnfant ? Math.min(Math.max(poids*0.2,0),5) : 5;
+  const soluMg1 = isEnfant ? poids*1 : 40;
+  const soluMg2 = isEnfant ? poids*2 : 80;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isEnfant?'posologie pédiatrique (mg/kg) appliquée':'posologie adulte appliquée'}`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Situation</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Adrénaline IM (1:1000)</td><td><strong>${adrMg.toFixed(2)} mg</strong>, cuisse (antéro-latérale), répétable toutes les 5-15 min</td></tr>` +
+    `<tr><td>Remplissage vasculaire (bolus)</td><td><strong>${remplissageMin.toFixed(0)}${remplissageMax>remplissageMin?'–'+remplissageMax.toFixed(0):''} mL</strong> cristalloïdes, à répéter selon réponse</td></tr>` +
+    `<tr><td>Déxchlorphéniramine (Polaramine®)</td><td><strong>${polaramineMg.toFixed(2)} mg</strong> IV/IM</td></tr>` +
+    `<tr><td>Méthylprednisolone (Solu-Médrol®)</td><td><strong>${soluMg1.toFixed(0)}–${soluMg2.toFixed(0)} mg</strong> IV</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. Seuil pédiatrique/adulte basé ici sur le poids (&lt;40 kg) à titre pratique ; se fier au jugement clinique en cas de doute (adolescent grand gabarit, adulte de petit poids).</p>`;
+
+  if(inlineAdr) inlineAdr.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${adrMg.toFixed(2)} mg</strong> IM`;
+  if(inlineRemplissage) inlineRemplissage.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${remplissageMin.toFixed(0)}${remplissageMax>remplissageMin?'–'+remplissageMax.toFixed(0):''} mL</strong>`;
+  if(inlineAdjuvants) inlineAdjuvants.innerHTML = `→ pour <strong>${poids} kg</strong> : Polaramine® <strong>${polaramineMg.toFixed(2)} mg</strong> · Solu-Médrol® <strong>${soluMg1.toFixed(0)}–${soluMg2.toFixed(0)} mg</strong>`;
+}
+
+/* Calculateur de doses intégré — fiche Intubation difficile / Séquence d'induction rapide (ISR) */
+function calcIsr(){
+  const poidsInput = document.getElementById('isr_poids');
+  const resultEl = document.getElementById('isr_result');
+  const noteEl = document.getElementById('isr_note');
+  const th = document.getElementById('isr_th_calc');
+  const cells = {
+    ket: document.getElementById('isr_ketamine'),
+    eto: document.getElementById('isr_etomidate'),
+    prop: document.getElementById('isr_propofol'),
+    sux: document.getElementById('isr_sux'),
+    roc: document.getElementById('isr_roc')
+  };
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(th) th.style.display = 'none';
+    Object.values(cells).forEach(c=>{ if(c) c.textContent=''; });
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+
+  const ketMin = poids*1.5, ketMax = poids*2;
+  const eto = poids*0.3;
+  const propMin = poids*1.5, propMax = poids*2.5;
+  const suxMin = poids*1, suxMax = poids*1.5;
+  const roc = poids*1.2;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  if(th) th.style.display = '';
+  if(cells.ket) cells.ket.innerHTML = `<strong>${ketMin.toFixed(0)}–${ketMax.toFixed(0)} mg</strong>`;
+  if(cells.eto) cells.eto.innerHTML = `<strong>${eto.toFixed(0)} mg</strong>`;
+  if(cells.prop) cells.prop.innerHTML = `<strong>${propMin.toFixed(0)}–${propMax.toFixed(0)} mg</strong>`;
+  if(cells.sux) cells.sux.innerHTML = `<strong>${suxMin.toFixed(0)}–${suxMax.toFixed(0)} mg</strong>`;
+  if(cells.roc) cells.roc.innerHTML = `<strong>${roc.toFixed(0)} mg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<p style="font-size:12px; color:var(--muted); margin:0;">Doses calculées affichées directement dans la colonne de droite du tableau ci-dessous pour <strong>${poids} kg</strong>. Vérifier systématiquement avant administration — ne jamais associer 2 agents d'induction ni 2 curares simultanément.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Sepsis / Choc septique de l'enfant */
+function calcSepsisPedia(){
+  const poidsInput = document.getElementById('sepsisp_poids');
+  const resultEl = document.getElementById('sepsisp_result');
+  const noteEl = document.getElementById('sepsisp_note');
+  const inlineAtb = document.getElementById('sepsisp_inline_atb');
+  const inlineRemplissage = document.getElementById('sepsisp_inline_remplissage');
+  const inlineHypogly = document.getElementById('sepsisp_inline_hypogly');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineAtb) inlineAtb.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    if(inlineRemplissage) inlineRemplissage.textContent = 'saisir le poids ci-dessus pour le bolus calculé';
+    if(inlineHypogly) inlineHypogly.textContent = 'saisir le poids ci-dessus pour les doses calculées';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:1, max:60, label:'Poids saisi', unit:'kg'}]);
+
+  const ceftriMin = poids*50, ceftriMax = poids*100;
+  const gentaMin = poids*5, gentaMax = poids*7;
+  const bolusMin = poids*10, bolusMax = poids*20;
+  const glucMin = poids*2, glucMax = poids*5;
+  const calciumMg = poids*100;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Situation</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Ceftriaxone (Rocéphine®)</td><td><strong>${ceftriMin.toFixed(0)}–${ceftriMax.toFixed(0)} mg/j</strong> IV en 1 injection</td></tr>` +
+    `<tr><td>Gentamicine (Gentalline®)</td><td><strong>${gentaMin.toFixed(0)}–${gentaMax.toFixed(0)} mg/j</strong> IV en 1 injection</td></tr>` +
+    `<tr><td>Bolus de remplissage</td><td><strong>${bolusMin.toFixed(0)}–${bolusMax.toFixed(0)} mL</strong> sur 5-10 min (seuil choc réfractaire ≈ ${(poids*40).toFixed(0)}-${(poids*60).toFixed(0)} mL cumulés)</td></tr>` +
+    `<tr><td>Glucosé 10% (hypoglycémie)</td><td><strong>${glucMin.toFixed(0)}–${glucMax.toFixed(0)} mL</strong> IV lente</td></tr>` +
+    `<tr><td>Gluconate de calcium 10% (hypocalcémie)</td><td><strong>${calciumMg.toFixed(0)} mg</strong> IV lente sur 10-15 min</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration, notamment chez le nourrisson &lt;1 an.</p>`;
+
+  if(inlineAtb) inlineAtb.innerHTML = `→ pour <strong>${poids} kg</strong> : Rocéphine® <strong>${ceftriMin.toFixed(0)}–${ceftriMax.toFixed(0)} mg/j</strong> · Gentalline® <strong>${gentaMin.toFixed(0)}–${gentaMax.toFixed(0)} mg/j</strong>`;
+  if(inlineRemplissage) inlineRemplissage.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${bolusMin.toFixed(0)}–${bolusMax.toFixed(0)} mL</strong> par bolus`;
+  if(inlineHypogly) inlineHypogly.innerHTML = `→ pour <strong>${poids} kg</strong> : Glucosé 10% <strong>${glucMin.toFixed(0)}–${glucMax.toFixed(0)} mL</strong> · Gluconate Ca <strong>${calciumMg.toFixed(0)} mg</strong>`;
+}
+
+/* Calculateur de doses intégré — fiche Intoxication aux organophosphorés/carbamates (Atropine + Pralidoxime, enfant) */
+function calcOrganophosphores(){
+  const poidsInput = document.getElementById('orga_poids');
+  const resultEl = document.getElementById('orga_result');
+  const noteEl = document.getElementById('orga_note');
+  const inlineAtropine = document.getElementById('orga_inline_atropine');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineAtropine) inlineAtropine.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:1, max:150, label:'Poids saisi', unit:'kg'}]);
+
+  const atrop1 = poids*0.02;
+  const atrop2 = atrop1*2;
+  const atrop3 = atrop1*4;
+  const atrop4 = atrop1*8;
+  const praliMin = poids*10, praliMax = poids*20;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — calcul pédiatrique (0,02 mg/kg). Chez l'adulte, la dose initiale reste fixe (1-2 mg), non pondérée.`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Atropine IV — doses successives (doublement /5 min)</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>1ère dose (0,02 mg/kg)</td><td><strong>${atrop1.toFixed(2)} mg</strong></td></tr>` +
+    `<tr><td>2e dose (si persistance, x2)</td><td><strong>${atrop2.toFixed(2)} mg</strong></td></tr>` +
+    `<tr><td>3e dose (x4)</td><td><strong>${atrop3.toFixed(2)} mg</strong></td></tr>` +
+    `<tr><td>4e dose (x8)</td><td><strong>${atrop4.toFixed(2)} mg</strong></td></tr>` +
+    `</table>` +
+    `<table style="margin-top:8px;"><tr><th>Pralidoxime (Contrathion®)</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Perfusion continue enfant (10-20 mg/kg/h)</td><td><strong>${praliMin.toFixed(0)}–${praliMax.toFixed(0)} mg/h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Pas de plafond fixe pour l'atropine — poursuivre le doublement jusqu'à assèchement des sécrétions bronchiques. Dose indicative — vérifier systématiquement avant administration.</p>`;
+
+  if(inlineAtropine) inlineAtropine.innerHTML = `→ pour <strong>${poids} kg</strong> : 1ère dose <strong>${atrop1.toFixed(2)} mg</strong>, à doubler toutes les 5 min si besoin`;
+}
+
+/* Calculateur de doses intégré — fiche Rage (immunoglobulines antirabiques selon le poids, catégorie III) */
+function calcRage(){
+  const poidsInput = document.getElementById('rage_poids');
+  const typeInput = document.getElementById('rage_type');
+  const resultEl = document.getElementById('rage_result');
+  const noteEl = document.getElementById('rage_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+  const type = typeInput ? typeInput.value : 'humaines';
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:1, max:150, label:'Poids saisi', unit:'kg'}]);
+
+  const doseUIkg = type==='equines' ? 40 : 20;
+  const totalUI = poids*doseUIkg;
+  const nom = type==='equines' ? 'Favirab® (équines)' : 'Imogam Rage® (humaines)';
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Catégorie III OMS uniquement`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Immunoglobulines antirabiques</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>${nom} — ${doseUIkg} UI/kg</td><td><strong>${totalUI.toFixed(0)} UI</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Infiltrer autour et dans la plaie autant que le volume le permette, le reste en IM à distance — en un site différent du vaccin. Vérifier la concentration du flacon disponible localement pour convertir en volume à injecter. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Laryngite aiguë (croup) / Épiglottite (poids de l'enfant) */
+function calcCroup(){
+  const poidsInput = document.getElementById('croup_poids');
+  const resultEl = document.getElementById('croup_result');
+  const noteEl = document.getElementById('croup_note');
+  const inlineDexa = document.getElementById('croup_inline_dexa');
+  const inlineAdr = document.getElementById('croup_inline_adr');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineDexa) inlineDexa.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    if(inlineAdr) inlineAdr.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:1, max:40, label:'Poids saisi', unit:'kg'}]);
+
+  const dexaMin = poids*0.15, dexaMax = poids*0.6;
+  const adrMl = Math.min(poids*0.5, 5);
+  const cefotaximeDose = poids*50;
+  const ceftriaxoneDose = Math.min(poids*50, 2000);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Situation</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Laryngite légère — Dexaméthasone (Soludécadron®)</td><td><strong>${dexaMin.toFixed(2)}–${dexaMax.toFixed(2)} mg</strong> PO/IV, dose unique</td></tr>` +
+    `<tr><td>Laryngite modérée/sévère — Adrénaline nébulisée (1 mg/mL)</td><td><strong>${adrMl.toFixed(1)} mL</strong>${poids*0.5>5?' (plafonné à 5 mL)':''}</td></tr>` +
+    `<tr><td>Épiglottite — Céfotaxime (Claforan®) /8h</td><td><strong>${cefotaximeDose.toFixed(0)} mg</strong> par injection</td></tr>` +
+    `<tr><td>Épiglottite — Ceftriaxone (Rocéphine®) /j</td><td><strong>${ceftriaxoneDose.toFixed(0)} mg/j</strong>${poids*50>2000?' (plafonné à 2 g/j)':''}</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. La nébulisation d'adrénaline impose une surveillance ≥3-4h après le geste.</p>`;
+
+  if(inlineDexa) inlineDexa.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${dexaMin.toFixed(2)}–${dexaMax.toFixed(2)} mg</strong>`;
+  if(inlineAdr) inlineAdr.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${adrMl.toFixed(1)} mL</strong>${poids*0.5>5?' (plafonné à 5 mL)':''}`;
+}
+
+/* Calculateur de doses intégré — fiche Malnutrition aiguë sévère OMS (glucosé, F-75, F-100) */
+function calcMalnutrition(){
+  const poidsInput = document.getElementById('malnut_poids');
+  const resultEl = document.getElementById('malnut_result');
+  const noteEl = document.getElementById('malnut_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:30, label:'Poids saisi', unit:'kg'}]);
+
+  const glucMl = poids*5;
+  // F-75 : 75 kcal/100 mL, phase stabilisation 100 kcal/kg/j, réparti en 8-12 repas/j
+  const f75VolJour = (100*poids)/0.75;
+  const f75Par8 = f75VolJour/8;
+  const f75Par12 = f75VolJour/12;
+  // F-100 : 100 kcal/100 mL = 1 kcal/mL, phase récupération 150-220 kcal/kg/j
+  const f100VolMin = (150*poids)/1;
+  const f100VolMax = (220*poids)/1;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Situation</th><th>Volume/dose calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Hypoglycémie — Glucosé 10% (bolus PO/SNG ou IV)</td><td><strong>${glucMl.toFixed(0)} mL</strong></td></tr>` +
+    `<tr><td>F-75 — phase de stabilisation (100 kcal/kg/j)</td><td><strong>${f75VolJour.toFixed(0)} mL/j</strong> — soit ≈${f75Par8.toFixed(0)} mL/repas (8 repas/j) à ${f75Par12.toFixed(0)} mL/repas (12 repas/j)</td></tr>` +
+    `<tr><td>F-100/ATPE — phase de récupération (150-220 kcal/kg/j)</td><td><strong>${f100VolMin.toFixed(0)}–${f100VolMax.toFixed(0)} mL/j</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Renutrition prudente et progressive — risque de syndrome de renutrition inappropriée. Dose indicative — vérifier systématiquement avant administration, notamment chez le nourrisson &lt;6 mois (privilégier le soutien de l'allaitement maternel).</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Intoxication digitalique (fragments Fab anti-digoxine) */
+function calcDigitalique(){
+  const doseInput = document.getElementById('digit_dose_ingeree');
+  const digoxinemieInput = document.getElementById('digit_digoxinemie');
+  const poidsInput = document.getElementById('digit_poids');
+  const resultEl = document.getElementById('digit_result');
+  const noteEl = document.getElementById('digit_note');
+  if(!doseInput) return;
+  const doseIngeree = parseFloat(doseInput.value);
+  const digoxinemie = digoxinemieInput ? parseFloat(digoxinemieInput.value) : NaN;
+  const poids = poidsInput ? parseFloat(poidsInput.value) : NaN;
+
+  const hasDose = !isNaN(doseIngeree) && doseIngeree>0;
+  const hasDigoxinemie = !isNaN(digoxinemie) && digoxinemie>0 && !isNaN(poids) && poids>0;
+
+  if(!hasDose && !hasDigoxinemie){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([
+    ...(hasDose ? [{val:doseIngeree, min:0.1, max:50, label:'Dose ingérée', unit:'mg'}] : []),
+    ...(hasDigoxinemie ? [{val:digoxinemie, min:0.5, max:30, label:'Digoxinémie', unit:'ng/mL'}, {val:poids, min:1, max:150, label:'Poids saisi', unit:'kg'}] : [])
+  ]);
+
+  noteEl.innerHTML = `1 flacon de fragments Fab neutralise ≈ 0,5 mg de digoxine`;
+
+  let rows = '';
+  if(hasDose){
+    const flaconsDose = Math.ceil(doseIngeree/0.5);
+    rows += `<tr><td>À partir de la dose ingérée (${doseIngeree} mg)</td><td><strong>${flaconsDose} flacon(s)</strong></td></tr>`;
+  }
+  if(hasDigoxinemie){
+    const flaconsNiveau = Math.ceil((digoxinemie*poids)/100);
+    rows += `<tr><td>À partir de la digoxinémie (${digoxinemie} ng/mL × ${poids} kg / 100)</td><td><strong>${flaconsNiveau} flacon(s)</strong></td></tr>`;
+  }
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Méthode</th><th>Flacons de fragments Fab</th></tr>${rows}</table>` +
+    `<p style="margin-top:8px; font-size:12px; color:var(--muted)">Si les deux champs sont saisis, comparer les deux estimations. À défaut de dosage/dose connue en intoxication aiguë massive : 5-10 flacons empiriques. Antidote non disponible à Madagascar — commande en urgence auprès d'un centre antipoison international si les moyens le permettent. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Syndrome de Guillain-Barré (immunoglobulines IV selon le poids) */
+function calcGuillainBarre(){
+  const poidsInput = document.getElementById('gbs_poids');
+  const resultEl = document.getElementById('gbs_result');
+  const noteEl = document.getElementById('gbs_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:3, max:150, label:'Poids saisi', unit:'kg'}]);
+
+  const doseJour = poids*0.4;
+  const doseTotale = poids*2;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Immunoglobulines IV (Tegeline®, Privigen®)</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Dose quotidienne (0,4 g/kg/j, sur 5 jours)</td><td><strong>${doseJour.toFixed(1)} g/j</strong></td></tr>` +
+    `<tr><td>Dose totale cumulée (2 g/kg sur 5 jours)</td><td><strong>${doseTotale.toFixed(1)} g</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Non disponible en pratique courante à Madagascar (importation spécifique ou transfert). Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Purpura fulminans (Ceftriaxone, remplissage, prophylaxie des contacts, selon le poids de l'enfant) */
+function calcPurpuraFulminans(){
+  const poidsInput = document.getElementById('purpura_poids');
+  const resultEl = document.getElementById('purpura_result');
+  const noteEl = document.getElementById('purpura_note');
+  const inlineAtb = document.getElementById('purpura_inline_atb');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineAtb) inlineAtb.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:1, max:60, label:'Poids saisi', unit:'kg'}]);
+
+  const ceftriMin = poids*50, ceftriMax = poids*100;
+  const remplissage = poids*20;
+  const rifampicine = poids*10;
+  const ceftriProphylaxie = poids*125>250 ? 250 : poids*125;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Situation</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Ceftriaxone (Rocéphine®) — traitement immédiat</td><td><strong>${ceftriMin.toFixed(0)}–${ceftriMax.toFixed(0)} mg</strong></td></tr>` +
+    `<tr><td>Bolus de remplissage vasculaire (20 mL/kg)</td><td><strong>${remplissage.toFixed(0)} mL</strong>, répétable</td></tr>` +
+    `<tr><td>Rifampicine (Rifadine®) — prophylaxie contact (&gt;1 mois, x2/j x2j)</td><td><strong>${rifampicine.toFixed(0)} mg</strong> par prise</td></tr>` +
+    `<tr><td>Ceftriaxone (Rocéphine®) — prophylaxie contact (&lt;15 ans, dose unique)</td><td><strong>${ceftriProphylaxie.toFixed(0)} mg</strong> IM</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">L'antibiothérapie doit être injectée sur place sans délai, avant tout transfert. Dose indicative — vérifier systématiquement avant administration.</p>`;
+
+  if(inlineAtb) inlineAtb.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${ceftriMin.toFixed(0)}–${ceftriMax.toFixed(0)} mg</strong>`;
+}
+
+/* Calculateur intégré — fiche Liquides et solutés pédiatriques (règle de Holliday-Segar + bolus) */
+function calcLiquidesPedia(){
+  const poidsInput = document.getElementById('liqp_poids');
+  const resultEl = document.getElementById('liqp_result');
+  const noteEl = document.getElementById('liqp_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:1, max:60, label:'Poids saisi', unit:'kg'}]);
+
+  // Règle de Holliday-Segar (4-2-1)
+  let mlPerH;
+  if(poids<=10){ mlPerH = poids*4; }
+  else if(poids<=20){ mlPerH = 40 + (poids-10)*2; }
+  else { mlPerH = 60 + (poids-20)*1; }
+  const mlPer24h = mlPerH*24;
+
+  const bolusMin = poids*10, bolusMax = poids*20;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Objectif</th><th>Débit/volume calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Entretien (Holliday-Segar, règle 4-2-1)</td><td><strong>${mlPerH.toFixed(0)} mL/h</strong> (≈ <strong>${mlPer24h.toFixed(0)} mL/24h</strong>)</td></tr>` +
+    `<tr><td>Bolus de remplissage (choc/hypovolémie)</td><td><strong>${bolusMin.toFixed(0)}–${bolusMax.toFixed(0)} mL</strong> sur 15-20 min, à répéter selon réponse</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Débit d'entretien théorique — à ajuster selon l'état d'hydratation, la fièvre (+10-12%/°C au-delà de 37,5°C), les pertes en cours et le contexte clinique (essai FEAST : prudence sur les bolus systématiques hors choc franc en ressources limitées).</p>`;
+}
+
+/* Calculateur de doses intégré — fiche État de mal épileptique (adulte et enfant selon le poids saisi) */
+function calcEme(){
+  const poidsInput = document.getElementById('eme_poids');
+  const resultEl = document.getElementById('eme_result');
+  const noteEl = document.getElementById('eme_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const isEnfant = poids < 40;
+
+  const diazMg = isEnfant ? Math.min(poids*0.175, 10) : 10; // 0,15-0,2 mg/kg IV, milieu de plage
+  const diazRectalMg = Math.min(poids*0.5, 10);
+  const midazBuccalMg = Math.min(poids*0.3, 10);
+  const valproateMg = Math.min(poids*40, 3000);
+  const phenytoineMg = poids*20;
+  const levetiracetamMg = Math.min(poids*60, 4500);
+  const midazBolusMg = poids*0.2;
+  const midazEntretienMinH = poids*0.05, midazEntretienMaxH = poids*0.5;
+  const propofolBolusMin = poids*1, propofolBolusMax = Math.min(poids*2, poids*5);
+  const propofolEntretienMinH = poids*3, propofolEntretienMaxH = poids*4;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isEnfant?'posologie pédiatrique appliquée pour les BZD':'posologie adulte appliquée pour les BZD'}`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Ligne</th><th>Molécule</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td rowspan="2">1ère ligne (BZD)</td><td>Diazépam (Valium®) IV${isEnfant?' — ou intrarectal '+diazRectalMg.toFixed(1)+' mg':''}</td><td><strong>${diazMg.toFixed(1)} mg</strong> IV lent${isEnfant?' (max 10 mg/dose)':''}</td></tr>` +
+    `<tr><td>Midazolam (Hypnovel®) buccal/IN/IM</td><td><strong>${isEnfant?midazBuccalMg.toFixed(1):'10'} mg</strong></td></tr>` +
+    `<tr><td rowspan="3">2ème ligne</td><td>Valproate (Dépakine®) IV</td><td><strong>${valproateMg.toFixed(0)} mg</strong>${poids*40>3000?' (plafonné à 3 g)':''} en 10-15 min</td></tr>` +
+    `<tr><td>Phénytoïne/Fosphénytoïne IV</td><td><strong>${phenytoineMg.toFixed(0)} mg</strong> (≤50 mg/min)</td></tr>` +
+    `<tr><td>Lévétiracétam (Keppra®) IV</td><td><strong>${levetiracetamMg.toFixed(0)} mg</strong>${poids*60>4500?' (plafonné à 4,5 g)':''} en 15 min</td></tr>` +
+    `<tr><td rowspan="2">3ème ligne (anesthésie)</td><td>Midazolam bolus puis IVSE</td><td>Bolus <strong>${midazBolusMg.toFixed(1)} mg</strong>, puis <strong>${midazEntretienMinH.toFixed(2)}–${midazEntretienMaxH.toFixed(2)} mg/h</strong></td></tr>` +
+    `<tr><td>Propofol bolus puis IVSE</td><td>Bolus <strong>${propofolBolusMin.toFixed(0)}–${propofolBolusMax.toFixed(0)} mg</strong>, puis <strong>${propofolEntretienMinH.toFixed(0)}–${propofolEntretienMaxH.toFixed(0)} mg/h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. Un seul agent de 2ème ligne à la fois, dose pleine, avant de passer à l'anesthésie générale.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Convulsions fébriles de l'enfant */
+function calcConvulsionsFebriles(){
+  const poidsInput = document.getElementById('cvf_poids');
+  const resultEl = document.getElementById('cvf_result');
+  const noteEl = document.getElementById('cvf_note');
+  const inlineBzd = document.getElementById('cvf_inline_bzd');
+  const inlinePara = document.getElementById('cvf_inline_para');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineBzd) inlineBzd.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    if(inlinePara) inlinePara.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:5, max:25, label:'Poids saisi', unit:'kg'}]);
+
+  const diazRectalMg = Math.min(poids*0.5, 10);
+  const midazBuccalMg = Math.min(poids*0.3, 10);
+  const paraMg = Math.min(poids*15, 1000);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Situation</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Diazépam (Valium®) intrarectal</td><td><strong>${diazRectalMg.toFixed(1)} mg</strong>${poids*0.5>10?' (plafonné à 10 mg)':''}</td></tr>` +
+    `<tr><td>Midazolam (Hypnovel®) buccal/IN</td><td><strong>${midazBuccalMg.toFixed(1)} mg</strong>${poids*0.3>10?' (plafonné à 10 mg)':''}</td></tr>` +
+    `<tr><td>Paracétamol (antipyrétique)</td><td><strong>${paraMg.toFixed(0)} mg</strong>${poids*15>1000?' (plafonné à 1 g)':''}</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. Ces doses ne s'appliquent qu'à une crise &gt;5 min (cf. protocole État de mal épileptique).</p>`;
+
+  if(inlineBzd) inlineBzd.innerHTML = `→ pour <strong>${poids} kg</strong> : Diazépam <strong>${diazRectalMg.toFixed(1)} mg</strong> IR ou Midazolam <strong>${midazBuccalMg.toFixed(1)} mg</strong> buccal/IN`;
+  if(inlinePara) inlinePara.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${paraMg.toFixed(0)} mg</strong>`;
+}
+
+/* Calculateur de doses intégré — fiche Paludisme grave (Artésunate) */
+function calcPaludisme(){
+  const poidsInput = document.getElementById('palu_poids');
+  const resultEl = document.getElementById('palu_result');
+  const noteEl = document.getElementById('palu_note');
+  const inlineArtesunate = document.getElementById('palu_inline_artesunate');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineArtesunate) inlineArtesunate.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const isMoinsDe20kg = poids < 20;
+  const mgParKg = isMoinsDe20kg ? 3 : 2.4;
+  const doseMg = poids*mgParKg;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isMoinsDe20kg?'enfant <20 kg : 3 mg/kg/dose':'adulte / enfant ≥20 kg : 2,4 mg/kg/dose'}`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Moment</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Artésunate IV — H0</td><td><strong>${doseMg.toFixed(1)} mg</strong> (${mgParKg} mg/kg)</td></tr>` +
+    `<tr><td>Artésunate IV — H12</td><td><strong>${doseMg.toFixed(1)} mg</strong></td></tr>` +
+    `<tr><td>Artésunate IV — H24, puis 1x/j</td><td><strong>${doseMg.toFixed(1)} mg</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration et la reconstitution de l'ampoule (bicarbonate puis NaCl 0,9%, selon notice). Poursuivre jusqu'à voie orale possible (minimum 24h de traitement parentéral).</p>`;
+
+  if(inlineArtesunate) inlineArtesunate.innerHTML = `→ pour <strong>${poids} kg</strong> (${mgParKg} mg/kg) : <strong>${doseMg.toFixed(1)} mg</strong> par injection (H0, H12, H24 puis 1x/j)`;
+}
+
+/* Calculateur de doses intégré — fiche Réanimation du nouveau-né */
+function calcReaNN(){
+  const poidsInput = document.getElementById('nn_poids');
+  const resultEl = document.getElementById('nn_result');
+  const noteEl = document.getElementById('nn_note');
+  const inlineAdr = document.getElementById('nn_inline_adr');
+  const inlineRemplissage = document.getElementById('nn_inline_remplissage');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineAdr) inlineAdr.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    if(inlineRemplissage) inlineRemplissage.textContent = 'saisir le poids ci-dessus pour le volume calculé';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:0.4, max:6, label:'Poids de naissance saisi', unit:'kg'}]);
+
+  const adrIvMin = poids*0.01, adrIvMax = poids*0.03;
+  const adrMlMin = poids*0.1, adrMlMax = poids*0.3; // dilution 1:10 000
+  const adrItMin = poids*0.05, adrItMax = poids*0.1;
+  const remplissageMl = poids*10;
+
+  noteEl.innerHTML = `Poids de naissance saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Situation</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Adrénaline IV/IO (1:10 000)</td><td><strong>${adrIvMin.toFixed(3)}–${adrIvMax.toFixed(3)} mg</strong> = <strong>${adrMlMin.toFixed(2)}–${adrMlMax.toFixed(2)} mL</strong>, répétable toutes les 3-5 min</td></tr>` +
+    `<tr><td>Adrénaline intratrachéale (si IV/IO non disponible)</td><td><strong>${adrItMin.toFixed(3)}–${adrItMax.toFixed(3)} mg</strong></td></tr>` +
+    `<tr><td>Remplissage (NaCl 0,9% ou sang O nég. si hémorragie)</td><td><strong>${remplissageMl.toFixed(0)} mL</strong> (10 mL/kg)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. Utiliser le poids de naissance estimé si le nouveau-né n'a pas encore été pesé.</p>`;
+
+  if(inlineAdr) inlineAdr.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${adrIvMin.toFixed(3)}–${adrIvMax.toFixed(3)} mg</strong> (${adrMlMin.toFixed(2)}–${adrMlMax.toFixed(2)} mL) IV/IO`;
+  if(inlineRemplissage) inlineRemplissage.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${remplissageMl.toFixed(0)} mL</strong>`;
+}
+
+/* Calculateur de doses intégré — fiche Crise vaso-occlusive drépanocytaire */
+function calcDrepanocytose(){
+  const poidsInput = document.getElementById('cvo_poids');
+  const resultEl = document.getElementById('cvo_result');
+  const noteEl = document.getElementById('cvo_note');
+  const inlineMorphine = document.getElementById('cvo_inline_morphine');
+  const inlineKetamine = document.getElementById('cvo_inline_ketamine');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineMorphine) inlineMorphine.textContent = 'saisir le poids ci-dessus pour la dose de charge calculée';
+    if(inlineKetamine) inlineKetamine.textContent = 'saisir le poids ci-dessus pour le débit calculé';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:5, max:200, label:'Poids saisi', unit:'kg'}]);
+
+  const morphineMg = poids*0.1;
+  const ketamineMinH = poids*0.15, ketamineMaxH = poids*1;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Molécule</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Morphine IVD — dose de charge</td><td><strong>${morphineMg.toFixed(1)} mg</strong>, puis bolus de 3 mg toutes les 5 min jusqu'à EVA &lt;4</td></tr>` +
+    `<tr><td>Kétamine IVSE (si échec morphine)</td><td><strong>${ketamineMinH.toFixed(1)}–${ketamineMaxH.toFixed(1)} mg/h</strong> (0,15-1 mg/kg/h)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. Titration IV répétée avec réévaluation toutes les 30-60 min en l'absence de PCA.</p>`;
+
+  if(inlineMorphine) inlineMorphine.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${morphineMg.toFixed(1)} mg</strong> dose de charge`;
+  if(inlineKetamine) inlineKetamine.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${ketamineMinH.toFixed(1)}–${ketamineMaxH.toFixed(1)} mg/h</strong>`;
+}
+
+/* Calculateur intégré — fiche Brûlures graves (formule de Parkland) */
+function calcBrulures(){
+  const poidsInput = document.getElementById('brul_poids');
+  const tbsaInput = document.getElementById('brul_tbsa');
+  const resultEl = document.getElementById('brul_result');
+  const noteEl = document.getElementById('brul_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+  const tbsa = parseFloat(tbsaInput.value);
+
+  if(isNaN(poids) || poids<=0 || isNaN(tbsa) || tbsa<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([
+    {val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'},
+    {val:tbsa, min:1, max:100, label:'%TBSA saisi', unit:'%'}
+  ]);
+
+  const total24h = 4*poids*tbsa;
+  const premieres8h = total24h/2;
+  const suivantes16h = total24h/2;
+  const debit8h = premieres8h/8;
+  const debit16h = suivantes16h/16;
+  const diureseCibleAdulte = poids*0.5;
+  const diureseCibleEnfant = poids*1;
+
+  noteEl.innerHTML = `Poids : <strong>${poids} kg</strong> · Surface brûlée : <strong>${tbsa}% TBSA</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Phase</th><th>Volume / débit calculé</th></tr>` +
+    `<tr><td>Volume total sur 24h (Parkland, 4 mL/kg/%TBSA)</td><td><strong>${total24h.toFixed(0)} mL</strong></td></tr>` +
+    `<tr><td>1ères 8h (depuis l'heure de la brûlure)</td><td><strong>${premieres8h.toFixed(0)} mL</strong> soit <strong>${debit8h.toFixed(0)} mL/h</strong></td></tr>` +
+    `<tr><td>16h suivantes</td><td><strong>${suivantes16h.toFixed(0)} mL</strong> soit <strong>${debit16h.toFixed(0)} mL/h</strong></td></tr>` +
+    `<tr><td>Objectif de diurèse</td><td>Adulte : <strong>${diureseCibleAdulte.toFixed(0)} mL/h</strong> (0,5 mL/kg/h) — Enfant : <strong>${diureseCibleEnfant.toFixed(0)} mL/h</strong> (1 mL/kg/h)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Calcul à partir de l'<strong>heure de la brûlure</strong>, non de l'heure d'arrivée — retrancher le temps déjà écoulé du débit des 8 premières heures. Volume de départ théorique — titration stricte impérative sur la diurèse horaire pour éviter le "fluid creep" ; certaines équipes démarrent d'emblée à 2 mL/kg/%TBSA (soit la moitié) avec titration plus précoce.</p>`;
+}
+
+/* Calculateur intégré — fiche Déshydratation sévère de l'enfant (OMS) */
+function calcDeshydratation(){
+  const poidsInput = document.getElementById('deshyd_poids');
+  const ageSelect = document.getElementById('deshyd_age');
+  const resultEl = document.getElementById('deshyd_result');
+  const noteEl = document.getElementById('deshyd_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:1, max:60, label:'Poids saisi', unit:'kg'}]);
+  const moinsDe12mois = ageSelect ? ageSelect.value === 'moins12' : true;
+
+  const planB = poids*75;
+  const planCTotal = poids*100;
+  const phase1 = poids*30;
+  const phase2 = poids*70;
+
+  noteEl.innerHTML = `Poids : <strong>${poids} kg</strong> — ${moinsDe12mois?'nourrisson <12 mois':'enfant ≥12 mois'}`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Plan</th><th>Volume calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Plan B (SRO 75 mL/kg sur 4h)</td><td><strong>${planB.toFixed(0)} mL</strong> sur 4h</td></tr>` +
+    `<tr><td>Plan C — total (100 mL/kg)</td><td><strong>${planCTotal.toFixed(0)} mL</strong></td></tr>` +
+    `<tr><td>Plan C — phase 1 (30 mL/kg)</td><td><strong>${phase1.toFixed(0)} mL</strong> en ${moinsDe12mois?'1h':'30 min'}</td></tr>` +
+    `<tr><td>Plan C — phase 2 (70 mL/kg)</td><td><strong>${phase2.toFixed(0)} mL</strong> sur ${moinsDe12mois?'les 5h suivantes':'les 2h30 suivantes'}</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — réévaluer toutes les 15-30 min et accélérer le débit si le pouls radial reste faible/imperceptible.</p>`;
+}
+
+/* Calculateur intégré — fiche Méningite / Encéphalite (Aciclovir + antibioprophylaxie des contacts) */
+function calcMeningite(){
+  const poidsInput = document.getElementById('menin_poids');
+  const resultEl = document.getElementById('menin_result');
+  const noteEl = document.getElementById('menin_note');
+  const inlineProphy = document.getElementById('menin_inline_prophy');
+  const inlineAciclovir = document.getElementById('menin_inline_aciclovir');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineProphy) inlineProphy.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    if(inlineAciclovir) inlineAciclovir.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const isEnfant = poids < 40;
+
+  const aciclovirMg = poids*10;
+  const rifampicineMg = isEnfant ? poids*10 : 600;
+  const ciproMg = isEnfant ? Math.min(poids*20, 500) : 500;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isEnfant?'posologie pédiatrique appliquée pour la prophylaxie':'posologie adulte appliquée pour la prophylaxie'}`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Molécule</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Aciclovir IV (encéphalite suspectée)</td><td><strong>${aciclovirMg.toFixed(0)} mg</strong> toutes les 8h</td></tr>` +
+    `<tr><td>Rifampicine (prophylaxie contacts)</td><td><strong>${rifampicineMg.toFixed(0)} mg</strong> x2/j, 2 jours</td></tr>` +
+    `<tr><td>Ciprofloxacine (prophylaxie contacts, dose unique)</td><td><strong>${ciproMg.toFixed(0)} mg</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. Rifampicine contre-indiquée chez la femme enceinte (préférer alors la Ceftriaxone en dose unique IM).</p>`;
+
+  if(inlineProphy) inlineProphy.innerHTML = `→ pour <strong>${poids} kg</strong> : Rifampicine <strong>${rifampicineMg.toFixed(0)} mg</strong> x2/j · Ciprofloxacine <strong>${ciproMg.toFixed(0)} mg</strong> dose unique`;
+  if(inlineAciclovir) inlineAciclovir.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${aciclovirMg.toFixed(0)} mg</strong> toutes les 8h`;
+}
+
+/* Calculateur intégré — fiche Intoxication au paracétamol (charbon activé + N-acétylcystéine) */
+function calcParacetamol(){
+  const poidsInput = document.getElementById('paraco_poids');
+  const resultEl = document.getElementById('paraco_result');
+  const noteEl = document.getElementById('paraco_note');
+  const inlineCharbon = document.getElementById('paraco_inline_charbon');
+  const inline2poches = document.getElementById('paraco_inline_2poches');
+  const th1 = document.getElementById('paraco_th_calc1');
+  const cells = {
+    p1: document.getElementById('paraco_p1'),
+    p2: document.getElementById('paraco_p2'),
+    p3: document.getElementById('paraco_p3'),
+    po: document.getElementById('paraco_po')
+  };
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineCharbon) inlineCharbon.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    if(inline2poches) inline2poches.textContent = 'saisir le poids ci-dessus pour les doses calculées';
+    if(th1) th1.style.display = 'none';
+    Object.values(cells).forEach(c=>{ if(c) c.textContent=''; });
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+
+  const charbonG = Math.min(poids*1, 50);
+  const nac1 = poids*150, nac2 = poids*50, nac3 = poids*100;
+  const nacPoCharge = poids*140, nacPoEntretien = poids*70;
+  const nac2poches1 = poids*200, nac2poches2 = poids*100;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  if(th1) th1.style.display = '';
+  if(cells.p1) cells.p1.innerHTML = `<strong>${nac1.toFixed(0)} mg</strong>`;
+  if(cells.p2) cells.p2.innerHTML = `<strong>${nac2.toFixed(0)} mg</strong>`;
+  if(cells.p3) cells.p3.innerHTML = `<strong>${nac3.toFixed(0)} mg</strong>`;
+  if(cells.po) cells.po.innerHTML = `Charge <strong>${nacPoCharge.toFixed(0)} mg</strong>, puis <strong>${nacPoEntretien.toFixed(0)} mg</strong>/4h`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<p style="font-size:12px; color:var(--muted); margin:0;">Doses calculées affichées directement dans le tableau ci-dessous pour <strong>${poids} kg</strong>. Vérifier systématiquement avant administration.</p>`;
+
+  if(inlineCharbon) inlineCharbon.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${charbonG.toFixed(0)} g</strong>${poids*1>50?' (plafonné à 50 g)':''}`;
+  if(inline2poches) inline2poches.innerHTML = `→ pour <strong>${poids} kg</strong> : 1ère poche <strong>${nac2poches1.toFixed(0)} mg</strong> sur 4h, puis <strong>${nac2poches2.toFixed(0)} mg</strong> sur 16h`;
+}
+
 function calcPedia(){
   let poids = parseFloat(document.getElementById('pedia_poids').value);
   const age = parseFloat(document.getElementById('pedia_age').value);
@@ -5287,6 +6550,596 @@ function calcSI(){
   document.getElementById('si_result').innerHTML = warn +
     `<strong>Shock Index = ${si.toFixed(2)}</strong> — <span class="${cls}">${interp}</span><br>
     <small style="color:var(--muted)">Normal : 0,5-0,7. &gt;0,9-1 associé à une mortalité accrue en contexte hémorragique (trauma, HPP, hémorragie digestive) — se méfie du piège d'une PA normale masquant une hypovolémie compensée.</small>`;
+}
+
+/* Calculateur intégré — fiche Prééclampsie sévère / Éclampsie (sulfate de magnésium) */
+function calcEclampsie(){
+  const concInput = document.getElementById('mgso4_conc');
+  const schemaEl = document.getElementById('mgso4_schema');
+  const resultEl = document.getElementById('mgso4_result');
+  const noteEl = document.getElementById('mgso4_note');
+  const inlineEl = document.getElementById('mgso4_inline');
+  if(!concInput) return;
+  const conc = parseFloat(concInput.value);
+  const schema = schemaEl ? schemaEl.value : 'zuspan';
+
+  if(isNaN(conc) || conc<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineEl) inlineEl.textContent = "saisir la concentration de l'ampoule ci-dessus pour le volume calculé";
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:conc, min:5, max:60, label:"Concentration de l'ampoule", unit:'%'}]);
+  // % = g pour 100 mL -> mL nécessaires pour X g = X*100/conc
+  const mlPerG = 100/conc;
+  const chargeMl = 4*mlPerG;
+
+  noteEl.innerHTML = `Concentration saisie : <strong>${conc}%</strong> (soit ${(conc*10).toFixed(0)} mg/mL)`;
+
+  let rows = `<tr><th>Étape</th><th>Volume calculé (conc. ${conc}%)</th></tr>` +
+    `<tr><td>Dose de charge — 4 g IV en 15-20 min</td><td><strong>${chargeMl.toFixed(1)} mL</strong></td></tr>`;
+
+  if(schema==='zuspan'){
+    const maintMlH = 1*mlPerG;
+    rows += `<tr><td>Entretien Zuspan — 1 g/h IV continu (PSE)</td><td><strong>${maintMlH.toFixed(1)} mL/h</strong></td></tr>` +
+      `<tr><td>Bolus supplémentaire si convulsion — 2 g IV</td><td><strong>${(2*mlPerG).toFixed(1)} mL</strong></td></tr>`;
+  } else {
+    const imMlPerFesse = 5*mlPerG;
+    const imMlEntretien = 5*mlPerG;
+    rows += `<tr><td>Dose IM initiale — 10 g (5 g dans chaque fesse)</td><td><strong>${imMlPerFesse.toFixed(1)} mL</strong> par fesse (${(imMlPerFesse*2).toFixed(1)} mL au total)</td></tr>` +
+      `<tr><td>Entretien Pritchard — 5 g IM toutes les 4h</td><td><strong>${imMlEntretien.toFixed(1)} mL</strong> par injection</td></tr>` +
+      `<tr><td>Bolus supplémentaire si convulsion — 2 g IV</td><td><strong>${(2*mlPerG).toFixed(1)} mL</strong></td></tr>`;
+  }
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;">${rows}</table>` +
+    `<p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement la concentration réelle de l'ampoule avant administration. Diluer la dose de charge dans 100-200 mL de sérum physiologique/glucosé pour perfusion en 15-20 min si administration à la seringue électrique non disponible.</p>`;
+
+  if(inlineEl) inlineEl.innerHTML = `→ pour une ampoule à <strong>${conc}%</strong> : charge <strong>${chargeMl.toFixed(1)} mL</strong> (4g), entretien <strong>${(1*mlPerG).toFixed(1)} mL/h</strong> (Zuspan) ou <strong>${(5*mlPerG).toFixed(1)} mL</strong>/injection IM (Pritchard)`;
+}
+
+/* Calculateur intégré — fiche Hémorragie du post-partum (acide tranexamique) */
+function calcHpp(){
+  const poidsInput = document.getElementById('hpp_poids');
+  const resultEl = document.getElementById('hpp_result');
+  const noteEl = document.getElementById('hpp_note');
+  const inlineEl = document.getElementById('hpp_inline');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineEl) inlineEl.textContent = 'saisir le poids ci-dessus pour la dose calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:30, max:200, label:'Poids saisi', unit:'kg'}]);
+  const doseMg = Math.min(poids*15, 1000);
+  const plafonne = (poids*15) > 1000;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Molécule</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Acide tranexamique (Exacyl®) IV en 10 min</td><td><strong>${doseMg.toFixed(0)} mg</strong>${plafonne ? ' (plafond à 1000 mg, dose théorique de '+(poids*15).toFixed(0)+' mg supérieure au plafond)' : ''}, répétable une fois après 30 min si saignement persistant</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative (15 mg/kg, plafond 1 g par injection) — vérifier systématiquement avant administration. Les utérotoniques (oxytocine 10 UI, misoprostol 800 µg) sont administrés à dose fixe, non pondérale.</p>`;
+
+  if(inlineEl) inlineEl.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${doseMg.toFixed(0)} mg</strong>`;
+}
+
+/* Calculateur intégré — fiche GEU (Méthotrexate, dose par surface corporelle) */
+function calcGeu(){
+  const poidsInput = document.getElementById('geu_poids');
+  const tailleInput = document.getElementById('geu_taille');
+  const resultEl = document.getElementById('geu_result');
+  const noteEl = document.getElementById('geu_note');
+  const inlineEl = document.getElementById('geu_inline');
+  if(!poidsInput || !tailleInput) return;
+  const poids = parseFloat(poidsInput.value);
+  const taille = parseFloat(tailleInput.value);
+
+  if(isNaN(poids) || poids<=0 || isNaN(taille) || taille<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineEl) inlineEl.textContent = 'saisir poids/taille ci-dessous pour la dose calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([
+    {val:poids, min:30, max:200, label:'Poids saisi', unit:'kg'},
+    {val:taille, min:120, max:210, label:'Taille saisie', unit:'cm'}
+  ]);
+  const bsa = Math.sqrt((taille*poids)/3600); // formule de Mosteller
+  const doseM2 = bsa*50;
+  const doseKgMin = poids*1, doseKgMax = poids*1.5;
+
+  noteEl.innerHTML = `Surface corporelle estimée (Mosteller) : <strong>${bsa.toFixed(2)} m²</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Schéma</th><th>Dose calculée</th></tr>` +
+    `<tr><td>Méthotrexate — 50 mg/m² (schéma dose unique)</td><td><strong>${doseM2.toFixed(1)} mg</strong> IM</td></tr>` +
+    `<tr><td>Méthotrexate — 1-1,5 mg/kg (alternative)</td><td><strong>${doseKgMin.toFixed(1)}–${doseKgMax.toFixed(1)} mg</strong> IM</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. Contrôle NFS/bilan hépatique/rénal avant injection ; surveillance β-hCG à J4 et J7 (décroissance attendue &gt;15% entre J4 et J7, sinon discuter une 2e dose ou un recours chirurgical).</p>`;
+
+  if(inlineEl) inlineEl.innerHTML = `→ pour <strong>${poids} kg / ${taille} cm</strong> (SC ${bsa.toFixed(2)} m²) : <strong>${doseM2.toFixed(1)} mg</strong> (50 mg/m²)`;
+}
+
+/* Calculateur intégré — fiche Fausse couche hémorragique (antalgie pondérale) */
+function calcFausseCouche(){
+  const poidsInput = document.getElementById('fc_poids');
+  const resultEl = document.getElementById('fc_result');
+  const noteEl = document.getElementById('fc_note');
+  const inlineEl = document.getElementById('fc_inline');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineEl) inlineEl.textContent = 'saisir le poids ci-dessus pour la dose pondérale calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:30, max:200, label:'Poids saisi', unit:'kg'}]);
+  const paraMg = Math.min(poids*15, 1000);
+  const morphMin = poids*0.05, morphMax = poids*0.1;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Molécule</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Paracétamol PO/IV</td><td><strong>${paraMg.toFixed(0)} mg</strong> (15 mg/kg, plafond 1 g), toutes les 6h, max 4 g/j</td></tr>` +
+    `<tr><td>Morphine IVD — bolus de titration</td><td><strong>${morphMin.toFixed(1)}–${morphMax.toFixed(1)} mg</strong> (0,05-0,1 mg/kg) toutes les 5-10 min jusqu'à soulagement</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration. Adapter la titration morphinique à la réponse clinique et à la surveillance respiratoire.</p>`;
+
+  if(inlineEl) inlineEl.innerHTML = `→ pour <strong>${poids} kg</strong> : paracétamol <strong>${paraMg.toFixed(0)} mg</strong>, morphine <strong>${morphMin.toFixed(1)}–${morphMax.toFixed(1)} mg</strong>/bolus`;
+}
+
+/* Calculateur intégré — fiche MAP/tocolyse (sulfate de magnésium — neuroprotection fœtale) */
+function calcMapTocolyse(){
+  const concInput = document.getElementById('map_conc');
+  const resultEl = document.getElementById('map_result');
+  const noteEl = document.getElementById('map_note');
+  const inlineEl = document.getElementById('map_inline');
+  if(!concInput) return;
+  const conc = parseFloat(concInput.value);
+
+  if(isNaN(conc) || conc<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineEl) inlineEl.textContent = "saisir la concentration de l'ampoule ci-dessous pour le volume calculé";
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:conc, min:5, max:60, label:"Concentration de l'ampoule", unit:'%'}]);
+  const mlPerG = 100/conc;
+  const chargeMl = 4*mlPerG;
+  const maintMlH = 1*mlPerG;
+
+  noteEl.innerHTML = `Concentration saisie : <strong>${conc}%</strong> (soit ${(conc*10).toFixed(0)} mg/mL)`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Étape</th><th>Volume calculé (conc. ${conc}%)</th></tr>` +
+    `<tr><td>Dose de charge — 4 g IV en 20-30 min</td><td><strong>${chargeMl.toFixed(1)} mL</strong></td></tr>` +
+    `<tr><td>Entretien — 1 g/h IV continu (PSE), jusqu'à l'accouchement ou 24h</td><td><strong>${maintMlH.toFixed(1)} mL/h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement la concentration réelle de l'ampoule avant administration. Diluer la dose de charge dans 100-200 mL de sérum physiologique/glucosé si administration sans seringue électrique. Surveillance identique au protocole éclampsie (ROT, FR, diurèse) — arrêter si signe de surdosage, antidote gluconate de calcium 10% 10 mL IV.</p>`;
+
+  if(inlineEl) inlineEl.innerHTML = `→ pour une ampoule à <strong>${conc}%</strong> : charge <strong>${chargeMl.toFixed(1)} mL</strong> (4g), entretien <strong>${maintMlH.toFixed(1)} mL/h</strong>`;
+}
+
+/* Calculateur de doses intégré — fiche AVC (thrombolyse IV, Altéplase/Ténectéplase selon le poids) */
+function calcAvc(){
+  const poidsInput = document.getElementById('avc_poids');
+  const moleculeInput = document.getElementById('avc_molecule');
+  const resultEl = document.getElementById('avc_result');
+  const noteEl = document.getElementById('avc_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+  const molecule = moleculeInput ? moleculeInput.value : 'alteplase';
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:30, max:200, label:'Poids saisi', unit:'kg'}]);
+  resultEl.classList.remove('hidden');
+
+  if(molecule==='tenecteplase'){
+    const dose = Math.min(poids*0.25, 25);
+    noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — schéma bolus unique`;
+    resultEl.innerHTML = warn +
+      `<table style="margin-top:4px;"><tr><th>Ténectéplase (Metalyse®)</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+      `<tr><td>0,25 mg/kg (max 25 mg)</td><td><strong>${dose.toFixed(1)} mg</strong> en bolus IV unique</td></tr>` +
+      `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement l'éligibilité (délai &lt;4h30, absence de contre-indication) avant administration.</p>`;
+  } else {
+    const doseTotal = Math.min(poids*0.9, 90);
+    const bolus = doseTotal*0.1;
+    const perfusion = doseTotal-bolus;
+    noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — schéma bolus + perfusion 1h`;
+    resultEl.innerHTML = warn +
+      `<table style="margin-top:4px;"><tr><th>Altéplase (Actilyse®)</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+      `<tr><td>Dose totale (0,9 mg/kg, max 90 mg)</td><td><strong>${doseTotal.toFixed(1)} mg</strong></td></tr>` +
+      `<tr><td>Bolus initial (10%)</td><td><strong>${bolus.toFixed(1)} mg</strong> IV sur 1-2 min</td></tr>` +
+      `<tr><td>Perfusion (90% restant)</td><td><strong>${perfusion.toFixed(1)} mg</strong> IV sur 1h</td></tr>` +
+      `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement l'éligibilité (délai &lt;4h30, absence de contre-indication) avant administration.</p>`;
+  }
+}
+
+/* Calculateur de doses intégré — fiche Acidocétose diabétique (débit d'insuline IVSE selon le poids) */
+function calcAcd(){
+  const poidsInput = document.getElementById('acd_poids');
+  const resultEl = document.getElementById('acd_result');
+  const noteEl = document.getElementById('acd_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const debit = Math.min(poids*0.1, 10);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Insuline rapide IVSE</th><th>Débit calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>0,1 UI/kg/h (max 10 UI/h)</td><td><strong>${debit.toFixed(1)} UI/h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">À débuter après ≥1h de réhydratation (sauf choc), sans bolus initial (surtout chez l'enfant, risque d'œdème cérébral). Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Sepsis/Choc septique (remplissage 30 mL/kg et Noradrénaline selon le poids) */
+function calcSepsis(){
+  const poidsInput = document.getElementById('sepsis_poids');
+  const resultEl = document.getElementById('sepsis_result');
+  const noteEl = document.getElementById('sepsis_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const remplissage = poids*30;
+  // Dilution standard du module Drogues de réanimation : 8 mg Noradrénaline dans 50 mL G5% → 160 µg/mL
+  const conc = 160;
+  const debitMlH = (dosekgmin)=> (dosekgmin*poids*60)/conc;
+  const debitBasMin = debitMlH(0.05), debitBasMax = debitMlH(0.1);
+  const debitRefMin = debitMlH(0.25), debitRefMax = debitMlH(0.5);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — dilution standard Noradrénaline 8 mg/50 mL G5% (160 µg/mL)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Étape</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Remplissage vasculaire (30 mL/kg, cristalloïdes équilibrés)</td><td><strong>${remplissage.toFixed(0)} mL</strong> en 3h</td></tr>` +
+    `<tr><td>Noradrénaline — dose initiale (0,05-0,1 µg/kg/min)</td><td><strong>${debitBasMin.toFixed(1)}-${debitBasMax.toFixed(1)} mL/h</strong></td></tr>` +
+    `<tr><td>Noradrénaline — seuil d'ajout Vasopressine (0,25-0,5 µg/kg/min)</td><td><strong>${debitRefMin.toFixed(1)}-${debitRefMax.toFixed(1)} mL/h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Débit à titrer par paliers selon la PAM cible (≥65 mmHg), sans plafond fixe — vérifier la dilution réellement préparée avant d'utiliser ces débits. Dose indicative.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Embolie pulmonaire (héparine, énoxaparine, altéplase selon le poids) */
+function calcEp(){
+  const poidsInput = document.getElementById('ep_poids');
+  const resultEl = document.getElementById('ep_result');
+  const noteEl = document.getElementById('ep_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const hnfBolus = poids*80;
+  const hnfEntretien = poids*18;
+  const enoxa = poids*100;
+  const alteplaseAccel = Math.min(poids*0.6, 50);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Héparine non fractionnée — bolus (80 UI/kg)</td><td><strong>${hnfBolus.toFixed(0)} UI</strong> IV</td></tr>` +
+    `<tr><td>Héparine non fractionnée — entretien (18 UI/kg/h)</td><td><strong>${hnfEntretien.toFixed(0)} UI/h</strong> IVSE (à adapter au TCA)</td></tr>` +
+    `<tr><td>Énoxaparine (100 UI/kg = 1 mg/kg)</td><td><strong>${enoxa.toFixed(0)} UI</strong> (${(poids*1).toFixed(0)} mg) SC toutes les 12h</td></tr>` +
+    `<tr><td>Altéplase — schéma accéléré (0,6 mg/kg, max 50 mg)</td><td><strong>${alteplaseAccel.toFixed(1)} mg</strong> en bolus sur 15 min (si arrêt cardiaque imminent)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Le schéma standard d'Altéplase pour EP à haut risque (100 mg en 2h, 10 mg bolus + 90 mg/2h) est une dose fixe, non pondérale. Dose indicative — vérifier systématiquement avant administration, notamment la fonction rénale et le risque hémorragique.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche HIC/Engagement cérébral (Mannitol 20% selon le poids) */
+function calcHic(){
+  const poidsInput = document.getElementById('hic_poids');
+  const resultEl = document.getElementById('hic_result');
+  const noteEl = document.getElementById('hic_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  // Mannitol 20% = 200 mg/mL → volume(mL) = dose(g) * 1000 / 200 = dose(g) * 5
+  const doseMinG = poids*0.25, doseMaxG = poids*1;
+  const volMinMl = doseMinG*5, volMaxMl = doseMaxG*5;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Mannitol 20% (200 mg/mL)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Mannitol 20%</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Dose (0,25-1 g/kg)</td><td><strong>${doseMinG.toFixed(0)}-${doseMaxG.toFixed(0)} g</strong></td></tr>` +
+    `<tr><td>Volume à perfuser</td><td><strong>${volMinMl.toFixed(0)}-${volMaxMl.toFixed(0)} mL</strong> IV en 15-20 min</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Ne pas attendre l'imagerie si signes cliniques d'engagement francs. Dose indicative — vérifier systématiquement la concentration réelle du flacon avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Intoxication aux tricycliques (bicarbonate, charbon activé, Intralipid selon le poids) */
+function calcTca(){
+  const poidsInput = document.getElementById('tca_poids');
+  const resultEl = document.getElementById('tca_result');
+  const noteEl = document.getElementById('tca_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const bicarbMinMl = poids*1, bicarbMaxMl = poids*2;
+  const charbon = poids*1;
+  const intralipidBolus = poids*1.5;
+  const intralipidEntretien = poids*0.25;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Bicarbonate de sodium molaire 8,4% (1-2 mmol/kg)</td><td><strong>${bicarbMinMl.toFixed(0)}-${bicarbMaxMl.toFixed(0)} mL</strong> IV bolus, répétable</td></tr>` +
+    `<tr><td>Charbon activé (1 g/kg, si &lt;1-2h et VA protégées)</td><td><strong>${charbon.toFixed(0)} g</strong> PO</td></tr>` +
+    `<tr><td>Intralipid® 20% — bolus (1,5 mL/kg)</td><td><strong>${intralipidBolus.toFixed(0)} mL</strong> IV en 1 min</td></tr>` +
+    `<tr><td>Intralipid® 20% — entretien (0,25 mL/kg/min)</td><td><strong>${intralipidEntretien.toFixed(1)} mL/min</strong> IVSE</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Bicarbonate répétable toutes les 10-15 min jusqu'à QRS &lt;100ms. Intralipid réservé à l'arrêt cardiaque réfractaire d'origine toxique. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Choléra (volume de Ringer Lactate, Plan C OMS, selon poids et âge) */
+function calcCholera(){
+  const poidsInput = document.getElementById('cholera_poids');
+  const ageInput = document.getElementById('cholera_age');
+  const resultEl = document.getElementById('cholera_result');
+  const noteEl = document.getElementById('cholera_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+  const age = ageInput ? ageInput.value : 'grand';
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const phase1 = poids*30;
+  const phase2 = poids*70;
+  const total = poids*100;
+  const isNourrisson = age==='nourrisson';
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isNourrisson?'schéma nourrisson < 1 an':'schéma ≥ 1 an / adulte'}`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Phase</th><th>Volume calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Phase 1 (30 mL/kg)</td><td><strong>${phase1.toFixed(0)} mL</strong> en ${isNourrisson?'1h':'30 min'} (répéter une fois si pouls radial faible/imperceptible)</td></tr>` +
+    `<tr><td>Phase 2 (70 mL/kg)</td><td><strong>${phase2.toFixed(0)} mL</strong> sur ${isNourrisson?'5h':'2h30'} suivantes</td></tr>` +
+    `<tr><td>Total (100 mL/kg)</td><td><strong>${total.toFixed(0)} mL</strong> sur ${isNourrisson?'6h':'3h'} au total</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Ringer Lactate en 1ère intention (NaCl 0,9% en 2e choix). Réévaluer toutes les 15-30 min, accélérer si pouls radial reste faible. Dose indicative.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Peste (Streptomycine/Gentamicine selon le poids et l'âge) */
+function calcPeste(){
+  const poidsInput = document.getElementById('peste_poids');
+  const resultEl = document.getElementById('peste_result');
+  const noteEl = document.getElementById('peste_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const isEnfant = poids<40;
+  const gentamicine = poids*5;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isEnfant?'posologie pédiatrique (mg/kg) appliquée pour la Streptomycine':'dose adulte fixe pour la Streptomycine'}`;
+  resultEl.classList.remove('hidden');
+  let rows = '';
+  if(isEnfant){
+    const strepto = poids*15;
+    rows += `<tr><td>Streptomycine (15 mg/kg x2/j)</td><td><strong>${strepto.toFixed(0)} mg</strong> IM x2/j, 10 jours</td></tr>`;
+  } else {
+    rows += `<tr><td>Streptomycine (dose adulte fixe)</td><td><strong>1 g</strong> IM x2/j, 10 jours</td></tr>`;
+  }
+  rows += `<tr><td>Gentamicine (5 mg/kg/j)</td><td><strong>${gentamicine.toFixed(0)} mg</strong> IM/IV en 1 injection/j, 10 jours</td></tr>`;
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Antibiotique</th><th>Dose calculée pour ${poids} kg</th></tr>${rows}</table>` +
+    `<p style="margin-top:8px; font-size:12px; color:var(--muted)">Ne jamais retarder l'antibiothérapie pour confirmation bactériologique. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Dengue grave (remplissage et Paracétamol selon le poids et l'âge) */
+function calcDengue(){
+  const poidsInput = document.getElementById('dengue_poids');
+  const resultEl = document.getElementById('dengue_result');
+  const noteEl = document.getElementById('dengue_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const isEnfant = poids<40;
+  const remplissageMin = poids*10, remplissageMax = poids*20;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isEnfant?'posologie pédiatrique appliquée pour le Paracétamol':'posologie adulte appliquée pour le Paracétamol'}`;
+  resultEl.classList.remove('hidden');
+  let paracetamolRow;
+  if(isEnfant){
+    const doseUnit = poids*15, doseMaxJour = poids*60;
+    paracetamolRow = `<tr><td>Paracétamol (15 mg/kg/6h, max 60 mg/kg/j)</td><td><strong>${doseUnit.toFixed(0)} mg</strong> toutes les 6h (max ${doseMaxJour.toFixed(0)} mg/j)</td></tr>`;
+  } else {
+    paracetamolRow = `<tr><td>Paracétamol (dose adulte fixe)</td><td><strong>1 g</strong> x4/j (max 4 g/j)</td></tr>`;
+  }
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Remplissage vasculaire (choc dengue, 10-20 mL/kg)</td><td><strong>${remplissageMin.toFixed(0)}-${remplissageMax.toFixed(0)} mL</strong> en 1h, à réévaluer</td></tr>` +
+    paracetamolRow +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Jamais d'aspirine/AINS. Remplissage prudent et titré (risque de surcharge si la fuite capillaire se résout brutalement). Dose indicative.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Fièvre typhoïde compliquée (antibiothérapie/corticoïde selon le poids et l'âge) */
+function calcTyphoide(){
+  const poidsInput = document.getElementById('typhoide_poids');
+  const resultEl = document.getElementById('typhoide_result');
+  const noteEl = document.getElementById('typhoide_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const isEnfant = poids<40;
+  const dexaCharge = poids*3, dexaEntretien = poids*1;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isEnfant?'posologie pédiatrique appliquée pour les antibiotiques':'posologie adulte appliquée pour les antibiotiques'}`;
+  resultEl.classList.remove('hidden');
+  let rows = '';
+  if(isEnfant){
+    const ceftriaxoneMin = poids*50, ceftriaxoneMax = poids*75;
+    const azithro = poids*20;
+    rows += `<tr><td>Ceftriaxone (50-75 mg/kg/j)</td><td><strong>${ceftriaxoneMin.toFixed(0)}-${ceftriaxoneMax.toFixed(0)} mg/j</strong> IV en 1 injection</td></tr>`;
+    rows += `<tr><td>Azithromycine (20 mg/kg/j)</td><td><strong>${azithro.toFixed(0)} mg/j</strong> PO</td></tr>`;
+  } else {
+    rows += `<tr><td>Ceftriaxone (dose adulte fixe)</td><td><strong>2 g/j</strong> IV en 1 injection</td></tr>`;
+    rows += `<tr><td>Azithromycine (dose adulte fixe)</td><td><strong>500 mg/j</strong> PO</td></tr>`;
+  }
+  rows += `<tr><td>Dexaméthasone — charge (3 mg/kg)</td><td><strong>${dexaCharge.toFixed(0)} mg</strong> dose de charge</td></tr>`;
+  rows += `<tr><td>Dexaméthasone — entretien (1 mg/kg/6h)</td><td><strong>${dexaEntretien.toFixed(0)} mg</strong> toutes les 6h, 48h</td></tr>`;
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Calculé pour ${poids} kg</th></tr>${rows}</table>` +
+    `<p style="margin-top:8px; font-size:12px; color:var(--muted)">Dexaméthasone réservée aux formes les plus sévères avec troubles de conscience — à discuter au cas par cas. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Invagination intestinale aiguë (remplissage et antalgie selon le poids de l'enfant) */
+function calcInvagination(){
+  const poidsInput = document.getElementById('invag_poids');
+  const resultEl = document.getElementById('invag_result');
+  const noteEl = document.getElementById('invag_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:30, label:'Poids saisi', unit:'kg'}]);
+  const remplissageMin = poids*10, remplissageMax = poids*20;
+  const paracetamol = poids*15;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Ringer Lactate (10-20 mL/kg, si déshydratation)</td><td><strong>${remplissageMin.toFixed(0)}-${remplissageMax.toFixed(0)} mL</strong></td></tr>` +
+    `<tr><td>Paracétamol IV (15 mg/kg/6h)</td><td><strong>${paracetamol.toFixed(0)} mg</strong> toutes les 6h</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Éviter les morphiniques qui peuvent masquer une aggravation. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Syndrome thoracique aigu drépanocytaire (antalgie, antibiothérapie, transfusion selon le poids et l'âge) */
+function calcStt(){
+  const poidsInput = document.getElementById('stt_poids');
+  const resultEl = document.getElementById('stt_result');
+  const noteEl = document.getElementById('stt_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const isEnfant = poids<40;
+  const ceftriaxone = Math.min(poids*50, 2000);
+  const azithro = Math.min(poids*10, 500);
+  const transfusionMin = poids*10, transfusionMax = poids*15;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${isEnfant?'posologie pédiatrique appliquée pour l\'antalgie':'posologie adulte appliquée pour l\'antalgie'}`;
+  resultEl.classList.remove('hidden');
+  let antalgieRows = '';
+  if(isEnfant){
+    const paracetamol = poids*15;
+    const morphine = poids*0.1;
+    antalgieRows += `<tr><td>Paracétamol (15 mg/kg/6h)</td><td><strong>${paracetamol.toFixed(0)} mg</strong> toutes les 6h</td></tr>`;
+    antalgieRows += `<tr><td>Morphine — titration (0,1 mg/kg/bolus)</td><td><strong>${morphine.toFixed(2)} mg</strong> IV par bolus</td></tr>`;
+  } else {
+    antalgieRows += `<tr><td>Paracétamol (dose adulte fixe)</td><td><strong>1 g</strong> x4/j</td></tr>`;
+    antalgieRows += `<tr><td>Morphine — titration (dose adulte fixe)</td><td><strong>2-3 mg</strong> IV par bolus</td></tr>`;
+  }
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Calculé pour ${poids} kg</th></tr>` +
+    antalgieRows +
+    `<tr><td>Ceftriaxone (50 mg/kg/j, max 2 g/j)</td><td><strong>${ceftriaxone.toFixed(0)} mg/j</strong></td></tr>` +
+    `<tr><td>Azithromycine (10 mg/kg/j, max 500 mg/j)</td><td><strong>${azithro.toFixed(0)} mg/j</strong></td></tr>` +
+    `<tr><td>Transfusion (culots globulaires, 10-15 mL/kg)</td><td><strong>${transfusionMin.toFixed(0)}-${transfusionMax.toFixed(0)} mL</strong> si anémie mal tolérée</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Éviter la sédation excessive (risque d'hypoventilation aggravant la falciformation). Dose indicative — vérifier systématiquement avant administration.</p>`;
 }
 
 /* ===================== MODULE ABRÉVIATIONS ===================== */
