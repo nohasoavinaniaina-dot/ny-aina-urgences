@@ -301,7 +301,7 @@ const MODULES = {
 const renderers = {}; // mod -> function() -> html string
 
 /* ——— Version de l'application ——— */
-const APP_VERSION = "2026.07.12";
+const APP_VERSION = "2026.07.14";
 document.addEventListener('DOMContentLoaded', ()=>{});
 (function initVersionBadge(){
   const el = document.getElementById('app-version');
@@ -837,6 +837,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-purpura-fulminans').scrollIntoView({behavior:'smooth',block:'start'})">🟣 Purpura fulminans</a></li>
         <li><a onclick="document.getElementById('proto-tetanos').scrollIntoView({behavior:'smooth',block:'start'})">🦷 Tétanos</a></li>
         <li><a onclick="document.getElementById('proto-cholera').scrollIntoView({behavior:'smooth',block:'start'})">🚱 Choléra / Diarrhée aiguë sévère</a></li>
+        <li><a onclick="document.getElementById('proto-tuberculose').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Tuberculose (TB) — PNLT Madagascar</a></li>
         <li><a onclick="document.getElementById('proto-fasciite-necrosante').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Fasciite nécrosante / Infections nécrosantes des tissus mous</a></li>
         <li><a onclick="document.getElementById('proto-neutropenie-febrile').scrollIntoView({behavior:'smooth',block:'start'})">🧬 Neutropénie fébrile / Aplasie fébrile</a></li>
       </ul></li>
@@ -1166,6 +1167,14 @@ function renderProtocoles(){
   <div class="card" id="proto-angioedeme-bradykinique">
     <h3>😷 Angio-œdème bradykinique (non allergique)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">À distinguer impérativement de l'angio-œdème allergique (histaminique) : mécanisme non IgE-médié, <strong>résistant à l'adrénaline, aux antihistaminiques et aux corticoïdes</strong>. Deux causes principales : <strong>iatrogène aux IEC</strong> (peut survenir à tout moment du traitement, même après des années) et <strong>angio-œdème héréditaire</strong> (déficit ou dysfonction en C1-inhibiteur, antécédents familiaux, épisodes récidivants depuis l'enfance).</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du concentré de C1-inhibiteur (Berinert®)</label>
+        <input type="number" step="0.1" min="0" id="angioedeme_poids" placeholder="ex. 70" oninput="calcAngioedemeBk()">
+      </div>
+      <div class="field" id="angioedeme_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="angioedeme_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Signes d'orientation</strong> : œdème localisé à la face, aux lèvres, à la langue, au larynx ou à la paroi intestinale (douleurs abdominales pseudo-chirurgicales) — <strong>absence d'urticaire et de prurit</strong>, absence de bronchospasme ou de collapsus associés, installation progressive sur plusieurs heures (contrairement à l'anaphylaxie)</li>
       <li><strong>Sécuriser les voies aériennes précocement</strong> — l'œdème peut progresser sur plusieurs heures jusqu'à l'obstruction complète ; anticiper une intubation difficile (fibroscopie, matériel de cricothyroïdotomie à proximité) en cas d'atteinte laryngée/linguale évolutive ; ne pas attendre la détresse respiratoire franche pour appeler l'anesthésiste-réanimateur</li>
@@ -1195,6 +1204,14 @@ function renderProtocoles(){
   <div class="card" id="proto-sca">
     <h3>🫀 Syndrome coronarien aigu (SCA / IDM) — ESC 2023</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Douleur thoracique constrictive &gt;20 min, irradiation typique, souvent associée à dyspnée/sueurs/nausées. ECG 18 dérivations dans les 10 min suivant le premier contact médical. Les recommandations ESC 2023 unifient la prise en charge STEMI/NSTEMI en un seul référentiel.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la thrombolyse (STEMI, schéma accéléré)</label>
+        <input type="number" step="0.1" min="0" id="sca_poids" placeholder="ex. 70" oninput="calcSca()">
+      </div>
+      <div class="field" id="sca_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="sca_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>MONA-BASH</strong> à l'admission : <strong>Aspirine (Aspégic®, Kardégic®)</strong> 300 mg PO/IV à croquer (dose de charge) ; Oxygène uniquement si SpO2&lt;90% (pas d'O2 systématique) ; <strong>Nitrés (Risordan® IV, Natispray® sublingual)</strong> si douleur persistante et TA systolique &gt;90 mmHg (contre-indiqués si suspicion d'IDM du VD) ; <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur réfractaire ; Bêtabloquant précoce (<strong>Bisoprolol (Cardensiel®)</strong>) si pas de contre-indication (insuffisance cardiaque aiguë, choc, bloc AV)</li>
       <li><strong>2e antiagrégant : Clopidogrel (Plavix®) 300-600 mg, ou Ticagrélor (Brilique®) 180 mg</strong> à administrer sans délai en cas de <strong>STEMI</strong> avec reperfusion prévue. En cas de <strong>NSTEMI</strong> avec stratégie invasive précoce disponible (&lt;24h) et coronarographie planifiée, l'<strong>ESC 2023 déconseille le prétraitement systématique</strong> par P2Y12 avant l'angiographie (à administrer plutôt au moment du geste) — en pratique à Madagascar, où l'accès à la coronarographie précoce reste très limité (cf. note ci-dessous), l'administration du 2e antiagrégant dès l'admission reste une option raisonnable en l'absence de stratégie invasive rapide accessible</li>
@@ -1227,6 +1244,14 @@ function renderProtocoles(){
     <h3>🫀 Choc cardiogénique</h3>
     <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 12/07/2026 — sources : ESC Heart Failure Guidelines 2021 (actualisées 2023), SCAI Cardiogenic Shock Classification 2022, ACC/AHA</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Définition :</strong> hypoperfusion tissulaire d'origine cardiaque primitive, malgré une volémie adéquate — TA systolique &lt;90 mmHg (ou baisse &gt;30 mmHg par rapport à la valeur habituelle) pendant &gt;30 min OU nécessité de vasopresseurs/inotropes pour maintenir une TA systolique ≥90 mmHg, associée à des signes d'hypoperfusion (marbrures, extrémités froides, oligurie, confusion, lactates élevés) et souvent des signes de congestion pulmonaire/systémique.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul Dobutamine et Noradrénaline</label>
+        <input type="number" step="0.1" min="0" id="cardio_poids" placeholder="ex. 70" oninput="calcChocCardio()">
+      </div>
+      <div class="field" id="cardio_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="cardio_result"></div>
     <table style="margin-bottom:10px;">
       <tr><th>Stade SCAI</th><th>Présentation</th></tr>
       <tr><td class="leger">A — À risque</td><td>Pas d'hypoperfusion actuelle, mais terrain à risque (IDM étendu, insuffisance cardiaque décompensée) — surveillance rapprochée</td></tr>
@@ -1290,6 +1315,16 @@ function renderProtocoles(){
       <li><strong>Signes évocateurs</strong> : asymétrie tensionnelle/des pouls entre les 2 bras (&gt;20 mmHg), souffle diastolique d'insuffisance aortique nouveau, déficit neurologique focal (dissection carotidienne), douleur abdominale/ischémie de membre (extension), signes de tamponnade (rupture dans le péricarde — <em>voir protocole dédié</em>), IDM inférieur (dissection coronaire droite)</li>
       <li><strong>Imagerie en urgence</strong> : angioscanner thoraco-abdomino-pelvien injecté (examen de référence, disponibilité large) ; échocardiographie transœsophagienne (ETO) si patient trop instable pour être transporté</li>
       <li><strong>Contrôle tensionnel et de la fréquence cardiaque — objectif rapide (idéalement &lt;20 min)</strong> : <strong>FC &lt;60/min</strong> et <strong>PA systolique &lt;120 mmHg</strong> (voir protocole Urgence hypertensive pour le détail des posologies)</li>
+    </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la dose d'Esmolol</label>
+        <input type="number" step="0.1" min="0" id="dissec_poids" placeholder="ex. 70" oninput="calcDissection()">
+      </div>
+      <div class="field" id="dissec_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="dissec_result"></div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Bêtabloquant IV en 1ère intention</strong> (réduit la fréquence cardiaque ET la force d'éjection systolique, donc le cisaillement pariétal aortique — dP/dt) : <strong>Esmolol (Brevibloc®)</strong> — bolus de charge 0,5 mg/kg IV sur 1 min, puis perfusion continue 50-300 µg/kg/min (titration rapide, demi-vie ultra-courte ~9 min) — ou <strong>Labétalol (Trandate®)</strong> en alternative (bolus 20 mg IV sur 2 min, répétable, dose cumulée max 300 mg)</li>
       <li>Si la cible tensionnelle n'est pas atteinte par le bêtabloquant seul : associer un vasodilatateur — <strong>Nicardipine (Loxen®)</strong> IVSE (cf. protocole HTA pour la dilution/titration) — <strong>toujours après</strong> le bêtabloquant, jamais en monothérapie initiale (un vasodilatateur seul entraîne une tachycardie réflexe qui augmente le cisaillement aortique et peut aggraver la dissection)</li>
       <li><strong>Antalgie</strong> : <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min — la douleur intense entretient la décharge sympathique et la poussée tensionnelle</li>
@@ -1349,6 +1384,7 @@ function renderProtocoles(){
     <h3>🫁 SDRA (Syndrome de détresse respiratoire aiguë)</h3>
     <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 12/07/2026, sources vérifiées par recherche le 12/07/2026 — définition de Berlin (2012), <strong>nouvelle définition globale de l'ARDS</strong> (Matthay et al., Am J Respir Crit Care Med 2024, DOI 10.1164/rccm.202303-0558WS), ARDSnet, Surviving Sepsis Campaign 2026 (Vt en l'absence de SDRA)</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Critères de Berlin (2012) :</strong> début aigu &lt;7 jours, <strong>opacités bilatérales</strong> à l'imagerie non pleurales/nodulaires/atélectasiques, <strong>insuffisance respiratoire non expliquée</strong> par une insuffisance cardiaque ou une surcharge hydrique, et <strong>PaO2/FiO2 ≤300 mmHg sous PEP/CPAP ≥5 cmH2O</strong> (nécessite donc une ventilation en pression positive et une gazométrie artérielle).</p>
+    <p style="font-size:13px; margin-bottom:8px;">🧮 <a onclick="document.querySelector('[data-mod=calculateurs]').click(); setTimeout(()=>document.getElementById('calc-pit')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">Calculateur Poids Idéal Théorique (PIT) &amp; Vt cible</a> — pour calculer directement le Vt en mL à partir de la taille et du sexe du patient</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Nouvelle définition globale (2024) — particulièrement adaptée aux ressources limitées :</strong> assouplit 3 critères de Berlin pour élargir le diagnostic — <strong>SpO2/FiO2 ≤315 utilisable à la place du PaO2/FiO2</strong> (si SpO2 ≤97%, évite la gazométrie artérielle systématique), <strong>échographie pulmonaire acceptée</strong> en plus de la radiographie/TDM pour les opacités bilatérales, et <strong>inclusion des patients non intubés sous oxygénothérapie à haut débit ≥30 L/min</strong> (pas seulement sous ventilation en pression positive). Cette définition identifie davantage de patients (jusqu'à 60% de plus que Berlin dans certaines cohortes) et est directement pertinente dans les structures sans gazométrie artérielle facilement disponible.</p>
     <table style="margin-bottom:10px;">
       <tr><th>Sévérité</th><th>PaO2/FiO2 (sous PEP≥5)</th><th>Mortalité indicative</th></tr>
@@ -1419,6 +1455,14 @@ function renderProtocoles(){
       <tr><td class="grave">Sévère</td><td>Parle par mots, penché en avant, agité · FR &gt;30/min · Mise en jeu des muscles accessoires · Pouls &gt;120/min · SpO2 (air ambiant) &lt;90% · DEP ≤50%</td></tr>
       <tr><td class="grave">Engageant le pronostic vital</td><td>Somnolence, confusion, ou thorax silencieux à l'auscultation → <strong>transfert en soins intensifs</strong></td></tr>
     </table>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de l'enfant (kg) — calcul de la Prednisolone</label>
+        <input type="number" step="0.1" min="0" id="asthme_poids" placeholder="ex. 20" oninput="calcAsthme()">
+      </div>
+      <div class="field" id="asthme_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="asthme_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Traitement initial (formes légères à modérées) :</strong> <strong>Salbutamol (Ventoline®)</strong> (SABA) 4-10 bouffées au pMDI + chambre d'inhalation, toutes les 20 min pendant la 1ère heure (3 doses) si besoin ; oxygène contrôlé si disponible, cible SpO2 93-95% chez l'adulte/adolescent (≥94% chez l'enfant)</li>
       <li><strong>Corticoïdes systémiques</strong> (sauf forme légère isolée) : <strong>Prednisolone (Solupred®)</strong> PO 40-50 mg/j chez l'adulte, 1-2 mg/kg/j (max 40 mg) chez l'enfant, pendant 5-7 jours (3-5 jours chez l'enfant). Voie IV (<strong>Méthylprednisolone (Solu-Médrol®)</strong>) si vomissements/impossibilité de prise orale, sans supériorité démontrée sur la voie orale</li>
@@ -1577,6 +1621,34 @@ function renderProtocoles(){
     <h3>💧 État hyperosmolaire hyperglycémique (coma hyperosmolaire)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Typiquement chez le diabétique de type 2 âgé, souvent révélateur. Critères : glycémie &gt;6 g/L (33 mmol/L), osmolarité plasmatique efficace &gt;320 mOsm/kg, pH&gt;7,3, bicarbonates &gt;18 mmol/L, cétonémie/cétonurie absente ou minime, déshydratation profonde.</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Calcul de l'osmolarité plasmatique :</strong> [2 × (Na + K) + glycémie (mmol/L) + urée (mmol/L)]. Normale : 290 ± 5 mOsm/L. Si &gt;320 mOsm/L : hyperosmolarité. Radiographie de thorax systématique (recherche du facteur déclenchant).</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>Na⁺ (mmol/L)</label>
+        <input type="number" step="0.1" min="0" id="hhs_na" placeholder="ex. 140" oninput="calcHhs()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>K⁺ (mmol/L)</label>
+        <input type="number" step="0.1" min="0" id="hhs_k" placeholder="ex. 4" oninput="calcHhs()">
+      </div>
+    </div>
+    <div class="row2" style="align-items:end; margin-top:6px;">
+      <div class="field" style="margin-bottom:0;">
+        <label>Glycémie (mmol/L)</label>
+        <input type="number" step="0.1" min="0" id="hhs_glycemie" placeholder="ex. 40" oninput="calcHhs()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Urée (mmol/L)</label>
+        <input type="number" step="0.1" min="0" id="hhs_uree" placeholder="ex. 10" oninput="calcHhs()">
+      </div>
+    </div>
+    <div class="row2" style="align-items:end; margin-top:6px;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de l'Insuline</label>
+        <input type="number" step="0.1" min="0" id="hhs_poids" placeholder="ex. 70" oninput="calcHhs()">
+      </div>
+      <div class="field" id="hhs_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="hhs_result"></div>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Monitorage :</strong> PANI, scope, SpO2 ; sonde urinaire ou pénilex.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Réhydratation</strong> massive mais prudente (déficit hydrique souvent &gt;8-10 L) : sérum physiologique (NaCl 0,9%) 1 000 mL en 30 min, PUIS 2 000 mL en 2h, PUIS solution Ringer Lactate ou sérum physiologique avec 2 g/L de KCl, PUIS 4 000 mL en 24h — à adapter au terrain (patient souvent âgé/cardiopathe). Correction de l'hypernatrémie de l'ordre de 10 mEq par jour. Vitamine B1 100 mg IVL systématique</li>
@@ -1940,6 +2012,23 @@ function renderProtocoles(){
   <div class="card" id="proto-hemorragie-digestive">
     <h3>🩸 Hémorragie digestive aiguë (haute / basse)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Hématémèse, méléna ou rectorragie abondante. Priorité : évaluer et corriger le retentissement hémodynamique avant/parallèlement à la recherche étiologique. Cause la plus fréquente d'HD haute : ulcère gastro-duodénal ; ne pas oublier la rupture de varices œsophagiennes chez le cirrhotique.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>💊 IPP — dose du flacon (mg) et volume de dilution (mL)</label>
+        <div style="display:flex; gap:6px;">
+          <input type="number" step="1" min="0" id="hd_ipp_mg" placeholder="ex. 80" oninput="calcHd()" style="width:50%;">
+          <input type="number" step="1" min="0" id="hd_ipp_vol" placeholder="ex. 100" oninput="calcHd()" style="width:50%;">
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>💊 Octréotide — dose de l'ampoule (µg) et volume de dilution (mL)</label>
+        <div style="display:flex; gap:6px;">
+          <input type="number" step="1" min="0" id="hd_octreo_mcg" placeholder="ex. 500" oninput="calcHd()" style="width:50%;">
+          <input type="number" step="1" min="0" id="hd_octreo_vol" placeholder="ex. 50" oninput="calcHd()" style="width:50%;">
+        </div>
+      </div>
+    </div>
+    <div class="result-box hidden" id="hd_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Évaluation de gravité</strong> : FC, TA, marbrures, TRC, état de conscience — un score de Glasgow-Blatchford ou de Rockall peut aider à stratifier le risque</li>
       <li><strong>2 VVP de gros calibre</strong>, bilan (NFS, groupe/Rh/RAI, coagulation, fonction rénale, lactates), commander des culots globulaires si instabilité</li>
@@ -1998,6 +2087,14 @@ function renderProtocoles(){
   <div class="card" id="proto-intoxications">
     <h3>☠️ Intoxications aiguës — Prise en charge générale et antidotes</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Approche systématique : ABCDE en premier lieu (une intoxication grave tue par dépression respiratoire, trouble du rythme ou coma avec inhalation). Identifier le toxique, l'heure et la dose si possible ; contacter un centre antipoison si disponible.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du Charbon activé</label>
+        <input type="number" step="0.1" min="0" id="intox_poids" placeholder="ex. 70" oninput="calcIntoxGenerale()">
+      </div>
+      <div class="field" id="intox_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="intox_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Décontamination digestive :</strong> Charbon activé (1g/kg, max 50g) utile si ingestion &lt;1-2h d'un toxique adsorbable et voies aériennes protégées — pas de lavage gastrique systématique (bénéfice non démontré, risques d'inhalation)</li>
       <li>Protéger les voies aériennes (position latérale de sécurité ou intubation) si trouble de conscience</li>
@@ -2106,6 +2203,14 @@ function renderProtocoles(){
   <div class="card" id="proto-coup-chaleur">
     <h3>🌡️ Coup de chaleur / Hyperthermie maligne</h3>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Coup de chaleur :</strong> température centrale &gt;40°C associée à une atteinte du système nerveux central (confusion, convulsions, coma), dans un contexte d'exposition à la chaleur (classique) ou d'effort intense (coup de chaleur d'exercice). Urgence vitale — mortalité élevée si refroidissement retardé.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du Dantrolène (hyperthermie maligne anesthésique)</label>
+        <input type="number" step="0.1" min="0" id="chaleur_poids" placeholder="ex. 70" oninput="calcCoupChaleur()">
+      </div>
+      <div class="field" id="chaleur_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="chaleur_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Refroidissement immédiat et agressif</strong> — priorité absolue avant tout autre geste : immersion en eau froide/glacée si possible (méthode la plus efficace, notamment coup de chaleur d'exercice), sinon linges humides + ventilation, glace aux zones de gros vaisseaux (cou, aisselles, aines). Objectif : température centrale &lt;39°C le plus rapidement possible (idéalement &lt;30 min)</li>
       <li>ABCDE, oxygène, remplissage vasculaire prudent (cristalloïdes, souvent hypovolémie associée), correction des troubles ioniques</li>
@@ -2386,6 +2491,16 @@ function renderProtocoles(){
       <li>ABCDE, refroidissement actif si hyperthermie significative (cf. protocole coup de chaleur), remplissage vasculaire, correction des troubles ioniques</li>
       <li>Benzodiazépines en 1ère intention dans les deux syndromes pour l'agitation, les myoclonies et la rigidité (<strong>Diazépam (Valium®)</strong> 5-10 mg IV lent, répétable, ou <strong>Lorazépam (Temesta®)</strong> 1-4 mg IV titré)</li>
       <li><strong>Syndrome sérotoninergique modéré à sévère :</strong> <strong>Cyproheptadine (Périactine®)</strong> (antagoniste sérotoninergique, uniquement per os ou par sonde nasogastrique — pas de forme injectable) : dose de charge 12 mg PO/SNG, puis 2 mg toutes les 2h tant que les symptômes persistent, jusqu'à un maximum de 32 mg/24h ; dose d'entretien 8 mg toutes les 6h une fois amélioré — en complément des benzodiazépines, évolution habituellement favorable en 24-72h après arrêt du médicament causal</li>
+    </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la dose de Dantrolène (SMN sévère)</label>
+        <input type="number" step="0.1" min="0" id="smn_poids" placeholder="ex. 70" oninput="calcSmn()">
+      </div>
+      <div class="field" id="smn_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="smn_result"></div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Syndrome malin des neuroleptiques sévère :</strong> <strong>Dantrolène IV (Dantrium®)</strong> 1-2,5 mg/kg (jusqu'à 10 mg/kg/j) si rigidité majeure/hyperthermie sévère ; <strong>Bromocriptine (Parlodel®)</strong> (agoniste dopaminergique) PO/SNG 2,5 mg 2 à 3 fois/jour, à augmenter progressivement selon la réponse jusqu'à 45 mg/j au total si nécessaire, en complément selon disponibilité</li>
       <li>Surveillance rapprochée : CK (rhabdomyolyse fréquente dans les deux tableaux — cf. protocole dédié), fonction rénale, coagulation, température, conscience</li>
       <li>Ne pas réintroduire l'agent causal ; en cas de nécessité de reprise d'un traitement psychotrope, le faire avec prudence et sous surveillance après résolution complète</li>
@@ -2395,6 +2510,14 @@ function renderProtocoles(){
   <div class="card" id="proto-tetanos">
     <h3>🦷 Tétanos</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Toxi-infection à Clostridium tetani, rare en zone vaccinée mais à évoquer devant un trismus fébrile, une hypertonie généralisée avec spasmes paroxystiques (opisthotonos), souvent déclenchés par les stimuli, sur une plaie souillée ou vaccination incomplète/inconnue.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de l'Esmolol (dysautonomie)</label>
+        <input type="number" step="0.1" min="0" id="tetanos_poids" placeholder="ex. 70" oninput="calcTetanos()">
+      </div>
+      <div class="field" id="tetanos_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="tetanos_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>ABCDE — risque de détresse respiratoire par spasme laryngé/rigidité thoracique et de dysautonomie sévère (formes graves) ; environnement calme et peu stimulant (limiter les stimuli déclenchants)</li>
       <li><strong>Immunoglobulines antitétaniques humaines (Gammatétanos®)</strong> IM : <strong>3000 à 6000 UI</strong> en dose unique dans le tétanos déclaré (dose curative, supérieure à la dose préventive de 250-500 UI utilisée en prophylaxie post-plaie) — une partie peut être infiltrée autour de la porte d'entrée si celle-ci est identifiable, le reste en IM à distance ; <strong>en un site différent</strong> du vaccin (neutralise la toxine circulante non encore fixée aux terminaisons nerveuses, sans effet sur la toxine déjà fixée)</li>
@@ -2434,6 +2557,14 @@ function renderProtocoles(){
     </table>
     <p style="font-size:13.5px; margin-top:6px;">Score ≥6 : suspicion à prendre au sérieux (VPP ~92%) ; score ≥8 : risque élevé. <strong>Un score bas n'élimine pas le diagnostic</strong> (sensibilité imparfaite, environ 40% des fasciites confirmées ont un score &lt;6) — la décision opératoire reste avant tout clinique.</p>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Prise en charge :</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la Gentamicine (si Clindamycine indisponible)</label>
+        <input type="number" step="0.1" min="0" id="fasciite_poids" placeholder="ex. 70" oninput="calcFasciite()">
+      </div>
+      <div class="field" id="fasciite_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="fasciite_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Appel chirurgical immédiat</strong> dès la suspicion clinique — le débridement chirurgical radical est le seul traitement curatif, l'imagerie (TDM/échographie) ne doit jamais retarder l'intervention en cas de suspicion forte</li>
       <li><strong>Réanimation hémodynamique</strong> — remplissage vasculaire (<strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong>), prise en charge du choc septique associé selon protocole dédié</li>
@@ -2566,6 +2697,14 @@ function renderProtocoles(){
       <tr><td class="modere">II — Menacé (marginalement / immédiatement)</td><td>Perte sensitive (orteils) ± discret déficit moteur ; Doppler artériel souvent inaudible</td><td>Revascularisation urgente (&lt;6h idéalement)</td></tr>
       <tr><td class="grave">III — Irréversible</td><td>Anesthésie complète, paralysie, rigidité musculaire ("rigor"), Doppler artériel et veineux inaudibles</td><td>Amputation d'emblée le plus souvent — la revascularisation expose au risque de syndrome de revascularisation/rhabdomyolyse létale</td></tr>
     </table>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du bolus d'héparine</label>
+        <input type="number" step="0.1" min="0" id="ischmembre_poids" placeholder="ex. 70" oninput="calcIschemieMembre()">
+      </div>
+      <div class="field" id="ischmembre_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="ischmembre_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Anticoagulation immédiate dès la suspicion</strong> (ne pas attendre l'imagerie) : <strong>Héparine non fractionnée (Héparine Choay®)</strong> — bolus 50-100 UI/kg IV, puis perfusion continue adaptée au TCA — prévient l'extension du thrombus et protège la circulation collatérale</li>
       <li>Antalgie systématique (douleur ischémique souvent intense) : <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min</li>
@@ -2580,6 +2719,14 @@ function renderProtocoles(){
   <div class="card" id="proto-tvp">
     <h3>🩸 Thrombose veineuse profonde (TVP)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après les ESC/ESVS Guidelines sur la maladie thromboembolique veineuse. Signes évocateurs : douleur/tuméfaction unilatérale d'un membre, augmentation de chaleur locale, œdème prenant le godet, dilatation veineuse superficielle, signe de Homans (peu fiable, non recommandé isolément).</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de l'anticoagulation curative</label>
+        <input type="number" step="0.1" min="0" id="tvp_poids" placeholder="ex. 70" oninput="calcTvp()">
+      </div>
+      <div class="field" id="tvp_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="tvp_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Évaluer la probabilité clinique</strong> (score de Wells pour TVP) avant tout examen complémentaire</li>
       <li>Probabilité <strong>faible/intermédiaire</strong> : <strong>D-dimères</strong> — si négatifs, TVP exclue ; si positifs ou probabilité forte d'emblée → <strong>écho-Doppler veineux</strong> des membres inférieurs (examen de référence, non invasif)</li>
@@ -2737,6 +2884,14 @@ function renderProtocoles(){
     <h3>🩸 Ischémie mésentérique aiguë</h3>
     <p class="module-sub" style="margin-bottom:8px;">D'après les recommandations WSES (World Society of Emergency Surgery, 2022) et ESVS. Pathologie rare mais grevée d'une mortalité de 30-70% en cas de retard diagnostique — à évoquer systématiquement devant une douleur abdominale disproportionnée par rapport à l'examen clinique.</p>
     <div class="warn-box">⚠️ La douleur abdominale intense avec un examen clinique initialement pauvre (ventre souple, sans défense) est le signe le plus évocateur au stade précoce — ne pas être rassuré par la discordance clinico-radiologique.</div>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de l'anticoagulation (héparine)</label>
+        <input type="number" step="0.1" min="0" id="isch_poids" placeholder="ex. 70" oninput="calcIschemie()">
+      </div>
+      <div class="field" id="isch_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="isch_result"></div>
     <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Terrain et présentations à évoquer :</p>
     <table>
       <tr><th>Mécanisme</th><th>Terrain évocateur</th></tr>
@@ -2787,6 +2942,14 @@ function renderProtocoles(){
   <div class="card" id="proto-glaucome-aigu">
     <h3>👁️ Glaucome aigu par fermeture de l'angle</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Urgence ophtalmologique vraie — douleur oculaire intense brutale, œil rouge, baisse d'acuité visuelle, halos colorés autour des lumières, souvent associée à des nausées/vomissements pouvant égarer vers une cause digestive.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du Mannitol 20%</label>
+        <input type="number" step="0.1" min="0" id="glaucome_poids" placeholder="ex. 70" oninput="calcGlaucome()">
+      </div>
+      <div class="field" id="glaucome_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="glaucome_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>Examen : œil rouge, cornée trouble/œdémateuse, pupille semi-mylatriase aréactive, globe oculaire dur à la palpation comparative — mesure de la pression intraoculaire si tonomètre disponible (typiquement très élevée, &gt;40-50 mmHg)</li>
       <li><strong>Avis ophtalmologique en urgence absolue</strong> — le pronostic visuel dépend de la rapidité de la baisse de pression intraoculaire</li>
@@ -3172,6 +3335,14 @@ function renderProtocoles(){
   <div class="card" id="proto-pancreatite">
     <h3>🟠 Pancréatite aiguë</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Inflammation aiguë du pancréas, le plus souvent d'origine biliaire (lithiase) ou alcoolique. Diagnostic retenu devant <strong>au moins 2 critères sur 3</strong> : douleur épigastrique/hypochondre gauche typique (transfixiante, irradiant dans le dos), lipasémie &gt;3x la limite supérieure de la normale, et/ou imagerie évocatrice. La majorité des formes sont bénignes, mais 15-20% évoluent vers une forme sévère avec défaillance d'organe.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du remplissage vasculaire</label>
+        <input type="number" step="0.1" min="0" id="panc_poids" placeholder="ex. 70" oninput="calcPancreatite()">
+      </div>
+      <div class="field" id="panc_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="panc_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Bilan étiologique initial :</strong> échographie abdominale (lithiase vésiculaire/voie biliaire), interrogatoire (alcool), triglycéridémie, calcémie, revue des médicaments récents</li>
       <li><strong>Évaluation de la gravité :</strong> aucun score isolé n'est totalement fiable, mais des critères précoces doivent alerter — SIRS à l'admission, urée/BUN élevée ou en hausse, hématocrite &gt;44%, obésité, âge avancé, comorbidités, épanchement pleural ou infiltrat pulmonaire ; toute défaillance d'organe impose une surveillance en unité monitorée/soins intensifs</li>
@@ -3259,6 +3430,104 @@ function renderProtocoles(){
       <li>Toute diarrhée aiguë sévère fébrile ou avec rectorragie doit faire reconsidérer un autre diagnostic (shigellose, amibiase) — le choléra classique n'est habituellement pas fébrile</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">⚠️ <strong>Contexte épidémiologique régional</strong> : Madagascar a connu une émergence de souches de <em>V. cholerae</em> résistantes aux tétracyclines/doxycycline lors de précédentes épidémies (Antananarivo, années 2000) ; une souche multirésistante distincte, apparue au Yémen, circule depuis 2023-2024 dans la région (Kenya, Tanzanie, Comores/Mayotte) — en cas d'échec clinique sous Doxycycline, de notion d'importation depuis une zone à souche résistante, ou dès que possible, privilégier/vérifier la sensibilité par antibiogramme local et envisager l'<strong>Azithromycine</strong> en 1ère intention si disponible. Une vigilance frontalière particulière s'applique aux régions côtières du Nord-Ouest (Mahajanga/Boeny) du fait de la proximité avec l'archipel des Comores.</p>
+  </div>
+
+  <div class="card" id="proto-tuberculose">
+    <h3>🫁 Tuberculose (TB) — Diagnostic et prise en charge selon le PNLT Madagascar</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Madagascar est un pays de forte endémicité tuberculeuse (incidence estimée autour de 220-230/100 000 habitants, plusieurs dizaines de milliers de cas notifiés chaque année), avec une prise en charge structurée par le <strong>Programme National de Lutte contre la Tuberculose (PNLT)</strong> à travers le réseau des <strong>CDT (Centres de Diagnostic et de Traitement)</strong>. Diagnostic et traitement de la TB pharmacosensible sont <strong>gratuits</strong> dans le circuit public. Ce protocole résume la conduite pratique adulte/enfant, alignée sur les recommandations de l'OMS adaptées par le PNLT.</p>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Situation</th><th>Présentation</th><th>Conduite</th></tr>
+      <tr><td class="grave">Urgence vitale</td><td>Miliaire avec détresse respiratoire/SDRA, méningite tuberculeuse, hémoptysie grave, tamponnade sur péricardite TB</td><td>Hospitalisation/soins intensifs — bilan et traitement antituberculeux à débuter sans délai après prélèvements, ne pas attendre la culture</td></tr>
+      <tr><td class="modere">Forme sévère non vitale</td><td>Pleurésie abondante, TB ganglionnaire compressive, mauvais état général/dénutrition sévère</td><td>Hospitalisation courte, bilan initial complet, prise en charge nutritionnelle associée</td></tr>
+      <tr><td class="leger">Forme non compliquée</td><td>TB pulmonaire commune, bon état général</td><td>Prise en charge ambulatoire au CDT, traitement supervisé (DOT)</td></tr>
+    </table>
+
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Diagnostic — parcours au CDT</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Suspicion clinique :</strong> toux ≥ 2 semaines (critère de dépistage), associée à un ou plusieurs signes parmi : fièvre vespérale, sueurs nocturnes, amaigrissement, asthénie, hémoptysie — dépistage renforcé chez les contacts de cas, PVVIH, détenus, personnes en milieu minier ou en situation de précarité/dénutrition</li>
+      <li><strong>Xpert MTB/RIF (Ultra) :</strong> test moléculaire de 1ère intention sur crachat dès que disponible — détecte simultanément <em>M. tuberculosis</em> et la résistance à la rifampicine (marqueur de TB-MR/RR) en quelques heures</li>
+      <li><strong>Microscopie des frottis (BAAR, Ziehl-Neelsen) :</strong> reste utilisée dans les sites sans GeneXpert ou en 1ère ligne périphérique ; 2 échantillons (spot + matinal)</li>
+      <li><strong>Radiographie thoracique :</strong> systématique si accessible — recherche d'images évocatrices (infiltrats apicaux, cavernes, miliaire), utile aussi si bactériologie négative mais forte suspicion clinique</li>
+      <li><strong>Enfant/formes paucibacillaires :</strong> algorithme clinico-radiologique (score de présomption), Xpert Ultra sur tubage gastrique ou selles si crachat impossible à obtenir</li>
+      <li><strong>Extrapulmonaire :</strong> ponction/biopsie selon localisation (pleurale, ganglionnaire, méningée, péricardique, ostéo-articulaire) avec analyse cytobactériologique et anatomopathologique</li>
+      <li><strong>Sérologie VIH systématique</strong> proposée à tout patient TB (forte prévalence de la co-infection à Madagascar, notamment chez les usagers de drogues injectables et en milieu carcéral)</li>
+    </ul>
+
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">2. Schéma thérapeutique standard — adulte et adolescent (≥ 25 kg)</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Catégorie</th><th>Schéma OMS</th><th>Indication</th></tr>
+      <tr><td>Nouveau cas / TB sensible</td><td><strong>2 RHZE / 4 RH</strong></td><td>Tout nouveau cas pulmonaire ou extrapulmonaire, rifampicine-sensible (ou résultat Xpert non disponible)</td></tr>
+      <tr><td>Retraitement (rechute, échec, reprise après abandon)</td><td><strong>2 RHZE / 4 RH</strong></td><td>Après Xpert écartant une résistance à la rifampicine — l'OMS ne recommande plus le schéma historique « Catégorie II » avec streptomycine</td></tr>
+      <tr><td>TB-MR/RR (rifampicine-résistante)</td><td>Schéma court tout oral (9-11 mois) ou BPaLM (6 mois)</td><td>Référence obligatoire vers un centre spécialisé — cf. section 8</td></tr>
+    </table>
+    <p style="font-size:13.5px; margin-bottom:6px;">Comprimés en association à dose fixe (ADF), prise unique quotidienne le matin à jeun (≥30 min avant repas) :</p>
+    <table style="margin-bottom:6px;">
+      <tr><th>Poids</th><th>Phase intensive RHZE (150/75/400/275 mg) — 2 mois</th><th>Phase d'entretien RH (150/75 mg) — 4 mois</th></tr>
+      <tr><td>25-37 kg</td><td>2 cp</td><td>2 cp</td></tr>
+      <tr><td>38-54 kg</td><td>3 cp</td><td>3 cp</td></tr>
+      <tr><td>55-70 kg</td><td>4 cp</td><td>4 cp</td></tr>
+      <tr><td>&gt; 70 kg</td><td>5 cp</td><td>5 cp</td></tr>
+    </table>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul du nombre de comprimés ADF</label>
+        <input type="number" step="0.1" min="0" id="tb_poids" placeholder="ex. 60" oninput="calcTuberculose()">
+      </div>
+      <div class="field" id="tb_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="tb_result"></div>
+
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">3. Posologies pédiatriques (&lt; 25 kg)</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Doses cibles mg/kg/j (révision OMS) : <strong>Isoniazide</strong> 10 mg/kg (7-15), <strong>Rifampicine</strong> 15 mg/kg (10-20), <strong>Pyrazinamide</strong> 35 mg/kg (30-40), <strong>Éthambutol</strong> 20 mg/kg (15-25)</li>
+      <li>ADF pédiatriques dispersibles recommandées (RHZ 75/50/150 mg phase intensive, RH 75/50 mg entretien) : 4-7 kg → 1 cp ; 8-11 kg → 2 cp ; 12-15 kg → 3 cp ; 16-24 kg → 4 cp ; ≥ 25 kg → se référer au tableau adulte ci-dessus</li>
+      <li>Formes non sévères (adénopathie intrathoracique isolée, TB pulmonaire sans caverne ni atteinte étendue) chez l'enfant de 3 mois à 16 ans : possibilité de schéma raccourci <strong>2 RHZE(ou RHZ) / 2 RH</strong> (4 mois au total) selon les recommandations OMS 2022 sur la TB de l'enfant — décision à valider avec le CDT/pédiatre référent</li>
+    </ul>
+
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">4. Formes extrapulmonaires graves — particularités</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Méningite tuberculeuse :</strong> traitement prolongé (schéma renforcé initial puis poursuite jusqu'à 9-12 mois selon les protocoles), + <strong>corticothérapie systématique</strong> (dexaméthasone ou prednisolone, dégression progressive sur 6-8 semaines) qui réduit la mortalité et les séquelles neurologiques</li>
+      <li><strong>Péricardite tuberculeuse :</strong> corticothérapie adjuvante recommandée (réduction du risque de péricardite constrictive), surveillance échographique répétée, drainage si tamponnade (cf. protocole Tamponnade)</li>
+      <li><strong>TB ostéo-articulaire (mal de Pott) :</strong> durée totale habituellement de 9 à 12 mois, avis neurochirurgical/orthopédique si compression médullaire ou instabilité rachidienne</li>
+      <li><strong>Miliaire tuberculeuse :</strong> traitement standard 6 mois sauf localisation méningée associée (à rechercher systématiquement par PL) qui impose la durée prolongée</li>
+    </ul>
+
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">5. Co-infection VIH-TB</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Cotrimoxazole</strong> systématique chez tout patient TB-VIH quel que soit le taux de CD4 (prophylaxie des infections opportunistes)</li>
+      <li><strong>Délai d'introduction du TARV :</strong> dans les 2 semaines suivant le début du traitement antituberculeux si CD4 &lt; 50/mm³ ; dans les 8 semaines si CD4 ≥ 50/mm³ — <strong>exception : méningite tuberculeuse</strong>, où l'introduction précoce du TARV est associée à une surmortalité (IRIS neurologique) : différer d'au moins 4 semaines sauf avis spécialisé</li>
+      <li><strong>Interactions :</strong> éviter la névirapine avec la rifampicine (induction enzymatique) ; privilégier <strong>éfavirenz</strong> (pas d'ajustement) ou <strong>dolutégravir à double dose</strong> (50 mg x2/j) pendant la co-administration avec la rifampicine</li>
+      <li>Surveillance du <strong>syndrome de reconstitution immunitaire (IRIS)</strong>, surtout dans les premières semaines de TARV</li>
+    </ul>
+
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">6. Surveillance, tolérance et mesures associées</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Vitamine B6 (pyridoxine)</strong> systématique sous isoniazide chez les patients à risque de neuropathie (dénutrition, grossesse, VIH, éthylisme, diabète) — 25-50 mg/j</li>
+      <li><strong>Contrôle bactériologique</strong> (frottis/Xpert selon protocole) à M2, M5 et M6 pour valider la négativation et dépister un échec thérapeutique</li>
+      <li><strong>Surveillance clinique et biologique</strong> : transaminases si signes d'hépatotoxicité (rifampicine, isoniazide, pyrazinamide sont tous potentiellement hépatotoxiques), acuité visuelle/vision des couleurs sous éthambutol, uricémie sous pyrazinamide</li>
+      <li><strong>Prise en charge nutritionnelle</strong> systématique — la dénutrition est fréquente et aggrave le pronostic ; supplémentation et suivi pondéral recommandés tout au long du traitement</li>
+      <li><strong>Traitement directement observé (DOT)</strong> par un agent de santé ou communautaire, pilier de la stratégie du PNLT pour limiter les abandons et l'émergence de résistances</li>
+    </ul>
+
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">7. Prévention et lutte antituberculeuse</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>BCG</strong> à la naissance, intégré au calendrier vaccinal national (PEV)</li>
+      <li><strong>Dépistage des contacts</strong> du foyer (surtout enfants &lt; 5 ans et PVVIH)</li>
+      <li><strong>Chimioprophylaxie par isoniazide</strong> (6 mois) chez l'enfant &lt; 5 ans contact d'un cas bacillifère et chez les PVVIH, après exclusion d'une TB-maladie</li>
+      <li><strong>Notification obligatoire</strong> de tout cas au CDT/PNLT ; mesures d'isolement respiratoire (aération, masque) en milieu de soins et en milieu carcéral, contexte à forte prévalence à Madagascar (surpopulation, ventilation insuffisante)</li>
+    </ul>
+
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">8. Tuberculose multirésistante (TB-MR/RR)</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Toute résistance à la rifampicine détectée par Xpert (même isolée) impose un <strong>transfert vers un centre de référence</strong> (test de sensibilité complémentaire au Centre National de Référence des Mycobactéries — Institut Pasteur de Madagascar)</li>
+      <li>Schémas historiques longs (18-20 mois, tout oral) progressivement remplacés par des schémas courts : schéma court tout oral de <strong>9-11 mois</strong>, ou schéma <strong>BPaLM</strong> (bédaquiline-prétomanid-linézolide-moxifloxacine) de <strong>6 mois</strong>, recommandé par l'OMS pour la majorité des TB-RR/MR sans résistance aux fluoroquinolones</li>
+      <li>Le PNLT, en collaboration avec l'Institut Pasteur de Madagascar et ses partenaires, travaille à la généralisation d'un schéma court (objectif 9 mois contre 18 mois auparavant) — se référer aux directives PNLT en vigueur au moment de la prise en charge, ces schémas évoluant rapidement</li>
+      <li>Prise en charge exclusivement spécialisée (pneumo-phtisiologue/centre de référence TB-MR) : ce protocole ne couvre pas la prescription détaillée des molécules de 2ème ligne</li>
+    </ul>
+
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">⚠️ <strong>Contexte Madagascar :</strong> diagnostic et traitement de la TB pharmacosensible gratuits dans le réseau public de CDT. Populations à risque particulier : contacts de cas, PVVIH, usagers de drogues injectables, travailleurs des zones minières, milieu carcéral (surpopulation/ventilation insuffisante). Les schémas de traitement de la TB-MR/RR évoluent rapidement (raccourcissement en cours sous l'impulsion du PNLT et de l'Institut Pasteur de Madagascar) — vérifier la version en vigueur auprès du CDT référent avant toute prescription. Sources : directives de l'OMS (traitement de la tuberculose, tuberculose pharmacorésistante, TB de l'enfant et de l'adolescent), Plan Stratégique National de Lutte contre la Tuberculose à Madagascar (PNLT, Ministère de la Santé Publique).</p>
   </div>
 
   <div class="card" id="proto-drepanocytose">
@@ -3524,6 +3793,14 @@ function renderProtocoles(){
       <li><strong>Traiter la cause déclenchante en priorité</strong> — antibiothérapie du sepsis, évacuation utérine, contrôle chirurgical de l'hémorragie</li>
       <li><strong>Correction transfusionnelle uniquement si saignement actif ou geste invasif prévu</strong> (la transfusion prophylactique sans saignement n'est pas recommandée) :</li>
     </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la correction transfusionnelle</label>
+        <input type="number" step="0.1" min="0" id="civd_poids" placeholder="ex. 70" oninput="calcCivd()">
+      </div>
+      <div class="field" id="civd_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="civd_result"></div>
     <table style="margin-top:6px;">
       <tr><th>Produit</th><th>Posologie / Seuil</th></tr>
       <tr><td>Plasma frais congelé (PFC)</td><td>15-20 mL/kg si TP/TCA &gt;1,5x normale avec saignement actif</td></tr>
@@ -3561,6 +3838,14 @@ function renderProtocoles(){
     </table>
 
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Posologies en pédiatrie :</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de l'enfant (kg) — calcul des volumes à transfuser</label>
+        <input type="number" step="0.1" min="0" id="transf_poids" placeholder="ex. 15" oninput="calcTransfusionPedia()">
+      </div>
+      <div class="field" id="transf_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="transf_result"></div>
     <table>
       <tr><th>Produit</th><th>Dose</th><th>Débit / Durée</th></tr>
       <tr><td><strong>CGR</strong></td><td>10-15 mL/kg (poids &lt;35-40kg) ou 1 unité si poids ≥35-40kg ; réduire à 5 mL/kg par séance si anémie sévère mal tolérée (risque de surcharge)</td><td>Débit usuel ~5 mL/kg/h ; durée totale 2-4h, à ne jamais dépasser 4h par poche</td></tr>
@@ -3586,6 +3871,14 @@ function renderProtocoles(){
   <div class="card" id="proto-transfusion-massive">
     <h3>🩸 Protocole de transfusion massive</h3>
     <p class="module-sub" style="margin-bottom:8px;">Défini par la transfusion de ≥10 CGR en 24h, ou ≥4 CGR en 1h avec instabilité persistante, ou remplacement de la masse sanguine totale.</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>🩸 Nombre de CGR transfusés/prévus — calcul du ratio 1:1:1</label>
+        <input type="number" step="1" min="0" id="tm_cgr" placeholder="ex. 6" oninput="calcTransfusionMassive()">
+      </div>
+      <div class="field" id="tm_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="tm_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Activer le protocole précocement</strong> — score ABC (Assessment of Blood Consumption) ou score de Shock Index (FC/PAS &gt;1) comme aide à la décision</li>
       <li><strong>Contrôle de l'hémorragie en parallèle</strong> — chirurgie/radiologie interventionnelle/tamponnement, garrot si hémorragie de membre</li>
@@ -3638,6 +3931,14 @@ function renderProtocoles(){
       <li><strong>Réévaluer/limiter la sédation</strong> — privilégier une sédation légère titrée, éviter les benzodiazépines qui aggravent le delirium</li>
       <li><strong>Traitement pharmacologique en 2e ligne si agitation dangereuse</strong> :</li>
     </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la Dexmédétomidine</label>
+        <input type="number" step="0.1" min="0" id="delirium_poids" placeholder="ex. 70" oninput="calcDelirium()">
+      </div>
+      <div class="field" id="delirium_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="delirium_result"></div>
     <table style="margin-top:6px;">
       <tr><th>Molécule</th><th>Posologie</th></tr>
       <tr><td><strong>Halopéridol (Haldol®)</strong></td><td>2,5-5mg IV/IM, répétable toutes les 30-60 min si besoin (max ~20mg/j) — surveillance QT systématique</td></tr>
@@ -3760,6 +4061,14 @@ function renderProtocoles(){
       <li><strong>Confirmer le diagnostic</strong> — ECG : rythme irrégulier, absence d'onde P organisée</li>
       <li><strong>Contrôle de la fréquence</strong> (stratégie de 1re intention chez la majorité des patients) :</li>
     </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul Esmolol/Diltiazem/HBPM</label>
+        <input type="number" step="0.1" min="0" id="fa_poids" placeholder="ex. 70" oninput="calcFaRapide()">
+      </div>
+      <div class="field" id="fa_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="fa_result"></div>
     <table style="margin-top:6px;">
       <tr><th>Contexte</th><th>Molécule</th><th>Posologie</th></tr>
       <tr><td rowspan="3">FEVG préservée</td><td><strong>Esmolol (Brevibloc®)</strong></td><td>Bolus 500 µg/kg IV en 1 min, puis 50-200 µg/kg/min IVSE</td></tr>
@@ -3782,6 +4091,14 @@ function renderProtocoles(){
       <li><strong>Échocardiographie</strong> (transthoracique puis transœsophagienne si forte suspicion et ETT non concluante) — recherche de végétation, abcès, désinsertion de prothèse</li>
       <li><strong>Antibiothérapie probabiliste précoce si sepsis sévère/choc septique</strong> — sans attendre les résultats bactériologiques :</li>
     </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul Amoxicilline/Gentamicine</label>
+        <input type="number" step="0.1" min="0" id="endoc_poids" placeholder="ex. 70" oninput="calcEndocardite()">
+      </div>
+      <div class="field" id="endoc_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="endoc_result"></div>
     <table style="margin-top:6px;">
       <tr><th>Association</th><th>Posologie</th></tr>
       <tr><td><strong>Amoxicilline (Clamoxyl®)</strong> + <strong>Gentamicine (Gentalline®)</strong></td><td>Amoxicilline 200mg/kg/j IV en 4-6 injections (max 12g/j) + Gentamicine 3mg/kg/j IV en 1 injection</td></tr>
@@ -3811,6 +4128,14 @@ function renderProtocoles(){
       <li>Rechercher un épanchement associé par échocardiographie — surveiller le risque de tamponnade</li>
     </ul>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Myocardite fulminante — urgence vitale :</p>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul Dobutamine/Noradrénaline</label>
+        <input type="number" step="0.1" min="0" id="myocard_poids" placeholder="ex. 70" oninput="calcMyocardite()">
+      </div>
+      <div class="field" id="myocard_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="myocard_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Monitorage continu</strong> — risque de trouble du rythme ventriculaire et de choc cardiogénique rapidement évolutif</li>
       <li><strong>Support hémodynamique</strong> selon présentation — <strong>Dobutamine (Dobutrex®)</strong> 5-15 µg/kg/min IVSE ou <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE titrée, voire assistance circulatoire mécanique (ECMO/ECLS) dans les formes les plus sévères, non disponible à Madagascar — transfert international à discuter selon contexte</li>
@@ -3853,6 +4178,16 @@ function renderProtocoles(){
       <li><strong>Rechercher un facteur déclenchant</strong> — infection intercurrente, chirurgie récente, arrêt/sous-dosage du traitement, certains médicaments contre-indiqués (aminoglycosides, bêtabloquants, magnésium IV, curares)</li>
       <li><strong>Évaluation respiratoire répétée</strong> — mesure de la capacité vitale, surveillance de la toux et de la déglutition ; intubation élective précoce si épuisement respiratoire prévisible</li>
       <li><strong>Distinguer crise myasthénique vs crise cholinergique</strong> (surdosage en anticholinestérasiques — <strong>Pyridostigmine (Mestinon®)</strong> habituellement 60mg x3-6/j per os) — la crise cholinergique associe des signes muscariniques (myosis, hypersialorrhée, diarrhée, bradycardie, sueurs) : dans le doute, suspendre les anticholinestérasiques</li>
+    </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul Immunoglobulines/Prednisolone</label>
+        <input type="number" step="0.1" min="0" id="myasthenie_poids" placeholder="ex. 70" oninput="calcMyasthenie()">
+      </div>
+      <div class="field" id="myasthenie_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="myasthenie_result"></div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Traitement spécifique</strong> — Immunoglobulines IV 0,4g/kg/j x5j ou échanges plasmatiques (efficacité comparable), corticothérapie (<strong>Prednisolone (Cortancyl®)</strong> 1mg/kg/j per os) à distancer de la phase aiguë (risque d'aggravation transitoire)</li>
       <li>Éviter formellement les curares non dépolarisants à dose standard (sensibilité accrue) et la succinylcholine (résistance relative) si intubation nécessaire — avis anesthésique spécialisé</li>
     </ol>
@@ -3868,6 +4203,16 @@ function renderProtocoles(){
       <li><strong>IRM médullaire en urgence</strong> (séquence de choix, disponible uniquement dans quelques centres à Antananarivo) — scanner si IRM non disponible/contre-indiquée</li>
       <li><strong>Corticothérapie IV à forte dose</strong> si compression tumorale suspectée — <strong>Dexaméthasone (Dectancyl®, Soludécadron®)</strong> 10mg IV en bolus puis 4mg IV toutes les 6h, en concertation avec le neurochirurgien</li>
       <li><strong>Contact neurochirurgical immédiat</strong> — décompression chirurgicale en urgence si déficit progressif ; radiothérapie en urgence si compression tumorale non chirurgicale (disponibilité très limitée à Madagascar)</li>
+    </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la quadrithérapie antituberculeuse (si abcès épidural tuberculeux)</label>
+        <input type="number" step="0.1" min="0" id="compmed_poids" placeholder="ex. 70" oninput="calcCompMedullaire()">
+      </div>
+      <div class="field" id="compmed_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="compmed_result"></div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>Si abcès épidural suspecté (notamment tuberculeux) : <strong>antibiothérapie/antituberculeux probabiliste</strong> après hémocultures/prélèvements (quadrithérapie antituberculeuse standard : Rifampicine 10mg/kg/j + Isoniazide 5mg/kg/j + Pyrazinamide 25mg/kg/j + Éthambutol 15mg/kg/j), sans retarder l'imagerie ni la décompression</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Dectancyl®, Soludécadron® sont disponibles à tous les niveaux hospitaliers. Le mal de Pott (spondylodiscite tuberculeuse) est une cause fréquente sous ces latitudes — les antituberculeux de 1re ligne sont distribués gratuitement via le Programme National de lutte contre la Tuberculose et doivent être considérés précocement dans ce contexte.</p>
@@ -3986,6 +4331,16 @@ function renderProtocoles(){
       <li><strong>Immobilisation rachidienne dès la prise en charge</strong> — collier cervical rigide, matelas-coquille/plan dur, retrait précoce dès que possible (risque d'escarres et de difficultés d'intubation si maintenue trop longtemps)</li>
       <li><strong>Examen neurologique complet et daté</strong> — cotation motrice par myotome, niveau sensitif, réflexes, tonus du sphincter anal (référentiel ASIA/ISNCSCI si disponible)</li>
       <li><strong>Rechercher un choc spinal / choc neurogénique</strong> — hypotension avec bradycardie paradoxale (perte du tonus sympathique) : remplissage prudent (<strong>Ringer Lactate (Baxter®)</strong> 250-500mL réévalués), <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE titrée pour PAM &gt;85-90 mmHg si besoin plutôt que remplissage massif ; <strong>Atropine (Atropine Aguettant®)</strong> 0,5-1mg IV si bradycardie symptomatique associée</li>
+    </ol>
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg) — calcul de la Noradrénaline (choc spinal)</label>
+        <input type="number" step="0.1" min="0" id="rachis_poids" placeholder="ex. 70" oninput="calcTraumaRachis()">
+      </div>
+      <div class="field" id="rachis_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="rachis_result"></div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Imagerie</strong> — scanner rachidien en urgence si suspicion clinique (critères NEXUS/Canadian C-Spine pour le rachis cervical) ; IRM si déficit neurologique pour évaluer les parties molles/moelle (accès limité hors Antananarivo)</li>
       <li><strong>Maintenir une pression de perfusion médullaire adéquate</strong> — objectif PAM &gt;85-90 mmHg dans les traumatismes médullaires aigus (limiter l'ischémie médullaire secondaire) grâce aux vasopresseurs</li>
       <li><strong>Analgésie</strong> — <strong>Paracétamol (Perfalgan®)</strong> 1g x4/j IV + <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3mg IV toutes les 5-10 min selon l'intensité douloureuse</li>
@@ -5205,7 +5560,7 @@ function renderCalculateurs(){
     <div class="result-box hidden" id="pedia_result"></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="calc-pit">
     <h3>⚖️ Poids Idéal Théorique (PIT) & Vt cible</h3>
     <div class="row2">
       <div class="field"><label>Sexe</label>
@@ -6932,6 +7287,417 @@ function calcTca(){
     `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Bicarbonate répétable toutes les 10-15 min jusqu'à QRS &lt;100ms. Intralipid réservé à l'arrêt cardiaque réfractaire d'origine toxique. Dose indicative — vérifier systématiquement avant administration.</p>`;
 }
 
+/* Calculateur de doses intégré — fiche Pancréatite aiguë (remplissage vasculaire selon le poids) */
+function calcPancreatite(){
+  const poidsInput = document.getElementById('panc_poids');
+  const resultEl = document.getElementById('panc_result');
+  const noteEl = document.getElementById('panc_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:20, max:200, label:'Poids saisi', unit:'kg'}]);
+  const bolus = poids*10;
+  const debitEntretien = poids*1.5;
+  const volume24h = debitEntretien*24;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Ringer Lactate`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Remplissage vasculaire</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Bolus initial si hypovolémie clinique (10 mL/kg)</td><td><strong>${bolus.toFixed(0)} mL</strong> Ringer Lactate</td></tr>` +
+    `<tr><td>Débit d'entretien initial (1,5 mL/kg/h)</td><td><strong>${debitEntretien.toFixed(0)} mL/h</strong></td></tr>` +
+    `<tr><td>Équivalent sur 24h (à titre indicatif)</td><td><strong>≈${volume24h.toFixed(0)} mL/24h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Remplissage modéré et individualisé recommandé (un remplissage agressif majore le risque de défaillance pulmonaire/rénale) — réévaluer fréquemment (diurèse, FC, lactates) et réduire les apports après 48h. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Hémorragie digestive (débit de perfusion IPP et Octréotide selon le flacon/l'ampoule utilisé(e)) */
+function calcHd(){
+  const ippMg = parseFloat(document.getElementById('hd_ipp_mg').value);
+  const ippVol = parseFloat(document.getElementById('hd_ipp_vol').value);
+  const octMcg = parseFloat(document.getElementById('hd_octreo_mcg').value);
+  const octVol = parseFloat(document.getElementById('hd_octreo_vol').value);
+  const resultEl = document.getElementById('hd_result');
+  if(!resultEl) return;
+
+  let rows = '';
+  let warnFields = [];
+
+  if(!isNaN(ippMg) && !isNaN(ippVol) && ippMg>0 && ippVol>0){
+    warnFields.push({val:ippMg, min:20, max:120, label:'Dose flacon IPP', unit:'mg'});
+    warnFields.push({val:ippVol, min:20, max:250, label:'Volume dilution IPP', unit:'mL'});
+    const concMgMl = ippMg/ippVol;
+    const bolusMl = 80/concMgMl;
+    const debitMlH = 8/concMgMl;
+    rows += `<tr><td>IPP — bolus 80 mg (à ${concMgMl.toFixed(2)} mg/mL)</td><td><strong>${bolusMl.toFixed(1)} mL</strong> IV lent</td></tr>`;
+    rows += `<tr><td>IPP — entretien 8 mg/h</td><td><strong>${debitMlH.toFixed(1)} mL/h</strong> IVSE</td></tr>`;
+  }
+
+  if(!isNaN(octMcg) && !isNaN(octVol) && octMcg>0 && octVol>0){
+    warnFields.push({val:octMcg, min:50, max:1000, label:'Dose ampoule Octréotide', unit:'µg'});
+    warnFields.push({val:octVol, min:10, max:250, label:'Volume dilution Octréotide', unit:'mL'});
+    const concUgMl = octMcg/octVol;
+    const bolusMl2 = 50/concUgMl;
+    const debitMinMl = 25/concUgMl;
+    const debitMaxMl = 50/concUgMl;
+    rows += `<tr><td>Octréotide — bolus 50 µg (à ${concUgMl.toFixed(2)} µg/mL)</td><td><strong>${bolusMl2.toFixed(2)} mL</strong> IV bolus</td></tr>`;
+    rows += `<tr><td>Octréotide — entretien 25-50 µg/h</td><td><strong>${debitMinMl.toFixed(2)}-${debitMaxMl.toFixed(2)} mL/h</strong> IVSE</td></tr>`;
+  }
+
+  if(rows===''){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings(warnFields);
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Perfusion</th><th>Débit calculé</th></tr>${rows}</table>` +
+    `<p style="margin-top:8px; font-size:12px; color:var(--muted)">Renseigner la dose réellement contenue dans le flacon/l'ampoule utilisé(e) et le volume de dilution effectivement préparé — les présentations disponibles varient selon les pharmacies. La Terlipressine (dose fixe 1-2 mg IV/4h, non pondérale) n'est pas concernée par ce calcul. Débit indicatif — vérifier systématiquement la concentration avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Ischémie mésentérique aiguë (anticoagulation par héparine selon le poids) */
+function calcIschemie(){
+  const poidsInput = document.getElementById('isch_poids');
+  const resultEl = document.getElementById('isch_result');
+  const noteEl = document.getElementById('isch_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:20, max:200, label:'Poids saisi', unit:'kg'}]);
+  const hnfBolus = poids*80;
+  const hnfEntretien = poids*18;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Héparine non fractionnée`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Héparine non fractionnée</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Bolus (80 UI/kg)</td><td><strong>${hnfBolus.toFixed(0)} UI</strong> IV</td></tr>` +
+    `<tr><td>Entretien (18 UI/kg/h)</td><td><strong>${hnfEntretien.toFixed(0)} UI/h</strong> IVSE (à adapter au TCA)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">À discuter au cas par cas selon le mécanisme (surtout thrombose veineuse mésentérique) et le risque hémorragique post-opératoire — anticoagulation souvent différée en post-opératoire immédiat si résection/laparotomie récente. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche CIVD (correction transfusionnelle selon le poids) */
+function calcCivd(){
+  const poidsInput = document.getElementById('civd_poids');
+  const resultEl = document.getElementById('civd_result');
+  const noteEl = document.getElementById('civd_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const pfcMin = poids*15, pfcMax = poids*20;
+  const plaquettesUnites = Math.max(1, Math.round(poids/10));
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Produit</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>PFC (15-20 mL/kg) si saignement actif</td><td><strong>${pfcMin.toFixed(0)}-${pfcMax.toFixed(0)} mL</strong></td></tr>` +
+    `<tr><td>Plaquettes (1 unité/10 kg)</td><td><strong>≈${plaquettesUnites} unité(s)</strong> de culot plaquettaire</td></tr>` +
+    `<tr><td>Acide tranexamique (Exacyl®), dose fixe</td><td><strong>1 g</strong> IV en 10 min (non pondéral)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Transfusion réservée au saignement actif ou avant geste invasif — pas de correction prophylactique en l'absence de saignement. Fibrinogène/cryoprécipités à dose fixe (1-2 g, ou 3-4 g si &lt;1 g/L), non pondérale. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Transfusion sanguine, volet pédiatrique (CGR/PFC/Plaquettes selon le poids) */
+function calcTransfusionPedia(){
+  const poidsInput = document.getElementById('transf_poids');
+  const resultEl = document.getElementById('transf_result');
+  const noteEl = document.getElementById('transf_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:60, label:'Poids saisi', unit:'kg'}]);
+  const cgrMin = poids*10, cgrMax = poids*15, cgrReduit = poids*5;
+  const pfcMin = poids*10, pfcMax = poids*20;
+  const plaqMin = poids*10, plaqMax = poids*15;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Produit</th><th>Volume calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>CGR (10-15 mL/kg)</td><td><strong>${cgrMin.toFixed(0)}-${cgrMax.toFixed(0)} mL</strong> — débit ~5 mL/kg/h sur 2-4h</td></tr>` +
+    `<tr><td>CGR — réduit si anémie sévère mal tolérée (5 mL/kg/séance)</td><td><strong>${cgrReduit.toFixed(0)} mL</strong></td></tr>` +
+    `<tr><td>PFC (10-20 mL/kg)</td><td><strong>${pfcMin.toFixed(0)}-${pfcMax.toFixed(0)} mL</strong></td></tr>` +
+    `<tr><td>Plaquettes (10-15 mL/kg)</td><td><strong>${plaqMin.toFixed(0)}-${plaqMax.toFixed(0)} mL</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Ne jamais dépasser 4h par poche. Chez l'enfant ≥35-40 kg, se référer plutôt au tableau adulte (1 unité). Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Transfusion massive (ratio 1:1:1 selon le nombre de CGR) */
+function calcTransfusionMassive(){
+  const cgrInput = document.getElementById('tm_cgr');
+  const resultEl = document.getElementById('tm_result');
+  const noteEl = document.getElementById('tm_note');
+  if(!cgrInput) return;
+  const cgr = parseFloat(cgrInput.value);
+
+  if(isNaN(cgr) || cgr<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:cgr, min:1, max:30, label:'Nombre de CGR', unit:'culot(s)'}]);
+  const pfc = Math.round(cgr);
+  const plaquettes = Math.round(cgr);
+
+  noteEl.innerHTML = `CGR saisis : <strong>${cgr}</strong> — ratio cible 1:1:1`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Produit</th><th>Quantité cible (ratio 1:1:1)</th></tr>` +
+    `<tr><td>Concentrés érythrocytaires (CGR)</td><td><strong>${cgr}</strong> culot(s)</td></tr>` +
+    `<tr><td>Plasma frais congelé (PFC)</td><td><strong>≈${pfc}</strong> unité(s)</td></tr>` +
+    `<tr><td>Plaquettes</td><td><strong>≈${plaquettes}</strong> unité(s) d'aphérèse (ou équivalent)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Acide tranexamique (Exacyl®) — dose fixe non pondérale : 1 g IV en 10 min puis 1 g IV sur 8h, dans les 3h suivant le traumatisme (CRASH-2). Ratio théorique — à adapter selon la biologie répétée (fibrinogène, TP/TCA, plaquettes) et la disponibilité réelle des produits. Quantité indicative.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Glaucome aigu par fermeture de l'angle (Mannitol 20% selon le poids) */
+function calcGlaucome(){
+  const poidsInput = document.getElementById('glaucome_poids');
+  const resultEl = document.getElementById('glaucome_result');
+  const noteEl = document.getElementById('glaucome_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:20, max:200, label:'Poids saisi', unit:'kg'}]);
+  // Mannitol 20% = 200 mg/mL → volume(mL) = dose(g) * 1000 / 200 = dose(g) * 5
+  const doseMinG = poids*1, doseMaxG = poids*2;
+  const volMinMl = doseMinG*5, volMaxMl = doseMaxG*5;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Mannitol 20% (200 mg/mL)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Mannitol 20%</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Dose (1-2 g/kg)</td><td><strong>${doseMinG.toFixed(0)}-${doseMaxG.toFixed(0)} g</strong></td></tr>` +
+    `<tr><td>Volume à perfuser</td><td><strong>${volMinMl.toFixed(0)}-${volMaxMl.toFixed(0)} mL</strong> IV en 30-60 min</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Réservé à la pression très élevée en échec du traitement médical de 1ère ligne (Acétazolamide, collyres). Dose indicative — vérifier systématiquement la concentration réelle du flacon et la fonction rénale/cardiaque avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Angio-œdème bradykinique (concentré de C1-inhibiteur, Berinert®, selon le poids) */
+function calcAngioedemeBk(){
+  const poidsInput = document.getElementById('angioedeme_poids');
+  const resultEl = document.getElementById('angioedeme_result');
+  const noteEl = document.getElementById('angioedeme_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const berinert = poids*20;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Concentré de C1-inhibiteur (Berinert®) — 20 UI/kg</td><td><strong>${berinert.toFixed(0)} UI</strong> IV</td></tr>` +
+    `<tr><td>Icatibant (Firazyr®), dose fixe</td><td><strong>30 mg</strong> SC (non pondéral)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Réservé à l'angio-œdème héréditaire connu (Berinert®) — traitements spécifiques d'accès limité à Madagascar ; en leur absence, ne pas retarder la prise en charge des voies aériennes. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Ischémie aiguë de membre (bolus d'héparine selon le poids) */
+function calcIschemieMembre(){
+  const poidsInput = document.getElementById('ischmembre_poids');
+  const resultEl = document.getElementById('ischmembre_result');
+  const noteEl = document.getElementById('ischmembre_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:20, max:200, label:'Poids saisi', unit:'kg'}]);
+  const bolusMin = poids*50, bolusMax = poids*100;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Héparine non fractionnée`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Héparine non fractionnée</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Bolus (50-100 UI/kg)</td><td><strong>${bolusMin.toFixed(0)}-${bolusMax.toFixed(0)} UI</strong> IV</td></tr>` +
+    `<tr><td>Entretien</td><td>Perfusion continue à adapter au TCA (pas de dose fixe UI/kg/h établie pour cette indication)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">À débuter dès la suspicion clinique, sans attendre l'imagerie. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche TVP (Énoxaparine/Héparine selon le poids) */
+function calcTvp(){
+  const poidsInput = document.getElementById('tvp_poids');
+  const resultEl = document.getElementById('tvp_result');
+  const noteEl = document.getElementById('tvp_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:20, max:200, label:'Poids saisi', unit:'kg'}]);
+  const enoxaUi = poids*100, enoxaMg = poids*1;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Énoxaparine (Lovenox®) — 100 UI/kg (1 mg/kg)</td><td><strong>${enoxaUi.toFixed(0)} UI</strong> (${enoxaMg.toFixed(0)} mg) SC toutes les 12h</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">À adapter à la clairance rénale. Héparine non fractionnée IVSE (à adapter au TCA) ou Rivaroxaban 15 mg x2/j (dose fixe, non pondéral) en alternative selon le contexte. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Tétanos (Esmolol selon le poids, dysautonomie) */
+function calcTetanos(){
+  const poidsInput = document.getElementById('tetanos_poids');
+  const resultEl = document.getElementById('tetanos_result');
+  const noteEl = document.getElementById('tetanos_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:20, max:200, label:'Poids saisi', unit:'kg'}]);
+  const bolus = poids*0.5;
+  const debitMin = (poids*50*60)/1000, debitMax = (poids*200*60)/1000; // affiché en mg/h à titre indicatif (µg/kg/min * poids * 60 / 1000)
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Esmolol (Brevibloc®)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Esmolol</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Bolus de charge (0,5 mg/kg IV sur 1 min)</td><td><strong>${bolus.toFixed(1)} mg</strong></td></tr>` +
+    `<tr><td>Perfusion continue (50-200 µg/kg/min)</td><td><strong>${debitMin.toFixed(0)}-${debitMax.toFixed(0)} mg/h</strong> IVSE, à titrer</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Réservé à la dysautonomie/instabilité tensionnelle des formes sévères de tétanos. Vérifier la dilution réellement préparée pour convertir en mL/h. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Crise d'asthme aiguë (Prednisolone pédiatrique selon le poids) */
+function calcAsthme(){
+  const poidsInput = document.getElementById('asthme_poids');
+  const resultEl = document.getElementById('asthme_result');
+  const noteEl = document.getElementById('asthme_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:60, label:'Poids saisi', unit:'kg'}]);
+  const doseMin = poids*1, doseMax = Math.min(poids*2, 40);
+  const plafonne = (poids*2) > 40;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Prednisolone (Solupred®)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Prednisolone</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Dose (1-2 mg/kg/j, max 40 mg/j)</td><td><strong>${doseMin.toFixed(0)}-${doseMax.toFixed(0)} mg/j</strong>${plafonne ? ' (dose théorique haute de '+(poids*2).toFixed(0)+' mg plafonnée à 40 mg)' : ''}</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Pendant 3-5 jours chez l'enfant. Chez l'adulte, dose fixe non pondérale (40-50 mg/j). Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Coup de chaleur / Hyperthermie maligne (Dantrolène selon le poids) */
+function calcCoupChaleur(){
+  const poidsInput = document.getElementById('chaleur_poids');
+  const resultEl = document.getElementById('chaleur_result');
+  const noteEl = document.getElementById('chaleur_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const bolus = poids*2.5;
+  const maxCumul = poids*10;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Dantrolène (Dantrium®)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Dantrolène</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Bolus initial (2,5 mg/kg)</td><td><strong>${bolus.toFixed(0)} mg</strong> IV</td></tr>` +
+    `<tr><td>Dose cumulée maximale (jusqu'à 10 mg/kg)</td><td><strong>${maxCumul.toFixed(0)} mg</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Réservé à l'hyperthermie maligne anesthésique (contexte différent du coup de chaleur classique) — arrêt immédiat de l'agent déclenchant en parallèle. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Fasciite nécrosante (Gentamicine selon le poids, alternative si Clindamycine indisponible) */
+function calcFasciite(){
+  const poidsInput = document.getElementById('fasciite_poids');
+  const resultEl = document.getElementById('fasciite_result');
+  const noteEl = document.getElementById('fasciite_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:20, max:200, label:'Poids saisi', unit:'kg'}]);
+  const genta = poids*5;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Gentamicine (Gentalline®)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Gentamicine</th><th>Calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Dose (5 mg/kg/j en 1 injection)</td><td><strong>${genta.toFixed(0)} mg/j</strong> IV</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">À associer à la Pénicilline G si la Clindamycine (effet anti-toxinique) est indisponible. Adapter à la fonction rénale. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
 /* Calculateur de doses intégré — fiche Choléra (volume de Ringer Lactate, Plan C OMS, selon poids et âge) */
 function calcCholera(){
   const poidsInput = document.getElementById('cholera_poids');
@@ -6963,6 +7729,45 @@ function calcCholera(){
     `<tr><td>Phase 2 (70 mL/kg)</td><td><strong>${phase2.toFixed(0)} mL</strong> sur ${isNourrisson?'5h':'2h30'} suivantes</td></tr>` +
     `<tr><td>Total (100 mL/kg)</td><td><strong>${total.toFixed(0)} mL</strong> sur ${isNourrisson?'6h':'3h'} au total</td></tr>` +
     `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Ringer Lactate en 1ère intention (NaCl 0,9% en 2e choix). Réévaluer toutes les 15-30 min, accélérer si pouls radial reste faible. Dose indicative.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Tuberculose (comprimés ADF RHZE/RH selon le poids, adulte/adolescent ≥25 kg) */
+function calcTuberculose(){
+  const poidsInput = document.getElementById('tb_poids');
+  const resultEl = document.getElementById('tb_result');
+  const noteEl = document.getElementById('tb_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+
+  if(poids < 25){
+    noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — poids &lt; 25 kg`;
+    resultEl.classList.remove('hidden');
+    resultEl.innerHTML = warn + `<p style="font-size:13px;">Patient &lt; 25 kg : utiliser les <strong>ADF pédiatriques dispersibles</strong> (RHZ 75/50/150 mg puis RH 75/50 mg) selon les tranches de poids détaillées ci-dessus (section 3), et non le tableau adulte.</p>`;
+    return;
+  }
+
+  let nbCp;
+  if(poids <= 37) nbCp = 2;
+  else if(poids <= 54) nbCp = 3;
+  else if(poids <= 70) nbCp = 4;
+  else nbCp = 5;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Phase</th><th>Comprimés ADF/j pour ${poids} kg</th></tr>` +
+    `<tr><td>Intensive — RHZE (150/75/400/275 mg), 2 mois</td><td><strong>${nbCp} cp</strong> en une prise, à jeun le matin</td></tr>` +
+    `<tr><td>Entretien — RH (150/75 mg), 4 mois</td><td><strong>${nbCp} cp</strong> en une prise, à jeun le matin</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Schéma nouveau cas / retraitement après exclusion d'une résistance à la rifampicine : 2 RHZE / 4 RH. Dose indicative — vérifier la tranche de poids exacte auprès du CDT référent.</p>`;
 }
 
 /* Calculateur de doses intégré — fiche Peste (Streptomycine/Gentamicine selon le poids et l'âge) */
@@ -7140,6 +7945,415 @@ function calcStt(){
     `<tr><td>Azithromycine (10 mg/kg/j, max 500 mg/j)</td><td><strong>${azithro.toFixed(0)} mg/j</strong></td></tr>` +
     `<tr><td>Transfusion (culots globulaires, 10-15 mL/kg)</td><td><strong>${transfusionMin.toFixed(0)}-${transfusionMax.toFixed(0)} mL</strong> si anémie mal tolérée</td></tr>` +
     `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Éviter la sédation excessive (risque d'hypoventilation aggravant la falciformation). Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche SCA/IDM (thrombolyse Altéplase, schéma accéléré, selon le poids) */
+function calcSca(){
+  const poidsInput = document.getElementById('sca_poids');
+  const resultEl = document.getElementById('sca_result');
+  const noteEl = document.getElementById('sca_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:30, max:200, label:'Poids saisi', unit:'kg'}]);
+  const bolus = 15;
+  const dose30 = Math.min(poids*0.75, 50);
+  const dose60 = Math.min(poids*0.5, 35);
+  const total = Math.min(bolus+dose30+dose60, 100);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Altéplase (Actilyse®), schéma accéléré STEMI`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Étape</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Bolus initial (dose fixe)</td><td><strong>${bolus} mg</strong> IV bolus</td></tr>` +
+    `<tr><td>Puis 0,75 mg/kg (max 50 mg)</td><td><strong>${dose30.toFixed(1)} mg</strong> IV sur 30 min</td></tr>` +
+    `<tr><td>Puis 0,5 mg/kg (max 35 mg)</td><td><strong>${dose60.toFixed(1)} mg</strong> IV sur 60 min</td></tr>` +
+    `<tr><td>Dose totale (max 100 mg)</td><td><strong>${total.toFixed(1)} mg</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Réservé au STEMI, &lt;12h depuis le début des symptômes, sans contre-indication, si angioplastie primaire non réalisable &lt;120 min. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Choc cardiogénique (Dobutamine et Noradrénaline selon le poids) */
+function calcChocCardio(){
+  const poidsInput = document.getElementById('cardio_poids');
+  const resultEl = document.getElementById('cardio_result');
+  const noteEl = document.getElementById('cardio_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  // Dilutions standard du module Drogues de réanimation : Dobutamine 250mg/50mL (5000 µg/mL), Noradrénaline 8mg/50mL (160 µg/mL)
+  const dobuMlH = (dosekgmin)=> (dosekgmin*poids*60)/5000;
+  const noradMlH = (dosekgmin)=> (dosekgmin*poids*60)/160;
+  const dobuMin = dobuMlH(2), dobuMax = dobuMlH(20), dobuDebut = dobuMlH(5);
+  const noradMin = noradMlH(0.05), noradMax = noradMlH(0.5);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — dilutions standard Dobutamine 250 mg/50 mL et Noradrénaline 8 mg/50 mL G5%`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Drogue</th><th>Débit calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Dobutamine — début (2-5 µg/kg/min)</td><td><strong>${dobuMin.toFixed(1)}-${dobuDebut.toFixed(1)} mL/h</strong></td></tr>` +
+    `<tr><td>Dobutamine — plage totale (2-20 µg/kg/min)</td><td><strong>${dobuMin.toFixed(1)}-${dobuMax.toFixed(1)} mL/h</strong></td></tr>` +
+    `<tr><td>Noradrénaline (0,05-0,5 µg/kg/min), si associée</td><td><strong>${noradMin.toFixed(1)}-${noradMax.toFixed(1)} mL/h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Débit à titrer selon la réponse hémodynamique — vérifier la dilution réellement préparée avant d'utiliser ces débits. Dose indicative.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Dissection aortique (Esmolol selon le poids) */
+function calcDissection(){
+  const poidsInput = document.getElementById('dissec_poids');
+  const resultEl = document.getElementById('dissec_result');
+  const noteEl = document.getElementById('dissec_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:30, max:200, label:'Poids saisi', unit:'kg'}]);
+  const bolus = poids*0.5;
+  const perfMinMgH = (50*poids*60)/1000;
+  const perfMaxMgH = (300*poids*60)/1000;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — Esmolol (Brevibloc®)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Étape</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Bolus de charge (0,5 mg/kg)</td><td><strong>${bolus.toFixed(1)} mg</strong> IV sur 1 min</td></tr>` +
+    `<tr><td>Perfusion continue (50-300 µg/kg/min)</td><td><strong>${perfMinMgH.toFixed(0)}-${perfMaxMgH.toFixed(0)} mg/h</strong> IVSE, à titrer</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Objectif FC &lt;60/min et PAS &lt;120 mmHg en &lt;20 min. Toujours avant tout vasodilatateur associé. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche FA rapide (Esmolol, Diltiazem, HBPM selon le poids) */
+function calcFaRapide(){
+  const poidsInput = document.getElementById('fa_poids');
+  const resultEl = document.getElementById('fa_result');
+  const noteEl = document.getElementById('fa_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:30, max:200, label:'Poids saisi', unit:'kg'}]);
+  const esmololBolus = poids*0.5;
+  const esmololPerfMin = (50*poids*60)/1000, esmololPerfMax = (200*poids*60)/1000;
+  const diltiazemBolus = poids*0.25;
+  const hbpm = poids*100;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Esmolol — bolus (500 µg/kg)</td><td><strong>${esmololBolus.toFixed(1)} mg</strong> IV en 1 min</td></tr>` +
+    `<tr><td>Esmolol — entretien (50-200 µg/kg/min)</td><td><strong>${esmololPerfMin.toFixed(0)}-${esmololPerfMax.toFixed(0)} mg/h</strong> IVSE</td></tr>` +
+    `<tr><td>Diltiazem — bolus (0,25 mg/kg)</td><td><strong>${diltiazemBolus.toFixed(1)} mg</strong> IV en 2 min</td></tr>` +
+    `<tr><td>HBPM (100 UI/kg x2/j), si anticoagulation indiquée</td><td><strong>${hbpm.toFixed(0)} UI</strong> SC x2/j</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Choisir Esmolol OU Diltiazem selon le terrain (pas d'association), jamais chez le patient à FEVG altérée. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Endocardite infectieuse (Amoxicilline/Gentamicine selon le poids) */
+function calcEndocardite(){
+  const poidsInput = document.getElementById('endoc_poids');
+  const resultEl = document.getElementById('endoc_result');
+  const noteEl = document.getElementById('endoc_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const amoxicilline = Math.min(poids*200, 12000);
+  const gentamicine = poids*3;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Antibiotique</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Amoxicilline (200 mg/kg/j, max 12 g/j)</td><td><strong>${amoxicilline.toFixed(0)} mg/j</strong> IV en 4-6 injections</td></tr>` +
+    `<tr><td>Gentamicine (3 mg/kg/j)</td><td><strong>${gentamicine.toFixed(0)} mg/j</strong> IV en 1 injection</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Hémocultures avant toute antibiothérapie si patient stable. Ceftriaxone (2g/j fixe) + Gentamicine en alternative si allergie/résistance suspectée. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Myocardite fulminante (Dobutamine/Noradrénaline selon le poids) */
+function calcMyocardite(){
+  const poidsInput = document.getElementById('myocard_poids');
+  const resultEl = document.getElementById('myocard_result');
+  const noteEl = document.getElementById('myocard_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  // Dilutions standard du module Drogues de réanimation : Dobutamine 250mg/50mL (5000 µg/mL), Noradrénaline 8mg/50mL (160 µg/mL)
+  const dobuMlH = (dosekgmin)=> (dosekgmin*poids*60)/5000;
+  const noradMlH = (dosekgmin)=> (dosekgmin*poids*60)/160;
+  const dobuMin = dobuMlH(5), dobuMax = dobuMlH(15);
+  const noradMin = noradMlH(0.1), noradMax = noradMlH(1);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — dilutions standard Dobutamine 250 mg/50 mL et Noradrénaline 8 mg/50 mL G5%`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Drogue</th><th>Débit calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Dobutamine (5-15 µg/kg/min)</td><td><strong>${dobuMin.toFixed(1)}-${dobuMax.toFixed(1)} mL/h</strong></td></tr>` +
+    `<tr><td>Noradrénaline (0,1-1 µg/kg/min), titrée</td><td><strong>${noradMin.toFixed(1)}-${noradMax.toFixed(1)} mL/h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Vérifier la dilution réellement préparée avant d'utiliser ces débits. Assistance circulatoire mécanique à discuter précocement si réfractaire. Dose indicative.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Crise myasthénique (Immunoglobulines IV / Prednisolone selon le poids) */
+function calcMyasthenie(){
+  const poidsInput = document.getElementById('myasthenie_poids');
+  const resultEl = document.getElementById('myasthenie_result');
+  const noteEl = document.getElementById('myasthenie_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const igJour = poids*0.4;
+  const igTotal = poids*2;
+  const prednisolone = poids*1;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Immunoglobulines IV (0,4 g/kg/j x5j)</td><td><strong>${igJour.toFixed(0)} g/j</strong> (dose totale sur 5j : ${igTotal.toFixed(0)} g)</td></tr>` +
+    `<tr><td>Prednisolone (1 mg/kg/j), à distance de la phase aiguë</td><td><strong>${prednisolone.toFixed(0)} mg/j</strong> per os</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Alternative : échanges plasmatiques (efficacité comparable). Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Compression médullaire aiguë (quadrithérapie antituberculeuse selon le poids) */
+function calcCompMedullaire(){
+  const poidsInput = document.getElementById('compmed_poids');
+  const resultEl = document.getElementById('compmed_result');
+  const noteEl = document.getElementById('compmed_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const rifampicine = poids*10;
+  const isoniazide = poids*5;
+  const pyrazinamide = poids*25;
+  const ethambutol = poids*15;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Antituberculeux</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Rifampicine (10 mg/kg/j)</td><td><strong>${rifampicine.toFixed(0)} mg/j</strong></td></tr>` +
+    `<tr><td>Isoniazide (5 mg/kg/j)</td><td><strong>${isoniazide.toFixed(0)} mg/j</strong></td></tr>` +
+    `<tr><td>Pyrazinamide (25 mg/kg/j)</td><td><strong>${pyrazinamide.toFixed(0)} mg/j</strong></td></tr>` +
+    `<tr><td>Éthambutol (15 mg/kg/j)</td><td><strong>${ethambutol.toFixed(0)} mg/j</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">À réserver à la suspicion d'abcès épidural tuberculeux (mal de Pott), après prélèvements, sans retarder l'imagerie ni la décompression. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Traumatisme du rachis (Noradrénaline, choc spinal, selon le poids) */
+function calcTraumaRachis(){
+  const poidsInput = document.getElementById('rachis_poids');
+  const resultEl = document.getElementById('rachis_result');
+  const noteEl = document.getElementById('rachis_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  // Dilution standard du module Drogues de réanimation : Noradrénaline 8mg/50mL G5% → 160 µg/mL
+  const noradMlH = (dosekgmin)=> (dosekgmin*poids*60)/160;
+  const noradMin = noradMlH(0.1), noradMax = noradMlH(1);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — dilution standard Noradrénaline 8 mg/50 mL G5% (160 µg/mL)`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Drogue</th><th>Débit calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Noradrénaline (0,1-1 µg/kg/min)</td><td><strong>${noradMin.toFixed(1)}-${noradMax.toFixed(1)} mL/h</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Objectif PAM &gt;85-90 mmHg pour limiter l'ischémie médullaire secondaire. Vérifier la dilution réellement préparée avant d'utiliser ce débit. Dose indicative.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Delirium de réanimation (Dexmédétomidine selon le poids) */
+function calcDelirium(){
+  const poidsInput = document.getElementById('delirium_poids');
+  const resultEl = document.getElementById('delirium_result');
+  const noteEl = document.getElementById('delirium_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const doseMin = poids*0.2, doseMax = poids*0.7;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Drogue</th><th>Débit calculé pour ${poids} kg</th></tr>` +
+    `<tr><td>Dexmédétomidine (Precedex®, 0,2-0,7 µg/kg/h)</td><td><strong>${doseMin.toFixed(0)}-${doseMax.toFixed(0)} µg/h</strong> IVSE</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Convertir en mL/h selon la dilution réellement préparée localement (non standardisée dans ce document). Réservée au patient ventilé. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Syndrome sérotoninergique/Syndrome malin des neuroleptiques (Dantrolène selon le poids) */
+function calcSmn(){
+  const poidsInput = document.getElementById('smn_poids');
+  const resultEl = document.getElementById('smn_result');
+  const noteEl = document.getElementById('smn_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const doseMin = poids*1, doseMax = poids*2.5;
+  const doseMaxJour = poids*10;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Dantrolène IV (Dantrium®)</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Dose (1-2,5 mg/kg)</td><td><strong>${doseMin.toFixed(0)}-${doseMax.toFixed(0)} mg</strong></td></tr>` +
+    `<tr><td>Dose maximale (10 mg/kg/j)</td><td><strong>${doseMaxJour.toFixed(0)} mg/j</strong></td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Réservé au syndrome malin des neuroleptiques sévère (rigidité majeure/hyperthermie sévère). Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche État hyperosmolaire hyperglycémique (osmolarité plasmatique + Insuline selon le poids) */
+function calcHhs(){
+  const naInput = document.getElementById('hhs_na');
+  const kInput = document.getElementById('hhs_k');
+  const glycemieInput = document.getElementById('hhs_glycemie');
+  const ureeInput = document.getElementById('hhs_uree');
+  const poidsInput = document.getElementById('hhs_poids');
+  const resultEl = document.getElementById('hhs_result');
+  const noteEl = document.getElementById('hhs_note');
+  if(!poidsInput) return;
+
+  const na = parseFloat(naInput.value);
+  const k = parseFloat(kInput.value);
+  const glycemie = parseFloat(glycemieInput.value);
+  const uree = parseFloat(ureeInput.value);
+  const poids = parseFloat(poidsInput.value);
+
+  const hasOsmo = !isNaN(na) && !isNaN(k) && !isNaN(glycemie) && !isNaN(uree);
+  const hasPoids = !isNaN(poids) && poids>0;
+
+  if(!hasOsmo && !hasPoids){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  let warn = '';
+  let rows = '';
+
+  if(hasOsmo){
+    warn += plausibilityWarnings([{val:na, min:100, max:180, label:'Na⁺ saisi', unit:'mmol/L'}, {val:k, min:1, max:9, label:'K⁺ saisi', unit:'mmol/L'}]);
+    const osmo = 2*(na+k) + glycemie + uree;
+    const interpretation = osmo>320 ? 'Hyperosmolarité confirmée (>320 mOsm/L)' : (osmo<285 ? 'Osmolarité basse pour le contexte' : 'Dans les valeurs normales (290±5)');
+    rows += `<tr><td>Osmolarité plasmatique calculée</td><td><strong>${osmo.toFixed(0)} mOsm/L</strong> — ${interpretation}</td></tr>`;
+  }
+
+  if(hasPoids){
+    warn += plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+    const insulineInitiale = poids*0.1;
+    const insulineDouble = poids*0.2;
+    const insulineRelaisSc = poids*0.5;
+    rows += `<tr><td>Insuline rapide IVSE — dose initiale (0,1 UI/kg/h)</td><td><strong>${insulineInitiale.toFixed(1)} UI/h</strong></td></tr>`;
+    rows += `<tr><td>Si inefficace à 2h (0,2 UI/kg/h)</td><td><strong>${insulineDouble.toFixed(1)} UI/h</strong></td></tr>`;
+    rows += `<tr><td>Relais SC après correction (0,5 UI/kg/j)</td><td><strong>${insulineRelaisSc.toFixed(1)} UI/j</strong> en injections toutes les 4h</td></tr>`;
+    noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  } else {
+    noteEl.textContent = '';
+  }
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Paramètre</th><th>Résultat</th></tr>${rows}</table>` +
+    `<p style="margin-top:8px; font-size:12px; color:var(--muted)">Ne jamais débuter l'insuline avant que la réhydratation seule ait commencé à faire baisser la glycémie — une insulinothérapie trop précoce expose à une chute osmotique brutale et un collapsus. Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Intoxications aiguës générales (Charbon activé selon le poids) */
+function calcIntoxGenerale(){
+  const poidsInput = document.getElementById('intox_poids');
+  const resultEl = document.getElementById('intox_result');
+  const noteEl = document.getElementById('intox_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+  const charbon = Math.min(poids*1, 50);
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Charbon activé</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>1 g/kg (max 50 g)</td><td><strong>${charbon.toFixed(0)} g</strong> PO/SNG</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Utile si ingestion &lt;1-2h d'un toxique adsorbable et voies aériennes protégées — inefficace sur l'alcool, les métaux, les caustiques. Dose indicative — vérifier systématiquement avant administration.</p>`;
 }
 
 /* ===================== MODULE ABRÉVIATIONS ===================== */
@@ -7512,7 +8726,22 @@ const ABBR_DATA = [
   ["VGM","Volume globulaire moyen"],
   ["VPN","Valeur prédictive négative"],
   ["WPW","Wolff-Parkinson-White (syndrome de préexcitation)"],
-  ["WSES","World Society of Emergency Surgery"]
+  ["WSES","World Society of Emergency Surgery"],
+  ["TB","Tuberculose"],
+  ["TB-MR / TB-RR","Tuberculose MultiRésistante / Tuberculose Résistante à la Rifampicine"],
+  ["RHZE","Rifampicine-Isoniazide-Pyrazinamide-Éthambutol — schéma antituberculeux de phase intensive"],
+  ["RH","Rifampicine-Isoniazide — schéma antituberculeux de phase d'entretien"],
+  ["BAAR","Bacille Acido-Alcoolo-Résistant — recherche de mycobactéries à l'examen microscopique des crachats"],
+  ["PNLT","Programme National de Lutte contre la Tuberculose (Madagascar)"],
+  ["CDT","Centre de Diagnostic et de Traitement (réseau de prise en charge de la tuberculose, Madagascar)"],
+  ["ADF","Association à Dose Fixe — comprimé combinant plusieurs principes actifs (ex. antituberculeux)"],
+  ["Xpert MTB/RIF (Ultra)","Test moléculaire de diagnostic rapide de la tuberculose et de la résistance à la rifampicine (GeneXpert)"],
+  ["IRIS","Immune Reconstitution Inflammatory Syndrome — syndrome de reconstitution immunitaire (sous TARV)"],
+  ["TARV","Traitement antirétroviral"],
+  ["PVVIH","Personne Vivant avec le VIH"],
+  ["PEV","Programme Élargi de Vaccination"],
+  ["DOT","Directly Observed Treatment — traitement directement observé (tuberculose)"],
+  ["BPaLM","Bédaquiline-Prétomanid-Linézolide-Moxifloxacine — schéma court de traitement de la TB-MR/RR"]
 ]).sort((a,b)=>a[0].localeCompare(b[0],'fr',{sensitivity:'base'}));
 
 function renderAbreviations(){
