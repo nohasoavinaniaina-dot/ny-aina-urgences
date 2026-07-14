@@ -3546,7 +3546,7 @@ function renderProtocoles(){
     <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Crise vaso-occlusive simple</p>
     <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Bilan :</strong></p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li>NFS (comparer à l'hémoglobine de base du patient), réticulocytes</li>
+      <li>NFS (comparer impérativement à l'hémoglobine de base du patient, notée dans son carnet de suivi si disponible — une Hb « basse » peut être le niveau habituel du patient : environ 6-9 g/dL chez le drépanocytaire SS/Sβ0, 9-11 g/dL chez le Sβ+, et souvent 10-13 g/dL chez le SC, avec réticulocytes physiologiquement élevés ~150-400 G/L par hémolyse chronique compensée), réticulocytes</li>
       <li>CRP (habituellement augmentée), ionogramme, bilan hépatique</li>
       <li>LDH (augmentées en cas d'hémolyse), Rx thorax</li>
       <li>Hémocultures et BU si fièvre ; β-HCG si femme en âge de procréer</li>
@@ -3628,6 +3628,35 @@ function renderProtocoles(){
       <li><strong>Injection intracaverneuse d'un vasoconstricteur</strong> — <strong>Étiléfrine (Effortil®)</strong> 2 mg (1 ampoule de 1 mL = 10 mg, diluer dans une seringue à insuline), répétable toutes les 10 min pendant la 1ère heure si échec, dose maximale 10 mg (après avis urologue). Si étiléfrine non disponible : <strong>adrénaline</strong> fortement diluée (10-20 µg par injection intracaverneuse) peut être utilisée en alternative selon avis urologique, sous surveillance tensionnelle/ECG</li>
       <li><strong>Si échec :</strong> chirurgie urologique — shunt uni ou bilatéral</li>
     </ol>
+
+    <p style="margin-top:14px; font-weight:600; color:var(--accent2);">4. Anémie aiguë chez le drépanocytaire : séquestration splénique vs crise érythroblastopénique</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Devant toute chute brutale de l'hémoglobine par rapport à la valeur de base connue du patient, deux diagnostics dominent — leur distinction repose avant tout sur le <strong>taux de réticulocytes</strong> et l'examen de la <strong>rate</strong>, et conditionne directement la prise en charge transfusionnelle.</p>
+    <table style="margin-bottom:10px;">
+      <tr><th></th><th>Séquestration splénique aiguë</th><th>Crise érythroblastopénique (aplasique)</th></tr>
+      <tr><td><strong>Mécanisme</strong></td><td>Piégeage brutal des hématies dans la rate</td><td>Arrêt transitoire de l'érythropoïèse médullaire, le plus souvent sur infection à <strong>Parvovirus B19</strong></td></tr>
+      <tr><td><strong>Terrain</strong></td><td>Surtout <strong>petit enfant</strong> (&lt;5-6 ans, avant l'auto-splénectomie fonctionnelle) ; possible à tout âge chez le SC/Sβ+</td><td>Tout âge, notion fréquente de contage viral ou d'épisode fébrile récent dans l'entourage</td></tr>
+      <tr><td><strong>Installation</strong></td><td>Très rapide (quelques heures) — urgence vitale par choc hypovolémique</td><td>Progressive sur quelques jours</td></tr>
+      <tr><td><strong>Rate</strong></td><td><strong>Grosse rate</strong> d'apparition ou d'augmentation brutale, souvent douloureuse, palpable (à mesurer et à surveiller au feutre sur l'abdomen)</td><td>Rate <strong>non modifiée</strong> (normale ou déjà atrophique/absente si auto-splénectomie ancienne)</td></tr>
+      <tr><td><strong>Réticulocytes</strong></td><td><strong>Élevés</strong> (anémie régénérative — la moelle répond normalement, l'hémolyse/piégeage périphérique est la cause)</td><td><strong>Effondrés</strong>, souvent &lt;10 G/L (signe cardinal, anémie arégénérative)</td></tr>
+      <tr><td><strong>Autres signes</strong></td><td>Thrombopénie fréquente associée (séquestration plaquettaire) ; signes de choc si sévère (tachycardie, hypotension, pâleur intense)</td><td>Peut s'associer à une neutropénie ; évolution spontanément résolutive en 7-10 jours (récupération médullaire)</td></tr>
+      <tr><td><strong>Conduite</strong></td><td><strong>Transfusion en urgence</strong> (prudente, par petits volumes — risque de restitution splénique brutale du sang séquestré et de surcharge/hyperviscosité à la levée de la séquestration) ; surveillance rapprochée du volume splénique ; splénectomie à discuter à distance si récidive</td><td>Transfusion simple si mal toléré ou Hb très basse, en <strong>attendant la reprise spontanée</strong> de l'érythropoïèse ; pas d'urgence à la « correction » complète</td></tr>
+    </table>
+
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Critères de décision transfusionnelle chez le drépanocytaire</p>
+    <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Transfusion simple</strong> (culot globulaire phénotypé, compatibilisé, si possible déleucocyté) — indications :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Anémie aiguë symptomatique ou chute de l'Hb &gt;2 g/dL par rapport à la base connue du patient</li>
+      <li>Séquestration splénique aiguë, crise érythroblastopénique mal tolérée</li>
+      <li>Préparation à une anesthésie générale/chirurgie : objectif Hb ≈10 g/dL (ne pas sur-corriger)</li>
+      <li>Grossesse à risque, selon avis spécialisé</li>
+    </ul>
+    <p style="font-size:13.5px; margin:6px 0 2px;"><strong>Échange transfusionnel</strong> (manuel ou par érythraphérèse selon plateau technique disponible) — indications :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>AVC constitué ou AIT (objectif habituel : HbS &lt;30%, cf. protocole AVC)</li>
+      <li>Syndrome thoracique aigu avec critère(s) de gravité (cf. supra)</li>
+      <li>Priapisme résistant, défaillance multiviscérale aiguë</li>
+    </ul>
+    <div class="warn-box">⚠️ Piège classique : <strong>ne jamais viser une Hb post-transfusionnelle &gt;10-11 g/dL</strong> chez le drépanocytaire, y compris lors d'une séquestration ou d'une érythroblastopénie sévère — au-delà, le risque d'<strong>hyperviscosité</strong> (majorée par la persistance d'HbS) augmente le risque d'AVC et de complications vaso-occlusives iatrogènes. Transfuser par volumes prudents (5-10 mL/kg par culot chez l'enfant) avec réévaluation clinique et biologique entre chaque poche plutôt qu'une correction complète d'emblée.</div>
 
     <p style="margin-top:10px; font-size:13px; color:var(--muted);"><strong>Ordonnance de sortie</strong> (CVO simple résolutive) : acide folique (Spéciafoldine®) 5 mg/j, antalgie par paracétamol 1 à 4 g/j, hydratation orale abondante. Voir aussi le protocole AVC pour la prise en charge de l'AVC drépanocytaire.</p>
   </div>
@@ -8457,7 +8486,7 @@ const ABBR_DATA = [
   ["RCP","Réanimation cardio-pulmonaire"],
   ["SABA","Short-Acting Beta-Agonist — bêta-2 agoniste de courte durée d'action"],
   ["SAMU","Service d'aide médicale urgente"],
-  ["SC","Sous-cutané"],
+  ["SC","Sous-cutané / Hémoglobinopathie SC, génotype drépanocytaire (selon contexte)"],
   ["SCA","Syndrome coronarien aigu"],
   ["SDRA","Syndrome de détresse respiratoire aiguë"],
   ["SE","Seringue électrique"],
@@ -8742,6 +8771,48 @@ const ABBR_DATA = [
   ["PEV","Programme Élargi de Vaccination"],
   ["DOT","Directly Observed Treatment — traitement directement observé (tuberculose)"],
   ["BPaLM","Bédaquiline-Prétomanid-Linézolide-Moxifloxacine — schéma court de traitement de la TB-MR/RR"]
+]).concat([
+  ["SA","Semaines d'aménorrhée (âge gestationnel)"],
+  ["HAS-BLED","Score de risque hémorragique sous anticoagulation (fibrillation atriale)"],
+  ["CV","Capacité vitale (mesure spirométrique, ex. Guillain-Barré) / Cardiovasculaire (selon contexte)"],
+  ["GDSv","Gaz du sang veineux"],
+  ["GDSa","Gaz du sang artériel"],
+  ["CKD-EPI","Chronic Kidney Disease Epidemiology Collaboration — formule d'estimation du débit de filtration glomérulaire"],
+  ["ARDSnet / ARDSNet","ARDS Network — protocole de référence de ventilation protectrice du SDRA"],
+  ["RESCUEicp","Randomised Evaluation of Surgery with Craniectomy for Uncontrollable Elevation of Intracranial Pressure — essai de référence sur la craniectomie décompressive"],
+  ["NOMI","Non-Occlusive Mesenteric Ischemia — ischémie mésentérique non occlusive (bas débit)"],
+  ["SaO2","Saturation artérielle en oxygène mesurée par gazométrie/co-oxymétrie (à distinguer de la SpO2 par oxymètre de pouls)"],
+  ["ReSoMal","Rehydration Solution for Malnutrition — soluté de réhydratation OMS spécifique à l'enfant sévèrement malnutri"],
+  ["ALSO","Advanced Life Support in Obstetrics — programme de formation aux urgences obstétricales"],
+  ["DigiFab","Anticorps anti-digoxine (fragments Fab) — antidote spécifique de l'intoxication digitalique"],
+  ["aVR","Dérivation ECG augmentée du bras droit (augmented Vector Right)"],
+  ["DS","Déviation standard (z-score) — utilisée notamment dans les critères anthropométriques de malnutrition aiguë sévère"],
+  ["ABA","American Burn Association"],
+  ["EAU","European Association of Urology"],
+  ["ASRA","American Society of Regional Anesthesia and Pain Medicine"],
+  ["BiPAP","Bilevel Positive Airway Pressure — mode ventilatoire non invasif à deux niveaux de pression"],
+  ["aPTT","Activated Partial Thromboplastin Time — équivalent anglais du TCA"],
+  ["PvCO2","Pression veineuse en dioxyde de carbone"],
+  ["SvO2","Saturation veineuse en oxygène (mêlée)"],
+  ["NT-proBNP","Fragment N-terminal du proBNP — marqueur biologique d'insuffisance cardiaque"],
+  ["mUI","Milli-unités internationales (à ne pas confondre avec MUI, millions d'unités internationales)"],
+  ["ROT","Réflexes ostéo-tendineux — surveillance notamment sous sulfate de magnésium (éclampsie)"],
+  ["VA","Voies aériennes"],
+  ["CK-MB","Isoenzyme MB de la créatine kinase (marqueur myocardique)"],
+  ["hypoTA","Hypotension artérielle (contraction d'usage courant dans ce guide)"],
+  ["HbCO","Carboxyhémoglobine (intoxication au monoxyde de carbone)"],
+  ["HbA1c","Hémoglobine glyquée — reflet de l'équilibre glycémique des 2-3 derniers mois"],
+  ["HbS","Hémoglobine S — hémoglobine anormale de la drépanocytose"],
+  ["SS / SC / Sβ+ / Sβ0","Génotypes drépanocytaires : homozygote S (SS, forme la plus sévère), hétérozygote composite S/C (SC), S/β-thalassémie plus ou zéro (Sβ+, Sβ0) — sévérité clinique globalement décroissante de SS vers SC/Sβ+"],
+  ["PTH","Parathormone (hormone parathyroïdienne)"],
+  ["CD4","Lymphocytes T CD4 — marqueur de suivi de l'infection à VIH"],
+  ["HNF","Héparine non fractionnée"],
+  ["NAC","N-acétylcystéine (antidote de l'intoxication au paracétamol, mucolytique)"],
+  ["AAA","Anévrisme de l'aorte abdominale"],
+  ["3TC","Lamivudine (antirétroviral)"],
+  ["dTPolio","Vaccin combiné diphtérie-tétanos-poliomyélite"],
+  ["BCG","Bacille Calmette-Guérin — vaccin antituberculeux"],
+  ["PQ","Segment/intervalle PQ (électrocardiogramme, synonyme d'intervalle PR)"]
 ]).sort((a,b)=>a[0].localeCompare(b[0],'fr',{sensitivity:'base'}));
 
 function renderAbreviations(){
