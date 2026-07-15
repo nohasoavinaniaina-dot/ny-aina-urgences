@@ -301,7 +301,7 @@ const MODULES = {
 const renderers = {}; // mod -> function() -> html string
 
 /* ——— Version de l'application ——— */
-const APP_VERSION = "2026.07.14";
+const APP_VERSION = "2026.07.15e";
 document.addEventListener('DOMContentLoaded', ()=>{});
 (function initVersionBadge(){
   const el = document.getElementById('app-version');
@@ -824,8 +824,12 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-acd').scrollIntoView({behavior:'smooth',block:'start'})">🩺 Acidocétose diabétique</a></li>
         <li><a onclick="document.getElementById('proto-hhs').scrollIntoView({behavior:'smooth',block:'start'})">💧 État hyperosmolaire</a></li>
         <li><a onclick="document.getElementById('proto-acidose-lactique').scrollIntoView({behavior:'smooth',block:'start'})">⚗️ Acidose lactique / MALA</a></li>
+        <li><a onclick="document.getElementById('proto-acidocetose-alcoolique').scrollIntoView({behavior:'smooth',block:'start'})">🍺 Acidocétose alcoolique</a></li>
         <li><a onclick="document.getElementById('proto-insuffisance-surrenale').scrollIntoView({behavior:'smooth',block:'start'})">🧂 Insuffisance surrénalienne aiguë</a></li>
         <li><a onclick="document.getElementById('proto-thyroide').scrollIntoView({behavior:'smooth',block:'start'})">🦋 Crise thyréotoxique / Coma myxœdémateux</a></li>
+        <li><a onclick="document.getElementById('proto-pheochromocytome').scrollIntoView({behavior:'smooth',block:'start'})">⚡ Crise catécholaminergique / Phéochromocytome</a></li>
+        <li><a onclick="document.getElementById('proto-apoplexie-hypophysaire').scrollIntoView({behavior:'smooth',block:'start'})">🧠 Apoplexie hypophysaire</a></li>
+        <li><a onclick="document.getElementById('proto-diabete-insipide').scrollIntoView({behavior:'smooth',block:'start'})">💦 Diabète insipide central aigu</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🦠 Infectiologie</span><span class="toc-cat-arrow">▾</span></li>
@@ -892,9 +896,14 @@ function renderProtocoles(){
       <li class="toc-group collapsed"><ul class="toc-sub">
         <li><a onclick="document.getElementById('proto-hemorragie-digestive').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Hémorragie digestive</a></li>
         <li><a onclick="document.getElementById('proto-encephalopathie-hepatique').scrollIntoView({behavior:'smooth',block:'start'})">🧠 Encéphalopathie hépatique</a></li>
+        <li><a onclick="document.getElementById('proto-insuffisance-hepatique-aigue').scrollIntoView({behavior:'smooth',block:'start'})">🫀 Insuffisance hépatique aiguë (hépatite fulminante)</a></li>
+        <li><a onclick="document.getElementById('proto-pbs-shr').scrollIntoView({behavior:'smooth',block:'start'})">💧 Péritonite bactérienne spontanée / Syndrome hépato-rénal</a></li>
         <li><a onclick="document.getElementById('proto-epigastralgie').scrollIntoView({behavior:'smooth',block:'start'})">🔥 Épigastralgie intense (ulcère/gastrite)</a></li>
         <li><a onclick="document.getElementById('proto-pancreatite').scrollIntoView({behavior:'smooth',block:'start'})">🟠 Pancréatite aiguë</a></li>
+        <li><a onclick="document.getElementById('proto-angiocholite').scrollIntoView({behavior:'smooth',block:'start'})">🟡 Angiocholite aiguë</a></li>
+        <li><a onclick="document.getElementById('proto-cholecystite').scrollIntoView({behavior:'smooth',block:'start'})">🟢 Cholécystite aiguë</a></li>
         <li><a onclick="document.getElementById('proto-abdomen-aigu').scrollIntoView({behavior:'smooth',block:'start'})">🫃 Douleur abdominale aiguë</a></li>
+        <li><a onclick="document.getElementById('proto-occlusion-intestinale').scrollIntoView({behavior:'smooth',block:'start'})">🌀 Occlusion intestinale aiguë</a></li>
         <li><a onclick="document.getElementById('proto-ischemie-mesenterique').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Ischémie mésentérique aiguë</a></li>
       </ul></li>
 
@@ -908,8 +917,14 @@ function renderProtocoles(){
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>👁️ ORL / Ophtalmologie</span><span class="toc-cat-arrow">▾</span></li>
       <li class="toc-group collapsed"><ul class="toc-sub">
         <li><a onclick="document.getElementById('proto-glaucome-aigu').scrollIntoView({behavior:'smooth',block:'start'})">👁️ Glaucome aigu</a></li>
+        <li><a onclick="document.getElementById('proto-oacr').scrollIntoView({behavior:'smooth',block:'start'})">👁️ Occlusion de l'artère centrale de la rétine</a></li>
+        <li><a onclick="document.getElementById('proto-endophtalmie').scrollIntoView({behavior:'smooth',block:'start'})">👁️ Endophtalmie aiguë</a></li>
         <li><a onclick="document.getElementById('proto-trauma-oculaire').scrollIntoView({behavior:'smooth',block:'start'})">👁️ Traumatisme oculaire grave</a></li>
+        <li><a onclick="document.getElementById('proto-cellulite-orbitaire').scrollIntoView({behavior:'smooth',block:'start'})">🟠 Cellulite orbitaire / périorbitaire</a></li>
         <li><a onclick="document.getElementById('proto-epistaxis').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Épistaxis</a></li>
+        <li><a onclick="document.getElementById('proto-phlegmon-periamygdalien').scrollIntoView({behavior:'smooth',block:'start'})">😷 Phlegmon périamygdalien / Abcès rétropharyngé</a></li>
+        <li><a onclick="document.getElementById('proto-otite-externe-maligne').scrollIntoView({behavior:'smooth',block:'start'})">👂 Otite externe maligne (nécrosante)</a></li>
+        <li><a onclick="document.getElementById('proto-vertige-aigu').scrollIntoView({behavior:'smooth',block:'start'})">🌀 Vertige aigu (syndrome vestibulaire)</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🤰 Gynéco-obstétrique</span><span class="toc-cat-arrow">▾</span></li>
@@ -918,18 +933,29 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-hpp').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Hémorragie post-partum</a></li>
         <li><a onclick="document.getElementById('proto-geu').scrollIntoView({behavior:'smooth',block:'start'})">🤰 Grossesse extra-utérine</a></li>
         <li><a onclick="document.getElementById('proto-fausse-couche').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Fausse couche hémorragique</a></li>
+        <li><a onclick="document.getElementById('proto-avortement-septique').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Avortement septique</a></li>
         <li><a onclick="document.getElementById('proto-hrp-placenta-praevia').scrollIntoView({behavior:'smooth',block:'start'})">🩸 HRP / Placenta praevia hémorragique</a></li>
         <li><a onclick="document.getElementById('proto-accouchement-inopine').scrollIntoView({behavior:'smooth',block:'start'})">🍼 Accouchement inopiné</a></li>
+        <li><a onclick="document.getElementById('proto-retention-placentaire').scrollIntoView({behavior:'smooth',block:'start'})">🤰 Rétention placentaire</a></li>
         <li><a onclick="document.getElementById('proto-procidence-cordon').scrollIntoView({behavior:'smooth',block:'start'})">🪢 Procidence du cordon</a></li>
         <li><a onclick="document.getElementById('proto-dystocie-epaules').scrollIntoView({behavior:'smooth',block:'start'})">💪 Dystocie des épaules</a></li>
+        <li><a onclick="document.getElementById('proto-souffrance-foetale-aigue').scrollIntoView({behavior:'smooth',block:'start'})">💓 Souffrance fœtale aiguë</a></li>
         <li><a onclick="document.getElementById('proto-rupture-uterine').scrollIntoView({behavior:'smooth',block:'start'})">💥 Rupture utérine</a></li>
         <li><a onclick="document.getElementById('proto-torsion-annexe').scrollIntoView({behavior:'smooth',block:'start'})">🌀 Torsion d'annexe</a></li>
+        <li><a onclick="document.getElementById('proto-salpingite-pid').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Salpingite aiguë / Infection génitale haute sévère</a></li>
+        <li><a onclick="document.getElementById('proto-bartholinite').scrollIntoView({behavior:'smooth',block:'start'})">🩹 Bartholinite abcédée</a></li>
+        <li><a onclick="document.getElementById('proto-sho').scrollIntoView({behavior:'smooth',block:'start'})">🫧 Syndrome d'hyperstimulation ovarienne</a></li>
         <li><a onclick="document.getElementById('proto-hellp').scrollIntoView({behavior:'smooth',block:'start'})">🤰 Syndrome HELLP</a></li>
+        <li><a onclick="document.getElementById('proto-choc-hemorragique-obstetrical').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Choc hémorragique obstétrical</a></li>
         <li><a onclick="document.getElementById('proto-embolie-amniotique').scrollIntoView({behavior:'smooth',block:'start'})">💥 Embolie amniotique</a></li>
         <li><a onclick="document.getElementById('proto-acr-grossesse').scrollIntoView({behavior:'smooth',block:'start'})">🫀 ACR chez la femme enceinte / césarienne périmortem</a></li>
+        <li><a onclick="document.getElementById('proto-cardiomyopathie-peripartum').scrollIntoView({behavior:'smooth',block:'start'})">🫀 Cardiomyopathie du péripartum</a></li>
         <li><a onclick="document.getElementById('proto-inversion-uterine').scrollIntoView({behavior:'smooth',block:'start'})">🔄 Inversion utérine</a></li>
         <li><a onclick="document.getElementById('proto-sepsis-puerperal').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Sepsis puerpéral / chorioamniotite</a></li>
+        <li><a onclick="document.getElementById('proto-endometrite-pp').scrollIntoView({behavior:'smooth',block:'start'})">🌡️ Endométrite du post-partum (non compliquée)</a></li>
+        <li><a onclick="document.getElementById('proto-sheehan').scrollIntoView({behavior:'smooth',block:'start'})">🧠 Syndrome de Sheehan</a></li>
         <li><a onclick="document.getElementById('proto-trauma-grossesse').scrollIntoView({behavior:'smooth',block:'start'})">🚑 Traumatisme chez la femme enceinte</a></li>
+        <li><a onclick="document.getElementById('proto-complications-cesarienne').scrollIntoView({behavior:'smooth',block:'start'})">🔪 Complications hémorragiques/infectieuses de la césarienne</a></li>
         <li><a onclick="document.getElementById('proto-mole-hydatiforme').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Môle hydatiforme hémorragique</a></li>
         <li><a onclick="document.getElementById('proto-map-tocolyse').scrollIntoView({behavior:'smooth',block:'start'})">⏱️ Menace d'accouchement prématuré / tocolyse</a></li>
         <li><a onclick="document.getElementById('proto-violences-sexuelles').scrollIntoView({behavior:'smooth',block:'start'})">⚖️ Violences sexuelles — prise en charge médico-légale</a></li>
@@ -1586,6 +1612,15 @@ function renderProtocoles(){
       <li>Recontrôler la glycémie à 15 min, répéter si besoin, puis relais par apport glucidique pour éviter la récidive (surtout si sulfamides hypoglycémiants — surveillance prolongée 24-48h)</li>
       <li>Rechercher la cause : surdosage insuline/ADO, jeûne prolongé, insuffisance rénale/hépatique, sepsis, insuffisance surrénalienne</li>
     </ul>
+    <div class="warn-box" style="margin-top:10px;">🍬 <strong>Hypoglycémie réfractaire aux sulfamides hypoglycémiants (Octréotide)</strong> — en cas de surdosage/intoxication par <strong>Glibenclamide (Daonil®)</strong> ou <strong>Gliclazide (Diamicron®)</strong>, l'hypersécrétion d'insuline induite peut provoquer des hypoglycémies récidivantes malgré des resucrages répétés au G30%, parfois pendant plus de 24-48h (demi-vie longue, surtout si insuffisance rénale associée).
+      <ul style="margin-left:18px; margin-top:6px;">
+        <li>Éviter le <strong>Glucagon</strong> en 1ère intention dans ce contexte précis : il stimule lui aussi la libération d'insuline endogène et peut aggraver/prolonger l'hypoglycémie en cas de surdosage aux sulfamides (à la différence de l'hypoglycémie de l'insulinothérapie, où il reste utile)</li>
+        <li><strong>Octréotide (Sandostatine®)</strong> 50-100 µg SC ou IV, à renouveler toutes les 6-12h selon la récidive — inhibe la sécrétion pancréatique d'insuline induite par les sulfamides et réduit le nombre d'épisodes hypoglycémiques ainsi que les besoins en glucosé. À associer au resucrage glucosé habituel, pas en remplacement</li>
+        <li>Surveillance glycémique rapprochée prolongée (au moins 24-48h après la dernière hypoglycémie) avant d'envisager une sortie, compte tenu du risque de récidive tardive</li>
+        <li>Avis toxicologique/réanimation si ingestion volontaire ou dose supra-thérapeutique importante</li>
+      </ul>
+      <p style="margin-top:6px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Glucosé 30%/G10% et le Glucagon sont disponibles à la plupart des niveaux hospitaliers. L'Octréotide (Sandostatine®) est d'accès plus limité, réservé aux pharmacies de CHU/CHRR — en son absence, poursuivre le resucrage glucosé répété (PO/IV) avec surveillance rapprochée prolongée reste la conduite de recours.</p>
+    </div>
   </div>
 
   <div class="card" id="proto-acd">
@@ -1615,6 +1650,15 @@ function renderProtocoles(){
       </li>
       <li>Surveiller activement : hypoglycémie et hypokaliémie iatrogènes (principale cause de décès évitable en cours de traitement), œdème cérébral (surtout enfant/adolescent — céphalées, altération de conscience, bradycardie : mannitol ou sérum salé hypertonique en urgence)</li>
     </ol>
+    <div class="warn-box" style="margin-top:10px;">🍬 <strong>Acidocétose diabétique euglycémique (iSGLT2)</strong> — chez un patient sous <strong>gliflozine</strong> (<strong>Dapagliflozine/Forxiga®</strong>, <strong>Empagliflozine/Jardiance®</strong>, de plus en plus prescrites dans le diabète de type 2 et l'insuffisance cardiaque), une ACD peut survenir avec une <strong>glycémie normale ou seulement modérément élevée (souvent &lt;2,5 g/L soit &lt;14 mmol/L, parfois quasi normale)</strong> — la glycosurie induite par le médicament masque l'hyperglycémie attendue.
+      <ul style="margin-left:18px; margin-top:6px;">
+        <li><strong>Piège diagnostique majeur :</strong> un dextro normal ne doit jamais éliminer une ACD chez un patient sous iSGLT2 présentant nausées/vomissements/douleurs abdominales/dyspnée/asthénie inexpliqués — doser systématiquement la cétonémie (ou à défaut la cétonurie) et le trou anionique devant ce tableau</li>
+        <li>Facteurs déclenchants classiques : jeûne prolongé, régime pauvre en glucides, chirurgie récente, déshydratation/vomissements, infection intercurrente, réduction ou arrêt concomitant de l'insuline, alcool</li>
+        <li><strong>Arrêt immédiat et définitif durant l'épisode aigu</strong> de l'iSGLT2 — ne pas reprendre avant réévaluation à distance par l'équipe diabétologique</li>
+        <li>Même prise en charge que l'ACD classique (réhydratation puis insulinothérapie IVSE au débit habituel 0,1 UI/kg/h, cf. calculateur ci-dessus) mais <strong>adjoindre un soluté glucosé (G10%) en Y dès le début ou dès que la glycémie approche 2-2,5 g/L (11-14 mmol/L)</strong> afin de pouvoir maintenir l'insuline jusqu'à résolution complète de la cétose — c'est la correction de la cétonémie, et non celle de la glycémie, qui définit ici la guérison</li>
+      </ul>
+      <p style="margin-top:6px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les bandelettes de cétonémie capillaire/cétonurie sont inconstamment disponibles hors CHU — en leur absence, s'appuyer sur le trou anionique et les gaz du sang veineux pour étayer le diagnostic devant toute symptomatologie évocatrice chez un patient sous iSGLT2, même à glycémie normale.</p>
+    </div>
   </div>
 
   <div class="card" id="proto-hhs">
@@ -1681,6 +1725,22 @@ function renderProtocoles(){
       <li>Surveillance rapprochée : lactates, gaz du sang, fonction rénale, kaliémie</li>
     </ol>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">⚠️ Ne pas confondre avec l'ACD : ici pas de cétose marquée, contexte évocateur (metformine + IRA), trou anionique élevé principalement porté par les lactates.</p>
+  </div>
+
+  <div class="card" id="proto-acidocetose-alcoolique">
+    <h3>🍺 Acidocétose alcoolique</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Entité distincte de l'ACD et de l'acidose lactique. Terrain typique : alcoolisme chronique avec réduction ou arrêt récent des apports alcooliques (souvent après un épisode de forte consommation), associé à un jeûne prolongé et des vomissements répétés. Biologie : acidose métabolique à trou anionique augmenté, cétonémie/cétonurie positive (surtout β-hydroxybutyrate), <strong>glycémie basse, normale ou seulement discrètement élevée</strong> (jamais franchement élevée comme dans l'ACD).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Diagnostic différentiel :</strong> ACD (glycémie franchement élevée, contexte diabétique), acidose lactique/MALA (cétose peu marquée, contexte metformine/choc/hypoxie), intoxication au méthanol/éthylène glycol (trou osmolaire élevé, troubles visuels), pancréatite aiguë associée (fréquente, à rechercher systématiquement devant des douleurs abdominales).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Thiamine (vitamine B1) 100-500 mg IV ou IM, à administrer avant ou en même temps que tout soluté glucosé</strong> — prévention de l'encéphalopathie de Gayet-Wernicke, systématique chez tout patient alcoolique recevant du glucose. Ne jamais retarder la correction d'une hypoglycémie sévère associée pour attendre la thiamine ; les administrer alors simultanément</li>
+      <li><strong>Réhydratation par soluté glucosé</strong> — <strong>Glucosé 5% ou 10% dans NaCl 0,9%</strong>, c'est le traitement clé : le glucose restaure l'insulinosécrétion endogène et stoppe la cétogenèse plus efficacement que le remplissage seul. À éviter transitoirement seulement si hypokaliémie sévère non corrigée (l'appel insulinique induit par le glucose aggraverait l'hypokaliémie) — corriger d'abord le potassium</li>
+      <li><strong>Pas d'insulinothérapie exogène nécessaire</strong> (à la différence de l'ACD) — le resucrage seul suffit à corriger la cétose chez la grande majorité des patients</li>
+      <li><strong>Correction électrolytique systématique</strong> : kaliémie, magnésémie, phosphorémie (déficits fréquents chez le patient alcoolique dénutri) — surveiller un éventuel syndrome de renutrition en cas de dénutrition sévère associée</li>
+      <li>Antiémétiques si vomissements, et rechercher/traiter les complications associées : sevrage alcoolique (cf. protocole dédié), pancréatite aiguë, hépatite alcoolique, hypoglycémie</li>
+      <li>Bicarbonates non recommandés — l'acidose se corrige habituellement rapidement (12-24h) sous traitement adapté</li>
+      <li>Évolution généralement rapide et favorable ; en l'absence d'amélioration attendue, rechercher une cause alternative ou associée (sepsis, pancréatite sévère, intoxication associée)</li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Thiamine injectable et les solutés glucosés (G5%/G10%) sont disponibles à tous les niveaux hospitaliers (LNMEIS) — prise en charge réalisable même en structure de base. Le dosage de la cétonémie capillaire n'est souvent disponible qu'en CHU ; à défaut, le diagnostic reste clinique et biologique (trou anionique, GDS veineux, contexte évocateur).</p>
   </div>
 
   <div class="card" id="proto-paludisme">
@@ -2084,6 +2144,48 @@ function renderProtocoles(){
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">⚠️ Toute encéphalopathie hépatique de novo ou qui s'aggrave chez un cirrhotique doit faire éliminer en priorité une hémorragie digestive et une infection (notamment péritonite bactérienne spontanée) avant d'incriminer la seule maladie hépatique.</p>
   </div>
 
+  <div class="card" id="proto-insuffisance-hepatique-aigue">
+    <h3>🫀 Insuffisance hépatique aiguë (hépatite fulminante)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Définition :</strong> apparition d'une coagulopathie (INR ≥1,5) associée à une encéphalopathie hépatique, dans un délai &lt;26 semaines, chez un patient sans hépatopathie chronique sous-jacente connue (exceptions : maladie de Wilson, réactivation d'hépatite B, hépatite auto-immune, syndrome de Budd-Chiari aigu, qui peuvent se présenter comme une insuffisance hépatique aiguë même sur foie préalablement atteint). Urgence vitale — mortalité élevée sans transplantation dans les formes graves.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Étiologies à rechercher systématiquement :</strong> médicamenteuse/toxique (paracétamol — cf. protocole dédié avec NAC et critères de King's College spécifiques —, autres hépatotoxiques : antituberculeux/Isoniazide-Rifampicine, antiépileptiques, phytothérapie), virale (hépatites A, B ± D, E surtout chez la femme enceinte, plus rarement CMV/EBV/HSV), toxique non médicamenteuse (amatoxines — champignons du genre <em>Amanita phalloides</em>), auto-immune, vasculaire (syndrome de Budd-Chiari, choc/ischémie hépatique — "foie de choc"), maladie de Wilson (sujet jeune, hémolyse associée), stéatose aiguë gravidique/HELLP (cf. protocoles obstétricaux dédiés), indéterminée (jusqu'à 15-20% des cas malgré bilan complet).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Bilan étiologique large et précoce</strong> : sérologies virales (VHA IgM, Ag HBs/IgM anti-HBc, VHE si contexte), bilan auto-immun (anticorps antinucléaires, anti-muscle lisse), cuprémie/cuprurie/céruloplasmine si suspicion de Wilson (sujet jeune), imagerie hépatique avec étude vasculaire (Doppler/angio-TDM) à la recherche d'un Budd-Chiari, interrogatoire policier sur les prises médicamenteuses/toxiques (y compris phytothérapie et champignons) des jours précédents</li>
+      <li><strong>Surveillance rapprochée en unité de soins intensifs/réanimation dès l'apparition d'une encéphalopathie</strong> : glycémie capillaire horaire (hypoglycémie fréquente et grave, sécrétion insuffisante de glucose par le foie défaillant — corriger par Glucosé 10-30% selon besoin), ionogramme, lactates, gaz du sang, TP/INR, fonction rénale (insuffisance rénale fréquemment associée — cf. syndrome hépato-rénal)</li>
+      <li><strong>Protection des voies aériennes</strong> dès un grade III-IV d'encéphalopathie (cf. protocole Encéphalopathie hépatique pour la gradation et la prise en charge symptomatique) — intubation si GCS ≤8 ou réflexes de protection abolis</li>
+      <li><strong>Prévention/traitement de l'hypertension intracrânienne</strong> (risque majeur dans les formes graves à évolution rapide, surtout chez le sujet jeune) : tête surélevée à 30°, éviter l'hypercapnie/hypoxie, sédation adaptée si intubé ; en cas de signes d'engagement (mydriase, bradycardie, HTA), mannitol ou sérum salé hypertonique en urgence — cf. protocole HTIC dédié</li>
+      <li><strong>Coagulopathie :</strong> ne pas corriger systématiquement l'INR (marqueur pronostique à préserver pour le suivi) — réserver PFC/CCP aux situations d'hémorragie active ou avant un geste invasif ; <strong>Vitamine K1</strong> systématique (carence fréquente, sans nuire au suivi de l'INR)</li>
+      <li><strong>N-acétylcystéine (NAC)</strong> à discuter même en dehors d'une étiologie paracétamol — bénéfice possible sur la survie sans transplantation dans les formes non-paracétamol à un stade précoce d'encéphalopathie (grade I-II), schéma similaire à celui du protocole paracétamol</li>
+      <li><strong>Prévention des complications infectieuses</strong> (le sepsis est une cause fréquente de décès et peut aggraver/précipiter l'encéphalopathie et l'hypertension intracrânienne) — dépistage clinique et biologique rapproché, antibiothérapie probabiliste précoce au moindre doute (pas d'antibioprophylaxie systématique en l'absence de guide local)</li>
+      <li><strong>Critères de King's College pour les étiologies non-paracétamol</strong> (orientant vers une indication de transplantation hépatique en urgence) : <strong>INR &gt;6,5 seul</strong>, OU au moins 3 des critères suivants parmi — âge &lt;10 ans ou &gt;40 ans, étiologie défavorable (hépatite non-A non-B, hépatotoxicité médicamenteuse idiosyncrasique, maladie de Wilson), délai ictère-encéphalopathie &gt;7 jours, INR &gt;3,5, bilirubine &gt;300 µmol/L</li>
+      <li><strong>Contact précoce avec un centre de transplantation hépatique</strong> dès qu'un critère de gravité apparaît (encéphalopathie de novo, aggravation rapide de l'INR) — la fenêtre d'action est étroite ; en l'absence de programme de transplantation accessible localement, discuter un transfert international selon les moyens et anticiper la discussion avec la famille</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la NAC injectable et la Vitamine K1 sont d'accès limité (pharmacies de CHU pour la forme IV de NAC — cf. protocole paracétamol). La transplantation hépatique n'est pas disponible localement ; la prise en charge repose donc essentiellement sur la réanimation symptomatique optimale (glycémie, prévention de l'HTIC, dépistage infectieux) et l'orientation la plus précoce possible vers un centre de référence en cas de critère de gravité, le pronostic se jouant souvent en quelques jours.</p>
+  </div>
+
+  <div class="card" id="proto-pbs-shr">
+    <h3>💧 Péritonite bactérienne spontanée & Syndrome hépato-rénal</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Péritonite bactérienne spontanée (PBS) :</strong> infection du liquide d'ascite sans foyer chirurgical identifiable, chez un patient cirrhotique ascitique — complication fréquente et grave (mortalité intra-hospitalière 20-40% sans traitement adapté). À évoquer systématiquement devant toute décompensation chez un cirrhotique ascitique : fièvre, douleur abdominale, mais aussi tableau frustre voire asymptomatique (encéphalopathie de novo, aggravation d'une insuffisance rénale, hypotension) — <strong>la ponction d'ascite diagnostique doit être quasi systématique à l'admission de tout cirrhotique ascitique</strong>, même en l'absence de symptôme évocateur.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Diagnostic</strong> : ponction d'ascite avec cytologie — <strong>PBS confirmée si polynucléaires neutrophiles (PNN) ≥250/mm³</strong> dans le liquide d'ascite, indépendamment de la positivité de la culture (souvent négative). Envoyer systématiquement le liquide en culture (ensemencement au lit du patient dans des flacons d'hémoculture, améliore le rendement) et réaliser des hémocultures</li>
+      <li><strong>Antibiothérapie probabiliste immédiate</strong> dès PNN ≥250/mm³, sans attendre la culture : <strong>Céfotaxime (Claforan®)</strong> 2g IV toutes les 8h, ou à défaut <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j — durée 5-7 jours, à réévaluer/désescalader selon l'antibiogramme et l'évolution clinique. Éviter les aminosides (néphrotoxicité chez un patient à risque de syndrome hépato-rénal)</li>
+      <li><strong>Expansion volémique par albumine humaine</strong> — <strong>1,5 g/kg à J1</strong> puis <strong>1 g/kg à J3</strong>, réduit significativement l'incidence du syndrome hépato-rénal et améliore la survie ; à privilégier surtout si créatinine &gt;88 µmol/L, urée élevée ou bilirubine &gt;68 µmol/L (patients à plus haut risque)</li>
+      <li>Arrêt/réduction prudente des diurétiques et de tout médicament néphrotoxique (AINS, IEC/ARA2, aminosides) durant l'épisode infectieux</li>
+      <li><strong>Réévaluer par une nouvelle ponction à 48h</strong> si évolution clinique défavorable — une diminution des PNN &lt;25% du taux initial doit faire suspecter une résistance/inadéquation de l'antibiothérapie ou une péritonite secondaire (perforation, abcès) méconnue</li>
+      <li><strong>Prophylaxie secondaire</strong> après un premier épisode de PBS (risque de récidive élevé à 1 an) : <strong>Norfloxacine</strong> 400 mg/j PO au long cours (ou Ciprofloxacine si indisponible) — à poursuivre jusqu'à disparition de l'ascite, transplantation, ou décès</li>
+      <li>Distinguer de la <strong>péritonite bactérienne secondaire</strong> (perforation digestive, abcès) : à évoquer devant une ascite multi-microbienne, des PNN très élevés avec plusieurs germes, une absence d'amélioration sous antibiothérapie adaptée, ou des critères de Runyon (protides d'ascite &gt;10g/L, glucose bas, LDH élevées) — impose une imagerie (TDM abdominale) et un avis chirurgical, l'antibiothérapie seule étant insuffisante</li>
+    </ol>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Syndrome hépato-rénal (SHR) :</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Insuffisance rénale fonctionnelle sur cirrhose décompensée (vasodilatation splanchnique majeure avec hypoperfusion rénale), diagnostic d'élimination après avoir écarté une cause organique (nécrose tubulaire, hypovolémie vraie, néphrotoxique) — souvent précipité par une PBS, une hémorragie digestive ou une déshydratation excessive sous diurétiques.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Diagnostic</strong> : élévation de la créatinine (critères AKI habituels), absence d'amélioration après 48h d'arrêt des diurétiques et d'expansion volémique par albumine (1g/kg/j, max 100g/j, pendant 2 jours), absence de choc, pas de prise récente de néphrotoxique, absence de protéinurie/hématurie/anomalie échographique évoquant une néphropathie organique</li>
+      <li><strong>Traitement de 1ère intention : Terlipressine (Glypressin®)</strong> 1 mg IV toutes les 4-6h (bolus ou perfusion continue selon disponibilité), à augmenter à 2 mg/4-6h si absence de réponse (baisse de créatinine &lt;30% à 48h) — <strong>associée systématiquement à de l'albumine humaine</strong> 20-40g/j — poursuivre jusqu'à réponse complète ou 14 jours maximum. Surveiller les signes d'ischémie (mésentérique, digitale) et l'apparition d'une surcharge/OAP</li>
+      <li><strong>Alternative si Terlipressine indisponible :</strong> Noradrénaline IVSE (0,5-3 mg/h, titrée à la TA moyenne, nécessite une surveillance en unité de soins intensifs) associée à l'albumine — efficacité comparable dans les données disponibles</li>
+      <li>Épuration extra-rénale à discuter en cas d'échec du traitement médical avec surcharge hydrosodée réfractaire, hyperkaliémie menaçante ou acidose sévère, en tenant compte du pronostic global et de l'accès à une transplantation</li>
+      <li>Seul traitement curatif définitif : <strong>transplantation hépatique</strong> — à évoquer précocement chez tout patient éligible</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Claforan®/Rocéphine® et l'albumine humaine sont disponibles en pharmacie hospitalière (CHU/CHRR), l'albumine restant d'accès parfois limité et coûteux — à réserver en priorité aux situations à bénéfice démontré (PBS à haut risque, syndrome hépato-rénal). La Terlipressine est d'accès limité aux CHU/CHRR ; en son absence, la Noradrénaline IVSE en unité de soins intensifs reste l'alternative la plus accessible localement. La transplantation hépatique n'étant pas disponible à Madagascar, l'objectif reste la récupération de la fonction rénale par le traitement médical et la correction du facteur déclenchant.</p>
+  </div>
+
   <div class="card" id="proto-intoxications">
     <h3>☠️ Intoxications aiguës — Prise en charge générale et antidotes</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Approche systématique : ABCDE en premier lieu (une intoxication grave tue par dépression respiratoire, trouble du rythme ou coma avec inhalation). Identifier le toxique, l'heure et la dose si possible ; contacter un centre antipoison si disponible.</p>
@@ -2274,6 +2376,57 @@ function renderProtocoles(){
       <li><strong>Coma myxœdémateux :</strong> décompensation aiguë d'une hypothyroïdie sévère non traitée, favorisée par le froid, une infection, des sédatifs/opiacés — hypothermie, bradycardie, hypoventilation avec hypercapnie, troubles de conscience jusqu'au coma, hyponatrémie fréquente. <strong>Mortalité élevée</strong> (jusqu'à 30-40%) — traiter sur suspicion clinique sans attendre les hormones thyroïdiennes</li>
       <li><strong>Traitement du coma myxœdémateux :</strong> <strong>Lévothyroxine IV</strong> — dose de charge 200-400 µg IV, puis 50-100 µg/j IV (relais oral dès que possible) ; associer systématiquement <strong>Hydrocortisone (Solu-Cortef®)</strong> 100 mg IV toutes les 8h <strong>avant/avec</strong> la lévothyroxine (une insuffisance surrénalienne associée est fréquente et la lévothyroxine seule peut précipiter une crise surrénalienne) ; réchauffement passif prudent (jamais actif agressif — risque de vasodilatation et de collapsus) ; ventilation assistée si hypercapnie/détresse respiratoire ; restriction hydrique si hyponatrémie (éviter la correction trop rapide, cf. protocole troubles ioniques) ; traiter le facteur déclenchant (infection +++)</li>
       <li>Éviter les sédatifs et opiacés dans les deux situations (masquent/aggravent les tableaux), surveillance rapprochée en unité de soins intensifs</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-pheochromocytome">
+    <h3>⚡ Crise catécholaminergique / Phéochromocytome</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Décharge brutale et massive de catécholamines par une tumeur des cellules chromaffines (phéochromocytome surrénalien ou paragangliome extra-surrénalien) — urgence hypertensive potentiellement fatale (AVC hémorragique, IDM, OAP, troubles du rythme). Triade classique évocatrice : <strong>céphalées + sueurs profuses + palpitations</strong>, associée à une HTA paroxystique ou permanente sévère (souvent &gt;200/120 mmHg).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Facteurs déclenchants à connaître</strong> (peuvent révéler une tumeur jusque-là méconnue) : induction anesthésique, palpation/pression abdominale, grossesse et surtout travail/accouchement, miction (paragangliome vésical) — et certains <strong>médicaments à proscrire</strong> chez un phéochromocytome connu ou fortement suspecté : <strong>métoclopramide, glucagon, produits de contraste iodés, corticoïdes à forte dose, antidépresseurs tricycliques</strong></li>
+      <li><strong>Piège pharmacologique majeur à ne jamais commettre : ne jamais administrer de bêtabloquant seul/en 1ère intention</strong> — en bloquant la vasodilatation bêta-2 sans contrer l'effet alpha-vasoconstricteur, il peut précipiter une <strong>crise hypertensive paradoxale avec collapsus hémodynamique</strong>. L'alpha-blocage doit toujours précéder tout bêtabloquant</li>
+      <li><strong>Traitement de la crise hypertensive aiguë</strong> : <strong>Phentolamine</strong> (alpha-bloquant non sélectif) IV 2-5 mg en bolus, répétable, si disponible — à défaut, <strong>Nicardipine (Loxen®) IVSE</strong> titrée (inhibiteur calcique, ne nécessite pas d'alpha-blocage préalable, option la plus praticable en ressources limitées) ; <strong>Nitroprussiate de sodium IVSE</strong> en alternative si disponible et sous monitorage rapproché (idéalement PA invasive)</li>
+      <li><strong>Si tachycardie ou trouble du rythme persistant malgré un alpha-blocage efficace</strong> (et seulement à ce moment) : un bêtabloquant peut être ajouté en association (<strong>Propranolol</strong> ou <strong>Esmolol</strong> titrable) — jamais avant, jamais seul</li>
+      <li><strong>Remplissage vasculaire prudent et anticipé</strong> : la vasoconstriction périphérique majeure induite par l'excès de catécholamines masque souvent une hypovolémie relative sous-jacente — surveiller une hypotension sévère de rebond après le contrôle tensionnel ou après l'exérèse chirurgicale de la tumeur (chute brutale des catécholamines circulantes)</li>
+      <li><strong>Bilan diagnostique</strong> une fois la patiente/le patient stabilisé, sans retarder le traitement symptomatique : <strong>métanéphrines plasmatiques ou urinaires fractionnées</strong> (examen de référence), puis imagerie surrénalienne (TDM/IRM) pour localiser la tumeur</li>
+      <li><strong>Préparation préopératoire</strong> si chirurgie programmée (à distance de l'épisode aigu) : alpha-bloquant oral (<strong>Prazosine, Doxazosine</strong>, ou <strong>Phénoxybenzamine</strong> si disponible) débuté 10-14 jours avant l'intervention à dose progressivement croissante, expansion volémique et régime normosodé associés, objectifs TA &lt;130/80 mmHg en position assise et PAS &gt;90 mmHg debout, FC &lt;80-90/min</li>
+      <li>Avis spécialisé endocrinologique et chirurgical (chirurgie endocrinienne) indispensable pour la prise en charge définitive — envisager un transfert précoce vers un centre de référence dès la stabilisation initiale</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais introduire un bêtabloquant seul devant une HTA paroxystique évocatrice de phéochromocytome, même en présence d'une tachycardie marquée — risque de crise hypertensive paradoxale et de collapsus.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Phentolamine IV est très rarement disponible ; le <strong>Loxen® (Nicardipine)</strong> IVSE reste l'option la plus réaliste en urgence dans la plupart des structures disposant d'une unité de soins intensifs. La Prazosine (alpha-bloquant oral) est généralement disponible pour la préparation préopératoire.</p>
+  </div>
+
+  <div class="card" id="proto-apoplexie-hypophysaire">
+    <h3>🧠 Apoplexie hypophysaire</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Hémorragie ou infarctus aigu au sein d'un adénome hypophysaire, le plus souvent un macroadénome jusque-là méconnu (dans plus de 2/3 des cas) — véritable « AVC hypophysaire », urgence endocrinienne et neurochirurgicale rare mais potentiellement mortelle par l'insuffisance corticotrope aiguë qu'elle entraîne.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Tableau clinique évocateur</strong> (pseudo-méningé) : <strong>céphalée brutale et intense</strong>, rétro-orbitaire ou diffuse, souvent au premier plan et précédant les autres signes ; syndrome méningé inconstant ; atteinte oculomotrice par extension au sinus caverneux (diplopie, ptosis, ophtalmoplégie) ; atteinte des voies optiques par compression chiasmatique (baisse d'acuité visuelle, hémianopsie bitemporale) ; troubles de conscience dans les formes sévères</li>
+      <li><strong>Diagnostics différentiels à évoquer et éliminer en urgence</strong> devant ce tableau : hémorragie sous-arachnoïdienne, méningite — le contexte (céphalée brutale + atteinte oculomotrice/visuelle + hypotension inexpliquée) doit orienter précocement vers l'apoplexie hypophysaire</li>
+      <li><strong>Considérer systématiquement qu'il existe un déficit corticotrope</strong>, même en l'absence de preuve biologique immédiate — l'atteinte endocrinienne aiguë n'est ni constante ni toujours complète mais doit être présumée dans le cadre de l'urgence</li>
+      <li><strong>Hydrocortisone en urgence, sur la seule suspicion clinique, sans attendre l'imagerie ni la biologie hormonale</strong> : <strong>Hémisuccinate d'hydrocortisone (Solu-Cortef®)</strong> 100 mg IV <strong>et</strong> 100 mg IM simultanément, à répéter en IM 6h après (ou schéma alternatif 50 mg IV toutes les 6h) — corrige/prévient l'insuffisance corticotrope aiguë potentiellement fatale</li>
+      <li>VVP, réhydratation (Glucosé 5% — ou 10% si hypoglycémie associée — avec apport de NaCl et KCl selon l'ionogramme), traitement symptomatique des vomissements si présents</li>
+      <li><strong>Imagerie cérébrale en urgence</strong> (IRM hypothalamo-hypophysaire de préférence pour confirmer le diagnostic, à défaut TDM cérébral) — <strong>à réaliser après le début du traitement par hydrocortisone</strong>, sans le retarder pour l'imagerie</li>
+      <li><strong>Surveillance rapprochée</strong> : neurologique (conscience, oculomotricité, réflexe photomoteur, champ visuel au doigt), cardio-respiratoire (pouls, TA, fréquence respiratoire), ionogramme sanguin et glycémie répétés dans les 12-24h</li>
+      <li><strong>Avis neurochirurgical en urgence</strong> si : troubles de conscience non corrigés par l'hydrocortisone, atteinte oculomotrice persistante, baisse d'acuité visuelle sévère ou d'aggravation rapide — décompression chirurgicale transsphénoïdale à discuter sans délai dans ces situations ; en dehors de ces critères, une prise en charge médicale seule est souvent suffisante, avec des résultats à long terme comparables entre les deux approches selon la littérature récente lorsque la sélection des patients est rigoureuse</li>
+      <li><strong>Lévothyroxine substitutive</strong> à introduire secondairement (typiquement 48h après le début de l'hydrocortisone) si insuffisance thyréotrope confirmée — <strong>jamais avant ou sans couverture par hydrocortisone</strong> (même piège que le coma myxœdémateux et le syndrome de Sheehan : risque de précipiter une insuffisance surrénalienne aiguë)</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais retarder l'hydrocortisone en attendant la confirmation par l'imagerie ou la biologie hormonale devant un tableau évocateur — l'insuffisance corticotrope aiguë engage le pronostic vital.</div></div>
+  </div>
+
+  <div class="card" id="proto-diabete-insipide">
+    <h3>💦 Diabète insipide central aigu</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Carence aiguë en hormone antidiurétique (vasopressine/ADH) entraînant une polyurie majeure et un risque de déshydratation hypernatrémique sévère. Contexte typique : post-neurochirurgie (notamment chirurgie hypophysaire transsphénoïdale), traumatisme crânien sévère, mort encéphalique (quasi constant dans ce contexte), plus rarement atteinte infiltrative ou tumorale hypothalamo-hypophysaire.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Présentation clinique</strong> : polyurie majeure d'apparition brutale (souvent &gt;200-300 mL/h, parfois &gt;10 L/24h), soif intense chez le patient conscient avec accès libre à l'eau — <strong>situation la plus dangereuse : patient inconscient, sédaté, ou sans accès libre à l'eau</strong> (réanimation, post-opératoire immédiat, coma), où l'hypernatrémie peut s'installer très rapidement sans mécanisme de compensation par la soif</li>
+      <li><strong>Diagnostic évoqué en contexte à risque devant :</strong> polyurie + hypernatrémie ou natrémie en ascension rapide + urines inappropriément diluées (densité urinaire basse &lt;1005, osmolalité urinaire basse malgré une osmolalité plasmatique élevée)</li>
+      <li><strong>Piège diagnostique à connaître :</strong> le test de restriction hydrique, examen de référence en contexte non urgent, est <strong>contre-indiqué en phase aiguë devant un diabète insipide central complet</strong> — risque de déshydratation majeure et d'hypernatrémie potentiellement fatale ; en situation d'urgence, un diagnostic présomptif clinique dans un contexte compatible suffit à démarrer le traitement</li>
+      <li><strong>Traitement substitutif : Desmopressine (Minirin®/DDAVP)</strong> — <strong>1-2 µg SC ou IV toutes les 8-12h</strong> (voie injectable à privilégier en phase aiguë ou si le patient ne peut pas prendre la voie orale/nasale), à titrer selon la diurèse horaire et l'évolution de la natrémie ; alternative intranasale (10-20 µg) si patient coopérant avec muqueuse nasale fonctionnelle</li>
+      <li><strong>Correction du déficit hydrique en parallèle</strong> : apport d'eau libre per os si le patient est conscient et peut boire, ou <strong>Glucosé 5%</strong> IV dans le cas contraire — déficit hydrique estimé = eau corporelle totale × (Natrémie actuelle / 140 − 1)</li>
+      <li><strong>Vitesse de correction de la natrémie à respecter :</strong> ne pas dépasser <strong>8-10 mmol/L par 24h</strong> en cas d'hypernatrémie chronique ou de durée indéterminée (risque d'œdème cérébral si correction trop rapide) — une correction plus rapide peut être tolérée uniquement si l'installation est clairement aiguë (&lt;48h) et documentée, toujours sous surveillance biologique rapprochée</li>
+      <li>Surveillance horaire de la diurèse en phase aiguë, ionogramme sanguin toutes les 4-6h initialement, poids quotidien</li>
+      <li><strong>Piège du surdosage en desmopressine :</strong> rétention hydrique et hyponatrémie de dilution, pouvant aller jusqu'à des convulsions chez l'enfant — <strong>Furosémide</strong> pour induire une diurèse en cas de surdosage symptomatique, et espacer/réduire les doses suivantes</li>
+      <li><strong>Rechercher systématiquement une atteinte antéhypophysaire associée</strong> dans le même contexte lésionnel, en particulier une insuffisance corticotrope — comme pour l'apoplexie hypophysaire et le syndrome de Sheehan, <strong>toujours couvrir l'axe corticotrope par hydrocortisone avant toute hormonothérapie thyroïdienne</strong> en cas d'insuffisance hypophysaire globale suspectée</li>
+      <li>Contexte particulier de la <strong>mort encéphalique/don d'organes</strong> : cf. protocole dédié de cette application pour la prise en charge spécifique du diabète insipide dans ce cadre</li>
     </ol>
   </div>
 
@@ -2880,6 +3033,75 @@ function renderProtocoles(){
     </ol>
   </div>
 
+  <div class="card" id="proto-angiocholite">
+    <h3>🟡 Angiocholite aiguë (cholangite)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les Tokyo Guidelines 2018 (TG18). Infection bactérienne des voies biliaires sur obstruction (le plus souvent lithiase de la voie biliaire principale, plus rarement sténose tumorale ou post-chirurgicale) — urgence associant sepsis et obstacle mécanique, nécessitant une antibiothérapie et un drainage biliaire adaptés à la gravité.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Triade de Charcot</strong> (fièvre/frissons + douleur de l'hypochondre droit + ictère) présente dans seulement 50-70% des cas — son absence n'élimine pas le diagnostic. <strong>Pentade de Reynolds</strong> (triade + choc + confusion) signe une forme sévère avec urgence de drainage.</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Gravité (TG18)</th><th>Critères</th><th>Conduite</th></tr>
+      <tr><td class="leger">Grade I (légère)</td><td>Répond au traitement médical initial, sans défaillance d'organe</td><td>Antibiothérapie ± drainage si absence d'amélioration à 24h</td></tr>
+      <tr><td class="modere">Grade II (modérée)</td><td>Au moins 2 parmi : leucocytes &gt;12000 ou &lt;4000/mm³, fièvre ≥39°C, âge ≥75 ans, bilirubine ≥85 µmol/L (5 mg/dL), hypoalbuminémie</td><td>Antibiothérapie + <strong>drainage biliaire précoce (&lt;24-48h)</strong></td></tr>
+      <tr><td class="grave">Grade III (sévère)</td><td>Dysfonction d'au moins un organe : hypotension/choc, confusion, insuffisance respiratoire (PaO2/FiO2&lt;300), insuffisance rénale (créatinine &gt;176 µmol/L), coagulopathie (INR&gt;1,5), thrombopénie &lt;100000/mm³</td><td>Réanimation immédiate + <strong>drainage biliaire en urgence dès stabilisation hémodynamique</strong></td></tr>
+    </table>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Bilan initial</strong> : NFS, CRP, bilan hépatique complet (bilirubine conjuguée, phosphatases alcalines, GGT, transaminases), hémocultures systématiques (positives dans 20-70% des formes sévères), échographie abdominale en 1ère intention (dilatation des voies biliaires, recherche de la lithiase), bili-IRM ou écho-endoscopie si échographie non contributive et forte suspicion clinique</li>
+      <li><strong>Réanimation initiale dès la suspicion</strong> (ne pas attendre la confirmation) : VVP, remplissage cristalloïdes (Ringer Lactate/NaCl 0,9%), oxygénothérapie si besoin, antalgie (Paracétamol IV, éviter les AINS en contexte cholestatique/septique), correction d'une coagulopathie associée (Vitamine K1 si cholestase prolongée)</li>
+      <li><strong>Antibiothérapie probabiliste précoce</strong> (couvrant entérobactéries et anaérobies) — <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j + <strong>Métronidazole (Flagyl®)</strong> 500mg IV toutes les 8h ; en cas de forme sévère/choc septique ou de facteur de risque de résistance (manipulation biliaire récente, antibiothérapie récente) : préférer une <strong>Pipéracilline-tazobactam (Tazocilline®)</strong> si disponible. Délai d'administration &lt;1h si choc septique, &lt;6h sinon</li>
+      <li><strong>Drainage biliaire</strong> — élément thérapeutique central, à ne jamais différer dans les formes modérées à sévères : <strong>CPRE avec sphinctérotomie ± extraction de calcul</strong> en 1ère intention si disponible (technique de référence) ; à défaut, <strong>drainage biliaire percutané transhépatique</strong> ou drainage chirurgical selon le plateau technique disponible. Cholécystectomie à distance (après résolution de l'épisode aigu) si cause lithiasique</li>
+      <li><strong>Durée d'antibiothérapie</strong> : 4-7 jours après un drainage efficace et un contrôle de la source infectieuse (durée plus courte possible si évolution rapidement favorable) ; prolonger si bactériémie à cocci Gram positif, obstacle résiduel non levé, ou évolution défavorable</li>
+      <li>Réévaluer la gravité toutes les 6-12h si le diagnostic n'est pas certain d'emblée ; en l'absence d'amélioration à 24h d'un tableau initialement classé léger, reclasser en modéré et procéder au drainage</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine® et Flagyl® sont disponibles à tous les niveaux hospitaliers (LNMEIS) ; la Tazocilline® est d'accès plus limité (CHU/CHRR). La CPRE n'est disponible que dans un nombre restreint de centres de référence (principalement Antananarivo) — en son absence ou en cas de délai d'accès prolongé pour une forme modérée à sévère, un drainage chirurgical (cholécystostomie/dérivation biliaire) ou un transfert précoce vers un centre disposant du plateau technique doit être envisagé sans attendre, en poursuivant la réanimation et l'antibiothérapie déjà débutées.</p>
+  </div>
+
+  <div class="card" id="proto-cholecystite">
+    <h3>🟢 Cholécystite aiguë</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les Tokyo Guidelines 2018 (TG18). Inflammation aiguë de la vésicule biliaire, le plus souvent secondaire à l'obstruction du canal cystique par un calcul (cholécystite lithiasique, &gt;90% des cas) ; la forme alithiasique (patient de réanimation, jeûne prolongé, brûlé, post-opératoire) est plus rare mais volontiers plus grave.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Diagnostic</strong> : douleur/défense de l'hypochondre droit + <strong>signe de Murphy</strong> (arrêt inspiratoire douloureux à la palpation de l'hypochondre droit), associé à un syndrome inflammatoire biologique (hyperleucocytose, CRP élevée) et/ou une imagerie évocatrice (échographie : épaississement pariétal vésiculaire &gt;4mm, distension, lithiase, épanchement péri-vésiculaire, signe de Murphy échographique).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Évaluation de gravité (TG18)</strong> : <strong>Grade I</strong> (légère, sans défaillance d'organe ni inflammation vésiculaire marquée) ; <strong>Grade II</strong> (modérée — au moins 1 parmi : leucocytes &gt;18000/mm³, masse palpable de l'hypochondre droit, durée des symptômes &gt;72h, inflammation locale marquée — péritonite biliaire, abcès péri-vésiculaire, cholécystite gangréneuse/emphysémateuse) ; <strong>Grade III</strong> (sévère — dysfonction d'au moins un organe, mêmes critères que l'angiocholite sévère)</li>
+      <li><strong>À jeun</strong>, VVP, réhydratation (Ringer Lactate/NaCl 0,9%), antalgie (Paracétamol IV, Phloroglucinol si composante spasmodique, éviter les AINS si suspicion de complication/terrain à risque), antiémétique si besoin</li>
+      <li><strong>Antibiothérapie probabiliste</strong> — <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j + <strong>Métronidazole (Flagyl®)</strong> 500mg IV toutes les 8h ; réservée à la période péri-opératoire seule pour les formes légères à modérées (Grade I-II) opérées précocement, à poursuivre 4-7 jours si contrôle chirurgical de la source retardé ou forme sévère (Grade III)</li>
+      <li><strong>Cholécystectomie</strong> — traitement de référence : <strong>cholécystectomie précoce (idéalement &lt;72h-7 jours suivant le début des symptômes)</strong> chez les patients Grade I-II opérables, réduit la durée d'hospitalisation sans surcroît de complication par rapport à une chirurgie différée. Laparoscopie à privilégier si le plateau technique le permet</li>
+      <li><strong>Grade III ou patient à haut risque chirurgical</strong> (comorbidités sévères, instabilité) : privilégier initialement un <strong>drainage vésiculaire percutané (cholécystostomie)</strong> sous contrôle échographique pour contrôler le sepsis, cholécystectomie différée après stabilisation (souvent à distance, 6-8 semaines)</li>
+      <li><strong>Signes devant faire suspecter une complication</strong> nécessitant une prise en charge chirurgicale urgente sans délai : défense/contracture généralisée (perforation vésiculaire/péritonite biliaire), crépitation locale ou gaz intra-pariétal à l'imagerie (cholécystite emphysémateuse, terrain diabétique), état septique sévère d'emblée (cholécystite gangréneuse)</li>
+      <li>En l'absence d'accès à la chirurgie/cholécystostomie en urgence : traitement médical seul (antibiothérapie, réhydratation, antalgie) avec surveillance rapprochée et transfert dès que possible vers un centre disposant du plateau chirurgical</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine® et Flagyl® disponibles à tous les niveaux hospitaliers. La cholécystectomie (notamment par laparoscopie) et le drainage percutané sous échographie ne sont disponibles que dans les centres chirurgicaux équipés — en cas d'indication chirurgicale urgente non réalisable localement, un transfert précoce doit être organisé en parallèle du traitement médical, qui ne doit jamais remplacer le contrôle définitif de la source infectieuse dans les formes compliquées.</p>
+  </div>
+
+  <div class="card" id="proto-occlusion-intestinale">
+    <h3>🌀 Occlusion intestinale aiguë</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Arrêt du transit intestinal, mécanique (obstacle organique) ou fonctionnel (iléus paralytique). L'enjeu principal est de distinguer une occlusion simple, relevant a priori d'un traitement médical initial, d'une occlusion avec souffrance digestive (strangulation, ischémie), imposant une chirurgie en urgence sans délai.</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Type</th><th>Causes fréquentes</th><th>Orientation clinique</th></tr>
+      <tr><td>Occlusion du grêle</td><td><strong>Brides/adhérences post-chirurgicales</strong> (cause la plus fréquente), hernie étranglée, volvulus, tumeur, invagination</td><td>Vomissements précoces et abondants, distension abdominale modérée, arrêt des matières et des gaz plus tardif</td></tr>
+      <tr><td>Occlusion colique</td><td>Cancer colorectal (cause la plus fréquente chez l'adulte &gt;50 ans), volvulus du sigmoïde (terrain âgé, constipation chronique), sténose diverticulaire</td><td>Distension abdominale majeure et précoce, arrêt des matières et des gaz précoce, vomissements plus tardifs (fécaloïdes si obstacle bas et valvule iléo-cæcale continente)</td></tr>
+      <tr><td>Iléus fonctionnel (paralytique)</td><td>Post-opératoire, sepsis/péritonite, hypokaliémie, médicaments (opioïdes, anticholinergiques), pancréatite, colique néphrétique</td><td>Distension diffuse sans niveau franc de transition, contexte causal évident, absence de douleur intense localisée</td></tr>
+    </table>
+    <p style="margin-top:6px; font-weight:600; color:var(--accent2);">⚠️ Signes de souffrance digestive imposant une chirurgie en urgence sans délai (occlusion "compliquée") :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Douleur intense, continue, disproportionnée par rapport à l'examen, ou au contraire sédation brutale d'une douleur intense (peut signer une perforation)</li>
+      <li>Défense/contracture abdominale, fièvre, tachycardie inexpliquée, choc</li>
+      <li>Hernie étranglée irréductible et douloureuse</li>
+      <li>Signes radiologiques de souffrance : pneumatose pariétale, défaut de rehaussement d'une anse au scanner injecté, épanchement intra-péritonéal abondant, volvulus complet</li>
+      <li>Élévation des lactates, acidose métabolique, hyperleucocytose marquée</li>
+    </ul>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Prise en charge initiale :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>À jeun strict</strong>, VVP de gros calibre, réhydratation cristalloïdes adaptée aux pertes (souvent importantes — 3ème secteur, vomissements) et à l'ionogramme, correction des troubles électrolytiques (hypokaliémie fréquente, à corriger avant toute chirurgie si possible)</li>
+      <li><strong>Sonde nasogastrique en aspiration douce</strong> si vomissements/distension importante — soulage la distension, réduit le risque d'inhalation, utile au diagnostic (aspect du liquide) et parfois suffisante pour lever une occlusion fonctionnelle</li>
+      <li><strong>Antalgie</strong> : Paracétamol IV en 1ère intention ; la Morphine titrée ne doit pas être retardée par crainte de masquer les signes chirurgicaux (pratique obsolète) mais impose une réévaluation clinique répétée et rapprochée</li>
+      <li><strong>Antiémétique</strong> (Métoclopramide) et antispasmodique (Phloroglucinol) en complément selon la tolérance</li>
+      <li><strong>Imagerie</strong> : radiographie d'abdomen sans préparation (niveaux hydro-aériques — orientation initiale rapide) ; <strong>TDM abdomino-pelvienne injectée</strong> en 1ère intention si disponible — examen de référence, précise le siège, la cause, et recherche les signes de souffrance/ischémie</li>
+      <li><strong>Occlusion simple sans signe de gravité</strong> (notamment sur brides) : traitement médical conservateur (aspiration, réhydratation, correction électrolytique) sous surveillance clinique rapprochée — <strong>la non-opératoire peut être poursuivie en toute sécurité jusqu'à 72h</strong> en l'absence de signe de péritonite/strangulation/ischémie (Bologna Guidelines WSES) ; au-delà de 72h sans résolution, indication chirurgicale. <strong>Test au produit de contraste hydrosoluble (Gastrografine®)</strong> — 50-150 mL par sonde nasogastrique (clampée 1-2h), avec contrôle radiographique à 24h — à la fois diagnostique et thérapeutique : la progression du contraste jusqu'au côlon dans les 24h prédit fortement la résolution sans chirurgie et accélère la reprise du transit ; son absence de progression oriente vers l'indication opératoire</li>
+      <li><strong>Volvulus du sigmoïde non compliqué</strong> : détorsion endoscopique (sigmoïdoscopie/rectoscopie) en 1ère intention si accessible, avec pose de sonde de décompression rectale — <strong>sigmoïdectomie élective à réaliser durant la même hospitalisation</strong> dès que l'état du patient le permet (préparation colique, stabilisation), et non différée à distance : le taux de récidive après détorsion seule est très élevé (45-85% selon les séries), avec un risque de récidive précoce et de complication ischémique en l'absence de résection programmée rapidement (WSES 2023)</li>
+      <li><strong>Toute occlusion avec signe de souffrance digestive, hernie étranglée, ou échec du traitement médical</strong> : <strong>avis chirurgical immédiat et intervention en urgence</strong> — résection des segments nécrosés, levée de l'obstacle, stomie de décharge selon les constatations peropératoires</li>
+      <li>Antibioprophylaxie péri-opératoire systématique avant toute chirurgie (couverture Gram négatif/anaérobies) ; antibiothérapie curative si signes de perforation/péritonite associée</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la radiographie d'abdomen sans préparation et la chirurgie d'urgence sont accessibles dans la plupart des structures de référence ; le scanner abdominal et le produit de contraste hydrosoluble (Gastrografine®) restent d'accès limité (CHU principalement) — en leur absence, la clinique (réévaluation répétée) associée à la radiographie standard guide la décision opératoire, avec un seuil bas pour l'avis chirurgical devant tout doute sur une souffrance digestive.</p>
+  </div>
+
   <div class="card" id="proto-ischemie-mesenterique">
     <h3>🩸 Ischémie mésentérique aiguë</h3>
     <p class="module-sub" style="margin-bottom:8px;">D'après les recommandations WSES (World Society of Emergency Surgery, 2022) et ESVS. Pathologie rare mais grevée d'une mortalité de 30-70% en cas de retard diagnostique — à évoquer systématiquement devant une douleur abdominale disproportionnée par rapport à l'examen clinique.</p>
@@ -2966,6 +3188,38 @@ function renderProtocoles(){
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Contre-indication formelle des mydriatiques dans le glaucome aigu par fermeture de l'angle — ne pas dilater la pupille, l'examen ne doit pas aggraver la fermeture de l'angle.</div></div>
   </div>
 
+  <div class="card" id="proto-oacr">
+    <h3>👁️ Occlusion de l'artère centrale de la rétine (OACR)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Baisse de vision brutale, indolore, sévère et monoculaire — c'est l'équivalent oculaire de l'AVC ischémique ("stroke of the eye"), désormais reconnu comme tel par l'American Heart Association (AHA/ASA). Mêmes facteurs de risque et mêmes enjeux de prévention secondaire qu'un AVC ischémique (cardio-embolique, athéromateux). À traiter avec la même urgence qu'une suspicion d'AVC.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Diagnostic</strong> : baisse d'acuité visuelle sévère et brutale d'un œil (souvent réduite à la perception lumineuse ou moins), pupille en semi-mydriase avec <strong>déficit pupillaire afférent relatif</strong> (signe de Marcus Gunn), fond d'œil si disponible (rétine pâle/œdémateuse, "macula rouge cerise") — mais le diagnostic ne doit jamais retarder l'orientation en cas de fond d'œil non disponible en urgence</li>
+      <li><strong>Noter l'heure précise de début des symptômes</strong> — élément déterminant comme pour tout AVC, conditionne l'éligibilité à une éventuelle thrombolyse</li>
+      <li><strong>Éliminer une cause artéritique (maladie de Horton/artérite gigantocellulaire)</strong> chez tout patient &gt;50 ans : céphalées temporales, claudication de la mâchoire, altération de l'état général, hyperesthésie du cuir chevelu — <strong>CRP/VS en urgence</strong>. Si suspicion : <strong>corticothérapie systémique à haute dose immédiate</strong> (Méthylprednisolone IV ou Prednisone PO 1 mg/kg/j) <strong>sans attendre la biopsie de l'artère temporale</strong>, pour protéger l'œil controlatéral (risque de bilatéralisation rapide et de cécité définitive)</li>
+      <li><strong>Orientation en urgence absolue selon la filière AVC</strong> — appel de l'équipe de neurologie/AVC comme pour toute suspicion d'AVC ischémique : bilan d'imagerie cérébrale (TDM ± angio-TDM ou IRM avec séquence de diffusion, qui peut révéler un infarctus cérébral silencieux associé dans un tiers des cas), bilan cardio-embolique (ECG, échocardiographie), recherche de sténose carotidienne (écho-Doppler des troncs supra-aortiques)</li>
+      <li><strong>Thrombolyse IV (Altéplase)</strong> à discuter avec l'équipe neuro-vasculaire si le patient se présente dans la <strong>fenêtre de 4h30</strong> suivant le début des symptômes et remplit les critères d'éligibilité habituels de l'AVC ischémique (cf. protocole AVC et son calculateur de dose) — bénéfice non formellement démontré par essai randomisé à ce jour mais recommandé à évaluer au cas par cas par les sociétés savantes récentes (AHA/ASA), en pesant le risque hémorragique</li>
+      <li><strong>Mesures conservatrices adjuvantes</strong> (efficacité individuelle non prouvée mais faible risque, à débuter en attendant l'avis spécialisé si le tableau est très récent, <strong>sans jamais retarder l'orientation neuro-vasculaire</strong>) : massage oculaire digital intermittent (pression ferme 10 secondes puis relâchement, répété, dans l'espoir de déloger l'embole), abaissement de la pression intraoculaire (<strong>Acétazolamide (Diamox®)</strong> 500 mg IV ou <strong>Timolol collyre</strong>), <strong>respiration en système clos avec réinhalation de CO2</strong> (sac en papier) ou oxygénothérapie à haut débit si disponible (vasodilatation rétinienne)</li>
+      <li><strong>Avis ophtalmologique</strong> en parallèle pour confirmation diagnostique au fond d'œil/OCT si accessible, mais ne doit jamais retarder l'orientation vers la filière neuro-vasculaire</li>
+      <li>Pronostic visuel généralement sombre au-delà de quelques heures d'ischémie (dommages rétiniens irréversibles rapides) — l'enjeu principal de la prise en charge en urgence devient alors la <strong>prévention secondaire d'un AVC constitué</strong>, la probabilité d'événement cérébrovasculaire dans les jours/semaines suivants étant significative</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la filière de thrombolyse pour AVC (Altéplase/Ténectéplase) existe dans les centres équipés (cf. protocole AVC) — en l'absence d'accès à l'imagerie cérébrale/à la thrombolyse en urgence, la priorité reste le bilan étiologique cardio-vasculaire et la prévention secondaire, ainsi que l'exclusion d'une maladie de Horton (CRP/VS disponibles à la plupart des niveaux) qui justifie une corticothérapie immédiate même en ressources limitées.</p>
+  </div>
+
+  <div class="card" id="proto-endophtalmie">
+    <h3>👁️ Endophtalmie aiguë</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection intraoculaire grave, urgence ophtalmologique majeure avec risque de cécité définitive en l'absence de traitement rapide. Le plus souvent <strong>post-opératoire</strong> (dans les jours suivant une chirurgie oculaire, notamment de cataracte), plus rarement <strong>post-traumatique</strong> (après une plaie du globe — cf. protocole Traumatisme oculaire) ou <strong>endogène</strong> (dissémination hématogène à partir d'un foyer infectieux à distance — endocardite, abcès, cathéter — surtout chez le patient immunodéprimé/diabétique).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes évocateurs</strong> : douleur oculaire intense et progressive, baisse d'acuité visuelle rapide, œil rouge, <strong>hypopion</strong> (niveau blanchâtre de pus visible dans la chambre antérieure), œdème palpébral, trouble des milieux (vitré trouble empêchant la visualisation du fond d'œil) — dans un contexte de chirurgie oculaire récente (typiquement 1-7 jours après une chirurgie de cataracte) ou de traumatisme pénétrant</li>
+      <li><strong>Avis ophtalmologique en urgence absolue</strong> (délai cible : quelques heures) — le pronostic visuel dépend directement de la rapidité du traitement intraoculaire</li>
+      <li><strong>Traitement de référence (étude EVS — Endophthalmitis Vitrectomy Study, toujours la base des recommandations américaines/européennes actuelles)</strong> : <strong>injection intravitréenne d'antibiotiques</strong> par l'ophtalmologiste — association <strong>Vancomycine intravitréenne</strong> (1 mg/0,1 mL, couverture Gram positif) + <strong>Ceftazidime intravitréenne</strong> (2-2,25 mg/0,1 mL, couverture Gram négatif), après prélèvement d'un échantillon de vitré/humeur aqueuse pour analyse bactériologique</li>
+      <li><strong>Décision vitrectomie vs injection seule</strong> guidée par l'acuité visuelle initiale : <strong>vitrectomie précoce</strong> recommandée si acuité visuelle ≤ perception des mouvements de la main ; simple injection intravitréenne (± reprise si non-amélioration à 48-72h) si acuité meilleure</li>
+      <li><strong>En l'absence d'accès immédiat à un ophtalmologiste/plateau d'injection intravitréenne</strong> : ne pas retarder le transfert vers un centre disposant de cette capacité — un traitement systémique seul (antibiothérapie IV) ne remplace pas l'injection intravitréenne, la pénétration oculaire des antibiotiques systémiques étant limitée, mais peut être débuté en pont pendant l'organisation du transfert : <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j (voire association à la Vancomycine IV si accessible)</li>
+      <li><strong>Corticoïdes intravitréens/systémiques</strong> à discuter par l'ophtalmologiste une fois l'antibiothérapie intravitréenne débutée (réduction de l'inflammation), jamais en 1ère intention isolée</li>
+      <li><strong>Antalgiques</strong> systémiques, <strong>collyre cycloplégique</strong> (atropine) pour le confort et prévenir les synéchies, sur prescription ophtalmologique</li>
+      <li>Rechercher une porte d'entrée si <strong>endophtalmie endogène</strong> suspectée (pas de chirurgie/traumatisme récent) : hémocultures systématiques, échocardiographie (endocardite), recherche d'un foyer infectieux profond — pronostic généralement plus sombre que les formes post-opératoires</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'injection intravitréenne d'antibiotiques nécessite un plateau d'ophtalmologie spécialisé, disponible seulement dans un nombre restreint de centres de référence — le transfert en urgence absolue vers un tel centre est l'élément déterminant du pronostic visuel. La Rocéphine® et la Vancomycine IV sont disponibles en pharmacie hospitalière (CHU/CHRR) pour un traitement systémique d'appoint pendant l'organisation du transfert, mais ne remplacent en aucun cas le traitement intraoculaire.</p>
+  </div>
+
   <div class="card" id="proto-trauma-oculaire">
     <h3>👁️ Traumatisme oculaire grave (globe ouvert / brûlure chimique)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Distinct du glaucome aigu (couvert ci-dessus) — ici l'urgence est traumatique/chimique. Pronostic visuel directement lié à la rapidité de la prise en charge, en particulier pour les brûlures chimiques (irrigation) et les plaies du globe (protection).</p>
@@ -2992,6 +3246,29 @@ function renderProtocoles(){
       <li><strong>Avis et transfert ophtalmologique/chirurgical en urgence</strong> — exploration et fermeture chirurgicale de la plaie dans les meilleurs délais (idéalement &lt;24h) pour optimiser le pronostic visuel</li>
       <li>Imagerie (TDM orbitaire, jamais d'IRM si suspicion de corps étranger métallique) pour rechercher un corps étranger intraoculaire ou une fracture associée</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-cellulite-orbitaire">
+    <h3>🟠 Cellulite orbitaire / périorbitaire</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection des tissus mous péri-oculaires — la distinction entre forme <strong>préseptale (périorbitaire)</strong>, généralement bénigne, et forme <strong>orbitaire (post-septale)</strong>, potentiellement grave (perte visuelle, thrombose du sinus caverneux, extension intracrânienne), est l'enjeu clinique central. Cause la plus fréquente : extension d'une <strong>sinusite aiguë</strong> (surtout ethmoïdite), plus rarement d'origine dentaire, cutanée (plaie/piqûre palpébrale, orgelet/chalazion surinfecté) ou post-traumatique/post-chirurgicale.</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Classification de Chandler</th><th>Description</th></tr>
+      <tr><td class="leger">Groupe 1 — Cellulite préseptale</td><td>Œdème/érythème limité à la paupière, en avant du septum orbitaire — <strong>pas</strong> d'exophtalmie, de limitation de l'oculomotricité, ni de baisse d'acuité visuelle</td></tr>
+      <tr><td class="modere">Groupe 2 — Cellulite orbitaire</td><td>Inflammation diffuse du contenu orbitaire (post-septal) — exophtalmie, chémosis, possible limitation de l'oculomotricité et douleur aux mouvements oculaires</td></tr>
+      <tr><td class="grave">Groupe 3 — Abcès sous-périosté</td><td>Collection purulente entre l'os orbitaire et le périoste — exophtalmie marquée, limitation oculomotrice franche</td></tr>
+      <tr><td class="grave">Groupe 4 — Abcès orbitaire</td><td>Collection purulente au sein même du tissu orbitaire — risque élevé de perte visuelle</td></tr>
+      <tr><td class="grave">Groupe 5 — Thrombose du sinus caverneux</td><td>Extension rétrograde par les veines ophtalmiques — atteinte bilatérale possible, sepsis sévère, mise en jeu du pronostic vital</td></tr>
+    </table>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes imposant de suspecter une forme orbitaire (post-septale) et de réaliser une imagerie en urgence</strong> : exophtalmie/proptosis, douleur aux mouvements oculaires ou limitation de l'oculomotricité (ophtalmoplégie), baisse d'acuité visuelle, trouble de la vision des couleurs, déficit pupillaire afférent relatif, chémosis marqué, altération de l'état général/fièvre élevée</li>
+      <li><strong>TDM orbito-sinusienne injectée</strong> (ou IRM si signes neurologiques/suspicion de thrombose du sinus caverneux ou d'extension intracrânienne) dès qu'un signe de forme post-septale est présent, ou en cas de doute diagnostique, ou d'absence d'amélioration à 24-48h sous traitement — recherche d'un abcès sous-périosté/orbitaire à drainer</li>
+      <li><strong>Cellulite préseptale non compliquée</strong> (patient non toxique, examen oculaire normal) : antibiothérapie orale ambulatoire possible chez l'adulte/grand enfant coopérant avec suivi rapproché — <strong>Amoxicilline-acide clavulanique (Augmentin®)</strong> PO, 7 jours ; réévaluation à 24-48h obligatoire, hospitalisation si absence d'amélioration ou terrain à risque (jeune enfant, immunodépression)</li>
+      <li><strong>Cellulite orbitaire (post-septale) ou tout signe de gravité</strong> : hospitalisation systématique, <strong>antibiothérapie IV probabiliste à large spectre</strong> couvrant les germes de la sinusite (staphylocoque, streptocoque, anaérobies) — <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j (50 mg/kg/j chez l'enfant, max 2g) + <strong>Métronidazole (Flagyl®)</strong> 500 mg IV toutes les 8h (couverture anaérobie, importante si origine sinusienne/dentaire) — durée totale 10-14 jours pour une cellulite orbitaire non compliquée, 2-3 semaines si abcès sous-périosté/orbitaire, relais oral possible après amélioration clinique nette</li>
+      <li><strong>Avis ophtalmologique et ORL conjoint systématique</strong> dès suspicion de forme post-septale — décision multidisciplinaire pour un éventuel drainage chirurgical de l'abcès (sous-périosté volumineux, non-amélioration sous antibiothérapie à 24-48h, baisse d'acuité visuelle ou détérioration neurologique)</li>
+      <li>Corticothérapie systémique à discuter par l'équipe spécialisée en complément de l'antibiothérapie dans certaines formes orbitaires (réduction de l'œdème), jamais en 1ère intention isolée ni avant couverture antibiotique effective</li>
+      <li>Signes d'alarme imposant une prise en charge en réanimation/neurochirurgicale en urgence : altération de conscience, signes méningés, atteinte bilatérale (évocatrice de thrombose du sinus caverneux), sepsis sévère</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Augmentin®, Rocéphine® et Flagyl® disponibles à la plupart des niveaux hospitaliers (LNMEIS). Le scanner orbito-sinusien reste d'accès limité (CHU principalement) — devant tout signe évocateur de forme post-septale sans accès à l'imagerie, traiter d'emblée comme une cellulite orbitaire (antibiothérapie IV large spectre + avis ophtalmologique/ORL urgent) plutôt que d'attendre une confirmation radiologique non disponible.</p>
   </div>
 
   <div class="card" id="proto-epistaxis">
@@ -3024,6 +3301,70 @@ function renderProtocoles(){
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais réaliser de balayage digital à l'aveugle dans la bouche — ne retirer qu'un corps étranger clairement visible, au risque de l'enfoncer plus profondément.</div></div>
   </div>
 
+  <div class="card" id="proto-phlegmon-periamygdalien">
+    <h3>😷 Phlegmon périamygdalien / Abcès rétropharyngé</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Complications suppuratives des infections oropharyngées, à distinguer d'une simple angine — urgence ORL avec risque d'obstruction des voies aériennes supérieures et de diffusion cervicale/médiastinale profonde.</p>
+    <p style="margin-top:6px; font-weight:600; color:var(--accent2);">1. Phlegmon (abcès) périamygdalien</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Signes évocateurs</strong> : odynophagie intense et unilatérale, <strong>trismus</strong> (limitation douloureuse de l'ouverture buccale — signe clé le distinguant de l'angine simple), voix étouffée ("voix de patate chaude"), hypersialorrhée, <strong>bombement asymétrique du pilier amygdalien</strong> avec <strong>déviation de la luette</strong> du côté opposé, adénopathies cervicales douloureuses, fièvre.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Ponction/aspiration à l'aiguille</strong> du point le plus fluctuant — geste diagnostique (confirme la présence de pus, à distinguer d'une simple cellulite périamygdalienne sans collection) et thérapeutique en 1ère intention ; à défaut, <strong>incision-drainage</strong> — efficacité comparable entre les deux techniques. <strong>Repère anatomique de sécurité</strong> : l'artère carotide chemine à environ 2 cm en arrière et en dehors de l'amygdale — ne jamais piquer/inciser au-delà de 1 cm de profondeur</li>
+      <li><strong>Antibiothérapie</strong> couvrant flore mixte aérobie/anaérobie oropharyngée — <strong>Amoxicilline-acide clavulanique (Augmentin®)</strong> IV puis relais PO, ou <strong>Ceftriaxone (Rocéphine®)</strong> + <strong>Métronidazole (Flagyl®)</strong> si forme sévère/allergie — durée totale 10-14 jours</li>
+      <li><strong>Corticothérapie courte</strong> (Dexaméthasone IV/PO dose unique à répéter selon besoin) en complément, réduit la douleur et l'œdème pharyngé</li>
+      <li>Antalgiques adaptés à l'intensité (Paracétamol ± palier 2), hydratation IV si dysphagie empêchant les apports oraux</li>
+      <li><strong>Signes imposant une hospitalisation/avis ORL en urgence</strong> : détresse respiratoire ou stridor, trismus sévère empêchant l'examen, déshydratation, échec du drainage ambulatoire, extension suspectée (abcès rétropharyngé/parapharyngé, médiastinite), immunodépression, enfant en bas âge, doute diagnostique</li>
+      <li><strong>Amygdalectomie "à chaud"</strong> (dans les 24-48h) à discuter en cas de récidive, d'échec du drainage simple, ou d'antécédents de phlegmons répétés — sinon amygdalectomie différée à distance de l'épisode aigu (6-8 semaines) proposée si récidives</li>
+    </ol>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">2. Abcès rétropharyngé/parapharyngé</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Plus rare, plus grave — surtout chez le jeune enfant (adénite rétropharyngée suppurée) mais possible chez l'adulte (corps étranger, traumatisme, extension dentaire). <strong>Signes évocateurs</strong> : torticolis fébrile, refus de mobiliser le cou, dysphagie/hypersialorrhée, stridor ou détresse respiratoire dans les formes évoluées, bombement de la paroi pharyngée postérieure.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Imagerie en urgence</strong> : TDM cervicale injectée (confirme la collection, précise l'extension vers le médiastin — risque majeur de médiastinite descendante nécrosante)</li>
+      <li><strong>Prise en charge des voies aériennes en priorité absolue</strong> si signe de détresse respiratoire — intubation potentiellement difficile (distorsion anatomique), à anticiper avec une équipe expérimentée/matériel de voies aériennes difficiles, voire trachéotomie de sauvetage si échec</li>
+      <li><strong>Drainage chirurgical en urgence</strong> (bloc opératoire) associé à une <strong>antibiothérapie IV large spectre</strong> (Ceftriaxone/Rocéphine® + Métronidazole/Flagyl®, ou Amoxicilline-acide clavulanique IV à forte dose) — l'antibiothérapie seule est insuffisante en cas de collection confirmée</li>
+      <li>Surveillance rapprochée en unité de soins intensifs/réanimation dans les formes évoluées, du fait du risque d'obstruction rapide et de diffusion médiastinale</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Augmentin®, Rocéphine® et Flagyl® disponibles à la plupart des niveaux hospitaliers. Le drainage à l'aiguille du phlegmon périamygdalien est réalisable en structure de base par un praticien formé ; le drainage chirurgical d'un abcès rétropharyngé et la prise en charge d'une voie aérienne difficile associée nécessitent un plateau technique de bloc opératoire — transfert à organiser sans délai devant tout signe de détresse respiratoire ou d'extension cervicale profonde.</p>
+  </div>
+
+  <div class="card" id="proto-otite-externe-maligne">
+    <h3>👂 Otite externe maligne (nécrosante)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Malgré son nom, il ne s'agit pas d'un cancer mais d'une <strong>infection nécrosante extensive de l'oreille externe</strong>, gagnant le cartilage puis l'os temporal/la base du crâne — urgence potentiellement mortelle. Terrain quasi-systématique : <strong>diabète</strong> (souvent mal équilibré) ou <strong>immunodépression</strong>, sujet âgé. Germe très largement dominant : <em>Pseudomonas aeruginosa</em>.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes évocateurs</strong> : otalgie intense, disproportionnée par rapport à l'aspect local, <strong>persistante malgré un traitement d'otite externe simple bien conduit</strong>, otorrhée souvent purulente/fétide, douleur nocturne et à la mastication, <strong>tissu de granulation caractéristique au plancher du conduit auditif externe</strong> (jonction ostéo-cartilagineuse) à l'otoscopie</li>
+      <li><strong>Signe d'alarme majeur : atteinte des nerfs crâniens</strong> (par ordre de fréquence : VII/facial en premier, puis IX, X, XI, XII) — paralysie faciale périphérique, dysphonie, trouble de la déglutition — témoigne d'une extension à la base du crâne et impose une prise en charge encore plus agressive</li>
+      <li><strong>Bilan</strong> : glycémie/HbA1c (équilibration du diabète indispensable au traitement), NFS/CRP, prélèvement local pour culture et antibiogramme (guide l'adaptation thérapeutique), <strong>TDM des rochers</strong> en 1ère intention (érosion osseuse) — IRM si suspicion d'extension aux tissus mous profonds/base du crâne ou atteinte des nerfs crâniens</li>
+      <li><strong>Antibiothérapie anti-pseudomonas prolongée</strong>, pierre angulaire du traitement — <strong>Ciprofloxacine</strong> forte dose : 750 mg PO x2/j en ambulatoire pour les formes non compliquées, ou IV (400 mg x2-3/j) dans les formes sévères/hospitalisées ; en cas de choc septique/forme extensive, associer initialement une <strong>bêta-lactamine anti-pseudomonas</strong> (Ceftazidime ou Pipéracilline-tazobactam si disponible) — <strong>durée prolongée de 6 à 8 semaines minimum</strong>, guidée par l'évolution clinique et biologique (CRP), et non par un délai fixe</li>
+      <li><strong>Équilibration stricte du diabète</strong> — élément thérapeutique à part entière, conditionne la réponse au traitement anti-infectieux</li>
+      <li><strong>Soins locaux quotidiens</strong> : nettoyage/débridement régulier du conduit auditif externe (retrait des débris et tissu de granulation) par un praticien ORL, gouttes auriculaires antibiotiques (Ciprofloxacine ± corticoïde) en complément — insuffisantes seules, ne remplacent jamais l'antibiothérapie systémique prolongée</li>
+      <li><strong>Avis ORL systématique</strong> — débridement chirurgical à discuter en cas d'évolution défavorable sous traitement médical bien conduit, ou de collection/séquestre osseux</li>
+      <li>Surveillance prolongée (plusieurs semaines à mois) même après amélioration clinique initiale — risque de rechute à l'arrêt trop précoce du traitement, d'où l'intérêt d'un suivi clinique et biologique jusqu'à résolution complète</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Ciprofloxacine (forme orale et injectable) est disponible à la plupart des niveaux hospitaliers, ce qui permet une prise en charge en ambulatoire prolongée pour les formes non compliquées avec suivi rapproché. La Ceftazidime/Pipéracilline-tazobactam et le scanner des rochers restent d'accès limité aux CHU/CHRR — en cas de forme sévère ou de suspicion d'atteinte des nerfs crâniens, un transfert précoce vers un tel centre doit être organisé sans attendre, l'équilibration du diabète pouvant en attendant être débutée à tout niveau de soins.</p>
+  </div>
+
+  <div class="card" id="proto-vertige-aigu">
+    <h3>🌀 Vertige aigu (syndrome vestibulaire aigu)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">L'enjeu principal devant un vertige aigu persistant (syndrome vestibulaire aigu — vertige continu, nausées/vomissements, instabilité posturale, nystagmus, durant &gt;24h) est de distinguer une cause <strong>périphérique</strong> (bénigne, vestibulaire) d'une cause <strong>centrale</strong> (AVC du tronc cérébral/cervelet — potentiellement grave et à traiter en urgence). L'examen clinique bien conduit (test HINTS) est plus fiable qu'une IRM précoce pour cette distinction.</p>
+    <p style="margin-top:6px; font-weight:600; color:var(--accent2);">Test HINTS (Head Impulse - Nystagmus - Test of Skew) — à réaliser uniquement chez un patient présentant un syndrome vestibulaire aigu CONTINU (pas un vertige positionnel bref ou épisodique, où ce test n'est pas validé) :</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Composante</th><th>Périphérique (rassurant)</th><th>Central (alarmant)</th></tr>
+      <tr><td><strong>H</strong>ead Impulse Test (test d'impulsion céphalique)</td><td><strong>Anormal</strong> (rattrapage saccadique visible après rotation rapide de la tête)</td><td><strong>Normal</strong> (absence de saccade de rattrapage — paradoxalement rassure à tort si isolé, c'est un signe d'alerme dans ce contexte précis)</td></tr>
+      <tr><td><strong>N</strong>ystagmus</td><td>Unidirectionnel, horizontal pur, s'atténue à la fixation</td><td>Change de direction selon le regard, vertical pur ou rotatoire pur</td></tr>
+      <tr><td><strong>T</strong>est de <strong>S</strong>kew (déviation skew)</td><td>Absent</td><td>Présent (réalignement vertical de l'œil à l'écran alterné)</td></tr>
+    </table>
+    <p style="font-size:13px; margin-bottom:8px; color:var(--muted);">Mnémotechnique <strong>"INFARCT"</strong> pour retenir la combinaison inquiétante : <strong>I</strong>mpulse <strong>N</strong>ormal, <strong>F</strong>ast-phase <strong>A</strong>lternating (nystagmus bidirectionnel), <strong>R</strong>efixation on <strong>C</strong>over <strong>T</strong>est (skew présent) — la présence d'<strong>un seul</strong> de ces trois éléments centraux suffit à rendre le test positif et à évoquer une cause centrale.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes cliniques associés devant faire suspecter une cause centrale d'emblée</strong> (indépendamment du HINTS) : céphalées brutales inhabituelles, diplopie, dysarthrie, ataxie/troubles de la marche disproportionnés par rapport au vertige, déficit moteur/sensitif, facteurs de risque cardiovasculaire majeurs (HTA, FA, âge avancé, antécédent d'AVC)</li>
+      <li><strong>HINTS évocateur d'une cause centrale (ou tout signe associé ci-dessus)</strong> : orientation en urgence vers la filière neuro-vasculaire (cf. protocole AVC) — <strong>imagerie cérébrale avec séquence de diffusion (IRM)</strong>, sachant qu'une IRM précoce (&lt;24-48h) peut être faussement normale dans les infarctus cérébelleux de petite taille — la clinique prime en cas de doute</li>
+      <li><strong>HINTS rassurant et absence de signe associé</strong> : orientation vers une cause périphérique (névrite vestibulaire/neuronite vestibulaire la plus fréquente ; labyrinthite si signes cochléaires associés — hypoacousie, acouphènes) — traitement symptomatique</li>
+      <li><strong>Traitement symptomatique de la crise vertigineuse</strong> (cause périphérique) : antiémétique (<strong>Métoclopramide (Primpéran®)</strong> IV/IM 10 mg, ou <strong>Dompéridone</strong> PO) et antihistaminique/anti-vertigineux (<strong>Méclozine</strong> ou <strong>Dimenhydrinate (Dramamine®)</strong>) sur une durée courte (48-72h maximum) — un traitement symptomatique prolongé retarde la compensation vestibulaire centrale spontanée et la récupération</li>
+      <li><strong>Corticothérapie courte</strong> (Prednisone/Prednisolone PO, schéma dégressif sur 10-14 jours) à discuter précocement dans la névrite vestibulaire — bénéfice démontré sur la récupération vestibulaire si débutée tôt</li>
+      <li><strong>Rééducation vestibulaire précoce</strong> (mobilisation active, exercices d'habituation) à encourager dès que possible dans les formes périphériques — accélère la compensation centrale, à ne pas retarder par excès de traitement symptomatique</li>
+      <li><strong>Vertige positionnel paroxystique bénin (VPPB)</strong> — diagnostic différentiel fréquent mais distinct du syndrome vestibulaire aigu continu : épisodes brefs (&lt;1 min), déclenchés par les changements de position, test de Dix-Hallpike positif — traitement par manœuvre de repositionnement canalaire (manœuvre d'Epley), pas par les anti-vertigineux au long cours</li>
+      <li>Rechercher systématiquement une cause otologique associée à réorienter vers un protocole dédié si présente : otite moyenne aiguë compliquée, cholestéatome, traumatisme</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Primpéran® et Dramamine®/antihistaminiques sont disponibles à tous les niveaux. L'IRM cérébrale en urgence reste d'accès limité (CHU principalement) — le test HINTS, réalisable à tout niveau de soins sans matériel spécifique, prend alors toute sa valeur pour orienter la décision de transfert en urgence vers un centre d'imagerie/neurologie en cas de suspicion de cause centrale.</p>
+  </div>
+
   <div class="card" id="proto-retention-urine">
     <h3>🚰 Rétention aiguë d'urine</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Impossibilité brutale et douloureuse d'uriner, avec globe vésical palpable — à distinguer de l'anurie (pas de production d'urine, vessie vide). Cause fréquente chez l'homme : hypertrophie bénigne de la prostate ; autres causes : fécalome, sténose urétrale, caillotage, cause médicamenteuse (anticholinergiques), post-opératoire, compression médullaire (à évoquer si troubles sensitifs/moteurs associés).</p>
@@ -3047,7 +3388,7 @@ function renderProtocoles(){
       <li>Échographie pelvienne (idéalement endovaginale) en urgence : recherche d'un hémopéritoine, d'une masse latéro-utérine, absence de grossesse intra-utérine malgré β-hCG positif</li>
       <li><strong>GEU rompue avec choc/hémopéritoine :</strong> chirurgie en urgence absolue (cœlioscopie ou laparotomie selon stabilité et plateau technique) — salpingectomie (trompe détruite) ou salpingotomie conservatrice selon l'état tubaire et le désir de fertilité ultérieure, remplissage vasculaire et transfusion en parallèle sans attendre</li>
       <li><strong>GEU non compliquée, asymptomatique, β-hCG bas et décroissants :</strong> abstention/surveillance biologique possible (β-hCG répétés) — option uniquement si patiente compliante et suivi assuré</li>
-      <li><strong>Traitement médical par Méthotrexate</strong> (si GEU non rompue, non active, β-hCG &lt;5000 UI/L, absence d'activité cardiaque embryonnaire, patiente stable et compliante au suivi) : 1-1,5 mg/kg ou 50 mg/m² en injection IM unique — surveillance de la décroissance des β-hCG à J4 et J7, répétable si décroissance insuffisante — <span id="geu_inline">saisir poids/taille ci-dessous pour la dose calculée</span>
+      <li><strong>Traitement médical par Méthotrexate</strong> (si GEU non rompue, non active, β-hCG &lt;5000 UI/L, absence d'activité cardiaque embryonnaire, patiente stable et compliante au suivi) : 1-1,5 mg/kg ou 50 mg/m² en injection IM unique — <span id="geu_inline">saisir poids/taille ci-dessous pour la dose calculée</span>
 
         <div class="row2" style="align-items:end; margin-top:8px;">
           <div class="field" style="margin-bottom:0;">
@@ -3062,6 +3403,9 @@ function renderProtocoles(){
         <div class="field" id="geu_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
         <div class="result-box hidden" id="geu_result"></div>
       </li>
+      <li><strong>Contre-indications au méthotrexate</strong> à vérifier systématiquement avant l'injection : immunodépression, insuffisance rénale ou hépatique, ulcère gastroduodénal évolutif, pathologie pulmonaire active, hémopathie/cytopénie, allaitement en cours (à interrompre au moins 1 semaine après l'injection), trouble de la coagulation ou anticoagulation en cours (contre-indication à la voie IM), désir de grossesse rapprochée non protégé (contraception efficace recommandée 3 mois après)</li>
+      <li><strong>Surveillance biologique post-méthotrexate :</strong> dosage des β-hCG à J1 (jour d'injection), J4 et J7 — une décroissance des β-hCG &gt;15% entre J4 et J7 confirme l'efficacité (poursuivre la surveillance hebdomadaire jusqu'à négativation) ; en l'absence de décroissance suffisante, une 2e injection à la même dose peut être réalisée, ou un recours à la chirurgie si échec répété, douleurs intenses ou signes de rupture à tout moment</li>
+      <li>Bilan préthérapeutique avant méthotrexate : NFS, fonction rénale, transaminases (contre-indication du traitement si anomalie significative)</li>
       <li>Vérifier systématiquement le <strong>groupe Rhésus</strong> : si Rhésus négatif, administrer des <strong>Immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM en prévention de l'allo-immunisation (dose réduite possible si <12 SA selon le produit disponible), quel que soit le traitement choisi, idéalement dans les 72h</li>
       <li>Soutien psychologique — toute perte de grossesse, y compris ectopique, nécessite une prise en charge empathique en plus du traitement médical</li>
     </ol>
@@ -3090,6 +3434,34 @@ function renderProtocoles(){
       <li>Antalgie adaptée — <strong>Paracétamol (Perfalgan®)</strong> 1 g PO/IV toutes les 6h (max 4 g/j), voire <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleurs intenses type contractions — <span id="fc_inline">saisir le poids ci-dessus pour la dose pondérale calculée</span></li>
       <li>Fausse couche non hémorragique/peu symptomatique : abstention, traitement médical (misoprostol) ou chirurgical selon le choix éclairé de la patiente — pas d'urgence si bien tolérée</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-avortement-septique">
+    <h3>🦠 Avortement septique</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection grave de l'utérus et parfois des annexes, contemporaine d'un avortement spontané ou provoqué — urgence gynécologique majeure, cause mondiale importante et évitable de mortalité maternelle (OMS), en particulier lorsque l'évacuation utérine a été réalisée dans des conditions non stériles. Symptomatologie typiquement retardée de 24-48h après le geste.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de la patiente (kg) — calcul de la dose de gentamicine</label>
+        <input type="number" step="0.5" min="0" id="avs_poids" placeholder="ex. 60" oninput="calcAvortementSeptique()">
+      </div>
+      <div class="field" id="avs_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="avs_result"></div>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Reconnaître le tableau :</strong> fièvre, douleur pelvienne, écoulement vaginal purulent/fétide, métrorragies, utérus mou et douloureux ± défense abdominale (évoque une perforation utérine) — rechercher activement les <strong>signes de choc septique</strong> (voir protocole Sepsis/Choc septique) : l'hypothermie paradoxale, l'oligurie et les troubles de conscience sont des signes de gravité, pas de réassurance</li>
+      <li><strong>Bilan en urgence :</strong> hémocultures et prélèvement vaginal/endocervical <strong>avant</strong> la 1ère dose d'antibiotique si cela ne retarde pas le traitement, NFS/CRP, bilan de coagulation (rechercher une CIVD), fonction rénale, groupe/Rh/RAI, β-hCG, échographie pelvienne (rétention, collection, corps étranger)</li>
+      <li><strong>Antibiothérapie IV empirique probabiliste immédiate</strong> (dans l'heure si signes de choc septique — cf. bundle Sepsis), triple association classique à large spectre couvrant germes aérobies et anaérobies (flore polymicrobienne) : <strong>Clindamycine (Dalacine®)</strong> 900 mg IV toutes les 8h <strong>+ Gentamicine (Gentalline®)</strong> 5-7 mg/kg IV en 1 injection/j <strong>± Ampicilline (Totapen®)</strong> 2 g IV toutes les 6h (couverture streptocoque/entérocoque, à associer surtout si sepsis sévère/choc) — <span id="avs_inline">saisir le poids ci-dessus pour la dose de gentamicine calculée</span></li>
+      <li><strong>Contrôle du foyer infectieux — évacuation utérine</strong> (aspiration/curetage) <strong>dès que possible après le début de l'antibiothérapie</strong>, sans attendre l'apyrexie — le geste doit être réalisé rapidement (idéalement dans les heures suivant le diagnostic) car il constitue le traitement étiologique, la source infectieuse persistant tant que la rétention n'est pas évacuée</li>
+      <li>Remplissage vasculaire par cristalloïdes, vasopresseurs (Noradrénaline) si choc septique persistant malgré remplissage — cf. protocole Sepsis/Choc septique pour la réanimation hémodynamique complète</li>
+      <li><strong>Suspicion de perforation utérine ou de péritonite</strong> (défense/contracture, iléus, crépitation sous-cutanée évoquant un gaz — penser à <em>Clostridium perfringens</em>, pourvoyeur d'hémolyse intravasculaire et de CIVD) : laparotomie exploratrice en urgence, hystérectomie d'hémostase si nécrose myométriale étendue ou sepsis incontrôlable malgré le traitement médical</li>
+      <li>Vérifier le statut vaccinal antitétanique (risque accru si manœuvres non stériles) — sérovaccination antitétanique si statut incertain ou non à jour</li>
+      <li>Vérifier le groupe Rhésus : <strong>Immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM si Rhésus négatif</li>
+      <li>Accompagnement et information systématiques sur la contraception et l'accès à des soins post-avortement sécurisés, dans le respect du choix et de la confidentialité de la patiente</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais retarder l'antibiothérapie en attendant les résultats des prélèvements en cas de signes de choc septique. Ne jamais différer l'évacuation utérine par crainte de « disséminer » l'infection — c'est l'inverse : la rétention non évacuée entretient le foyer septique.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Gentalline® et Totapen® sont disponibles jusqu'au niveau CHRD (LNMEIS) ; la Dalacine® (clindamycine injectable) est d'accès plus variable, souvent limitée aux CHU/CHRR — à défaut, une bi-antibiothérapie Ampicilline + Gentamicine reste une alternative raisonnable en 1ère intention, avec ajout de <strong>Métronidazole (Flagyl®)</strong> IV (large disponibilité, bonne couverture anaérobie) pour compenser l'absence de couverture anti-anaérobie stricte de la clindamycine.</p>
   </div>
 
   <div class="card" id="proto-hrp-placenta-praevia">
@@ -3124,6 +3496,24 @@ function renderProtocoles(){
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais tirer sur la tête pour dégager les épaules, ni tirer sur le cordon pour accélérer la délivrance — ces gestes exposent à une lésion du plexus brachial, une rupture du cordon ou une inversion utérine.</div></div>
   </div>
 
+  <div class="card" id="proto-retention-placentaire">
+    <h3>🤰 Rétention placentaire</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Absence de décollement placentaire complet dans les <strong>30 minutes</strong> suivant la naissance (définition OMS) malgré une prise en charge active de la 3e phase du travail (utérotonique, traction contrôlée du cordon) — 1ère cause du "Tissu" dans la règle des 4T de l'HPP. Distinguer la <strong>rétention totale</strong> (placenta non décollé) de la <strong>rétention partielle</strong> (cotylédon ou membranes restants après une délivrance apparemment complète).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Vérifier la vacuité vésicale</strong> (sondage évacuateur si besoin — une vessie pleine gêne la rétraction utérine et le décollement) et poursuivre le <strong>massage utérin</strong></li>
+      <li><strong>Traction contrôlée du cordon</strong> associée à une <strong>contre-pression sus-pubienne</strong> ferme (manœuvre de Brandt-Andrews) — ne jamais tirer sur le cordon sans contre-pression abdominale simultanée (risque d'inversion utérine ou de rupture du cordon)</li>
+      <li>Dose supplémentaire d'utérotonique si non déjà fait : <strong>Oxytocine (Syntocinon®)</strong> 10 UI IM/IV lente — favorise la rétraction utérine et le décollement</li>
+      <li><strong>Si échec à 30 minutes, ou hémorragie associée à tout moment</strong> (ne pas attendre 30 min si saignement actif) : <strong>délivrance artificielle et révision utérine manuelle</strong> sous analgésie/anesthésie adaptée (kétamine IV si disponible, sinon bloc paracervical/anesthésie locorégionale selon plateau technique) — main entière introduite dans la cavité utérine le long du cordon, décollement du placenta au bord cubital de la main puis extraction complète, suivie d'une révision systématique de la cavité à la recherche de débris résiduels</li>
+      <li><strong>Antibioprophylaxie en dose unique</strong> au moment du geste (<strong>Ampicilline (Totapen®)</strong> 2 g IV ou céphalosporine de 1ère génération) — recommandée par l'OMS par analogie avec les autres gestes endo-utérins invasifs, bien que le niveau de preuve spécifique reste faible (revue Cochrane 2024 : bénéfice non démontré avec certitude, mais pratique largement maintenue au vu du contexte à risque infectieux élevé)</li>
+      <li><strong>Inspection systématique du placenta et des membranes</strong> après toute délivrance (même spontanée) : compter les cotylédons, vérifier l'intégrité des membranes — la découverte d'un cotylédon manquant ou d'un lobe succenturié impose une révision utérine même en l'absence d'hémorragie immédiate</li>
+      <li><strong>Suspicion de placenta accreta/increta/percreta</strong> (absence de plan de clivage franc, hémorragie cataclysmique dès la tentative de décollement, échec répété de la traction) : <strong>arrêter immédiatement toute traction</strong>, ne pas insister — organiser en urgence une prise en charge chirurgicale (laparotomie, hystérectomie d'hémostase le plus souvent nécessaire), transfusion à anticiper largement</li>
+      <li>Vérifier le groupe Rhésus : <strong>Immunoglobulines anti-D (Rhophylac®)</strong> 200 µg (1000 UI) IM si Rhésus négatif</li>
+      <li>Surveillance post-geste rapprochée (saignement, tonus utérin, constantes) — cf. protocole HPP si hémorragie associée ou secondaire</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais tirer sur le cordon sans contre-pression sus-pubienne, et ne jamais forcer une traction qui rencontre une résistance importante (risque majeur d'inversion utérine ou de rupture du cordon, et risque d'aggravation hémorragique en cas de placenta accreta méconnu).</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la kétamine injectable est largement disponible jusqu'au niveau CHRD et constitue une option d'anesthésie de choix pour la révision utérine en ressources limitées (maintien de la stabilité hémodynamique). Le bloc paracervical reste une alternative simple en son absence.</p>
+  </div>
+
   <div class="card" id="proto-procidence-cordon">
     <h3>🪢 Procidence du cordon ombilical</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Le cordon ombilical descend devant la présentation fœtale, souvent après rupture des membranes — urgence obstétricale absolue par risque de compression du cordon et d'asphyxie fœtale aiguë.</p>
@@ -3155,6 +3545,28 @@ function renderProtocoles(){
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais exercer de traction excessive sur la tête fœtale ni de pression fondique — risque majeur de lésion du plexus brachial et de rupture utérine. Progresser méthodiquement dans les manœuvres plutôt que de forcer.</div></div>
   </div>
 
+  <div class="card" id="proto-souffrance-foetale-aigue">
+    <h3>💓 Souffrance fœtale aiguë (anomalies du rythme cardiaque fœtal)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Altération aiguë de l'oxygénation fœtale survenant pendant le travail — dépistée principalement par l'enregistrement continu du rythme cardiaque fœtal (RCF/cardiotocographie) ou, à défaut, par l'auscultation intermittente. Classification simplifiée en 3 catégories (FIGO/CNGOF), à interpréter toujours en fonction du contexte clinique (terme, facteurs de risque materno-fœtaux).</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Catégorie</th><th>Caractéristiques</th><th>Conduite</th></tr>
+      <tr><td class="leger">Normal</td><td>Rythme de base 110-160 bpm, variabilité normale (5-25 bpm), absence de ralentissements ou ralentissements précoces isolés uniquement</td><td>Surveillance standard, poursuite du travail</td></tr>
+      <tr><td class="modere">Suspect</td><td>Une seule anomalie isolée : tachycardie ou bradycardie modérée, variabilité réduite, ralentissements variables non compliqués</td><td>Mesures de réanimation in utero (ci-dessous) + surveillance rapprochée, rechercher une cause corrigible</td></tr>
+      <tr><td class="grave">Pathologique</td><td>Association de plusieurs anomalies, bradycardie &lt;100 bpm &gt;5 min, ralentissements tardifs répétés, variabilité minime/absente, tracé sinusoïdal</td><td>Mesures de réanimation in utero immédiates + <strong>extraction fœtale en urgence</strong> si non résolutif</td></tr>
+    </table>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Mesures de réanimation in utero</strong> (1ère intention devant tout tracé suspect/pathologique, à débuter sans délai) : <strong>décubitus latéral gauche</strong> (lève la compression aorto-cave et améliore le retour veineux/la perfusion utéro-placentaire), <strong>oxygénothérapie maternelle</strong> au masque, <strong>arrêt immédiat de toute perfusion d'ocytocine</strong> en cours</li>
+      <li><strong>Tocolyse d'urgence</strong> si hypercinésie/hypertonie utérine associée (contractions trop fréquentes/prolongées, cause fréquente et rapidement corrigible de souffrance fœtale) : <strong>Salbutamol (Ventoline®)</strong> IV lent ou <strong>Terbutaline (Bricanyl®)</strong> sous-cutanée selon disponibilité</li>
+      <li><strong>Remplissage vasculaire</strong> par cristalloïdes si hypotension maternelle (notamment après pose d'une analgésie/anesthésie locorégionale) — cause corrigible fréquente de bradycardie fœtale</li>
+      <li>Corriger toute cause maternelle évidente identifiée : fièvre (antipyrétique), déshydratation (hydratation), hypoxie maternelle</li>
+      <li><strong>Toucher vaginal</strong> pour éliminer une cause mécanique immédiatement corrigible ou orientant vers une urgence spécifique : procidence du cordon (palpation du cordon battant), progression rapide du travail (accouchement imminent parfois préférable à une extraction chirurgicale)</li>
+      <li><strong>Si tracé pathologique persistant malgré les mesures ci-dessus, ou bradycardie prolongée &gt;5-10 min</strong> : <strong>extraction fœtale en urgence</strong> par la voie la plus rapide et la plus sûre selon les conditions obstétricales — extraction instrumentale (ventouse/forceps) si conditions réunies (dilatation complète, présentation engagée), sinon <strong>césarienne en urgence absolue</strong></li>
+      <li><strong>Devant une bradycardie fœtale brutale et sévère</strong>, évoquer et rechercher activement une cause spécifique grave : <a onclick="document.getElementById('proto-procidence-cordon').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">procidence du cordon</a>, <a onclick="document.getElementById('proto-rupture-uterine').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">rupture utérine</a>, <a onclick="document.getElementById('proto-hrp-placenta-praevia').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">HRP</a>, hypotension maternelle sévère (hémorragie, rachianesthésie) — chacune impose sa prise en charge spécifique en parallèle</li>
+      <li>Anticiper et préparer une <strong>réanimation néonatale</strong> dès qu'une souffrance fœtale aiguë est identifiée, quelle que soit la voie d'accouchement retenue — prévenir l'équipe pédiatrique/néonatale sans délai</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">🩺 <strong>En l'absence de monitoring électronique continu</strong> (fréquent hors CHU/CHRR à Madagascar) : l'<strong>auscultation intermittente au stéthoscope de Pinard ou au Doppler fœtal</strong> reste l'outil de référence — toutes les 15-30 min en phase active du travail, systématiquement après chaque contraction en fin de travail. Toute bradycardie persistant plusieurs minutes après la fin d'une contraction (équivalent clinique d'un ralentissement tardif) doit alerter et déclencher les mêmes mesures de réanimation in utero.</p>
+  </div>
+
   <div class="card" id="proto-rupture-uterine">
     <h3>💥 Rupture utérine</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Solution de continuité de la paroi utérine pendant le travail — urgence vitale materno-fœtale. Facteur de risque principal : <strong>utérus cicatriciel</strong> (antécédent de césarienne, surtout en cas de tentative de voie basse après césarienne), mais possible sur utérus sain (grande multiparité, hyperstimulation par ocytociques, traumatisme).</p>
@@ -3180,6 +3592,50 @@ function renderProtocoles(){
     </ol>
   </div>
 
+  <div class="card" id="proto-salpingite-pid">
+    <h3>🦠 Salpingite aiguë / Infection génitale haute sévère (PID)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection ascendante de l'appareil génital haut (endométrite, salpingite, abcès tubo-ovarien, pelvipéritonite), le plus souvent d'origine sexuellement transmissible (<em>Chlamydia trachomatis</em>, <em>Neisseria gonorrhoeae</em>) ou consécutive à un geste endo-utérin récent (DIU, curetage, hystéroscopie, révision utérine). Le <strong>seuil diagnostique doit rester bas</strong> : un retard de traitement expose à des séquelles majeures et souvent irréversibles (GEU, infertilité tubaire, douleurs pelviennes chroniques).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Diagnostic essentiellement clinique</strong> : douleur pelvienne (souvent bilatérale), fièvre, leucorrhées anormales, métrorragies parfois associées — la <strong>douleur à la mobilisation utérine et/ou annexielle</strong> au toucher vaginal est le signe le plus sensible ; ne pas attendre une confirmation microbiologique ou d'imagerie pour débuter le traitement devant un tableau évocateur</li>
+      <li><strong>β-hCG systématique</strong> pour éliminer une grossesse (notamment une GEU, principal diagnostic différentiel), échographie pelvienne (idéalement endovaginale) à la recherche d'un abcès tubo-ovarien ou d'un pyosalpinx</li>
+      <li><strong>Forme non compliquée, prise en charge ambulatoire possible</strong> (pas de signe de gravité, tolérance digestive correcte, suivi assuré à 48-72h) : <strong>Ceftriaxone (Rocéphine®)</strong> 500 mg-1 g IM en dose unique <strong>+ Doxycycline</strong> 100 mg x2/j PO pendant 14 jours <strong>+ Métronidazole (Flagyl®)</strong> 500 mg x2/j PO pendant 14 jours (couverture anaérobie, en particulier si geste endo-utérin récent)</li>
+      <li><strong>Critères d'hospitalisation</strong> : sepsis sévère/choc septique, grossesse en cours, échec du traitement ambulatoire à 48-72h ou intolérance orale, abcès tubo-ovarien à l'imagerie, doute diagnostique justifiant une exploration chirurgicale, immunodépression</li>
+      <li><strong>Forme sévère/hospitalisée :</strong> <strong>Ceftriaxone</strong> 1 g IV/24h <strong>+ Doxycycline</strong> 100 mg x2/j (IV ou PO) <strong>+ Métronidazole</strong> 500 mg x3/j IV — relais oral possible après 24-48h d'amélioration clinique nette, durée totale de traitement 14 jours ; ajouter <strong>Gentamicine (Gentalline®)</strong> en cas de sepsis sévère ou d'abcès tubo-ovarien constitué</li>
+      <li><strong>Abcès tubo-ovarien &gt;3 cm ou pelvipéritonite :</strong> drainage (radioguidé si disponible, sinon chirurgical par cœlioscopie/laparotomie) si non-amélioration à 48-72h d'antibiothérapie adaptée ou volumineux d'emblée — <strong>la rupture d'un abcès tubo-ovarien est une urgence chirurgicale absolue</strong> (tableau de péritonite/choc septique brutal)</li>
+      <li><strong>DIU en place :</strong> son retrait n'est pas systématique d'emblée, mais à envisager en l'absence d'amélioration clinique après 48-72h d'antibiothérapie bien conduite</li>
+      <li>Traitement systématique du/des partenaire(s) sexuel(s) si étiologie sexuellement transmissible suspectée/confirmée, dépistage des autres IST associées, information sur la contraception et la prévention</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-bartholinite">
+    <h3>🩹 Bartholinite abcédée (abcès de la glande de Bartholin)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection d'un kyste de la glande de Bartholin (obstruction du canal excréteur), se manifestant par une tuméfaction unilatérale douloureuse, chaude et inflammatoire de la grande lèvre, pouvant rendre la marche et la position assise difficiles. Les abcès sont environ 3 fois plus fréquents que les simples kystes non infectés.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Kyste simple peu symptomatique, non infecté :</strong> abstention thérapeutique et bains de siège chauds répétés suffisent le plus souvent, sans geste invasif</li>
+      <li><strong>Abcès constitué (tuméfaction fluctuante, douloureuse, ± fièvre) :</strong> <strong>incision-drainage en urgence</strong> sous anesthésie locale — geste simple, rapide, procurant un soulagement quasi immédiat de la douleur</li>
+      <li><strong>Prévenir la récidive</strong> (fréquente après une simple incision-évacuation sans mesure complémentaire, le trajet cicatrisant souvent trop vite) : mise en place d'un <strong>cathéter de Word</strong> laissé en place 4-6 semaines si disponible, ou à défaut une <strong>mèche/drain</strong> maintenu quelques jours pour garder l'ouverture perméable ; en cas de récidive malgré ces mesures, discuter une <strong>marsupialisation</strong> (suture des berges du kyste incisé à la peau, créant une ouverture permanente) avec un opérateur expérimenté</li>
+      <li><strong>Antibiothérapie</strong> non systématique après un drainage efficace — réservée aux formes avec cellulite périphérique extensive, signes d'infection systémique (fièvre, altération de l'état général), abcès récidivant, ou terrain à risque (diabète mal équilibré, immunodépression) : <strong>Amoxicilline-Acide clavulanique (Augmentin®)</strong> PO 7-10 jours en 1ère intention</li>
+      <li>Prélèvement bactériologique du pus au moment du drainage, particulièrement utile si contexte évocateur d'IST (rechercher gonocoque/Chlamydia)</li>
+      <li>Antalgie adaptée (Paracétamol, voire palier 2 en péri-geste), bains de siège plusieurs fois par jour après le drainage jusqu'à cicatrisation complète</li>
+      <li>Diagnostics différentiels à garder en tête devant une masse vulvaire : hernie inguinale/crurale étranglée, kyste sébacé infecté, lipome, plus rarement carcinome de la glande de Bartholin (à évoquer devant une masse dure, fixée, non douloureuse, ou chez une patiente ménopausée — biopsie recommandée dans ce contexte)</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-sho">
+    <h3>🫧 Syndrome d'hyperstimulation ovarienne (SHO)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Complication iatrogène de la stimulation ovarienne contrôlée (procréation médicalement assistée, induction de l'ovulation) — augmentation de la perméabilité capillaire médiée par le VEGF entraînant un passage de liquide vers le « troisième secteur » (ascite, épanchement pleural), une hémoconcentration et un risque thromboembolique majeur (veineux ET artériel). Pertinence limitée à Madagascar en dehors des rares patientes suivies en PMA ou sous induction de l'ovulation (clomifène, gonadotrophines), mais à connaître pour ne pas méconnaître une urgence potentiellement grave chez une patiente ayant récemment bénéficié d'un traitement de la fertilité.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Facteurs de risque :</strong> âge &lt;30 ans, syndrome des ovaires polykystiques, réponse ovarienne excessive à la stimulation (recueil de nombreux ovocytes), grossesse débutante associée (SHO tardif, généralement plus sévère que le SHO précoce lié au seul déclenchement de l'ovulation)</li>
+      <li><strong>Présentation clinique</strong> proportionnelle à la sévérité : formes légères à modérées — distension et douleur abdominales, nausées, prise de poids rapide ; formes sévères — ascite volumineuse, épanchement pleural (dyspnée), oligurie, hémoconcentration biologique (NFS), troubles électrolytiques, thromboembolie veineuse ou artérielle (parfois révélatrice)</li>
+      <li><strong>Formes légères/modérées bien tolérées :</strong> surveillance ambulatoire rapprochée (poids quotidien, diurèse, périmètre abdominal), hydratation orale, antalgie simple, arrêt de toute activité physique intense</li>
+      <li><strong>Formes sévères :</strong> hospitalisation, <strong>réplétion volémique prudente</strong> par cristalloïdes isotoniques (objectif : corriger l'hypovolémie efficace sans aggraver l'épanchement) — <strong>éviter les macromolécules de type albumine, hydroxyéthylamidon (HES) ou mannitol</strong>, non recommandées en routine dans cette indication</li>
+      <li><strong>Ponction évacuatrice</strong> (ascite ou épanchement pleural) en cas de détresse respiratoire ou d'inconfort abdominal majeur — geste purement symptomatique, à répéter si nécessaire, sans traitement étiologique curatif disponible (l'évolution est spontanément favorable en quelques jours à semaines en dehors d'une grossesse évolutive qui prolonge le tableau)</li>
+      <li><strong>Thromboprophylaxie systématique</strong> par héparine de bas poids moléculaire dans les formes modérées à sévères — le risque thromboembolique reste élevé plusieurs semaines après la résolution clinique</li>
+      <li>Surveillance biologique rapprochée : NFS/hématocrite (marqueur de sévérité et de la réponse au remplissage), ionogramme, fonction rénale et hépatique</li>
+      <li>Orientation vers un centre de référence en cas de doute sur la sévérité ou de dégradation clinique — les formes sévères comportent un risque de mortalité, bien que rare</li>
+    </ol>
+  </div>
+
   <div class="card" id="proto-hellp">
     <h3>🤰 Syndrome HELLP</h3>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>H</strong>emolysis (hémolyse), <strong>E</strong>levated <strong>L</strong>iver enzymes (cytolyse hépatique), <strong>L</strong>ow <strong>P</strong>latelets (thrombopénie) — variante ou complication sévère de la prééclampsie (survient dans 10-20% des prééclampsies sévères), mais peut aussi apparaître isolément, sans HTA franche ni protéinurie dans 10-15% des cas, et jusqu'à 30% des cas se révèlent en post-partum (jusqu'à 7 jours après l'accouchement). Mortalité maternelle jusqu'à 1%, morbidité sévère (hématome sous-capsulaire du foie, CIVD, insuffisance rénale aiguë, œdème pulmonaire, décollement rétinien).</p>
@@ -3194,6 +3650,36 @@ function renderProtocoles(){
       <li><strong>Le seul traitement curatif reste l'accouchement</strong> — à discuter en urgence avec l'équipe obstétricale dès la 34e SA, ou avant si dégradation maternelle/fœtale sévère quel que soit le terme ; corticothérapie de maturation pulmonaire fœtale si extraction anticipée et terme le permettant</li>
       <li>Orientation en réanimation/unité de soins intensifs si défaillance d'organe associée (CIVD, insuffisance rénale, OAP, atteinte neurologique)</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-choc-hemorragique-obstetrical">
+    <h3>🩸 Choc hémorragique obstétrical</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Protocole transversal de réanimation du choc hémorragique en contexte obstétrical (HPP, HRP, rupture utérine, GEU rompue...), à appliquer <strong>en parallèle</strong> du traitement de la cause spécifique. Piège classique : l'<strong>hypervolémie physiologique de la grossesse</strong> (+30 à 50% du volume sanguin) masque longtemps les signes de choc — une femme enceinte peut perdre 1000-1500 mL avant de présenter une tachycardie ou une hypotension franches ; ne pas se rassurer sur des constantes initialement normales.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>💓 Fréquence cardiaque (bpm)</label>
+        <input type="number" step="1" min="0" id="cho_fc" placeholder="ex. 110" oninput="calcChocHemoObst()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>📉 PA systolique (mmHg)</label>
+        <input type="number" step="1" min="0" id="cho_pas" placeholder="ex. 95" oninput="calcChocHemoObst()">
+      </div>
+    </div>
+    <div class="field" id="cho_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    <div class="result-box hidden" id="cho_result"></div>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Alerte immédiate et approche en parallèle</strong> : une équipe traite la cause (utérotoniques, tamponnement, geste chirurgical selon l'étiologie) pendant qu'une autre mène la réanimation — ne jamais attendre le contrôle complet de l'hémorragie pour débuter le remplissage/la transfusion</li>
+      <li><strong>Estimation objective des pertes</strong> : l'estimation visuelle sous-évalue systématiquement les pertes réelles (souvent de moitié) — utiliser un sac de recueil sous-fessier ou peser les champs/compresses imbibés si disponible ; ne pas se fier aux seules constantes vitales initiales du fait de la réserve physiologique gravidique</li>
+      <li>2 VVP de gros calibre, bilan (NFS, coagulation avec <strong>fibrinogène</strong>, groupe/Rh/RAI), commander sans délai des culots globulaires — activer le <a onclick="document.getElementById('proto-transfusion-massive').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole de transfusion massive</a> dès qu'un saignement obstétrical sévère et actif est identifié, sans attendre les résultats biologiques</li>
+      <li><strong>Transfusion précoce et équilibrée :</strong> ratio CGR:PFC entre 1:1 et 2:1, transfusion plaquettaire précoce (objectif &gt;50 G/L) — l'hémorragie obstétricale s'accompagne d'une <strong>chute rapide et disproportionnée du fibrinogène</strong> par rapport aux autres causes de choc hémorragique ; un fibrinogène &lt;2 g/L est un marqueur prédictif fort de sévérité en contexte obstétrical (seuil plus élevé que pour un choc hémorragique non obstétrical) → apport précoce de <strong>fibrinogène concentré ou cryoprécipités</strong> si disponible dès ce seuil</li>
+      <li><strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min dès le diagnostic d'hémorragie obstétricale sévère, quelle qu'en soit la cause (réduit la mortalité par hémorragie, cf. protocole HPP pour la posologie pondérale détaillée)</li>
+      <li>Remplissage par cristalloïdes isotoniques en attendant les produits sanguins — <strong>éviter le remplissage excessif</strong> (aggrave la coagulopathie de dilution et l'hémorragie) ; à la différence du polytraumatisé, ne pas viser une hypotension permissive tant que le fœtus est in utero, la perfusion utéro-placentaire devant être préservée</li>
+      <li>Maintenir la <strong>normothermie</strong> (réchauffement actif, produits sanguins réchauffés si possible) et corriger l'acidose — la triade létale hypothermie/acidose/coagulopathie aggrave rapidement le pronostic</li>
+      <li>Si hémorragie réfractaire malgré ces mesures : tamponnement/gestes hémostatiques spécifiques à la cause, <strong>hystérectomie d'hémostase</strong> à ne pas différer si le pronostic vital maternel est engagé et les mesures conservatrices ont échoué</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le dosage du fibrinogène et les concentrés de fibrinogène/cryoprécipités sont rarement disponibles hors CHU — en leur absence, le PFC reste la principale source d'apport de facteurs de coagulation et de fibrinogène ; anticiper largement le transfert vers un centre disposant d'une banque de sang (CNTS) si l'hémorragie n'est pas rapidement contrôlée sur place.</p>
   </div>
 
   <div class="card" id="proto-embolie-amniotique">
@@ -3223,6 +3709,23 @@ function renderProtocoles(){
       <li>La césarienne périmortem est réalisée avant tout <strong>pour améliorer les chances de survie maternelle</strong> (lève la compression aorto-cave, améliore le retour veineux et l'efficacité du massage cardiaque) — le bénéfice fœtal est secondaire mais réel si le geste est rapide</li>
       <li><strong>Poursuivre la RCP pendant et après l'extraction</strong>, sans interrompre les compressions thoraciques pour le geste chirurgical ; prise en charge néonatale immédiate simultanée par une seconde équipe (cf. protocole réanimation du nouveau-né)</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-cardiomyopathie-peripartum">
+    <h3>🫀 Cardiomyopathie du péripartum</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Insuffisance cardiaque avec dysfonction systolique du ventricule gauche (FEVG &lt;45%) apparaissant du dernier mois de grossesse jusqu'à 5 mois post-partum, en l'absence d'autre cause identifiable de dysfonction cardiaque — <strong>diagnostic d'élimination</strong>, cause majeure et sous-diagnostiquée de mortalité maternelle. Piège fréquent : les symptômes (dyspnée, œdèmes des membres inférieurs, fatigue) sont facilement confondus avec les manifestations d'une fin de grossesse normale.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Facteurs de risque</strong> à connaître pour évoquer le diagnostic : prééclampsie/HTA gravidique, multiparité, grossesse multiple, âge maternel avancé, origine afro-caribéenne, tabagisme — leur présence doit abaisser le seuil de suspicion devant une dyspnée d'apparition ou d'aggravation péripartum</li>
+      <li><strong>Signes d'alerte</strong> devant faire évoquer le diagnostic plutôt qu'un simple inconfort de fin de grossesse : orthopnée, dyspnée nocturne paroxystique, toux, tachycardie persistante au repos, œdèmes s'aggravant rapidement, désaturation — <strong>échocardiographie</strong> dès que possible pour confirmer la dysfonction ventriculaire gauche</li>
+      <li><strong>Formes sévères</strong> : œdème aigu du poumon, choc cardiogénique, troubles du rythme, arrêt cardiaque — cf. <a onclick="document.getElementById('proto-oap').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole OAP cardiogénique</a> et <a onclick="document.getElementById('proto-acr-grossesse').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">ACR chez la femme enceinte</a> pour la prise en charge symptomatique immédiate</li>
+      <li><strong>Traitement de l'insuffisance cardiaque adapté à la grossesse</strong> : <strong>diurétique de l'anse</strong> (<strong>Furosémide (Lasilix®)</strong>) pour la congestion, <strong>bêta-bloquant cardiosélectif</strong> (<strong>Bisoprolol</strong>) une fois la patiente stabilisée hémodynamiquement — <strong>IEC, ARA2 et sacubitril/valsartan formellement contre-indiqués pendant la grossesse</strong> (tératogènes), à introduire seulement après l'accouchement si persistance de la dysfonction VG et absence d'allaitement (ou avec prudence/molécule adaptée si allaitement poursuivi)</li>
+      <li><strong>Bromocriptine (Parlodel®)</strong> (schéma BOARD, recommandation ESC de grade IIb) : 2,5 mg/j pendant 1 semaine dans les formes non compliquées ; schéma prolongé (2,5 mg x2/j pendant 2 semaines puis 2,5 mg/j pendant 6 semaines) dans les formes sévères (FEVG &lt;25%, choc cardiogénique) — <strong>toujours associée à une anticoagulation</strong> (risque thromboembolique et vasculaire accru sous bromocriptine), et incompatible avec la poursuite de l'allaitement (effet antiprolactinique)</li>
+      <li><strong>Anticoagulation prophylactique systématique</strong> par <strong>héparine de bas poids moléculaire (Lovenox®)</strong> tant que la FEVG reste sévèrement abaissée et/ou sous bromocriptine — le risque thromboembolique est majoré par la stase (dysfonction VG, bas débit) et l'état d'hypercoagulabilité de la grossesse/du post-partum</li>
+      <li><strong>Choc cardiogénique réfractaire</strong> : discuter précocement avec un centre de référence l'indication d'une assistance circulatoire mécanique (ECMO/ballon de contre-pulsion) si le plateau technique le permet — transfert à organiser sans délai si non disponible sur place</li>
+      <li><strong>Grossesse en cours au diagnostic :</strong> pas d'indication systématique à interrompre la grossesse — décision d'extraction fœtale à discuter au cas par cas, en concertation obstétrico-cardiologique, en fonction de la stabilité maternelle et du terme</li>
+      <li><strong>Suivi :</strong> la récupération de la FEVG est fréquente (jusqu'à 50% des cas) mais non systématique — contraception efficace à discuter avant toute grossesse ultérieure compte tenu du risque de récidive, particulièrement élevé en cas de FEVG non totalement récupérée</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Lasilix® et Lovenox® (énoxaparine) sont disponibles jusqu'au niveau CHRD. La bromocriptine (Parlodel®) et l'échocardiographie sont d'accès limité, généralement réservés au niveau CHU — en leur absence, le traitement symptomatique de l'insuffisance cardiaque (diurétique, bêta-bloquant à distance de l'épisode aigu) et l'orientation rapide vers un centre cardiologique restent la priorité.</p>
   </div>
 
   <div class="card" id="proto-inversion-uterine">
@@ -3255,6 +3758,37 @@ function renderProtocoles(){
     </ol>
   </div>
 
+  <div class="card" id="proto-endometrite-pp">
+    <h3>🌡️ Endométrite du post-partum (forme non compliquée)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection utérine ascendante survenant après l'accouchement (2-3% des accouchements par voie basse, jusqu'à 5-20 fois plus fréquente après césarienne, surtout si celle-ci a été réalisée après le début du travail). À distinguer des formes sévères/septiques traitées dans le <a onclick="document.getElementById('proto-sepsis-puerperal').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Sepsis puerpéral</a>.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Diagnostic clinique</strong> : fièvre ≥38°C au-delà de 24h post-partum, douleur à la mobilisation utérine, lochies malodorantes ou anormales, utérus mal involué — en l'<strong>absence</strong> de signe de gravité (sepsis, choc, défense abdominale)</li>
+      <li>Bilan à visée étiologique et de gravité : NFS/CRP, prélèvement vaginal, ECBU, hémoculture si fièvre &gt;38,5°C ou frissons</li>
+      <li><strong>Antibiothérapie probabiliste de 1ère intention</strong> (CNGOF/SPILF) : <strong>Amoxicilline-Acide clavulanique (Augmentin®)</strong> IV, 3-6 g/j selon le poids (compatible avec l'allaitement) — relais oral après normalisation thermique, adaptation secondaire aux prélèvements</li>
+      <li><strong>Alternative en cas de contre-indication aux pénicillines</strong> (allergie), ou si l'antibiothérapie de 1ère ligne s'avère insuffisante : association <strong>Clindamycine (Dalacine®)</strong> 900 mg IV toutes les 8h <strong>+ Gentamicine (Gentalline®)</strong> 5 mg/kg IV en 1 injection/j — régime jugé le plus efficace en comparaison directe (méta-analyse Cochrane), mais nécessitant un avis spécialisé si l'allaitement est poursuivi</li>
+      <li><strong>Utérotoniques associés</strong> pour favoriser la rétraction utérine : <strong>Oxytocine (Syntocinon®)</strong> IM ou <strong>Méthylergométrine (Methergin®)</strong> PO</li>
+      <li><strong>Durée du traitement IV :</strong> jusqu'à 48h après l'obtention de l'apyrexie et la disparition des douleurs provoquées — un relais oral systématique n'est pas nécessaire en cas de bonne évolution sous traitement IV seul</li>
+      <li><strong>Si fièvre persistante &gt;48-72h malgré une antibiothérapie bien conduite et adaptée :</strong> rechercher activement un <strong>abcès pelvien</strong> ou une <strong>thrombophlébite pelvienne septique</strong> (imagerie — TDM/IRM injectée) — la thrombophlébite pelvienne septique reste un diagnostic d'exclusion, confirmé a posteriori par la réponse à un essai d'anticoagulation ; en l'absence d'amélioration ou d'aggravation, rebasculer vers le protocole Sepsis puerpéral</li>
+      <li>Anticoagulation préventive à discuter au cas par cas, en particulier si mauvais terrain veineux associé (immobilisation prolongée, obésité, antécédent thromboembolique)</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-sheehan">
+    <h3>🧠 Syndrome de Sheehan (nécrose hypophysaire du post-partum)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Nécrose ischémique de l'antéhypophyse secondaire à un choc hypovolémique sévère du péripartum (le plus souvent une hémorragie du post-partum majeure) — urgence endocrinienne potentiellement létale, particulièrement pertinente dans les contextes où les hémorragies sévères du post-partum restent fréquentes. Le tableau peut être précoce (heures à jours après l'épisode hémorragique) ou ne se révéler que des mois, voire des années plus tard.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Évoquer systématiquement</strong> le diagnostic chez toute patiente ayant présenté un collapsus/choc hémorragique sévère du péripartum, devant l'apparition de signes inexpliqués — y compris à distance de l'épisode obstétrical</li>
+      <li><strong>Signe le plus évocateur et souvent le plus précoce : absence de montée laiteuse</strong> (agalactie) dans les suites de l'accouchement — à rechercher systématiquement à l'interrogatoire de toute patiente ayant fait une hémorragie sévère de la délivrance</li>
+      <li><strong>Présentation aiguë grave possible</strong> (véritable urgence métabolique et endocrinienne) : hypotension réfractaire au remplissage sans saignement actif retrouvé, hypoglycémies récidivantes ou résistantes au resucrage, hyponatrémie, céphalées avec syndrome méningé fébrile trompeur, troubles de conscience pouvant aller jusqu'au coma — tableau pouvant mimer d'autres causes (sepsis, cause neurologique)</li>
+      <li><strong>Mécanisme :</strong> insuffisance corticotrope (déficit en ACTH) — la plus dangereuse, pouvant précipiter un collapsus/une hypoglycémie sévère réfractaire — associée à des degrés divers à une insuffisance thyréotrope, gonadotrope et somatotrope, ± diabète insipide si l'atteinte s'étend à la post-hypophyse</li>
+      <li><strong>Devant toute suspicion, traiter en urgence comme une insuffisance surrénalienne aiguë sans attendre la confirmation biologique complète</strong> : <strong>Hydrocortisone (Hydrocortisone Upjohn®/Solu-Cortef®)</strong> 100 mg IV en bolus puis 50 mg IV toutes les 6h (ou perfusion continue selon disponibilité), correction de l'hypoglycémie par <strong>Glucosé 30%</strong> IV, remplissage vasculaire par sérum salé isotonique</li>
+      <li><strong>Piège à connaître impérativement :</strong> ne jamais introduire d'hormonothérapie thyroïdienne substitutive avant d'avoir couvert l'axe corticotrope — l'accélération du métabolisme induite par les hormones thyroïdiennes peut précipiter une insuffisance surrénalienne aiguë et un collapsus chez une patiente dont la réserve corticotrope est déjà compromise</li>
+      <li>Correction prudente et progressive d'une hyponatrémie sévère associée — une correction trop rapide expose à un risque de myélinolyse centropontine</li>
+      <li>Bilan hormonal complet à distance de la phase aiguë (cortisol, ACTH, TSH/T4, prolactine, gonadotrophines, IRM hypophysaire) pour confirmer le diagnostic et adapter le traitement hormonal substitutif au long cours</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais administrer de lévothyroxine avant l'hydrocortisone chez une patiente suspecte de syndrome de Sheehan en phase aiguë — risque de précipiter une insuffisance surrénalienne aiguë gravissime.</div></div>
+  </div>
+
   <div class="card" id="proto-trauma-grossesse">
     <h3>🚑 Traumatisme chez la femme enceinte</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après ATLS 10th Ed. (chapitre grossesse et traumatisme). <strong>La priorité reste la réanimation maternelle</strong> — la meilleure prise en charge du fœtus passe par une stabilisation maternelle optimale. Toute femme en âge de procréer victime d'un traumatisme doit bénéficier d'un dosage de β-hCG.</p>
@@ -3268,6 +3802,21 @@ function renderProtocoles(){
       <li><strong>Imagerie :</strong> ne pas priver la mère d'une imagerie indiquée (TDM notamment) par crainte de l'irradiation fœtale — les bénéfices d'un diagnostic précis dépassent largement le risque radique aux doses diagnostiques ; protéger l'abdomen/pelvis si possible sans compromettre la qualité de l'examen</li>
       <li><strong>Césarienne périmortem</strong> à envisager sans délai en cas d'arrêt cardiaque maternel post-traumatique et grossesse ≥20 SA (cf. protocole dédié) ; césarienne en urgence (hors ACR) à discuter avec l'équipe obstétricale si détresse fœtale sévère et mère stabilisable</li>
       <li>Prévention de la maladie thromboembolique (mobilisation précoce, bas de contention) et anti-tétanique selon les plaies associées</li>
+    </ol>
+  </div>
+
+  <div class="card" id="proto-complications-cesarienne">
+    <h3>🔪 Complications hémorragiques et infectieuses de la césarienne</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">L'infection de paroi et l'endométrite sont les complications post-opératoires les plus fréquentes de la césarienne ; l'hémorragie peropératoire en est la complication la plus fréquente en peropératoire. Une antibioprophylaxie systématique avant l'incision (non citée dans le champ obstétrical dédié) réduit significativement le risque infectieux global et doit être la règle pour toute césarienne.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Antibioprophylaxie systématique</strong> avant l'incision cutanée (et non après le clampage du cordon comme cela se pratiquait autrefois) : <strong>Céfazoline</strong> ou <strong>Amoxicilline-Acide clavulanique (Augmentin®)</strong> en dose unique IV — réduit significativement le risque d'infection de paroi et d'endométrite post-césarienne</li>
+      <li><strong>Hémorragie peropératoire</strong> : causes spécifiques à rechercher — atonie utérine, plaie d'un pédicule vasculaire utérin, placenta praevia/accreta sur cicatrice(s) de césarienne antérieure(s) (risque majoré et croissant avec le nombre de césariennes antérieures, à anticiper dès l'échographie prénatale si suspicion) — cf. protocoles <a onclick="document.getElementById('proto-hpp').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">HPP</a> et <a onclick="document.getElementById('proto-choc-hemorragique-obstetrical').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Choc hémorragique obstétrical</a> pour la réanimation</li>
+      <li><strong>Plaie vésicale peropératoire</strong> : évoquer devant des urines claires anormalement abondantes dans le champ opératoire ou une distension vésicale inhabituelle — réparation chirurgicale immédiate en 2 plans, sondage vésical prolongé (7-10 jours) avec cystographie de contrôle avant ablation de la sonde</li>
+      <li><strong>Hémopéritoine ou hématome pariétal postopératoire précoce</strong> (dans les heures suivant le geste) : douleur abdominale croissante et inhabituelle, distension abdominale, déglobulisation, instabilité hémodynamique — <strong>imagerie en urgence</strong> (échographie ou TDM injectée selon disponibilité et stabilité) ; <strong>reprise chirurgicale sans délai</strong> si collection compressive/active ou instabilité hémodynamique</li>
+      <li><strong>Infection de paroi</strong> (la plus fréquente, typiquement à J5-J7) : érythème, écoulement, désunion de cicatrice — soins locaux, antibiothérapie si cellulite extensive ou signes systémiques associés, drainage chirurgical si collection/abcès pariétal constitué</li>
+      <li><strong>Suspicion de fasciite nécrosante pariétale ou périnéale</strong> (rare mais gravissime) : douleur disproportionnée par rapport aux signes locaux visibles, extension rapide, crépitation sous-cutanée (gaz), choc septique précoce — <strong>urgence chirurgicale absolue</strong> (débridement large sans délai), antibiothérapie à très large spectre associée ; <strong>ne jamais différer le geste chirurgical dans l'attente d'une imagerie</strong> si la suspicion clinique est forte, le pronostic vital se jouant en heures</li>
+      <li><strong>Endométrite post-césarienne</strong> : risque multiplié par 5 à 20 par rapport à un accouchement voie basse, surtout si la césarienne a été réalisée en cours de travail — cf. <a onclick="document.getElementById('proto-endometrite-pp').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Endométrite du post-partum</a></li>
+      <li>Prévention thromboembolique post-opératoire systématique à évaluer (mobilisation précoce, bas de contention, héparine prophylactique selon les facteurs de risque associés — obésité, césarienne en urgence, immobilisation prolongée)</li>
     </ol>
   </div>
 
@@ -4659,7 +5208,20 @@ function renderProtocoles(){
       <li>Surviving Sepsis Campaign — International Guidelines for Management of Sepsis and Septic Shock 2021, actualisées 2026 (SCCM/ESICM)</li>
       <li>ATLS — Advanced Trauma Life Support, 10th Edition (American College of Surgeons)</li>
       <li>ADA — Hyperglycemic Crises in Diabetes: Diabetic Ketoacidosis (ACD) and Hyperosmolar Hyperglycemic State (HHS)</li>
+      <li>Umpierrez GE et al. — Hyperglycaemic crises in adults with diabetes: a consensus report, Diabetologia 2024 ; Chow E et al. — Euglycemic diabetic ketoacidosis in the era of SGLT-2 inhibitors, BMJ Open Diabetes Res Care 2023 (acidocétose diabétique euglycémique)</li>
+      <li>Tokyo Guidelines 2018 (TG18) — Diagnostic criteria, severity grading and management of acute cholangitis and cholecystitis, J Hepatobiliary Pancreat Sci 2018 (Miura, Gomi, Yokoe et al.)</li>
+      <li>AASLD Position Paper — Management of Acute Liver Failure ; King's College Criteria (O'Grady et al., Gastroenterology 1989) pour les étiologies non-paracétamol</li>
+      <li>EASL Clinical Practice Guidelines — Management of ascites, spontaneous bacterial peritonitis and hepatorenal syndrome in cirrhosis ; AASLD 2021 Practice Guidance (péritonite bactérienne spontanée, syndrome hépato-rénal)</li>
+      <li>Ten Broek RPG et al. — Bologna guidelines for diagnosis and management of adhesive small bowel obstruction (ASBO): 2017 update, World Society of Emergency Surgery ; Tian BWCA et al. — WSES consensus guidelines on sigmoid volvulus management, World J Emerg Surg 2023 (occlusion intestinale aiguë)</li>
+      <li>American Academy of Ophthalmology — Retinal and Ophthalmic Artery Occlusions, Preferred Practice Pattern 2024 ; Mac Grory B et al. (AHA/ASA Scientific Statement) — Management of Central Retinal Artery Occlusion, Stroke (occlusion de l'artère centrale de la rétine)</li>
+      <li>Endophthalmitis Vitrectomy Study (EVS) Group — base des recommandations actuelles AAO/ESCRS pour la prise en charge de l'endophtalmie aiguë post-opératoire</li>
+      <li>Chandler JR et al. — classification des complications orbitaires de la sinusite ; Red Book (AAP) 2024-2027 — cellulite préseptale/orbitaire</li>
+      <li>Galioto NJ — Peritonsillar Abscess, Am Fam Physician ; Cochrane Database Syst Rev — Needle aspiration versus incision and drainage for peritonsillar abscess (phlegmon périamygdalien/abcès rétropharyngé)</li>
+      <li>StatPearls — Necrotizing (Malignant) Otitis Externa 2024 ; Merck Manual Professional — Malignant External Otitis (otite externe maligne)</li>
+      <li>Kattah JC et al. — HINTS to diagnose stroke in the acute vestibular syndrome, Stroke 2009 ; Newman-Toker DE et al. — HINTS outperforms ABCD2 to screen for stroke, Acad Emerg Med 2013 (vertige aigu)</li>
       <li>KDIGO / littérature néphrologique — Metformin-Associated Lactic Acidosis (MALA)</li>
+      <li>Wrenn KD et al. — The Syndrome of Alcoholic Ketoacidosis, Am J Med 1991 ; littérature de médecine d'urgence de référence — Alcoholic Ketoacidosis: Etiologies, Evaluation, and Management (acidocétose alcoolique)</li>
+      <li>Lheureux PE et al. — Bench-to-bedside review: Antidotal treatment of sulfonylurea-induced hypoglycaemia with octreotide, Crit Care ; McLaughlin SA et al. — Octreotide: an antidote for sulfonylurea-induced hypoglycemia, Ann Emerg Med (hypoglycémie réfractaire aux sulfamides)</li>
       <li>GINA (Global Initiative for Asthma) — 2025 Global Strategy for Asthma Management and Prevention, Management of Asthma Exacerbations</li>
       <li>ESC Guidelines — Acute Coronary Syndromes (STEMI/NSTEMI management)</li>
       <li>ESC Guidelines — Acute and Chronic Heart Failure (OAP cardiogénique)</li>
@@ -7017,7 +7579,83 @@ function calcHpp(){
   if(inlineEl) inlineEl.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${doseMg.toFixed(0)} mg</strong>`;
 }
 
-/* Calculateur intégré — fiche GEU (Méthotrexate, dose par surface corporelle) */
+/* Calculateur intégré — fiche Avortement septique (gentamicine pondérale) */
+function calcAvortementSeptique(){
+  const poidsInput = document.getElementById('avs_poids');
+  const resultEl = document.getElementById('avs_result');
+  const noteEl = document.getElementById('avs_note');
+  const inlineEl = document.getElementById('avs_inline');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    if(inlineEl) inlineEl.textContent = 'saisir le poids ci-dessus pour la dose de gentamicine calculée';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:30, max:200, label:'Poids saisi', unit:'kg'}]);
+  const doseMin = poids*5;
+  const doseMax = poids*7;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Molécule</th><th>Dose calculée pour ${poids} kg</th></tr>` +
+    `<tr><td>Gentamicine (Gentalline®) IV, 1 injection/j</td><td><strong>${doseMin.toFixed(0)}-${doseMax.toFixed(0)} mg/j</strong> (5-7 mg/kg/j)</td></tr>` +
+    `<tr><td>Clindamycine (Dalacine®) IV</td><td><strong>900 mg</strong> toutes les 8h (dose fixe, non pondérale)</td></tr>` +
+    `<tr><td>Ampicilline (Totapen®) IV</td><td><strong>2 g</strong> toutes les 6h (dose fixe, non pondérale)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative de gentamicine (5-7 mg/kg/j en 1 injection) — vérifier la fonction rénale avant/pendant le traitement, adapter en cas d'insuffisance rénale. Diluer dans 100 mL de sérum physiologique, perfusion en 30 min.</p>`;
+
+  if(inlineEl) inlineEl.innerHTML = `→ pour <strong>${poids} kg</strong> : gentamicine <strong>${doseMin.toFixed(0)}-${doseMax.toFixed(0)} mg/j</strong>`;
+}
+
+/* Calculateur intégré — fiche Choc hémorragique obstétrical (index de choc) */
+function calcChocHemoObst(){
+  const fcInput = document.getElementById('cho_fc');
+  const pasInput = document.getElementById('cho_pas');
+  const resultEl = document.getElementById('cho_result');
+  const noteEl = document.getElementById('cho_note');
+  if(!fcInput || !pasInput) return;
+  const fc = parseFloat(fcInput.value);
+  const pas = parseFloat(pasInput.value);
+
+  if(isNaN(fc) || isNaN(pas) || fc<=0 || pas<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([
+    {val:fc, min:30, max:220, label:'Fréquence cardiaque', unit:'bpm'},
+    {val:pas, min:40, max:220, label:'PA systolique', unit:'mmHg'}
+  ]);
+  const si = fc/pas;
+  let interpret, cls;
+  if(si < 0.9){
+    interpret = 'Index de choc normal — ne permet pas d\'exclure une hémorragie significative en cours (réserve physiologique gravidique), rester vigilant sur la cinétique du saignement';
+    cls = 'leger';
+  } else if(si < 1.7){
+    interpret = 'Index de choc anormal (seuil obstétrical ≥0,9) — associé à un besoin accru de transfusion et à une hémorragie plus sévère, alerter et activer la réanimation';
+    cls = 'modere';
+  } else {
+    interpret = 'Index de choc très élevé (≥1,7) — fortement prédictif d\'un besoin de transfusion massive, alerte maximale et activation immédiate du protocole de transfusion massive';
+    cls = 'grave';
+  }
+
+  noteEl.innerHTML = `FC : <strong>${fc} bpm</strong> — PAS : <strong>${pas} mmHg</strong>`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Index de choc (FC/PAS)</th><th>Interprétation</th></tr>` +
+    `<tr><td><strong class="${cls}">${si.toFixed(2)}</strong></td><td>${interpret}</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Seuils spécifiques au contexte obstétrical (différents du seuil ≥1,0 utilisé en traumatologie générale) — à interpréter comme un outil d'aide à la décision en complément, jamais en remplacement, du jugement clinique et de l'estimation des pertes.</p>`;
+}
+
 function calcGeu(){
   const poidsInput = document.getElementById('geu_poids');
   const tailleInput = document.getElementById('geu_taille');
@@ -8812,7 +9450,32 @@ const ABBR_DATA = [
   ["3TC","Lamivudine (antirétroviral)"],
   ["dTPolio","Vaccin combiné diphtérie-tétanos-poliomyélite"],
   ["BCG","Bacille Calmette-Guérin — vaccin antituberculeux"],
-  ["PQ","Segment/intervalle PQ (électrocardiogramme, synonyme d'intervalle PR)"]
+  ["PQ","Segment/intervalle PQ (électrocardiogramme, synonyme d'intervalle PR)"],
+  ["iSGLT2 / SGLT2","Inhibiteur du cotransporteur sodium-glucose de type 2 (gliflozine — ex. Dapagliflozine/Forxiga®, Empagliflozine/Jardiance®)"],
+  ["TG18","Tokyo Guidelines 2018 — classification de gravité et prise en charge de l'angiocholite et de la cholécystite aiguës"],
+  ["AKI","Acute Kidney Injury (équivalent anglais de l'insuffisance rénale aiguë, critères KDIGO)"],
+  ["VHA","Virus de l'Hépatite A"],
+  ["VHE","Virus de l'Hépatite E"],
+  ["HINTS","Head Impulse - Nystagmus - Test of Skew — examen bedside de triage du vertige aigu (central vs périphérique)"],
+  ["INFARCT","Impulse Normal, Fast-phase Alternating, Refixation on Cover Test — mnémotechnique de la combinaison centrale du HINTS"],
+  ["VPPB","Vertige Positionnel Paroxystique Bénin"],
+  ["PBS","Péritonite Bactérienne Spontanée"],
+  ["OCT","Optical Coherence Tomography — tomographie en cohérence optique (imagerie rétinienne)"],
+  ["AAO","American Academy of Ophthalmology"],
+  ["ESCRS","European Society of Cataract and Refractive Surgeons"],
+  ["EBV","Epstein-Barr Virus"],
+  ["HSV","Herpes Simplex Virus"],
+  ["SHO","Syndrome d'Hyperstimulation Ovarienne"],
+  ["ADH","Hormone antidiurétique (vasopressine)"],
+  ["ISTH","International Society on Thrombosis and Haemostasis — score diagnostique de la CIVD"],
+  ["PMA","Procréation Médicalement Assistée"],
+  ["PID","Pelvic Inflammatory Disease — équivalent anglais de l'infection génitale haute/salpingite"],
+  ["EASL","European Association for the Study of the Liver"],
+  ["OACR","Occlusion de l'Artère Centrale de la Rétine"],
+  ["LATA","Limitation et Arrêt des Thérapeutiques Actives"],
+  ["PAC","Pneumopathie/Pneumonie Aiguë Communautaire"],
+  ["SHR","Syndrome Hépato-Rénal"],
+  ["VEGF","Vascular Endothelial Growth Factor — facteur de croissance de l'endothélium vasculaire"]
 ]).sort((a,b)=>a[0].localeCompare(b[0],'fr',{sensitivity:'base'}));
 
 function renderAbreviations(){
