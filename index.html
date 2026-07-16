@@ -262,6 +262,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
       <li><button data-mod="drogues"><span class="icon">💉</span> Drogues de réanimation</button></li>
       <li><button data-mod="ventilation"><span class="icon">🫁</span> Ventilation & O2</button></li>
       <li><button data-mod="abords"><span class="icon">🩸</span> Voies veineuses / Abords</button></li>
+      <li><button data-mod="gestes"><span class="icon">🖐️</span> Gestes techniques d'urgence</button></li>
       <li><button data-mod="surveillance"><span class="icon">📈</span> Bilan & Surveillance</button></li>
       <li><button data-mod="biologie"><span class="icon">🧪</span> Valeurs normales (Biologie)</button></li>
       <li><button data-mod="fiches"><span class="icon">✅</span> Fiches pratiques</button></li>
@@ -290,6 +291,7 @@ const MODULES = {
   drogues: { title:"Drogues de réanimation", icon:"💉" },
   ventilation: { title:"Ventilation & O2", icon:"🫁" },
   abords: { title:"Voies veineuses / Abords", icon:"🩸" },
+  gestes: { title:"Gestes techniques d'urgence", icon:"🖐️" },
   surveillance: { title:"Bilan & Surveillance", icon:"📈" },
   biologie: { title:"Valeurs normales (Biologie)", icon:"🧪" },
   fiches: { title:"Fiches pratiques", icon:"✅" },
@@ -301,7 +303,7 @@ const MODULES = {
 const renderers = {}; // mod -> function() -> html string
 
 /* ——— Version de l'application ——— */
-const APP_VERSION = "2026.07.15e";
+const APP_VERSION = "2026.07.15i";
 document.addEventListener('DOMContentLoaded', ()=>{});
 (function initVersionBadge(){
   const el = document.getElementById('app-version');
@@ -972,6 +974,13 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-sepsis-pediatrique').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Sepsis / Choc septique de l'enfant</a></li>
         <li><a onclick="document.getElementById('proto-invagination').scrollIntoView({behavior:'smooth',block:'start'})">🌀 Invagination intestinale aiguë</a></li>
         <li><a onclick="document.getElementById('proto-stt-drepanocytaire').scrollIntoView({behavior:'smooth',block:'start'})">🔴 Syndrome thoracique aigu drépanocytaire</a></li>
+        <li><a onclick="document.getElementById('proto-acd-pediatrique').scrollIntoView({behavior:'smooth',block:'start'})">🩺 Acidocétose diabétique de l'enfant</a></li>
+        <li><a onclick="document.getElementById('proto-tc-pecarn').scrollIntoView({behavior:'smooth',block:'start'})">🤕 Traumatisme crânien pédiatrique (PECARN)</a></li>
+        <li><a onclick="document.getElementById('proto-pac-pediatrique').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Pneumopathie aiguë communautaire grave de l'enfant</a></li>
+        <li><a onclick="document.getElementById('proto-ictere-neonatal').scrollIntoView({behavior:'smooth',block:'start'})">🟡 Ictère néonatal</a></li>
+        <li><a onclick="document.getElementById('proto-sepsis-neonatal').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Sepsis néonatal (&lt;28 jours)</a></li>
+        <li><a onclick="document.getElementById('proto-polytrauma-pediatrique').scrollIntoView({behavior:'smooth',block:'start'})">🚑 Polytraumatisme pédiatrique — spécificités</a></li>
+        <li><a onclick="document.getElementById('proto-douleur-enfant').scrollIntoView({behavior:'smooth',block:'start'})">🩹 Douleur de l'enfant — évaluation et prise en charge</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🔴 Réanimation avancée & Complications</span><span class="toc-cat-arrow">▾</span></li>
@@ -5201,6 +5210,161 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Zithromax®, Perfalgan® et Morphine Aguettant® sont disponibles dans les hôpitaux de référence. L'échange transfusionnel dépend fortement de la disponibilité des culots au CNTS — anticiper largement la commande et envisager un transfert précoce vers un CHU si la forme s'aggrave et que la structure locale ne dispose pas de banque de sang suffisante.</p>
   </div>
 
+  <div class="card" id="proto-acd-pediatrique">
+    <h3>🩺 Acidocétose diabétique de l'enfant — protocole pédiatrique spécifique</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations <strong>ISPAD (International Society for Pediatric and Adolescent Diabetes) Clinical Practice Consensus Guidelines 2022</strong>, actualisées 2024. À ne <strong>jamais</strong> traiter selon le protocole adulte : le rythme de correction hydrique et l'introduction de l'insuline diffèrent fondamentalement, en raison du risque spécifique d'<strong>œdème cérébral</strong>, première cause de décès au cours de l'acidocétose diabétique (ACD) de l'enfant. Souvent révélatrice d'un diabète de type 1 nouvellement diagnostiqué.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Diagnostic</strong> : glycémie &gt;11 mmol/L (2 g/L), cétonémie ≥3 mmol/L (ou cétonurie ≥2+), pH veineux &lt;7,30 et/ou bicarbonates &lt;15 mmol/L. <strong>Sévérité (seuils pédiatriques, différents de l'adulte)</strong> : légère (pH 7,20-7,30 / HCO3 10-15), modérée (pH 7,10-7,20 / HCO3 5-10), sévère (pH&lt;7,10 / HCO3&lt;5).</p>
+    <div class="warn-box">⚠️ <strong>Œdème cérébral</strong> : survient chez 0,5-1% des ACD pédiatriques, le plus souvent dans les 4-12h suivant le début du traitement, avec une mortalité de 20-25% en cas de survenue. Les principaux facteurs de risque évitables sont une <strong>réhydratation trop rapide</strong>, une <strong>chute trop rapide de la natrémie corrigée ou de la glycémie</strong>, et l'administration d'un <strong>bolus d'insuline</strong>.</div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Bolus de remplissage réservé au choc avéré</strong> — uniquement si signes cliniques de choc (temps de recoloration cutanée allongé, extrémités froides, pouls filant, hypotension) : NaCl 0,9% <strong>10 mL/kg</strong> IV en 15-30 min, à répéter une fois si besoin. <strong>En l'absence de choc, ne pas administrer de bolus</strong> — la correction de la déshydratation doit être lente</li>
+      <li><strong>Réhydratation totale étalée sur 48h</strong> (et non 24h comme chez l'adulte) — besoins de base (règle de Holliday-Segar, cf. <a onclick="document.getElementById('proto-liquides-pediatriques').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Liquides pédiatriques</a>) + déficit estimé (rarement &gt;8-10% même en cas d'ACD sévère, à ne pas surestimer), le débit horaire total ne devant généralement pas dépasser <strong>1,5 à 2 fois</strong> les besoins d'entretien. NaCl 0,9% en 1ère intention</li>
+      <li><strong>Insulinothérapie différée</strong> — débuter <strong>au moins 1h après le début</strong> de la réhydratation (jamais en bolus initial). <strong>Insuline rapide (Actrapid®, Novorapid®)</strong> en perfusion IV continue à la seringue électrique, <strong>0,05 à 0,1 UI/kg/h</strong> (privilégier la dose la plus basse chez le jeune enfant ou lors d'un diabète inaugural) — <strong>aucun bolus</strong>, quel que soit l'âge</li>
+      <li><strong>Dès que la glycémie &lt;14-17 mmol/L (2,5-3 g/L)</strong> : ajouter du glucose (G5% ou G10%) dans la perfusion plutôt que de diminuer le débit d'insuline — c'est la résolution de la cétose/acidose (et non la normalisation glycémique) qui définit la guérison ; maintenir l'insuline jusqu'à pH&gt;7,30, bicarbonates &gt;15 mmol/L et trou anionique normalisé</li>
+      <li><strong>Apport potassique précoce</strong> — dès que la kaliémie est connue (&lt;5,5 mmol/L) et la diurèse confirmée, même avant de débuter l'insuline si le délai le permet : environ 40 mmol/L de KCl dans les solutés de perfusion, à adapter selon l'ionogramme répété (l'insuline aggrave l'hypokaliémie en faisant rentrer le potassium dans les cellules)</li>
+      <li><strong>Bicarbonates : contre-indiqués</strong> sauf hyperkaliémie menaçant le pronostic vital à très court terme — augmentent le risque d'œdème cérébral et n'apportent aucun bénéfice démontré dans l'ACD pédiatrique</li>
+      <li><strong>Surveillance neurologique horaire systématique</strong> (feuille de surveillance dédiée) : score de Glasgow, taille des pupilles, céphalées, vomissements répétés, irritabilité inhabituelle, bradycardie relative inexpliquée, incontinence nouvelle chez un enfant propre — tout signe évocateur impose une action immédiate, sans attendre la confirmation radiologique</li>
+      <li><strong>Si signes d'œdème cérébral</strong> : réduire immédiatement le débit de perfusion aux 2/3 des besoins d'entretien, <strong>Mannitol 0,5-1 g/kg IV en 10-15 min</strong> (répétable si absence d'amélioration à 30 min) — ou, à défaut, <strong>sérum salé hypertonique 3% 2,5-5 mL/kg IV en 10-15 min</strong> — surélever la tête du lit à 30°, appel réanimation/neurochirurgie sans délai, TDM cérébrale si accessible mais <strong>sans jamais retarder le traitement</strong> pour l'obtenir</li>
+      <li>Rechercher le facteur déclenchant : diabète inaugural (fréquent), infection intercurrente, inobservance de l'insulinothérapie chez un diabétique connu</li>
+      <li><strong>Surveillance biologique</strong> : dextro horaire, ionogramme et gaz du sang veineux toutes les 2-4h (plus rapprochée si acidose sévère ou apport de KCl), bilan des entrées-sorties horaire</li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Insuline rapide (Actrapid®, Novorapid®), NaCl 0,9% et KCl sont disponibles à la plupart des niveaux hospitaliers. Les bandelettes de cétonémie/cétonurie et les gaz du sang veineux restent inconstamment disponibles hors CHU — s'appuyer alors sur la clinique et le trou anionique. Le Mannitol est généralement disponible en réanimation de CHU/CHRR ; le sérum salé hypertonique à 3% n'existe pas sous forme commerciale et doit être préparé par la pharmacie hospitalière — vérifier sa disponibilité localement et organiser un transfert sans délai vers un CHU dès l'apparition de signes évocateurs d'œdème cérébral si la structure ne dispose ni de Mannitol ni de NaCl 3%.</p>
+  </div>
+
+  <div class="card" id="proto-tc-pecarn">
+    <h3>🤕 Traumatisme crânien pédiatrique — Règle de décision PECARN</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Règle de décision clinique (Kuppermann et al., <em>Lancet</em> 2009, validée prospectivement sur plus de 40 000 enfants) permettant d'identifier les enfants à <strong>très faible risque de lésion intracrânienne cliniquement significative</strong> pouvant se passer en toute sécurité d'une TDM cérébrale — un enjeu majeur pour limiter l'irradiation chez l'enfant, et particulièrement utile là où l'accès au scanner est limité, comme dans la plupart des structures malgaches hors CHU/CHRR. Deux algorithmes distincts selon l'âge.</p>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Enfant &lt; 2 ans</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Risque élevé → TDM cérébrale indiquée</strong> : Glasgow &lt;15, altération de la conscience ou agitation anormale, <strong>fracture du crâne palpable</strong></li>
+      <li><strong>Risque intermédiaire → TDM ou surveillance clinique selon jugement</strong> (décision pondérée par plusieurs facteurs : âge &lt;3 mois, association de plusieurs critères, aggravation, préférence des parents/du clinicien, possibilité d'un suivi fiable) : hématome du cuir chevelu occipital/pariétal/temporal, perte de connaissance ≥5 secondes, mécanisme sévère (chute &gt;0,9 m, éjection de véhicule, traumatisme par objet lourd ou à haute cinétique), comportement anormal signalé par les parents</li>
+      <li>En l'absence de tout critère ci-dessus : risque de lésion intracrânienne cliniquement significative &lt;0,02% — TDM non recommandée</li>
+    </ol>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">2. Enfant ≥ 2 ans</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Risque élevé → TDM cérébrale indiquée</strong> : Glasgow &lt;15, altération de la conscience, signes de fracture de la base du crâne (otorragie, ecchymose périorbitaire/mastoïdienne, rhinorrhée claire)</li>
+      <li><strong>Risque intermédiaire → TDM ou surveillance clinique selon jugement</strong> : perte de connaissance, vomissements, céphalée sévère, mécanisme sévère (chute &gt;1,5 m, éjection de véhicule, piéton/cycliste heurté par véhicule motorisé, traumatisme par objet lourd ou à haute cinétique)</li>
+      <li>En l'absence de tout critère ci-dessus : risque de lésion intracrânienne cliniquement significative &lt;0,05% — TDM non recommandée</li>
+    </ol>
+    <ol start="4" style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>En cas de risque intermédiaire sans TDM disponible</strong> : privilégier une <strong>surveillance clinique de 4 à 6h</strong> (Glasgow répété, comportement, tolérance alimentaire) — en cas d'amélioration franche et de symptôme isolé, un retour à domicile avec consignes écrites est envisageable ; en cas de doute, d'association de plusieurs critères intermédiaires ou d'aggravation, organiser un <strong>transfert</strong> vers une structure disposant d'un scanner plutôt que de prolonger l'observation seule</li>
+      <li>Cette règle ne s'applique <strong>pas</strong> aux traumatismes pénétrants, aux enfants porteurs d'une dérivation ventriculo-péritonéale, ni à ceux ayant un trouble de la coagulation connu ou une anomalie neurologique préexistante — abaisser largement le seuil d'imagerie/transfert dans ces situations</li>
+      <li>Consignes de surveillance écrites à la sortie, identiques au traumatisme crânien léger de l'adulte (cf. <a onclick="document.getElementById('proto-tc-leger').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Traumatisme crânien léger à modéré</a>) : reconsulter en urgence en cas de vomissements répétés, somnolence anormale, confusion, céphalée croissante, convulsion ou faiblesse d'un membre</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le scanner cérébral reste d'accès limité aux CHU/CHRR. En structure périphérique sans imagerie, l'absence de critère PECARN de risque élevé ou intermédiaire autorise une surveillance clinique locale et une sortie sécurisée ; la présence d'un critère de risque élevé, une aggravation secondaire, ou l'association de plusieurs critères intermédiaires doivent conduire à un transfert sans délai vers un centre disposant d'un scanner, sans attendre une dégradation clinique franche.</p>
+  </div>
+
+  <div class="card" id="proto-pac-pediatrique">
+    <h3>🫁 Pneumopathie aiguë communautaire grave de l'enfant</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après la classification clinique <strong>OMS/PCIME (Prise en Charge Intégrée des Maladies de l'Enfant)</strong> et les recommandations <strong>PIDS/IDSA</strong> pédiatriques (actualisées 2023). La 1ère cause infectieuse de mortalité chez l'enfant &lt;5 ans dans le monde — le score CURB-65 de l'adulte <strong>ne s'applique pas</strong> à l'enfant ; le diagnostic et la sévérité reposent avant tout sur la <strong>fréquence respiratoire selon l'âge</strong> et les signes de danger généraux.</p>
+    <table style="margin-bottom:10px;">
+      <tr><th>Âge</th><th>Seuil de polypnée (tachypnée)</th></tr>
+      <tr><td>&lt; 2 mois</td><td>≥ 60/min</td></tr>
+      <tr><td>2 à 11 mois</td><td>≥ 50/min</td></tr>
+      <tr><td>12 à 59 mois</td><td>≥ 40/min</td></tr>
+    </table>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Toux/difficulté respiratoire + polypnée selon l'âge</strong> (sans tirage ni signe de danger) = pneumonie non sévère. <strong>+ tirage sous-costal</strong> = pneumonie sévère. <strong>+ signe de danger général</strong> = pneumonie très sévère.</p>
+    <div class="warn-box">⚠️ <strong>Signes de danger généraux (OMS)</strong> imposant une hospitalisation immédiate quelle que soit la fréquence respiratoire : incapacité à boire/téter ou à garder quoi que ce soit par voie orale (vomissements de tout), convulsions, léthargie ou enfant inconscient, stridor chez l'enfant calme, malnutrition aiguë sévère associée, cyanose, geignement expiratoire, SpO2 &lt;90%.</div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Pneumonie non sévère, ambulatoire (&gt;2 mois)</strong> : <strong>Amoxicilline dispersible (Clamoxyl®)</strong> 40-50 mg/kg x2/j PO pendant 5 jours (posologie OMS révisée — 2 prises/j suffisent, plus l'ancien schéma x3/j) ; reconsulter systématiquement à 48-72h ou avant si aggravation</li>
+      <li><strong>Pneumonie sévère, hospitalisation</strong> : <strong>Ampicilline IV</strong> 50 mg/kg toutes les 6h <strong>+ Gentamicine (Gentalline®)</strong> 7,5 mg/kg/j IV/IM en 1 injection, ou <strong>Ceftriaxone (Rocéphine®)</strong> 50-80 mg/kg/j IV en 1 injection (max 2g/j) en alternative en monothérapie ; relais oral par Amoxicilline dès amélioration clinique nette et apyrexie &gt;24-48h, durée totale 5-7 jours (jusqu'à 10 jours si forme compliquée)</li>
+      <li><strong>Nourrisson &lt;2 mois avec pneumonie</strong> : hospitalisation systématique, prise en charge comme un <a onclick="document.getElementById('proto-sepsis-neonatal').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">sepsis néonatal</a> (antibiothérapie associant Ampicilline + Gentamicine), seuil de gravité encore plus bas</li>
+      <li><strong>Oxygénothérapie</strong> si SpO2 &lt;90% (à discuter dès &lt;94% si détresse respiratoire associée), lunettes/masque adapté à l'âge, objectif SpO2 ≥94%</li>
+      <li><strong>Suspicion de germe atypique</strong> (enfant &gt;5 ans, toux traînante, contexte épidémique, mauvaise réponse aux bêta-lactamines) : ajouter <strong>Azithromycine (Zithromax®)</strong> 10 mg/kg/j (max 500mg/j) pendant 3-5 jours</li>
+      <li>Antipyrétique/antalgique — <strong>Paracétamol (Doliprane®, Efferalgan®)</strong> 15 mg/kg toutes les 6h ; désobstruction rhinopharyngée au sérum physiologique chez le nourrisson, fractionnement des repas si polypnée gênant l'alimentation</li>
+      <li>Rechercher une complication en cas d'évolution défavorable sous traitement bien conduit (48-72h) : <strong>épanchement pleural parapneumonique/empyème</strong> (échographie thoracique au lit si disponible, ponction pleurale diagnostique et évacuatrice si épanchement significatif), abcédation pulmonaire</li>
+      <li>Ne pas méconnaître une malnutrition aiguë sévère associée (facteur de gravité majeur et de risque de décès) — cf. <a onclick="document.getElementById('proto-malnutrition').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Malnutrition aiguë sévère</a></li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Clamoxyl®, Rocéphine® et Gentalline® sont disponibles à tous les niveaux hospitaliers (LNMEIS), y compris en CSB pour l'Amoxicilline orale — la prise en charge de la pneumonie non sévère est donc possible à tout niveau. L'Azithromycine reste plus limitée (CHU/CHRR). L'oxygénothérapie (concentrateur/bouteille) et l'échographie thoracique sont inconstamment disponibles hors CHRR — organiser un transfert sans délai devant tout signe de danger général ou toute hypoxémie ne répondant pas à l'oxygène disponible localement.</p>
+  </div>
+
+  <div class="card" id="proto-ictere-neonatal">
+    <h3>🟡 Ictère néonatal</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après le <strong>AAP Clinical Practice Guideline 2022</strong> (Hyperbilirubinemia in the Newborn Infant ≥35 semaines) et le nomogramme de <strong>Bhutani</strong>. Motif de consultation néonatale extrêmement fréquent, le plus souvent bénin (ictère physiologique), mais avec un risque rare et gravissime d'<strong>ictère nucléaire (kernictère)</strong> en cas de bilirubine libre non conjuguée très élevée et non traitée à temps.</p>
+    <div class="warn-box">⚠️ <strong>Ictère apparaissant avant 24h de vie</strong> = toujours pathologique jusqu'à preuve du contraire (évoquer en priorité une maladie hémolytique — incompatibilité ABO/Rhésus, déficit en G6PD) — bilan étiologique et prise en charge urgents, ne jamais attribuer à un ictère « physiologique ».</div>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Évaluation clinique</strong> — progression céphalo-caudale de l'ictère (règle de Kramer) : visage seul (zone 1, environ 100 µmol/L) → tronc (zone 2-3) → membres/paumes-plantes (zone 4-5, souvent &gt;250-340 µmol/L) ; estimation visuelle grossière seulement, à confirmer par un dosage de la bilirubine dès que possible, notamment en peau mate/foncée où l'estimation visuelle est moins fiable</li>
+      <li><strong>Facteurs de risque à rechercher systématiquement</strong> : prématurité (&lt;38 SA), incompatibilité ABO/Rhésus mère-enfant, déficit en G6PD (fréquent, à évoquer surtout si ictère précoce ou sévère sans autre cause), céphalhématome/ecchymoses étendues, allaitement maternel exclusif insuffisant (perte de poids &gt;7-10%), fratrie ayant nécessité une photothérapie, infection materno-fœtale associée</li>
+      <li><strong>Bilan si disponible</strong> : bilirubine totale/transcutanée si dosage possible, groupe sanguin-Rhésus mère et enfant, test de Coombs direct, NFS (recherche d'hémolyse/anémie), dosage G6PD si contexte évocateur ; ne pas retarder la photothérapie en attendant un bilan complet devant un ictère cliniquement sévère</li>
+      <li><strong>Photothérapie</strong> — seuils simplifiés à titre indicatif chez le nouveau-né à terme sans facteur de risque : à discuter dès J1-J2 si ictère visible aux membres, systématique si bilirubine totale approximativement &gt;260-290 µmol/L (15-17 mg/dL) selon l'âge en heures ; <strong>seuils abaissés</strong> (traitement plus précoce) en cas de prématurité, d'hémolyse, ou de tout autre facteur de risque ci-dessus — se référer au nomogramme spécifique par âge en heures si disponible</li>
+      <li><strong>Modalités de la photothérapie</strong> : exposition cutanée maximale (couche seule), protection oculaire systématique, alimentation maintenue/renforcée (augmenter la fréquence des tétées, ne pas interrompre l'allaitement), surveillance de la température et de l'hydratation (pertes hydriques accrues sous photothérapie), contrôle de la bilirubine à 12-24h pour juger de l'efficacité et de l'arrêt</li>
+      <li><strong>Signes d'encéphalopathie aiguë à la bilirubine (urgence absolue)</strong> : léthargie, hypotonie initiale puis hypertonie/opisthotonos, cri aigu perçant, refus de téter, fièvre, convulsions — <strong>exsanguino-transfusion en urgence</strong> (centre de référence uniquement) associée à une photothérapie intensive immédiate dans l'attente du transfert</li>
+      <li>Rechercher et traiter la cause sous-jacente : infection néonatale (cf. <a onclick="document.getElementById('proto-sepsis-neonatal').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">sepsis néonatal</a>), déficit en G6PD (éviction des oxydants), incompatibilité materno-fœtale</li>
+      <li><strong>Sortie précoce (&lt;72h de vie)</strong> : toujours prévoir une réévaluation clinique à 48-72h après la sortie (consultation ou visite à domicile), en particulier chez le nouveau-né allaité exclusivement — c'est la période de risque maximal de majoration de l'ictère</li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les unités de photothérapie sont disponibles en néonatologie de CHU/CHRR et dans certaines maternités bien équipées, mais peuvent manquer en structure de base — à défaut, une exposition à la lumière du jour indirecte (jamais en plein soleil direct, risque de brûlure/déshydratation) peut limiter l'aggravation en attendant un transfert, sans se substituer à la photothérapie médicale devant un ictère sévère. Le dosage de la bilirubine et le test de Coombs restent d'accès limité hors CHU — devant un ictère précoce (&lt;24h) ou cliniquement sévère (atteignant les membres/paumes), un transfert vers un centre équipé doit être organisé sans délai plutôt que d'attendre la confirmation biologique. L'exsanguino-transfusion n'est réalisable qu'en centre de référence.</p>
+  </div>
+
+  <div class="card" id="proto-sepsis-neonatal">
+    <h3>🦠 Sepsis néonatal (&lt; 28 jours)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après <strong>NICE NG195 (2021, Neonatal infection)</strong> et les recommandations AAP. Entité distincte du <a onclick="document.getElementById('proto-sepsis-pediatrique').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">sepsis de l'enfant plus grand</a> : germes en cause, présentation clinique et antibiothérapie de 1ère intention différents. Les signes sont souvent <strong>frustes et non spécifiques</strong> chez le nouveau-né — un seuil de suspicion et de traitement bas est essentiel, l'aggravation pouvant être très rapide.</p>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Distinguer précoce vs tardif</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Sepsis précoce (&lt;72h de vie)</strong> — origine materno-fœtale : <em>Streptocoque du groupe B</em>, <em>E. coli</em>, <em>Listeria monocytogenes</em>. Facteurs de risque : rupture prématurée des membranes &gt;18h, fièvre maternelle en péripartum, chorioamniotite, portage vaginal de streptocoque B non traité, prématurité, liquide amniotique méconial/fétide</li>
+      <li><strong>Sepsis tardif (&gt;72h de vie)</strong> — origine nosocomiale/communautaire : staphylocoques, entérobactéries, plus rarement pneumocoque/méningocoque ; facteurs de risque : prématurité, cathéters/dispositifs invasifs, hospitalisation prolongée</li>
+    </ul>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">2. Signes d'appel (souvent non spécifiques)</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Instabilité thermique (hypothermie <strong>ou</strong> hyperthermie — l'hypothermie est parfois plus évocatrice que la fièvre chez le nouveau-né), détresse respiratoire/geignement/apnées, difficultés alimentaires ou refus de téter, léthargie ou irritabilité inhabituelle, teint gris/marbré, temps de recoloration cutanée allongé, distension abdominale, ictère précoce ou inhabituel, convulsions dans les formes sévères/méningées.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Antibiothérapie empirique de 1ère intention (sepsis précoce)</strong> : <strong>Ampicilline (ou Amoxicilline) IV</strong> 50 mg/kg toutes les 8-12h (intervalle réduit à 6-8h après J7 selon protocole local) <strong>+ Gentamicine (Gentalline®) IV/IM</strong> 4-5 mg/kg toutes les 24h — associe une couverture du streptocoque B, de Listeria et des entérobactéries les plus fréquentes</li>
+      <li><strong>Sepsis tardif/nosocomial</strong> : élargir la couverture selon l'écologie locale — <strong>Céfotaxime IV</strong> (à privilégier chez le nouveau-né plutôt que la Ceftriaxone) + Ampicilline si suspicion de Listeria, ou selon protocole du service de néonatologie</li>
+      <li><strong>Prélèvements avant antibiothérapie si possible sans retard significatif</strong> : hémoculture systématique, ponction lombaire si l'état clinique le permet (suspicion de méningite associée — signes neurologiques, mauvaise réponse au traitement initial), bandelette/ECBU selon contexte</li>
+      <li><strong>Mesures de soutien</strong> : thermorégulation stricte (peau à peau, incubateur/table chauffante), maintien de la glycémie (risque d'hypoglycémie associé), oxygénothérapie/support ventilatoire si détresse respiratoire, remplissage vasculaire prudent par bolus de <strong>10 mL/kg</strong> de NaCl 0,9% (répétable, réévaluer après chaque bolus — le nouveau-né tolère moins bien la surcharge que l'enfant plus grand) si signes de choc, amines vasopressives (Adrénaline en 1ère ligne) si choc réfractaire</li>
+      <li><strong>Durée du traitement</strong> : réévaluation clinique et biologique (CRP) à 36-48h — arrêt possible si hémoculture négative à 36-48h ET évolution clinique favorable ET CRP non élevée ; poursuite 7-10 jours si hémoculture positive ou forte suspicion clinique malgré cultures négatives, 14-21 jours si méningite documentée</li>
+      <li>Allaitement maternel à maintenir/encourager dès que l'état clinique le permet — bénéfice immunitaire propre, ne pas interrompre systématiquement</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Éviter la <strong>Ceftriaxone</strong> chez le nouveau-né, en particulier s'il est ictérique/prématuré ou reçoit des solutés contenant du calcium (risque de précipitation calcium-ceftriaxone et de déplacement de la bilirubine de son transporteur plasmatique, majorant le risque d'ictère nucléaire) — préférer le <strong>Céfotaxime</strong> lorsqu'une céphalosporine de 3e génération est nécessaire chez le nouveau-né.</div></div>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Ampicilline/Amoxicilline injectable et Gentalline® sont disponibles à la plupart des niveaux hospitaliers (LNMEIS), permettant de débuter le traitement de 1ère intention sans délai dès la suspicion clinique. Le Céfotaxime est d'accès plus limité (CHU/CHRR) — en son absence et devant la nécessité d'élargir le spectre, peser prudemment le rapport bénéfice-risque d'une Ceftriaxone en informant l'équipe, ou organiser un transfert rapide. La CRP et l'hémoculture ne sont pas disponibles à tous les niveaux — en leur absence, la décision de traiter et sa durée reposent principalement sur la clinique et les facteurs de risque, avec un seuil de suspicion bas étant donné la gravité potentielle.</p>
+  </div>
+
+  <div class="card" id="proto-polytrauma-pediatrique">
+    <h3>🚑 Polytraumatisme pédiatrique — spécificités</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après <strong>ATLS 10e édition</strong> (chapitre Trauma pédiatrique), <strong>PALS/APLS 2020</strong> et l'<strong>OMS — Pocket Book of Hospital Care for Children</strong>. La démarche <strong>ABCDE</strong> reste identique à celle de l'<a onclick="document.getElementById('proto-polytraumatisme').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">adulte</a>, mais plusieurs particularités anatomiques et physiologiques de l'enfant modifient concrètement la prise en charge.</p>
+    <div class="warn-box">⚠️ <strong>L'hypotension est un signe tardif et péjoratif chez l'enfant</strong> — grâce à une vasoconstriction périphérique efficace, un enfant peut maintenir une tension artérielle normale jusqu'à une perte volémique de <strong>30-40%</strong>. Ne jamais attendre l'hypotension pour reconnaître un choc hémorragique : se fier à la tachycardie, à l'allongement du temps de recoloration cutanée et aux pouls périphériques.</div>
+    <table style="margin-bottom:10px;">
+      <tr><th>Âge</th><th>FC normale (/min)</th><th>FR normale (/min)</th><th>PAS limite basse (choc)</th></tr>
+      <tr><td>Nouveau-né (0-28j)</td><td>100-180</td><td>30-60</td><td>&lt;60 mmHg</td></tr>
+      <tr><td>Nourrisson (1-12 mois)</td><td>100-160</td><td>30-50</td><td>&lt;70 mmHg</td></tr>
+      <tr><td>1-9 ans</td><td>70-150</td><td>20-40</td><td>&lt;70 + (2 × âge en années)</td></tr>
+      <tr><td>≥10 ans</td><td>60-100</td><td>12-20</td><td>&lt;90 mmHg</td></tr>
+    </table>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>A — Voies aériennes</strong> : chez l'enfant &lt;2 ans, l'occiput proéminent impose un <strong>billot sous les épaules</strong> (et non sous la tête) pour obtenir un alignement neutre, à la différence de l'adulte ; éviter toute hyperextension cervicale. Taille de sonde d'intubation : <strong>(âge/4) + 4</strong> sans ballonnet ou <strong>(âge/4) + 3,5</strong> avec ballonnet (les sondes à ballonnet sont acceptées dès le jeune enfant selon PALS 2020, sous réserve d'une surveillance de la pression du ballonnet &lt;20-25 cmH2O)</li>
+      <li><strong>B — Respiration</strong> : le thorax de l'enfant est plus compliant (cartilages costaux souples) — une <strong>lésion intrathoracique/pulmonaire grave est possible sans fracture costale visible</strong>, ne pas éliminer une contusion pulmonaire sur la seule absence de fracture. Le médiastin, plus mobile, tolère moins bien un pneumothorax suffocant, dont la décompensation peut être plus rapide que chez l'adulte</li>
+      <li><strong>C — Circulation</strong> : reconnaître le <strong>choc compensé</strong> (tachycardie, extrémités froides, TRC &gt;2 sec, pouls périphériques faibles, pincement de la différentielle) avant l'apparition de l'hypotension. Remplissage par <strong>bolus répétés de 10 mL/kg</strong> de cristalloïdes (NaCl 0,9% ou Ringer Lactate) IV ou IO, en réévaluant après chaque bolus plutôt qu'un bolus unique de 20 mL/kg, pour limiter la coagulopathie de dilution ; passage précoce à la <strong>transfusion (CGR 10-20 mL/kg)</strong> en l'absence de réponse après 1-2 bolus ou devant des signes de choc hémorragique manifeste</li>
+      <li><strong>Accès intra-osseux (IO) en 1ère intention</strong> si accès veineux périphérique difficile ou non obtenu rapidement (délai cible &lt;90 secondes) — ne pas persister sur des tentatives de voie veineuse répétées chez un enfant en état critique</li>
+      <li><strong>Acide tranexamique (Exacyl®)</strong> pédiatrique si hémorragie significative dans les 3h post-trauma : <strong>15 mg/kg (max 1g) IV en 10 min</strong> puis <strong>2 mg/kg/h sur 8h</strong> (dose extrapolée de l'essai CRASH-2, en l'absence à ce jour de seuil pédiatrique propre validé à large échelle)</li>
+      <li><strong>D — Disability</strong> : score de Glasgow adapté au préverbal pour la réponse verbale chez le nourrisson/jeune enfant (cf. <a onclick="document.getElementById('proto-tc-pecarn').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">règle PECARN</a> pour l'indication de TDM cérébrale) ; <strong>glycémie capillaire systématique</strong> — l'hypoglycémie est fréquente chez l'enfant traumatisé et aggrave le pronostic neurologique</li>
+      <li><strong>E — Exposure</strong> : la prévention de l'hypothermie est encore plus critique que chez l'adulte, du fait d'un rapport surface corporelle/masse élevé — déshabillage complet pour l'examen mais couverture/réchauffement actif immédiat dès l'examen terminé</li>
+      <li><strong>Toujours évoquer la maltraitance</strong> devant : lésions d'âges différents, discordance entre le mécanisme rapporté et les lésions observées, retard de recours aux soins, ecchymoses de localisation inhabituelle chez un nourrisson non déambulant — abaisser le seuil de suspicion et orienter vers une prise en charge de protection de l'enfance en cas de doute</li>
+      <li>Limiter l'irradiation : privilégier l'échographie abdominale (FAST) au lit lorsque disponible, réserver la TDM corps entier aux situations qui la justifient réellement</li>
+    </ol>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Exacyl® est disponible à tous les niveaux hospitaliers. Le matériel pédiatrique dédié (sondes d'intubation de tailles variées, colliers cervicaux pédiatriques, aiguilles IO pédiatriques) est surtout présent dans les services de réanimation/pédiatrie de CHU/CHRR — en son absence, adapter avec le matériel adulte disponible en respectant les principes ci-dessus (taille de sonde calculée, billot sous les épaules) plutôt que de renoncer au geste. La disponibilité de CGR pédiatriques dépend fortement du CNTS — anticiper la commande dès la suspicion de choc hémorragique.</p>
+  </div>
+
+  <div class="card" id="proto-douleur-enfant">
+    <h3>🩹 Douleur de l'enfant — évaluation et prise en charge</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les <strong>recommandations OMS 2012</strong> (WHO guidelines on the pharmacological treatment of persisting pain in children with medical illnesses, toujours en vigueur) et les échelles validées <strong>EVENDOL</strong> et <strong>FLACC</strong>. L'évaluation systématique de la douleur, avec un outil adapté à l'âge, doit précéder tout geste et toute décision thérapeutique — une douleur non évaluée est une douleur non traitée.</p>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Outils d'évaluation selon l'âge</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Enfant non communicant ou préverbal, 0-7 ans (échelle de référence aux urgences pédiatriques) : EVENDOL</strong> — 5 items (expression vocale/verbale, mimique, mouvements, positions, relation avec l'environnement), chacun coté 0 à 3, score total /15. <strong>Seuil ≥4/15 : douleur nécessitant un traitement</strong></li>
+      <li><strong>Alternative, 2 mois à 7 ans, notamment en post-opératoire : FLACC</strong> (Face, Legs, Activity, Cry, Consolability) — chaque item coté 0 à 2, score total /10</li>
+      <li><strong>Enfant ≥4-6 ans capable d'auto-évaluer : échelle des visages</strong> (type Wong-Baker, 6 visages de « pas mal du tout » à « très très mal ») ; <strong>échelle numérique ou EVA</strong> utilisables dès environ 6 ans</li>
+    </ul>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">2. Stratégie thérapeutique — approche OMS en 2 paliers (révision 2012)</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">L'ancienne échelle à 3 paliers de l'OMS (avec un palier intermédiaire d'opioïdes faibles) a été <strong>abandonnée pour l'enfant</strong> : <strong>Palier 1</strong> (douleur légère à modérée) — Paracétamol ± AINS. <strong>Palier 2</strong> (douleur modérée à sévère) — passage <strong>direct</strong> à un opioïde fort (Morphine), sans étape intermédiaire par opioïde faible.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Paracétamol (Doliprane®, Efferalgan®)</strong> 15 mg/kg PO/IV toutes les 6h (max 60 mg/kg/j, 4g/j) — systématique en 1ère intention quelle que soit l'intensité</li>
+      <li><strong>Ibuprofène (Advil®, Nurofen®)</strong> 10 mg/kg PO toutes les 6-8h (max 30 mg/kg/j) — <strong>contre-indiqué &lt;3 mois</strong>, en cas de déshydratation, de varicelle évolutive, ou de suspicion d'infection bactérienne sévère non contrôlée</li>
+      <li><strong>Morphine (Morphine Aguettant®)</strong> — titration IV par bolus de <strong>0,1 mg/kg</strong>, répétable toutes les 5-10 min jusqu'à soulagement, sous surveillance de la fréquence respiratoire et de la sédation ; voie orale <strong>0,2-0,4 mg/kg toutes les 4h</strong> si voie IV non disponible/non nécessaire</li>
+      <li><strong>Kétamine (Ketalar®)</strong> à dose sous-dissociative <strong>0,1-0,3 mg/kg IV</strong> pour une douleur sévère ou un geste procédural bref (réduction de fracture, pansement de brûlure) — alternative précieuse à la morphine, notamment en structure isolée</li>
+      <li><strong>MEOPA</strong> (mélange équimolaire O2/protoxyde d'azote) pour l'analgésie procédurale de courte durée si disponible (ponction, suture, pansement) — action rapide et réversible</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne pas utiliser la <strong>codéine</strong> ni le <strong>tramadol</strong> chez l'enfant &lt;12 ans (et avec prudence au-delà) — risque de dépression respiratoire potentiellement fatale chez les métaboliseurs ultra-rapides du CYP2D6, qui transforment ces prodrogues en morphine de façon imprévisible et excessive (alertes OMS/ANSM/FDA). Passer directement à la morphine en cas de douleur modérée à sévère.</div></div>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">3. Mesures non médicamenteuses (à associer systématiquement)</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Présence parentale, allaitement ou solution sucrée (saccharose 24%, quelques gouttes) chez le nourrisson pour les gestes douloureux mineurs (prise de sang, vaccination), distraction (jeux, bulles, écrans selon l'âge), <strong>crème anesthésiante locale (EMLA®)</strong> avant une ponction si le délai le permet (application 45-60 min avant le geste).</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Paracétamol et Ibuprofène sont disponibles à tous les niveaux (LNMEIS). La Morphine est disponible en milieu hospitalier mais son accès peut être restreint en structure de base du fait de la réglementation des stupéfiants — anticiper la commande/l'autorisation. La Kétamine, largement disponible du fait de son usage anesthésique courant, représente une alternative analgésique précieuse en zone reculée lorsque la Morphine n'est pas accessible. Le MEOPA et l'EMLA® restent d'accès limité, principalement en CHU/CHRR.</p>
+  </div>
+
   <div class="card" id="proto-sources">
     <h3>📚 Sources de référence</h3>
     <ul style="margin-left:18px; font-size:13px; color:var(--muted); line-height:1.9;">
@@ -5283,6 +5447,13 @@ function renderProtocoles(){
       <li>ERC Guidelines 2025 — Cardiac arrest in special circumstances : hypothermie accidentelle (classification suisse de Durrer, RCP adaptée &lt;30°C)</li>
       <li>American Heart Association / ILCOR / American Academy of Pediatrics — Neonatal Resuscitation Program (NRP) 8th Edition, 2020</li>
       <li>American Academy of Pediatrics (AAP) — Clinical Practice Guideline: Febrile Seizures ; Clinical Practice Guideline: Diagnosis and Management of Bronchiolitis (NICE Bronchiolitis Guideline, actualisations conjointes)</li>
+      <li>ISPAD (International Society for Pediatric and Adolescent Diabetes) — Clinical Practice Consensus Guidelines 2022 : DKA and HHS (Diabetic Ketoacidosis and Hyperglycemic Hyperosmolar State), actualisées 2024</li>
+      <li>Kuppermann N. et al. — Identification of children at very low risk of clinically-important brain injuries after head trauma (règle PECARN), <em>Lancet</em> 2009 ; Pediatric Emergency Care Applied Research Network</li>
+      <li>OMS — Prise en Charge Intégrée des Maladies de l'Enfant (PCIME/IMCI) ; PIDS/IDSA — Management of Community-Acquired Pneumonia in Infants and Children (actualisé 2023)</li>
+      <li>American Academy of Pediatrics (AAP) Clinical Practice Guideline 2022 — Management of Hyperbilirubinemia in the Newborn Infant 35 or More Weeks of Gestation ; nomogramme de Bhutani</li>
+      <li>NICE Guideline NG195 (2021) — Neonatal infection: antibiotics for prevention and treatment ; AAP — Management of Neonates with Suspected or Proven Early-Onset Bacterial Sepsis</li>
+      <li>ATLS 10th Ed. (American College of Surgeons) — Pediatric Trauma ; PALS/APLS (Pediatric/Advanced Paediatric Life Support) 2020 ; OMS — Pocket Book of Hospital Care for Children (prise en charge du traumatisme pédiatrique en ressources limitées)</li>
+      <li>OMS — WHO guidelines on the pharmacological treatment of persisting pain in children with medical illnesses, 2012 (stratégie en 2 paliers) ; Fournier-Charrière E. et al. — EVENDOL scale validation, <em>Pain</em> 2012 ; Merkel S. et al. — FLACC scale, <em>Pediatr Nurs</em> 1997</li>
       <li>ILAE (International League Against Epilepsy) — Definition and classification of status epilepticus, 2015 ; AES (American Epilepsy Society) Guideline 2016 : Evidence-Based Guideline for the Management of Convulsive Status Epilepticus ; ESETT Trial 2019 (NEJM)</li>
       <li>European Society for Vascular Surgery (ESVS) Clinical Practice Guidelines 2020 — Diagnosis and Management of Acute Limb Ischaemia (classification de Rutherford) ; ESC Guidelines — Venous Thromboembolic Disease</li>
       <li>AABB (Association for the Advancement of Blood & Biotherapies) — Standards and guidance on transfusion reaction recognition and management</li>
@@ -5566,16 +5737,19 @@ function renderAbords(){
       <tr><td><strong>Sous-clavière</strong></td><td>Confort patient, faible infection</td><td>Pneumothorax +++, hémothorax</td></tr>
       <tr><td><strong>Fémorale</strong></td><td>Pas de pneumothorax, urgence facile</td><td>Infection +++, thrombose</td></tr>
     </table>
-    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Technique Seldinger :</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Technique Seldinger — échoguidage recommandé en 1ère intention :</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">L'échoguidage réduit significativement le nombre de tentatives, le taux de ponction artérielle accidentelle et le risque de pneumothorax par rapport au repérage anatomique seul — recommandation forte pour la voie jugulaire interne en particulier, et à privilégier chaque fois que le matériel est disponible, y compris pour les voies fémorale et sous-clavière.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li>Asepsie chirurgicale stricte (masque, charlotte, gants stériles, champ large)</li>
-      <li>Repérage du site (idéalement sous échoguidance)</li>
+      <li>Asepsie chirurgicale stricte (masque, charlotte, gants stériles, champ large), y compris protection stérile de la sonde d'échographie si échoguidage</li>
+      <li><strong>Repérage échographique préalable</strong> : identifier la veine (compressible, non pulsatile) et l'artère adjacente (pulsatile, non compressible) en coupe transversale, vérifier la perméabilité veineuse (absence de thrombose)</li>
       <li>Anesthésie locale Lidocaïne 1% si patient vigile</li>
-      <li>Ponction → retour sanguin veineux → guide métallique (sans résistance forcée)</li>
-      <li>Retirer aiguille → dilatateur → cathéter → retirer guide → fixer + protection stérile</li>
-      <li>Vérification radio thorax systématique + refluent veineux</li>
+      <li><strong>Ponction sous guidage échographique en temps réel</strong> : approche « out-of-plane » (sonde perpendiculaire à l'aiguille, vue en coupe transversale — la plus simple, technique la plus répandue) ou « in-plane » (sonde parallèle à l'aiguille, visualisation de la totalité du trajet de l'aiguille — plus sécurisante mais nécessite davantage d'entraînement) ; garder le point de ponction, l'aiguille et l'écran dans le même axe visuel (technique à un seul opérateur)</li>
+      <li>Retour sanguin veineux franc → introduction du guide métallique (sans résistance forcée — arrêter immédiatement en cas de résistance ou d'arythmie ventriculaire à l'introduction)</li>
+      <li>Retirer aiguille → petite incision cutanée → dilatateur → cathéter sur le guide → retirer guide → vérifier le reflux veineux sur chaque voie → fixer + pansement stérile</li>
+      <li>Vérification systématique post-pose : radiographie thoracique (position de l'extrémité, recherche de pneumothorax) pour les voies jugulaire/sous-clavière, ou contrôle échographique de l'absence de pneumothorax (glissement pleural conservé) en alternative/complément si disponible</li>
     </ol>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Surveillance quotidienne site d'insertion. Pansement stérile J0-J2 puis tous les 7j.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'échographe portable pour guidage de pose n'est pas systématiquement disponible en dehors des CHU/CHRR équipés — la technique par repères anatomiques classiques reste acceptable et largement enseignée en son absence, à condition d'une maîtrise rigoureuse des repères de sécurité (notamment voie jugulaire interne, moins pourvoyeuse de pneumothorax que la sous-clavière en cas d'échec de repérage).</p>
   </div>
 
   <div class="card">
@@ -5611,6 +5785,547 @@ function renderAbords(){
   </div>`;
 }
 renderers.abords = renderAbords;
+
+/* ===================== MODULE GESTES TECHNIQUES D'URGENCE ===================== */
+function renderGestes(){
+  return `
+  <h2 class="module-title">🖐️ Gestes techniques d'urgence</h2>
+  <p class="module-sub">Anesthésie locorégionale, gestes thoraciques, réductions... Technique pas-à-pas, repères anatomiques et pièges à éviter. Asepsie rigoureuse pour tous les gestes.</p>
+
+  <nav class="toc" id="gestes-toc" aria-label="Sommaire des gestes techniques d'urgence">
+    <div class="toc-head" onclick="toggleGestesToc()">
+      <h3>📑 Sommaire — accès rapide</h3>
+      <button type="button" class="toc-toggle" aria-label="Afficher/masquer le sommaire" onclick="event.stopPropagation(); toggleGestesToc();">▾</button>
+    </div>
+    <ul class="toc-list">
+      <li><a onclick="document.getElementById('geste-al-toxicite').scrollIntoView({behavior:'smooth',block:'start'})">💉 Anesthésiques locaux — Dose max & LAST</a></li>
+      <li><a onclick="document.getElementById('geste-bloc-femoral').scrollIntoView({behavior:'smooth',block:'start'})">🦵 Bloc fémoral (3-en-1)</a></li>
+      <li><a onclick="document.getElementById('geste-bloc-iliofascial').scrollIntoView({behavior:'smooth',block:'start'})">🦴 Bloc iliofascial</a></li>
+      <li><a onclick="document.getElementById('geste-bloc-sciatique-poplite').scrollIntoView({behavior:'smooth',block:'start'})">🦵 Bloc sciatique — voie poplitée</a></li>
+      <li><a onclick="document.getElementById('geste-bloc-cheville').scrollIntoView({behavior:'smooth',block:'start'})">🦶 Bloc de cheville (5 nerfs)</a></li>
+      <li><a onclick="document.getElementById('geste-bloc-penien').scrollIntoView({behavior:'smooth',block:'start'})">🍆 Bloc pénien</a></li>
+      <li><a onclick="document.getElementById('geste-reduction-epaule').scrollIntoView({behavior:'smooth',block:'start'})">💪 Réduction de luxation antérieure d'épaule</a></li>
+      <li><a onclick="document.getElementById('geste-reduction-coude').scrollIntoView({behavior:'smooth',block:'start'})">💪 Réduction de luxation postérieure de coude</a></li>
+      <li><a onclick="document.getElementById('geste-pronation-douloureuse').scrollIntoView({behavior:'smooth',block:'start'})">🧒 Pronation douloureuse (subluxation de la tête radiale)</a></li>
+      <li><a onclick="document.getElementById('geste-arthrocentese-genou').scrollIntoView({behavior:'smooth',block:'start'})">🦵 Arthrocentèse du genou</a></li>
+      <li><a onclick="document.getElementById('geste-reduction-cheville').scrollIntoView({behavior:'smooth',block:'start'})">🦶 Réduction de fracture-luxation de cheville</a></li>
+      <li><a onclick="document.getElementById('geste-ponction-pleurale').scrollIntoView({behavior:'smooth',block:'start'})">💧 Ponction pleurale (diagnostique & évacuatrice)</a></li>
+      <li><a onclick="document.getElementById('geste-exsufflation').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Exsufflation à l'aiguille</a></li>
+      <li><a onclick="document.getElementById('geste-drainage-thoracique').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Drainage thoracique</a></li>
+      <li><a onclick="document.getElementById('geste-pericardiocentese').scrollIntoView({behavior:'smooth',block:'start'})">❤️ Péricardiocentèse</a></li>
+      <li><a onclick="document.getElementById('geste-ponction-lombaire').scrollIntoView({behavior:'smooth',block:'start'})">🧠 Ponction lombaire</a></li>
+      <li><a onclick="document.getElementById('geste-paracentese').scrollIntoView({behavior:'smooth',block:'start'})">💧 Ponction d'ascite (paracentèse)</a></li>
+      <li><a onclick="document.getElementById('geste-voie-io').scrollIntoView({behavior:'smooth',block:'start'})">🦴 Voie intra-osseuse</a></li>
+      <li><a onclick="document.getElementById('geste-sondages').scrollIntoView({behavior:'smooth',block:'start'})">🩹 Sondage vésical & sondage naso-gastrique</a></li>
+      <li><a onclick="document.getElementById('geste-suture-plaie').scrollIntoView({behavior:'smooth',block:'start'})">🧵 Suture de plaie simple</a></li>
+      <li><a onclick="document.getElementById('geste-bloc-digital').scrollIntoView({behavior:'smooth',block:'start'})">🖐️ Bloc digital (anesthésie tronculaire du doigt)</a></li>
+      <li><a onclick="document.getElementById('geste-corps-etranger-orl').scrollIntoView({behavior:'smooth',block:'start'})">👂 Corps étranger auriculaire & nasal</a></li>
+      <li><a onclick="document.getElementById('geste-reduction-nez').scrollIntoView({behavior:'smooth',block:'start'})">👃 Réduction de fracture des os propres du nez</a></li>
+      <li><a onclick="document.getElementById('geste-cricothyroidotomie').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Cricothyroïdotomie (scalpel-bougie)</a></li>
+    </ul>
+  </nav>
+
+
+  <div class="card" id="geste-al-toxicite">
+    <h3>💉 Anesthésiques locaux — Calculateur de dose maximale & Toxicité systémique (LAST)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">Avant tout bloc : calculer la dose maximale admissible selon le poids et se fier scrupuleusement à ce plafond, quel que soit le volume "habituellement utilisé". La <strong>toxicité systémique des anesthésiques locaux (LAST)</strong> survient par injection intravasculaire accidentelle ou par dépassement de dose — signes neurologiques précoces (paresthésies péribuccales, goût métallique, acouphènes, confusion) pouvant évoluer vers convulsions puis <strong>collapsus cardiovasculaire et troubles du rythme graves</strong>, parfois d'emblée sans prodrome avec la bupivacaïne.</p>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids du patient (kg)</label>
+        <input type="number" step="0.1" min="0" id="al_poids" placeholder="ex. 70" oninput="calcDoseAL()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Anesthésique local</label>
+        <select id="al_produit" onchange="calcDoseAL()">
+          <option value="lido">Lidocaïne (Xylocaïne®)</option>
+          <option value="bupi">Bupivacaïne (Marcaine®)</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Avec ou sans adrénaline ?</label>
+      <select id="al_adrenaline" onchange="calcDoseAL()">
+        <option value="sans">Sans adrénaline</option>
+        <option value="avec">Avec adrénaline (1:200 000)</option>
+      </select>
+    </div>
+    <div class="result-box hidden" id="al_result"></div>
+    <div id="al_note" style="font-size:12px; color:var(--muted); margin-top:4px;"></div>
+
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Prévention et prise en charge de la LAST :</p>
+    <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li><strong>Aspiration systématique</strong> avant chaque injection (recherche de reflux sanguin) et <strong>injection lente, fractionnée</strong> (5 mL à la fois), en réaspirant entre chaque fraction</li>
+      <li>Surveillance clinique et scopée pendant l'injection et les <strong>20-30 minutes</strong> suivantes (signes précoces = arrêt immédiat de l'injection)</li>
+      <li>En cas de convulsions/collapsus : arrêt de l'injection, appel à l'aide, oxygénation/ventilation, benzodiazépine si convulsions, RCP standard si arrêt cardiaque (compressions prolongées, réponse aux antiarythmiques souvent retardée)</li>
+      <li><strong>Émulsion lipidique IV 20% (Intralipid®)</strong> si disponible : bolus 1,5 mL/kg IVD puis perfusion continue — antidote spécifique de la toxicité cardiaque aux AL, à administrer sans délai devant des signes de gravité</li>
+    </ul>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais dépasser la dose maximale calculée pour le poids du patient, même en fractionnant sur plusieurs sites de bloc — la dose totale cumulée de tous les points d'injection compte, pas le volume par site.</div></div>
+  </div>
+
+  <div class="card" id="geste-bloc-femoral">
+    <h3>🦵 Bloc fémoral (technique du « 3-en-1 »)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> fracture du col ou de la diaphyse fémorale (analgésie avant mobilisation, traction, transport), complément d'anesthésie pour chirurgie du genou/cuisse. <strong>Contre-indications :</strong> allergie aux AL, infection cutanée au point de ponction, trouble de coagulation sévère non corrigé, refus du patient.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> aiguille 22G de 5 cm (à biseau court si neurostimulateur), seringue, AL (bupivacaïne ou lidocaïne selon disponibilité), champ stérile, gants stériles.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repères :</strong> ligne inguinale entre l'épine iliaque antéro-supérieure et le tubercule pubien ; palper le pouls fémoral ; point de ponction 1 à 1,5 cm en dehors du pouls artériel, juste sous le pli inguinal.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Décubitus dorsal, hanche en légère rotation externe si possible, asepsie large</li>
+      <li>Repérer le pouls fémoral au pli inguinal</li>
+      <li>Ponction perpendiculaire à la peau, 1-1,5 cm latéral au pouls, angle 30-45° en direction céphalique</li>
+      <li>Recherche de la perte de résistance en 2 temps (franchissement du fascia lata puis du fascia iliaca), ou réponse motrice en « danse rotulienne » (contraction du quadriceps) si neurostimulateur disponible</li>
+      <li>Aspiration avant toute injection — absence de reflux sanguin</li>
+      <li>Injection lente et fractionnée de 15-20 mL d'AL, réaspiration toutes les 5 mL</li>
+      <li>Surveillance clinique 20-30 min après le geste (signes de LAST)</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Piquer trop médial expose à la ponction de l'artère/veine fémorale (hématome) ; piquer trop latéral ne bloque que le nerf cutané latéral de cuisse, avec un bloc fémoral incomplet et une analgésie insuffisante.</div></div>
+  </div>
+
+  <div class="card" id="geste-bloc-iliofascial">
+    <h3>🦴 Bloc iliofascial (technique des 2 ressauts)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> alternative simple au bloc fémoral, réalisable sans échoguidage ni neurostimulateur — fracture du col/diaphyse fémorale, particulièrement adapté à un contexte de ressources limitées. <strong>Avantage :</strong> geste « à l'aveugle » fiable, accessible à tout urgentiste formé au repérage anatomique.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repères :</strong> tracer la ligne épine iliaque antéro-supérieure (EIAS) – tubercule pubien, la diviser en 3 ; point de ponction au tiers latéral, 1 cm sous cette ligne.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Décubitus dorsal, asepsie</li>
+      <li>Ponction perpendiculaire à la peau au point repéré</li>
+      <li>Recherche de 2 ressauts successifs (franchissement du fascia lata puis du fascia iliaca) — l'aiguille s'arrête juste après le 2e ressaut</li>
+      <li>Aspiration, puis injection lente et fractionnée de 30-40 mL d'AL dilué</li>
+      <li>Pression manuelle distale (sous le point de ponction) pendant l'injection pour favoriser la diffusion proximale du produit le long du fascia iliaca</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne pas confondre les 2 ressauts avec une simple sensation de résistance des tissus sous-cutanés — un geste trop superficiel (1 seul ressaut perçu) place l'AL au-dessus du fascia iliaca, sans effet analgésique.</div></div>
+  </div>
+
+  <div class="card" id="geste-bloc-sciatique-poplite">
+    <h3>🦵 Bloc du nerf sciatique — voie poplitée</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> chirurgie ou traumatologie de la cheville et du pied (fracture bimalléolaire, plaies), complément d'anesthésie du membre inférieur en distalité. <strong>Contre-indications :</strong> idem bloc fémoral.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repères :</strong> fosse poplitée, entre le tendon du biceps fémoral (bord latéral) et les tendons semi-tendineux/semi-membraneux (bord médial), point de ponction 7-10 cm au-dessus du pli poplité, sur la ligne médiane.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Décubitus ventral (ou latéral, jambe fléchie à 30°)</li>
+      <li>Ponction latérale entre les deux chefs musculaires repérés, angle 45-60° en direction céphalique</li>
+      <li>Recherche d'une réponse motrice en flexion plantaire ou dorsale du pied (neurostimulateur), ou perte de résistance</li>
+      <li>Aspiration puis injection lente et fractionnée de 20-30 mL d'AL</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Un point de ponction trop proximal peut se situer au-delà de la division du nerf sciatique en nerfs tibial et fibulaire commun (déjà séparés) : injecter à proximité des deux branches ou légèrement plus distal pour un bloc complet.</div></div>
+  </div>
+
+  <div class="card" id="geste-bloc-cheville">
+    <h3>🦶 Bloc de cheville (bloc tronculaire, 5 nerfs)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> chirurgie ou plaie du pied, corps étranger plantaire, réduction de fracture/luxation du pied. Nécessite le blocage de <strong>5 nerfs</strong> pour une anesthésie complète du pied.</p>
+    <table>
+      <tr><th>Nerf</th><th>Territoire</th><th>Point d'injection</th></tr>
+      <tr><td>Tibial postérieur</td><td>Plante du pied (sensibilité principale)</td><td>Rétromalléolaire interne, en arrière de l'artère tibiale postérieure</td></tr>
+      <tr><td>Sural</td><td>Bord latéral du pied</td><td>Entre malléole externe et tendon d'Achille</td></tr>
+      <tr><td>Saphène</td><td>Bord médial de cheville/pied</td><td>Sous-cutané, en avant de la malléole interne</td></tr>
+      <tr><td>Fibulaire superficiel</td><td>Dos du pied</td><td>Sous-cutané, face antérieure de la cheville</td></tr>
+      <tr><td>Fibulaire profond</td><td>1er espace inter-orteil</td><td>Entre les tendons extenseurs, face antérieure de la cheville</td></tr>
+    </table>
+    <p style="margin-top:8px; font-size:13px; color:var(--muted);">Infiltration sous-cutanée « en bracelet » pour les nerfs superficiels (sural, saphène, fibulaire superficiel), injection plus profonde péri-artérielle pour le nerf tibial postérieur. Volume total 15-20 mL réparti sur les 5 sites — respecter la dose maximale calculée ci-dessus.</p>
+  </div>
+
+  <div class="card" id="geste-bloc-penien">
+    <h3>🍆 Bloc pénien (bloc des nerfs dorsaux de la verge)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> circoncision, paraphimosis (avant réduction), plaies du gland/prépuce. <strong>Contre-indications :</strong> allergie aux AL, infection locale.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique du bloc dorsal :</strong> 2 points d'injection à la base de la verge, à environ 10h30 et 1h30 (de part et d'autre de la ligne médiane dorsale), sous le fascia de Buck, après aspiration. <strong>Alternative — bloc en bague (« ring block ») :</strong> infiltration sous-cutanée circulaire à la base de la verge.</p>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais utiliser d'anesthésique local avec adrénaline pour un bloc pénien — la vascularisation terminale de la verge expose à un risque d'ischémie et de nécrose en cas de vasoconstriction.</div></div>
+  </div>
+
+  <div class="card" id="geste-reduction-epaule">
+    <h3>💪 Réduction de luxation antérieure d'épaule</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> luxation gléno-humérale antérieure (la plus fréquente, &gt;95% des luxations d'épaule), confirmée si possible par une radiographie avant réduction (élimine une fracture associée qui modifierait la prise en charge) — la réduction ne doit toutefois pas être différée en cas d'atteinte vasculo-nerveuse associée (pouls radial, sensibilité du moignon de l'épaule) même sans imagerie disponible. <strong>Contre-indications relatives :</strong> suspicion de fracture associée du col huméral déplacée (risque de déplacement supplémentaire lors des manœuvres de rotation/traction — discuter un avis orthopédique avant réduction si disponible).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Analgésie/sédation :</strong> antalgie systémique (morphine titrée ou kétamine à dose sous-dissociative) ± sédation procédurale brève selon le plateau technique, ou bloc interscalénique/bloc du nerf suprascapulaire si compétence disponible — une analgésie insuffisante est la 1ère cause d'échec de réduction par contracture musculaire réflexe.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique recommandée — méthode FARES (Fast, Reliable, and Safe) :</strong> comparée aux techniques historiques (Kocher, Hippocratique), la méthode FARES est associée à un taux de succès plus élevé, une durée de réduction plus courte et une douleur procédurale significativement moindre dans les essais randomisés récents — à privilégier en 1ère intention par un opérateur seul.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Patient en décubitus dorsal, bras affecté en extension le long du corps, coude en extension</li>
+      <li>Traction longitudinale douce et continue dans l'axe du bras</li>
+      <li>Tout en maintenant la traction, imprimer au bras un mouvement de <strong>va-et-vient vertical de faible amplitude</strong> (haut-bas, quelques centimètres)</li>
+      <li>Associer progressivement une <strong>rotation externe lente et continue</strong> du bras, tout en poursuivant la traction et le va-et-vient — la réduction survient habituellement entre 0° et 90° de rotation externe, souvent perceptible par un ressaut</li>
+      <li>Si échec après une tentative bien conduite : réévaluer l'analgésie/la relaxation musculaire avant de répéter, ou recourir à une méthode alternative (Kocher, traction-contre-traction de Stimson en décubitus ventral)</li>
+    </ol>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Après réduction :</strong> vérification systématique du pouls radial et de la sensibilité du nerf axillaire (moignon de l'épaule) avant et après le geste, radiographie de contrôle post-réduction, immobilisation coude au corps (écharpe simple, quelques jours à 2-3 semaines selon l'âge et le risque de récidive), consultation orthopédique pour une luxation récidivante ou une fracture associée.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>La méthode de Kocher, bien que largement enseignée, nécessite davantage de force et est associée à un risque plus élevé de fracture iatrogène lors de la phase de rotation externe forcée — à réserver en 2e intention si la méthode FARES échoue, avec un mouvement toujours lent et sans forcer en cas de résistance.</div></div>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Toujours documenter l'examen vasculo-nerveux (pouls radial, sensibilité du nerf axillaire) <strong>avant et après</strong> toute tentative de réduction — une atteinte neurologique préexistante méconnue peut être à tort attribuée au geste de réduction en l'absence d'examen initial tracé.</div></div>
+  </div>
+
+  <div class="card" id="geste-reduction-coude">
+    <h3>💪 Réduction de luxation postérieure de coude</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> luxation postérieure du coude (la plus fréquente, typiquement après une chute sur la main, coude en extension), confirmée par une radiographie avant réduction sauf en cas de <strong>déficit neurovasculaire</strong> associé qui impose une réduction en urgence sans attendre l'imagerie si celle-ci n'est pas immédiatement disponible. <strong>Examen neurovasculaire systématique avant tout geste</strong> : pouls radial/cubital, sensibilité et motricité des nerfs médian, ulnaire (le plus fréquemment lésé) et radial — l'atteinte vasculaire (artère brachiale) reste rare (&lt;6% des luxations fermées) mais impose un avis chirurgical immédiat si présente.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Contre-indication :</strong> luxation complexe avec fracture associée significative (coronoïde, tête radiale, olécrane) — une tentative de réduction fermée reste raisonnable en urgence en cas de déficit neurovasculaire, mais la prise en charge définitive de ces formes complexes relève du chirurgien orthopédiste.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Analgésie/sédation :</strong> sédation procédurale (kétamine ou association benzodiazépine-opioïde) fortement recommandée — le relâchement musculaire du triceps conditionne largement le succès du geste.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique — traction-contre-traction (patient en décubitus dorsal) :</strong></p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Un aide stabilise l'humérus à 2 mains en contre-traction</li>
+      <li>L'opérateur saisit le poignet, avant-bras maintenu en <strong>supination</strong>, coude en légère flexion (relâche le triceps)</li>
+      <li>Traction axiale progressive et continue, maintenue jusqu'à 5-10 minutes si nécessaire (le relâchement musculaire progressif facilite le désengagement du processus coronoïde)</li>
+      <li>Une pression additionnelle vers le bas sur l'avant-bras proximal peut être nécessaire pour désengager le coronoïde de la fossa olécranienne</li>
+      <li>Réduction perçue par un allongement de l'avant-bras et un ressaut palpable (« clunk »)</li>
+      <li><strong>Alternative si échec — position ventrale :</strong> patient en décubitus ventral, bras pendant hors de la table, léger poids/traction au niveau du poignet ; l'opérateur applique une pression sur l'olécrane vers l'avant tout en imprimant une légère supination — technique souvent efficace sans nécessiter de force importante</li>
+    </ol>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Après réduction :</strong> réexamen neurovasculaire systématique (une lésion nerveuse apparue après réduction, bien que rare, doit faire évoquer un piégeage nerveux et justifier un avis chirurgical), test de stabilité en flexion-extension prudente si toléré, attelle postérieure à 90° de flexion en position neutre de prono-supination, radiographie de contrôle post-réduction, surveillance 2-3h (risque de compression vasculaire différée par l'œdème).</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Un déficit neurovasculaire présent avant la réduction ou apparu après le geste impose un <strong>avis chirurgical/orthopédique sans délai</strong> — ne pas attribuer par excès de confiance une anomalie neurologique à un simple œdème post-traumatique sans surveillance rapprochée et réévaluation.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais forcer la réduction en cas de résistance franche — évoquer une fracture associée (coronoïde, tête radiale) non visible avant l'imagerie, ou une interposition de tissus mous, et solliciter un avis orthopédique plutôt que de multiplier les tentatives traumatisantes.</div></div>
+  </div>
+
+  <div class="card" id="geste-pronation-douloureuse">
+    <h3>🧒 Pronation douloureuse — subluxation de la tête radiale (« nursemaid's elbow »)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Contexte :</strong> pathologie très fréquente chez le petit enfant (typiquement 1-4 ans), classiquement après une traction axiale sur le bras tendu (enfant tiré ou soulevé par la main) — le ligament annulaire glisse partiellement au-dessus de la tête radiale. Présentation typique : enfant qui refuse d'utiliser le bras, maintenu en légère flexion et pronation le long du corps, sans déformation visible, sans tuméfaction ni ecchymose. <strong>Le diagnostic est clinique</strong> ; une imagerie n'est nécessaire qu'en cas de présentation atypique, de tuméfaction/ecchymose associée, de point douloureux osseux net, ou d'échec de réduction après 2 tentatives bien conduites.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique recommandée en 1ère intention — hyperpronation :</strong> les données comparatives (essais randomisés et méta-analyses récentes) montrent un taux de succès au 1er essai significativement supérieur à la technique de supination-flexion historiquement enseignée (environ 90% contre 70-75%), avec une douleur procédurale généralement moindre.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Installer l'enfant sur les genoux d'un parent ou sur la table d'examen, geste réalisable sans sédation ni analgésie</li>
+      <li>Tenir le coude fléchi à 90° d'une main (pouce sur la tête radiale, repère palpatoire du ressaut de réduction), tenir le poignet/avant-bras de l'autre main</li>
+      <li><strong>Hyperpronation</strong> : imprimer une pronation forcée et complète de l'avant-bras (geste unique, franc) — un ressaut ou un clic palpable au niveau de la tête radiale signe habituellement la réduction</li>
+      <li>Si échec après une tentative bien conduite : <strong>technique de supination-flexion</strong> en alternative — supination complète et rapide de l'avant-bras associée à une flexion complète du coude en un seul mouvement continu</li>
+      <li>Après réduction réussie, l'enfant recommence typiquement à utiliser spontanément le bras dans les 5-15 minutes qui suivent (parfois plus long si la subluxation était ancienne) — laisser le temps à l'enfant sans le forcer à bouger le bras immédiatement</li>
+    </ol>
+    <p style="font-size:13.5px; margin-bottom:8px;">Geste simple, sûr, sans matériel spécifique, ni sédation, ni immobilisation post-réduction nécessaire en cas de succès net et de reprise de l'usage du bras.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>En l'absence de reprise de l'usage du bras dans les 15-20 minutes suivant une tentative de réduction perçue comme réussie (ressaut senti), ne pas s'obstiner sur des tentatives répétées — réexaminer à la recherche d'un point douloureux osseux net, d'une tuméfaction, ou d'un mécanisme atypique évocateur d'une fracture (notamment supracondylienne) et demander une radiographie.</div></div>
+  </div>
+
+  <div class="card" id="geste-arthrocentese-genou">
+    <h3>🦵 Arthrocentèse du genou</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> épanchement articulaire de cause indéterminée avec suspicion d'<strong>arthrite septique</strong> (urgence diagnostique — le retard de prise en charge menace le cartilage articulaire), suspicion de goutte/chondrocalcinose (analyse des cristaux), épanchement volumineux symptomatique (ponction évacuatrice antalgique), hémarthrose post-traumatique. <strong>Contre-indications :</strong> infection cutanée ou cellulite en regard du site de ponction (rechercher un site alternatif), prothèse articulaire (préférer un avis orthopédique/geste au bloc en raison du risque d'infection périprothétique) ; trouble sévère de l'hémostase non corrigé = prudence, pas une contre-indication absolue en cas d'urgence diagnostique (suspicion d'arthrite septique).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> aiguille 18-20G pour un épanchement volumineux (21-22G possible pour un petit épanchement), seringue(s) de 20-60 mL selon le volume attendu, champ stérile, AL (lidocaïne 1%, infiltration sous-cutanée superficielle uniquement — une infiltration profonde peut fausser l'analyse du liquide articulaire), tubes stériles pour l'analyse.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repères — voie parapatellaire (médiale ou latérale), genou en extension ou légère flexion (10-20°), coussin sous le genou :</strong> point de ponction à environ 1 cm en arrière et 1 cm au-dessus du bord supéro-médial (ou supéro-latéral) de la patella, aiguille dirigée horizontalement sous la patella en direction de l'espace intercondylien. L'échoguidage, quand disponible, améliore le taux de succès, le volume recueilli et réduit la douleur procédurale par rapport au repérage anatomique seul.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Décubitus dorsal, genou en légère flexion sur un coussin, repérage du récessus supéro-médial ou latéral (le plus renflé en cas d'épanchement)</li>
+      <li>Asepsie chirurgicale large, anesthésie locale sous-cutanée superficielle uniquement</li>
+      <li>Ponction horizontale sous la patella, aspiration continue jusqu'au retour de liquide synovial</li>
+      <li>Si le flux s'arrête : manœuvre de « traite » du récessus suprapatellaire (pression manuelle proximale) pour mobiliser le liquide vers l'aiguille, ou léger repositionnement de l'aiguille sans changer de trajet de ponction</li>
+      <li>Répartir le liquide dans les tubes (numération avec formule, examen direct + culture bactériologique, recherche de cristaux en lumière polarisée) ; pour une arthrite septique suspectée, administrer l'antibiothérapie IV sans délai après le prélèvement</li>
+      <li>Retrait de l'aiguille, pansement compressif, ± bandage élastique si évacuation volumineuse</li>
+    </ol>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Orientation diagnostique</strong> (seuils indicatifs, à interpréter selon le contexte clinique) : liquide inflammatoire/septique si leucocytes &gt;2 000-25 000/mm³ (arthrite inflammatoire) voire souvent &gt;50 000/mm³ à prédominance de polynucléaires neutrophiles (forte suspicion d'arthrite septique) ; cristaux d'urate négativement biréfringents (goutte) ou de pyrophosphate de calcium faiblement biréfringents (chondrocalcinose) — la présence de cristaux n'élimine pas une arthrite septique associée, qui reste un diagnostic clinico-biologique global.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Devant toute suspicion clinique forte d'<strong>arthrite septique</strong> (monoarthrite fébrile, impotence fonctionnelle majeure), ne jamais retarder l'antibiothérapie empirique dans l'attente des résultats du liquide articulaire — la prélever avant la 1ère dose si possible, sans délai significatif, à l'image de la ponction lombaire en contexte de méningite.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Éviter une infiltration profonde d'anesthésique local dans l'articulation avant le prélèvement — elle peut diluer le liquide et fausser la numération cellulaire, compliquant l'interprétation en cas de suspicion d'arthrite septique.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le geste par repérage anatomique est réalisable à tout niveau de soins accueillant des urgences, sans nécessiter d'échoguidage. L'analyse du liquide articulaire (cytologie, cristaux en lumière polarisée) est surtout disponible en CHU — en son absence, l'aspect macroscopique du liquide (trouble/purulent) et le contexte clinique restent des éléments d'orientation majeurs pour ne pas retarder une antibiothérapie probabiliste devant une forte suspicion d'arthrite septique.</p>
+  </div>
+
+  <div class="card" id="geste-reduction-cheville">
+    <h3>🦶 Réduction de fracture-luxation de cheville</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> fracture-luxation de cheville avec déplacement — <strong>urgence de réduction</strong>, à réaliser le plus rapidement possible sans attendre systématiquement l'imagerie en cas de mise en tension cutanée menaçante (peau blanchie/marbrée en regard du foyer) ou de signe de souffrance neurovasculaire distale (pouls pédieux/tibial postérieur diminué ou absent, allongement du temps de recoloration, trouble sensitif). L'objectif est de <strong>réaligner rapidement le pied sous le tibia</strong> pour lever la tension cutanée et la compression vasculo-nerveuse, avant même la confirmation radiographique du type exact de fracture si le contexte l'impose.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Analgésie :</strong> sédation procédurale (association benzodiazépine-opioïde ou kétamine) ou, en alternative validée et moins consommatrice de ressources, <strong>bloc hématique intra-articulaire</strong> (infiltration de lidocaïne 1% directement dans le foyer fracturaire/l'hématome articulaire) — efficacité analgésique comparable à la sédation consciente pour ce geste, avec un risque cardiorespiratoire moindre.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique de réduction</strong> (variable selon le mécanisme et le sens du déplacement, le plus souvent postéro-latéral) :</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Patient en décubitus dorsal, genou fléchi à 90° (relâche le triceps sural), un aide stabilise la jambe par une contre-traction au niveau du mollet</li>
+      <li>L'opérateur saisit le talon d'une main (traction longitudinale) et l'avant-pied de l'autre</li>
+      <li>Traction axiale douce et progressive dans l'axe de la jambe, associée à une manœuvre inverse du mécanisme lésionnel (le plus souvent : traction + flexion plantaire initiale, puis translation antérieure du talon et dorsiflexion pour une luxation postérieure — mouvement à adapter selon le déplacement observé cliniquement/radiologiquement)</li>
+      <li>Maintenir la réduction obtenue par une <strong>attelle plâtrée postérieure en U</strong> (ou attelle jambière postérieure), cheville à 90°, sans plâtre circulaire complet (risque de compression sur un œdème évolutif)</li>
+      <li>Réexamen neurovasculaire immédiat après réduction (pouls, recoloration, sensibilité) et radiographie de contrôle post-réduction</li>
+    </ol>
+    <p style="font-size:13.5px; margin-bottom:8px;">Une réduction anatomique parfaite n'est pas l'objectif prioritaire de ce geste d'urgence — il s'agit avant tout de <strong>lever la mise en tension cutanée et vasculo-nerveuse</strong> ; la réduction chirurgicale définitive (ostéosynthèse) reste à organiser secondairement selon le plateau technique disponible.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais différer la réduction dans l'attente d'une radiographie en cas de peau tendue/menacée de nécrose ou de signe de souffrance vasculo-nerveuse distale — chaque minute de compression aggrave le risque de nécrose cutanée et de séquelle neurologique/vasculaire irréversible.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Un plâtre circulaire complet posé précocement sur une cheville traumatique récente expose à un syndrome des loges par compression secondaire à l'œdème — toujours privilégier une attelle non circulaire (fendue) dans les premiers jours, avec surveillance rapprochée.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le bloc hématique intra-articulaire est une alternative peu coûteuse et réalisable à tout niveau de soins accueillant des urgences, particulièrement utile en l'absence d'équipe d'anesthésie disponible pour une sédation procédurale. L'ostéosynthèse définitive nécessite un plateau chirurgical orthopédique (CHU/CHRR) — organiser le transfert dès la réduction/attelle réalisées, sans le faire au prix d'un délai de réduction initiale.</p>
+  </div>
+
+  <div class="card" id="geste-ponction-pleurale">
+    <h3>💧 Ponction pleurale (thoracocentèse diagnostique & évacuatrice)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> épanchement pleural de cause indéterminée (ponction <strong>diagnostique</strong> : biochimie, cytologie, bactériologie) ; épanchement abondant mal toléré sur le plan respiratoire (ponction <strong>évacuatrice</strong>, soulagement symptomatique). <strong>Contre-indications :</strong> aucune absolue ; relatives — trouble sévère de l'hémostase non corrigé (plaquettes &lt;50 000/mm³, INR&gt;1,5 non urgent à corriger systématiquement selon les données récentes, mais prudence), infection cutanée au site de ponction, patient non coopérant. En cas de détresse respiratoire vitale par pneumothorax suffocant, se référer au protocole d'exsufflation dédié ci-dessous, pas à cette fiche.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> échographe si disponible (le <strong>repérage échographique est fortement recommandé pour tout épanchement pleural</strong> — réduit significativement le risque de ponction traumatique selon les recommandations BTS 2023), aiguille/cathéter 18-22G pour une ponction diagnostique simple, cathéter avec robinet 3 voies et tubulure de recueil (ou kit de drainage sous vide) pour une ponction évacuatrice, flacons stériles (biochimie, cytologie) et flacons d'hémoculture pour ensemencement bactériologique au lit du patient (améliore le rendement), champ stérile, AL.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repères :</strong> patient assis, penché légèrement en avant, bras du côté ponctionné levé au-dessus de la tête (élargit les espaces intercostaux) ; ponction 1 à 2 espaces intercostaux <strong>sous</strong> le niveau supérieur de la matité/de l'épanchement repéré à l'échographie ou à la percussion, sur la ligne scapulaire ou axillaire postérieure — jamais sous le 8e-9e espace intercostal (risque d'atteinte sous-diaphragmatique).</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Installation assise, repérage échographique du niveau de l'épanchement et du point de ponction optimal si disponible</li>
+      <li>Asepsie chirurgicale large, anesthésie locale plan par plan jusqu'à la plèvre pariétale, au ras du <strong>bord supérieur de la côte inférieure</strong> de l'espace choisi (le paquet vasculo-nerveux longe le bord inférieur de chaque côte)</li>
+      <li>Ponction perpendiculaire à la peau au même repère costal, aspiration continue jusqu'au retour de liquide pleural</li>
+      <li>Ponction diagnostique : prélever 30-50 mL répartis dans les tubes (biochimie : protides, LDH, glucose ; cytologie ; bactériologie ± ensemencement direct de flacons d'hémoculture)</li>
+      <li>Ponction évacuatrice : raccorder au système de recueil sous vide, évacuation progressive en surveillant la tolérance clinique</li>
+      <li>Retrait de l'aiguille/cathéter en fin d'expiration ou pendant une manœuvre de Valsalva, pansement occlusif</li>
+      <li>Radiographie thoracique de contrôle si doute sur un pneumothorax iatrogène, toux ou douleur thoracique pendant le geste, ou ponction difficile</li>
+    </ol>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Orientation diagnostique :</strong> critères de Light pour distinguer exsudat/transsudat (exsudat si au moins 1 critère : protides pleuraux/sériques &gt;0,5, LDH pleural/sérique &gt;0,6, LDH pleural &gt;2/3 de la limite supérieure sérique normale) ; polynucléaires neutrophiles élevés en faveur d'un processus infectieux/parapneumonique, lymphocytose en faveur d'une tuberculose ou d'une néoplasie.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Limiter le volume évacué à environ 1-1,5 L par séance en l'absence de monitorage de la pression pleurale (des volumes plus importants sont possibles sous surveillance stricte selon des données récentes, mais restent à réserver à des équipes entraînées) — <strong>arrêter immédiatement le geste</strong> en cas de toux importante, de douleur/oppression thoracique ou de résistance croissante à l'aspiration, signes évocateurs d'une pression pleurale trop négative exposant à un œdème de réexpansion ou un pneumothorax ex vacuo.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais ponctionner au bord inférieur d'une côte (paquet vasculo-nerveux intercostal) ni trop bas (risque de lésion diaphragmatique, hépatique ou splénique, en particulier à droite/à gauche en fin d'expiration profonde) — toujours viser le bord supérieur de la côte inférieure de l'espace choisi.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le matériel de ponction pleurale simple (aiguille/cathéter, robinet 3 voies) est réalisable à tout niveau de soins accueillant des urgences. L'échoguidage, bien que fortement recommandé, n'est pas systématiquement disponible en dehors des CHU/CHRR équipés — à défaut, un repérage clinique rigoureux (percussion, auscultation) par un opérateur entraîné reste acceptable, sans renoncer au geste diagnostique ou évacuateur devant un épanchement significatif symptomatique.</p>
+  </div>
+
+  <div class="card" id="geste-exsufflation">
+    <h3>🫁 Exsufflation à l'aiguille (pneumothorax suffocant)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> pneumothorax suffocant (compressif) — diagnostic <strong>clinique</strong> devant une détresse respiratoire aiguë avec turgescence jugulaire, déviation trachéale controlatérale, abolition unilatérale du murmure vésiculaire, tympanisme, et instabilité hémodynamique. Geste de sauvetage immédiat, à ne jamais différer pour une imagerie.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> aiguille/cathéter long (14G, ≥5 cm chez l'adulte — les cathéters courts standards échouent souvent chez le patient corpulent), seringue, antiseptique.</p>
+    <table>
+      <tr><th>Repère</th><th>Site</th><th>Remarque</th></tr>
+      <tr><td>2e espace intercostal</td><td>Ligne médio-claviculaire, bord supérieur de la 3e côte</td><td>Repère historique, épaisseur pariétale variable</td></tr>
+      <tr><td>5e espace intercostal</td><td>Ligne axillaire moyenne (« triangle de sécurité »)</td><td>Paroi thoracique plus fine — site préféré par les recommandations les plus récentes</td></tr>
+    </table>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9; margin-top:10px;">
+      <li>Asepsie rapide du site</li>
+      <li>Ponction perpendiculaire à la peau, au ras du <strong>bord supérieur de la côte inférieure</strong> de l'espace choisi (le paquet vasculo-nerveux longe le bord inférieur de chaque côte)</li>
+      <li>Avancer en aspirant doucement jusqu'à obtenir un retour d'air franc</li>
+      <li>Laisser le cathéter en place (retirer l'aiguille), fixer</li>
+      <li>Geste temporaire — poser un drain thoracique dès que possible</li>
+    </ol>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Pneumothorax suffocant = diagnostic clinique. Ne jamais attendre une radiographie ou une TDM pour exsuffler — chaque minute d'attente rapproche le patient de l'arrêt cardiaque par choc obstructif.</div></div>
+  </div>
+
+  <div class="card" id="geste-drainage-thoracique">
+    <h3>🫁 Drainage thoracique (pose de drain)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> pneumothorax (relais après exsufflation, pneumothorax de grande abondance, sous ventilation mécanique), hémothorax, épanchement pleural abondant mal toléré. <strong>Contre-indications relatives :</strong> trouble de coagulation sévère non corrigé (sauf urgence vitale).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> kit de drainage (drain 20-28F selon indication — calibre plus large pour hémothorax), bistouri, pince courbe, fil de suture, système de drainage sous eau (Pleur-evac ou système à valve unidirectionnelle), champ stérile, AL.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repère — « triangle de sécurité » :</strong> délimité par le bord latéral du grand pectoral, le bord antérieur du grand dorsal, une ligne horizontale passant par le mamelon (5e espace intercostal) — au-dessus du niveau du mamelon pour éviter le diaphragme.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Décubitus dorsal, bras du côté concerné derrière la tête, asepsie chirurgicale large</li>
+      <li>Anesthésie locale plan par plan (peau, muscle, plèvre pariétale — la plèvre est richement innervée), en restant au bord <strong>supérieur</strong> de la côte inférieure</li>
+      <li>Incision cutanée horizontale de 2-3 cm au niveau du 5e espace, ligne axillaire moyenne</li>
+      <li>Dissection au doigt/pince courbe jusqu'à la plèvre, effraction pleurale franche (perte de résistance, bruit d'air ou de liquide)</li>
+      <li>Exploration digitale de la cavité pleurale (absence d'adhérences, confirmation de l'espace pleural)</li>
+      <li>Introduction du drain <strong>guidé au doigt ou à la pince</strong> (jamais avec le trocart pointu en force), orientation postéro-apicale (pneumothorax) ou déclive (épanchement liquidien)</li>
+      <li>Raccordement immédiat au système de drainage sous eau, fixation cutanée solide (bourse + point de fixation), pansement occlusif</li>
+      <li>Radiographie thoracique de contrôle systématique</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais introduire le drain avec le trocart en force sans contrôle digital préalable — risque de lésion parenchymateuse pulmonaire, cardiaque, diaphragmatique ou abdominale (foie, rate) en cas de ponction trop basse ou trop médiale.</div></div>
+  </div>
+
+  <div class="card" id="geste-pericardiocentese">
+    <h3>❤️ Péricardiocentèse (tamponnade péricardique)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> tamponnade péricardique avec instabilité hémodynamique — triade de Beck (hypotension, turgescence jugulaire, assourdissement des bruits du cœur), pouls paradoxal, échographie au lit du malade montrant un épanchement péricardique compressif (swinging heart, collapsus diastolique du VD). <strong>Échoguidage fortement recommandé</strong> si disponible — améliore nettement la sécurité du geste.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> aiguille longue (spinale 18G, 10-15 cm), seringue, robinet 3 voies, si possible électrode ECG reliée à l'aiguille (élévation du segment ST si contact avec le myocarde = retrait immédiat), échographe si disponible.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repère — voie sous-xiphoïdienne :</strong> point de ponction 1-2 cm sous et à gauche de l'appendice xiphoïde, aiguille orientée à 45° vers l'épaule gauche, en aspirant en continu.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Position semi-assise à 30-45° si tolérée (rapproche l'épanchement de la paroi antérieure)</li>
+      <li>Asepsie chirurgicale, anesthésie locale si patient conscient et temps disponible</li>
+      <li>Ponction sous-xiphoïdienne, progression lente en aspirant en continu, idéalement sous guidage échographique direct</li>
+      <li>Dès retour de liquide péricardique, stabiliser l'aiguille et évacuer — quelques dizaines de mL suffisent souvent à améliorer transitoirement l'hémodynamique</li>
+      <li>Laisser un cathéter en place si possible (technique de Seldinger) en cas de ré-accumulation attendue, en relais vers un traitement définitif (drainage chirurgical/péricardique)</li>
+    </ol>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Geste de sauvetage à haut risque (ponction myocardique, coronaire, pneumothorax) — à réserver à la tamponnade avec instabilité hémodynamique menaçante, idéalement sous échoguidage. En l'absence d'échographe et si le patient tolère un transfert rapide vers un plateau technique adapté, privilégier ce transfert plutôt qu'un geste à l'aveugle non vital.</div></div>
+  </div>
+
+  <div class="card" id="geste-ponction-lombaire">
+    <h3>🧠 Ponction lombaire (PL)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> suspicion de méningite/méningo-encéphalite (geste diagnostique clé, urgence), suspicion d'hémorragie sous-arachnoïdienne avec imagerie cérébrale normale ou non disponible, bilan d'un trouble neurologique inexpliqué (recherche de dissociation albumino-cytologique, etc.). <strong>Contre-indications :</strong> signes cliniques d'engagement ou de forte suspicion d'hypertension intracrânienne (déficit neurologique focal, trouble de conscience sévère, crise convulsive récente, œdème papillaire) — <strong>imagerie cérébrale préalable indispensable</strong> dans ces situations ; trouble sévère de l'hémostase non corrigé ; infection cutanée au site de ponction.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> aiguille de ponction lombaire — idéalement à pointe conique/« atraumatique » (calibre 22-25G) qui réduit le risque de céphalées post-PL par rapport aux aiguilles à biseau tranchant classiques ; à défaut, une aiguille standard reste acceptable en orientant le biseau parallèlement à l'axe des fibres durales (verticalement, patient assis) pour limiter ce risque. Manomètre si mesure de la pression d'ouverture souhaitée, 3-4 tubes stériles numérotés, champ stérile, AL.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repères :</strong> ligne bi-iliaque (ligne de Tuffier, reliant les 2 crêtes iliaques) qui croise habituellement l'espace L4-L5 — ponction en <strong>L3-L4 ou L4-L5</strong>, toujours sous le niveau du cône médullaire (qui se termine en L1-L2 chez l'adulte) pour éviter tout risque de lésion médullaire directe.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Position assise penchée en avant (« dos rond »), ou décubitus latéral avec genoux ramenés vers le thorax et dos parfaitement perpendiculaire au plan du lit (position souvent préférée si mesure de la pression d'ouverture nécessaire)</li>
+      <li>Repérage de la ligne bi-iliaque et de l'espace intervertébral choisi, asepsie chirurgicale large, anesthésie locale du point de ponction</li>
+      <li>Ponction sur la ligne médiane, perpendiculaire au dos ou légèrement orientée en direction céphalique (vers l'ombilic), biseau de l'aiguille orienté parallèlement aux fibres durales</li>
+      <li>Progression lente jusqu'au franchissement du ligament jaune puis de la dure-mère (perte de résistance/ressaut caractéristique), retrait du mandrin</li>
+      <li>Recueil du LCR <strong>goutte à goutte, jamais par aspiration</strong> ; mesure de la pression d'ouverture au manomètre si indiquée (valeur normale 10-20 cmH2O en décubitus latéral)</li>
+      <li>Répartir le LCR dans les tubes numérotés (cytologie, biochimie — glycorachie/protéinorachie avec glycémie capillaire simultanée, bactériologie/PCR selon contexte)</li>
+      <li>Replacer le mandrin avant le retrait complet de l'aiguille (réduit le risque de céphalées post-PL par fuite persistante de LCR), pansement, décubitus non systématique après le geste (le repos strict au lit ne prévient pas les céphalées post-PL selon les données actuelles)</li>
+    </ol>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span><strong>Ne jamais retarder l'antibiothérapie</strong> pour réaliser la PL en cas de suspicion de méningite bactérienne — hémocultures avant la 1ère dose si possible mais sans délai significatif, la PL pouvant être différée après l'antibiothérapie si une imagerie cérébrale préalable est nécessaire (cf. protocole Purpura fulminans/méningite).</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais ponctionner au-dessus de L2-L3 chez l'adulte (risque de léser le cône médullaire) — se fier systématiquement au repère de la ligne bi-iliaque plutôt qu'à une estimation visuelle approximative de l'espace intervertébral.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les aiguilles atraumatiques à pointe conique sont d'accès limité en dehors de certains CHU — l'aiguille standard reste une alternative acceptable avec une orientation correcte du biseau, sans justifier de renoncer ou de retarder une PL indiquée en urgence (suspicion de méningite notamment).</p>
+  </div>
+
+  <div class="card" id="geste-paracentese">
+    <h3>💧 Ponction d'ascite (paracentèse diagnostique & évacuatrice)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> ascite de découverte récente (ponction <strong>diagnostique</strong> systématique), suspicion de péritonite bactérienne spontanée chez le cirrhotique ascitique (<em>voir protocole dédié</em>), ascite volumineuse mal tolérée — inconfort abdominal, dyspnée par compression diaphragmatique (ponction <strong>évacuatrice</strong>). <strong>Contre-indications :</strong> aucune absolue, y compris en cas de coagulopathie modérée (la correction systématique de l'INR/des plaquettes avant le geste n'est pas recommandée en l'absence de saignement actif ou de CIVD clinique) ; prudence en cas de distension intestinale majeure/occlusion (risque de perforation), grossesse (adapter le site), ou infection cutanée pariétale au site prévu.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> cathéter/aiguille 18-20G (kit de paracentèse si disponible), flacons d'hémoculture pour ensemencement direct au lit du patient (améliore significativement le rendement bactériologique, comme pour la ponction d'ascite diagnostique de PBS), tubes pour cytologie et biochimie (protides/albumine du liquide, pour le calcul du gradient sérum-ascite avec l'albuminémie simultanée), système de recueil sous vide pour une ponction évacuatrice, <strong>albumine humaine 20-25%</strong> disponible si volume évacué prévisible &gt;5 L.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repères :</strong> fosse iliaque gauche de préférence (point situé à la jonction du tiers externe et des deux tiers internes de la ligne reliant l'ombilic à l'épine iliaque antéro-supérieure gauche — paroi généralement plus fine qu'à droite), à distance de toute cicatrice chirurgicale et des veines collatérales visibles (hypertension portale). Échoguidage recommandé si disponible, en particulier pour une ascite de faible abondance ou cloisonnée.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Décubitus dorsal ou légère rotation controlatérale, miction préalable (vessie vide)</li>
+      <li>Asepsie chirurgicale large, anesthésie locale plan par plan</li>
+      <li>Technique en « Z » recommandée : décaler la peau de 1-2 cm avant de ponctionner perpendiculairement, puis relâcher en fin de geste — limite le risque de fuite persistante de liquide d'ascite après le retrait</li>
+      <li>Progression lente avec aspiration intermittente jusqu'au retour de liquide d'ascite</li>
+      <li>Ponction diagnostique : prélever les tubes (cytologie avec compte de polynucléaires neutrophiles — <strong>PBS si PNN ≥250/mm³</strong> — et biochimie) et ensemencer directement 2 flacons d'hémoculture au lit</li>
+      <li>Ponction évacuatrice : raccorder au système sous vide, évacuation progressive en surveillant la tolérance hémodynamique</li>
+      <li>Retrait du cathéter, pansement compressif ; surveillance du point de ponction (fuite persistante)</li>
+    </ol>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Pour toute paracentèse évacuatrice <strong>&gt;5 L</strong>, administrer de l'<strong>albumine humaine 20-25%, 6-8 g par litre de liquide évacué au-delà du 1er litre</strong> — prévient la dysfonction circulatoire post-paracentèse (hypovolémie efficace, risque d'insuffisance rénale et d'hyponatrémie), recommandation AASLD.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Éviter toute ponction sur une cicatrice abdominale ou à proximité d'une veine collatérale visible (circulation veineuse collatérale de l'hypertension portale) — choisir systématiquement un site à distance, la fosse iliaque étant généralement préférée à la ligne médiane sous-ombilicale (risque vésical/vaisseaux épigastriques).</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le matériel de paracentèse simple et les flacons d'hémoculture pour ensemencement au lit sont réalisables à la plupart des niveaux de soins. L'albumine humaine concentrée est généralement réservée aux CHU/CHRR (LNMEIS) — anticiper sa disponibilité avant une évacuation prévisible &gt;5 L, ou fractionner l'évacuation sur plusieurs séances si l'albumine n'est pas accessible, plutôt que d'évacuer un grand volume sans protection circulatoire.</p>
+  </div>
+
+  <div class="card" id="geste-voie-io">
+    <h3>🦴 Voie intra-osseuse (abord IO)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> urgence vitale (arrêt cardiorespiratoire, choc) avec accès veineux périphérique impossible ou trop long à obtenir (recommandé après 2 tentatives infructueuses ou 90 secondes sans succès selon les algorithmes ILCOR) — chez l'adulte comme chez l'enfant. Tout soluté ou médicament administrable par voie IV peut l'être par voie IO, y compris les catécholamines, avec un délai d'action comparable. <strong>Contre-indications :</strong> fracture de l'os concerné ou du membre en amont, infection cutanée au site, tentative d'abord IO déjà réalisée sur le même os dans les 24-48h précédentes, ostéogenèse imparfaite/fragilité osseuse connue.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> dispositif d'abord IO — manuel (aiguille de type Cook, réalisable à tout niveau de soins) ou semi-automatique à percussion (type EZ-IO ou équivalent, si disponible), aiguille de calibre et longueur adaptés à l'âge/au site choisi, seringue de 10 mL de NaCl 0,9% pour le rinçage, tubulure avec dispositif de mise en pression (poche à pression ou pousse-seringue) — le débit gravitaire seul est souvent insuffisant en situation d'urgence vitale.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repères :</strong> <strong>tibia proximal</strong> (1-2 cm en dessous et en dedans de la tubérosité tibiale antérieure, sur la face antéro-interne plane du tibia) — site de 1ère intention, accessible à tout âge ; alternatives : <strong>tibia distal</strong> (2-3 cm au-dessus de la malléole interne), <strong>humérus proximal</strong> (grand tubercule, bras en rotation interne) chez l'adulte pour un débit plus rapide, <strong>fémur distal</strong> chez le nourrisson.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Repérage du site, asepsie rapide (le contexte d'urgence vitale ne doit pas retarder le geste, mais une asepsie même sommaire reste de mise)</li>
+      <li>Insertion perpendiculaire à l'os (léger angle vers le bas chez l'enfant pour éviter le cartilage de croissance), progression jusqu'à sensation de perte de résistance nette (« pop ») signant le franchissement de la corticale osseuse</li>
+      <li>Retrait du mandrin, vérification de la stabilité de l'aiguille (tient debout sans soutien)</li>
+      <li>Test de perméabilité : rinçage de 10 mL de NaCl 0,9% — doit passer sans résistance importante ni tuméfaction/douleur sous-cutanée locale (signe d'extravasation)</li>
+      <li>Connexion de la tubulure sous pression, fixation solide du dispositif</li>
+      <li>Surveillance régulière du membre (mollet/avant-bras selon le site) pendant toute la durée de perfusion — recherche d'un syndrome des loges par extravasation méconnue</li>
+    </ol>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Toujours rincer et vérifier la perméabilité avant toute administration de médicament — un abord IO mal positionné ou déplacé expose à une extravasation sous-cutanée et à un <strong>syndrome des loges</strong>, complication grave pouvant nécessiter une aponévrotomie en urgence.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>La voie intra-osseuse est un abord <strong>temporaire</strong> (à retirer dans les 24h) — relayer par une voie veineuse périphérique ou centrale dès que la situation le permet, sans jamais la laisser en place au-delà de la période d'urgence vitale.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les dispositifs semi-automatiques à percussion sont surtout disponibles dans les services de réanimation/pédiatrie de CHU/CHRR — la technique manuelle à l'aiguille de Cook, moins coûteuse, reste réalisable à tout niveau de soins accueillant des urgences et ne doit jamais être négligée en attendant un dispositif plus sophistiqué face à un accès veineux impossible en situation vitale.</p>
+  </div>
+
+  <div class="card" id="geste-sondages">
+    <h3>🩹 Sondage vésical & sondage naso-gastrique</h3>
+    <p style="font-size:13.5px; margin-bottom:8px; font-weight:600; color:var(--accent2);">Sondage vésical évacuateur/à demeure</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> rétention aiguë d'urines (globe vésical — geste diagnostique et thérapeutique immédiat, <em>voir protocole dédié</em>), surveillance horaire de la diurèse en réanimation/choc, bilan des entrées-sorties, préparation à une chirurgie pelvienne/abdominale. <strong>Contre-indications :</strong> suspicion de rupture de l'urètre (traumatisme du bassin avec urétrorragie, hématome périnéal/scrotal, prostate non palpable ou anormalement haute au toucher rectal chez l'homme) — <strong>ne jamais sonder à l'aveugle</strong> dans ce contexte, avis urologique et cystographie/urétrographie rétrograde avant tout geste.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> sonde vésicale à ballonnet (Foley) — calibre 14-18 Ch chez l'adulte selon le contexte (calibre plus large en cas d'hématurie/caillots), lubrifiant urétral ± anesthésique local (gel de lidocaïne), seringue avec eau stérile pour le gonflage du ballonnet (10 mL habituellement, vérifier le volume indiqué sur la sonde), champ stérile, poche collectrice.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Décubitus dorsal, asepsie génitale rigoureuse (toilette antiseptique, champ stérile) — <strong>chez l'homme</strong>, décalotter avant l'antisepsie et maintenir le décalottage jusqu'à la fin du geste (prévention du paraphimosis)</li>
+      <li>Instillation de gel lubrifiant/anesthésiant dans l'urètre avant l'introduction de la sonde</li>
+      <li>Introduction douce de la sonde jusqu'au retour d'urine, puis progression de quelques centimètres supplémentaires avant de gonfler le ballonnet (évite un gonflage intra-urétral)</li>
+      <li>Gonflage du ballonnet avec le volume d'eau stérile indiqué, retrait doux jusqu'à sentir la résistance du col vésical, recalotter chez l'homme non circoncis</li>
+      <li>Raccordement à la poche collectrice, fixation de la sonde (cuisse chez la femme, bas-abdomen chez l'homme pour limiter la pression sur l'angle pénoscrotal)</li>
+      <li>En cas de globe vésical volumineux et ancien : <strong>vidange progressive</strong> (clampage intermittent toutes les 300-500 mL) plutôt qu'une vidange brutale complète — limite le risque d'hématurie a vacuo et d'hypotension par levée d'obstacle brutale, bien que la preuve de ce bénéfice reste débattue ; surveiller la diurèse post-obstructive dans les heures suivantes (risque de polyurie osmotique si insuffisance rénale obstructive associée)</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>En cas de résistance à la progression de la sonde chez l'homme (obstacle prostatique) : ne jamais forcer — retirer, réessayer avec une sonde à bout coudé (Tiemann) tenue par un opérateur expérimenté, ou recourir à un cathéter sus-pubien si l'échec persiste et que la situation est urgente.</div></div>
+
+    <p style="font-size:13.5px; margin:14px 0 8px; font-weight:600; color:var(--accent2);">Sondage naso-gastrique (SNG)</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> vidange gastrique (occlusion intestinale, iléus, avant certaines intoxications), alimentation entérale, administration de médicaments/charbon activé si voie orale impossible, aspiration digestive dans le cadre d'une pancréatite/occlusion sévère. <strong>Contre-indications :</strong> traumatisme facial sévère/suspicion de fracture de la base du crâne (risque de passage intracrânien — préférer alors une sonde orogastrique), varices œsophagiennes connues avec saignement actif (prudence, discuter avec l'équipe en charge), sténose œsophagienne connue non franchissable.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> sonde naso-gastrique (calibre 14-18 Ch chez l'adulte selon l'indication — calibre plus large si vidange de résidus épais/hématémèse), lubrifiant, seringue de 50 mL (type embout cathéter) pour la vérification de position et l'aspiration, stéthoscope, sparadrap de fixation.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Patient assis ou semi-assis si possible, mesure de la longueur à introduire (distance nez-lobe de l'oreille-appendice xiphoïde, repère à marquer sur la sonde)</li>
+      <li>Lubrification de l'extrémité de la sonde, introduction par une narine perméable, orientation vers le bas et l'arrière (le long du plancher de la fosse nasale, pas vers le haut)</li>
+      <li>Faire déglutir le patient (petites gorgées d'eau si autorisé) au fur et à mesure de la progression pour faciliter le passage pharyngo-œsophagien</li>
+      <li>Progresser jusqu'au repère préalablement mesuré ; en cas de toux, désaturation ou résistance franche, retirer immédiatement (fausse route trachéale)</li>
+      <li><strong>Vérification de la position avant toute utilisation :</strong> aspiration de liquide gastrique franc (meilleure preuve), et/ou insufflation de 20-30 mL d'air à la seringue avec auscultation épigastrique (« gargouillis » perçu) — méthode d'appoint, non fiable isolément selon les données actuelles ; la <strong>radiographie thoracique de contrôle reste la référence en cas de doute</strong>, en particulier avant une nutrition entérale ou chez un patient à conscience altérée/intubé</li>
+      <li>Fixation solide au nez, raccordement au sac de recueil ou au système de nutrition selon l'indication</li>
+    </ol>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais débuter une nutrition ou une administration médicamenteuse par une SNG dont la position n'a pas été formellement vérifiée — le risque de fausse route bronchique méconnue expose à une pneumopathie d'inhalation grave, en particulier chez le patient à conscience altérée.</div></div>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais tenter de pose de sonde naso-gastrique (privilégier la voie orogastrique) en cas de traumatisme facial sévère ou de suspicion de fracture de la base du crâne (rhinorrhée de LCR, ecchymoses périorbitaires bilatérales/« yeux de raton laveur », otorragie) — risque de passage intracrânien de la sonde à travers une brèche de la lame criblée.</div></div>
+  </div>
+
+  <div class="card" id="geste-suture-plaie">
+    <h3>🧵 Suture de plaie simple</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> plaie cutanée simple relevant d'une fermeture par 1ère intention (bords nets, peu contaminée, sans perte de substance majeure). <strong>Avant toute décision de suture, exploration systématique de la plaie</strong> : recherche d'un corps étranger, évaluation de l'atteinte des structures profondes (tendons, nerfs, vaisseaux, articulation), sous anesthésie locale et bon éclairage — ne jamais suturer une plaie non explorée en cas de mécanisme pénétrant ou de doute sur une structure profonde.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Délai de fermeture :</strong> la notion historique de « période dorée » de 6-8h au-delà de laquelle une plaie ne pourrait plus être suturée n'est <strong>pas soutenue par les données actuelles</strong> — de nombreuses plaies propres et peu contaminées peuvent être fermées avec succès au-delà de ce délai, en particulier au visage/cuir chevelu (zone très vascularisée, fermeture habituellement raisonnable jusqu'à 24h, voire au-delà selon le contexte). Le facteur déterminant reste le <strong>degré de contamination et le mécanisme</strong> (plaie franche vs écrasement/morsure) plutôt qu'un chiffre horaire rigide — les plaies fortement contaminées, les morsures, et les plaies punctiformes profondes restent de moins bonnes indications à la fermeture primaire, quel que soit le délai.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Préparation :</strong> anesthésie locale (voir calculateur de dose ci-dessus pour respecter les doses maximales), irrigation abondante au NaCl 0,9% (ou eau propre à défaut) sous pression modérée — geste le plus important pour réduire la charge bactérienne, exploration et parage des berges dévitalisées si nécessaire, antisepsie cutanée périphérique.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique :</strong> points séparés simples en 1ère intention (les plus polyvalents), en prenant des berges symétriques et en légère éversion (favorise une cicatrice plane), espacés d'une distance approximativement égale à la largeur de la prise ; plaies sous tension : points en U ou points profonds (résorbables) pour rapprocher les plans avant la fermeture cutanée ; plaies du visage : fils fins (5-0/6-0), au minimum de tension.</p>
+    <table>
+      <tr><th>Localisation</th><th>Calibre indicatif</th><th>Délai de retrait des fils</th></tr>
+      <tr><td>Visage/cuir chevelu</td><td>5-0 à 6-0</td><td>5-7 jours</td></tr>
+      <tr><td>Tronc</td><td>3-0 à 4-0</td><td>7-10 jours</td></tr>
+      <tr><td>Membres</td><td>3-0 à 4-0</td><td>10-14 jours</td></tr>
+      <tr><td>Paume/plante, zones de tension (articulations)</td><td>3-0 à 4-0, points renforcés</td><td>12-14 jours</td></tr>
+    </table>
+    <p style="font-size:13.5px; margin:8px 0;"><strong>Antibioprophylaxie :</strong> non systématique pour une plaie simple propre — réservée aux plaies fortement contaminées/souillées, morsures, plaies avec atteinte osseuse/articulaire ou tendineuse, patient immunodéprimé/diabétique mal équilibré. <strong>Prophylaxie antitétanique</strong> à vérifier systématiquement selon le statut vaccinal et le type de plaie (<em>voir protocole dédié</em>).</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais suturer une plaie sans exploration préalable en cas de plaie pénétrante, de mécanisme à haute énergie, ou de doute clinique sur une atteinte tendineuse/nerveuse/vasculaire ou articulaire — une lésion profonde méconnue et « enfermée » sous une suture cutanée d'apparence satisfaisante retarde le diagnostic et aggrave le pronostic fonctionnel.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne pas se fier à un délai horaire rigide pour décider de fermer ou non une plaie — l'évaluation du degré de contamination, du mécanisme lésionnel et du terrain du patient prime sur le simple temps écoulé depuis le traumatisme.</div></div>
+  </div>
+
+  <div class="card" id="geste-bloc-digital">
+    <h3>🖐️ Bloc digital (anesthésie tronculaire du doigt)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> tout geste douloureux localisé au doigt/orteil — suture de plaie, réduction de luxation interphalangienne, drainage de panaris/hématome sous-unguéal, avulsion unguéale, extraction de corps étranger. <strong>Contre-indications :</strong> allergie aux AL, infection cutanée étendue au site d'injection (préférer alors un bloc plus proximal), atteinte vasculaire préexistante du doigt (prudence).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Anesthésique et adrénaline :</strong> lidocaïne 1-2% sans agent conservateur ; la crainte historique de nécrose digitale par vasoconstriction a longtemps fait proscrire l'<strong>adrénaline</strong> dans les blocs digitaux, mais les données accumulées depuis plus de 15 ans (essais cliniques, revue Cochrane) montrent l'<strong>absence de sur-risque ischémique</strong> aux concentrations standards (1:100 000 ou 1:200 000) chez un patient sans pathologie vasculaire périphérique sévère — l'adrénaline prolonge l'anesthésie et réduit le saignement au site opératoire, un avantage réel notamment en l'absence de garrot digital disponible. En cas de doute ou de terrain vasculaire à risque (artériopathie, phénomène de Raynaud sévère, diabète avec microangiopathie), le repli sans adrénaline reste une option raisonnable.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique classique — bloc à la base du doigt (bloc en bague/« wing block ») :</strong> 2 points d'injection dorso-latéraux à la base du doigt (face dorsale, de part et d'autre), aiguille fine (25-27G) insérée perpendiculairement puis progressant vers la face palmaire, injection lente de 1-2 mL de chaque côté en retirant progressivement l'aiguille (dépôt en éventail dorsal et palmaire) — bloque les 4 nerfs digitaux (2 dorsaux, 2 palmaires).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Alternative — bloc transthécal (gaine des fléchisseurs) :</strong> injection unique de 2-3 mL au niveau du pli palmaire distal correspondant au doigt concerné, aiguille dirigée vers la gaine du tendon fléchisseur (sensation de perte de résistance/« give » au passage de la gaine) — diffusion circonférentielle rapide autour de la phalange proximale, anesthésie plus rapide qu'avec la technique classique, injection unique moins douloureuse ; moins fiable pour l'anesthésie de la face dorsale du doigt dans certains cas.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Asepsie cutanée, patient informé de la sensation de striction/pression pendant l'injection</li>
+      <li>Choisir la technique (bloc en bague classique ou transthécal) selon le geste prévu et l'expérience de l'opérateur</li>
+      <li>Injection lente (limite la douleur procédurale), aspiration préalable si volume plus important</li>
+      <li>Attendre 5-10 minutes avant de tester l'anesthésie (piqûre douce, pince) avant de débuter le geste</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais injecter un volume excessif à la base du doigt (au-delà de 4-5 mL au total) — le tissu sous-cutané digital est peu extensible, un volume trop important majore la pression tissulaire locale et peut compromettre la perfusion, indépendamment de la présence ou non d'adrénaline.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la lidocaïne avec adrénaline (cartouches dentaires ou flacons standards) est largement disponible à tous les niveaux — son usage pour le bloc digital est un choix raisonnable et pratique, en particulier en l'absence de garrot digital dédié, en respectant les précautions ci-dessus.</p>
+  </div>
+
+  <div class="card" id="geste-corps-etranger-orl">
+    <h3>👂 Corps étranger auriculaire & nasal</h3>
+    <p style="font-size:13.5px; margin-bottom:8px; font-weight:600; color:var(--accent2);">Corps étranger du conduit auditif externe</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Techniques selon le type d'objet :</strong> <strong>irrigation à l'eau tiède</strong> (seringue de 20-50 mL, jet dirigé le long de la paroi supérieure du conduit, jamais directement sur l'objet) — efficace pour la plupart des corps étrangers inertes non végétaux, contre-indiquée en cas de perforation tympanique connue/suspectée ou de corps étranger végétal (gonflement à l'eau) ; <strong>extraction instrumentale directe</strong> (micro-crochet, pince alligator) sous bon éclairage et immobilisation stricte de la tête, réservée à un opérateur entraîné et à un objet bien visualisé et accessible ; <strong>insecte vivant</strong> — <strong>noyer l'insecte avant toute tentative d'extraction</strong> (lidocaïne visqueuse 2% ou huile minérale instillée dans le conduit) pour éviter les mouvements qui aggravent les lésions du conduit/tympan, puis irrigation ou extraction.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span><strong>Pile bouton (bouton de montre/pile plate) dans le conduit auditif ou la fosse nasale</strong> : extraction en urgence absolue, sans délai — le risque de nécrose tissulaire par brûlure électrochimique et de perforation septale/tympanique évolue en quelques heures. Avis ORL immédiat si l'extraction en 1ère intention échoue ; ne jamais tenter d'irrigation sur une pile bouton.</div></div>
+    <p style="font-size:13.5px; margin-bottom:8px; font-weight:600; color:var(--accent2); margin-top:14px;">Corps étranger nasal</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique de 1ère intention chez le jeune enfant coopérant peu — méthode de la « pression positive » (« bisou du parent ») :</strong> l'enfant est installé sur les genoux d'un parent, en décubitus ou assis ; le parent occlut la narine <strong>non</strong> concernée avec un doigt, place sa bouche en étanchéité complète sur la bouche de l'enfant, et souffle un puff d'air bref et ferme — la surpression ainsi générée expulse fréquemment l'objet par la narine libre. Alternative si le parent ne peut réaliser le geste : source d'oxygène/air médical à débit modéré appliquée dans la narine controlatérale via une tubulure adaptée. Efficace surtout pour les objets lisses, non organiques, situés dans la partie antérieure de la fosse nasale — taux de succès rapporté de l'ordre de 50-60%, à limiter à 2 tentatives avant de passer à l'extraction instrumentale.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Extraction instrumentale :</strong> sous bon éclairage (frontal ou otoscope), immobilisation rigoureuse de la tête (aide/parent) — micro-crochet passé au-delà de l'objet puis ramené vers l'avant (à privilégier pour un objet rond/lisse, qu'une pince risquerait de repousser plus loin), pince alligator pour un objet allongé/saisissable, cathéter à ballonnet (sonde de Foley fine) introduit au-delà de l'objet puis gonflé et retiré doucement en traction, en alternative.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span><strong>Pile bouton ou aimant(s) dans la fosse nasale : extraction en urgence absolue</strong> — même risque de nécrose tissulaire rapide qu'au niveau auriculaire ; en cas de 2 aimants ou plus (ou aimant + objet métallique) de part et d'autre de la cloison, risque de nécrose septale par compression, avis ORL immédiat systématique.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne pas multiplier les tentatives d'extraction instrumentale chez un enfant peu coopérant — chaque tentative infructueuse majore l'œdème local et le risque de refoulement postérieur de l'objet vers le pharynx (risque d'inhalation). Privilégier un avis ORL/une sédation adaptée après 2 tentatives infructueuses plutôt que de s'obstiner.</div></div>
+  </div>
+
+  <div class="card" id="geste-reduction-nez">
+    <h3>👃 Réduction de fracture des os propres du nez</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> fracture des os propres du nez avec déviation/déformation cliniquement visible (asymétrie de l'arête nasale, déviation de plus de la moitié de la largeur de la pyramide nasale) ou obstruction nasale fonctionnelle. Une fracture non déplacée ou sans retentissement esthétique/fonctionnel ne nécessite pas de réduction.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>⚠️ Geste préalable indispensable avant toute décision de réduction — rechercher un hématome de cloison :</strong> examen systématique des fosses nasales (rhinoscopie antérieure simple) à la recherche d'une <strong>tuméfaction bleutée/violacée de la cloison</strong>, bilatérale ou unilatérale, obstruant partiellement la fosse nasale. Un hématome de cloison méconnu et non drainé expose à une <strong>nécrose septale par ischémie du cartilage</strong> (le cartilage septal est avasculaire, nourri par diffusion depuis le périchondre — sa compression par l'hématome le prive d'oxygène en quelques heures) pouvant évoluer vers une perforation septale ou une déformation en « nez en selle », complication définitive et évitable par un drainage simple et rapide.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Timing de la réduction :</strong> deux fenêtres classiquement décrites — <strong>réduction très précoce (dans les 3-6 premières heures)</strong> avant l'installation de l'œdème, si le patient consulte immédiatement ; à défaut, <strong>différer la réduction de 3 à 10 jours</strong> (jusqu'à 14 jours maximum chez l'adulte, délai plus court chez l'enfant — 3-7 jours — en raison d'une consolidation plus rapide) pour laisser résorber l'œdème qui gêne l'examen et la manipulation précise, tout en restant avant la fixation fibreuse des fragments qui complique la réduction au-delà de 2 semaines.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Technique (sous anesthésie locale/locorégionale, ± sédation légère) :</strong> anesthésie par mèches imbibées d'un vasoconstricteur (oxymétazoline/naphazoline) et d'un anesthésique local (lidocaïne 2-4%) laissées en place 10-15 minutes, complétée par une infiltration locale si nécessaire.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Mesurer la distance entre le rebord narinaire et l'os nasal (repère au doigt sur l'instrument de réduction) pour ne pas dépasser vers la base du crâne</li>
+      <li>Introduire l'instrument (davier de Walsham ou élévateur de Boies/spatule mousse) dans la fosse nasale du côté déplacé, jusqu'au niveau de la fracture</li>
+      <li>Appliquer une pression dirigée vers l'extérieur sur le fragment enfoncé, en contre-appui externe avec l'autre main sur l'arête nasale controlatérale</li>
+      <li>Si déviation bilatérale : réduction séquentielle de chaque côté, en recherchant la symétrie de l'arête nasale</li>
+      <li>Contrôle visuel et palpatoire de la symétrie obtenue, contention externe (attelle thermoformable ou plâtrée) et ± méchage antérieur de soutien selon la stabilité obtenue</li>
+    </ol>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Un hématome de cloison nasale doit être <strong>drainé en urgence</strong> dès son diagnostic (incision et évacuation, ± méchage bilatéral de contre-appui) — ne jamais attendre le délai habituel de réduction osseuse pour traiter cette complication à part, sous peine de nécrose septale irréversible en quelques heures à quelques jours.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne pas se limiter à l'examen externe du nez — l'absence de déformation visible de l'arête nasale n'élimine pas un hématome de cloison sous-jacent, qui doit être recherché systématiquement par un examen endonasal devant tout traumatisme nasal, même apparemment mineur.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le geste de réduction simple (davier/élévateur, mèches vasoconstrictrices) est réalisable à la plupart des niveaux de soins accueillant des urgences ORL/traumatologiques. En cas de fracture complexe, de déviation septale majeure associée, ou d'échec de réduction fermée, un avis ORL/orientation vers un centre équipé pour une prise en charge secondaire (septoplastie à distance) doit être organisé, sans que cela ne retarde le traitement immédiat d'un hématome de cloison le cas échéant.</p>
+  </div>
+
+  <div class="card" id="geste-cricothyroidotomie">
+    <h3>🫁 Cricothyroïdotomie (technique scalpel-bougie)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication unique : situation « ne peut pas intuber, ne peut pas oxygéner » (CICO)</strong> — échec de la ventilation au masque, échec de l'intubation, échec du masque laryngé/dispositif supraglottique. Geste de <strong>dernier recours</strong>, après échec confirmé de toutes les alternatives moins invasives, jamais un geste de première intention.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel (technique privilégiée « scalpel-doigt-bougie ») :</strong> bistouri à lame large (n°10 ou 20), bougie d'intubation à extrémité coudée, sonde d'intubation à ballonnet de petit calibre (6-6,5 mm chez l'adulte) — matériel simple, déjà présent sur tout chariot d'intubation, à privilégier par rapport aux kits de cricothyroïdotomie à l'aiguille/Seldinger dont le taux d'échec est nettement plus élevé en situation réelle de crise.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Repère :</strong> membrane cricothyroïdienne — dépression palpable entre le bord inférieur du cartilage thyroïde et le bord supérieur du cartilage cricoïde, sur la ligne médiane du cou.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Identifier la membrane cricothyroïdienne par palpation (« laryngeal handshake » : repérer l'ensemble cartilage thyroïde/membrane/cricoïde avec les doigts), tête en légère extension si possible</li>
+      <li>Incision cutanée horizontale franche d'environ 2-3 cm en regard de la membrane</li>
+      <li>Incision horizontale de la membrane cricothyroïdienne elle-même avec la pointe du scalpel, en pénétrant dans la trachée</li>
+      <li>Faire pivoter le manche du scalpel de 90° (ou introduire le doigt) pour maintenir l'orifice ouvert et confirmer la position trachéale</li>
+      <li>Glisser la bougie coudée le long de la lame/du doigt, à travers l'orifice, jusqu'à sentir la butée trachéale caractéristique (ressaut à 10-15 cm)</li>
+      <li>Enfiler la sonde d'intubation sur la bougie et la faire progresser dans la trachée en anticipant une résistance au passage de l'orifice</li>
+      <li>Retirer la bougie, gonfler le ballonnet, confirmer la position (capnographie si disponible, auscultation, soulèvement thoracique), fixer solidement la sonde</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Éviter la cricothyroïdotomie à l'aiguille/jet-ventilation en première intention chez l'adulte : taux d'échec très élevé en situation de crise réelle (audit NAP4 : environ 60% d'échec) contre un taux de succès nettement supérieur avec la technique chirurgicale scalpel-bougie. Réserver la voie à l'aiguille aux situations où l'anatomie ne permet vraiment pas d'aborder la membrane au scalpel.</div></div>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais retarder ce geste par une recherche prolongée d'un matériel spécifique — le kit minimal (bistouri + bougie + sonde) doit être immédiatement accessible sur tout site pratiquant l'intubation. Chaque minute perdue en situation de CICO vraie aggrave directement le pronostic neurologique.</div></div>
+  </div>`;
+}
+renderers.gestes = renderGestes;
+
+function toggleGestesToc(){
+  const toc=document.getElementById('gestes-toc');
+  if(toc) toc.classList.toggle('collapsed');
+}
+
+function init_gestes(){
+  const content = document.getElementById('content');
+  const toc = document.getElementById('gestes-toc');
+  if(!content || !toc) return;
+  content.querySelectorAll('.card[id^="geste-"]').forEach(card=>{
+    if(card.querySelector('.back-to-toc')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'back-to-toc';
+    btn.innerHTML = '↑ Retour au sommaire';
+    btn.onclick = ()=>{
+      toc.classList.remove('collapsed');
+      toc.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    card.appendChild(btn);
+  });
+}
+
+/* Calculateur de doses intégré — Anesthésiques locaux : dose maximale et volumes selon concentrations usuelles */
+function calcDoseAL(){
+  const poidsInput = document.getElementById('al_poids');
+  const produitSel = document.getElementById('al_produit');
+  const adrSel = document.getElementById('al_adrenaline');
+  const resultEl = document.getElementById('al_result');
+  const noteEl = document.getElementById('al_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+  const produit = produitSel.value;
+  const avecAdr = adrSel.value === 'avec';
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:200, label:'Poids saisi', unit:'kg'}]);
+
+  let mgParKg, doseAbsMax, nom, concentrations;
+  if(produit === 'lido'){
+    nom = 'Lidocaïne';
+    mgParKg = avecAdr ? 7 : 4.5;
+    doseAbsMax = avecAdr ? 500 : 300;
+    concentrations = [{label:'1% (10 mg/mL)', mgPerMl:10}, {label:'2% (20 mg/mL)', mgPerMl:20}];
+  } else {
+    nom = 'Bupivacaïne';
+    mgParKg = avecAdr ? 2.5 : 2;
+    doseAbsMax = avecAdr ? 175 : 150;
+    concentrations = [{label:'0,25% (2,5 mg/mL)', mgPerMl:2.5}, {label:'0,5% (5 mg/mL)', mgPerMl:5}];
+  }
+
+  const doseCalc = Math.min(poids*mgParKg, doseAbsMax);
+  const rows = concentrations.map(c => `<tr><td>${c.label}</td><td><strong>${(doseCalc/c.mgPerMl).toFixed(1)} mL</strong> maximum</td></tr>`).join('');
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong> — ${nom} ${avecAdr?'avec':'sans'} adrénaline (${mgParKg} mg/kg, plafond absolu ${doseAbsMax} mg)`;
+
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Dose maximale totale</th><th>${doseCalc.toFixed(0)} mg</th></tr>` +
+    rows +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative (valeurs usuellement enseignées) — vérifier systématiquement avant administration. La dose totale cumulée de tous les sites d'injection ne doit jamais dépasser ce plafond. En cas de doute ou de terrain à risque (insuffisance hépatique, cardiaque, sujet âgé/dénutri), réduire la dose et privilégier la borne basse.</p>`;
+}
 
 /* ===================== MODULE BILAN & SURVEILLANCE ===================== */
 function renderSurveillance(){
@@ -9063,6 +9778,7 @@ const ABBR_DATA = [
   ["FR","Fréquence respiratoire"],
   ["FV","Fibrillation ventriculaire"],
   ["G5% / G10% / G30% / G50%","Soluté glucosé à 5%, 10%, 30% ou 50%"],
+  ["G6PD","Glucose-6-phosphate déshydrogénase — enzyme dont le déficit favorise l'hémolyse et l'ictère néonatal"],
   ["GCS","Glasgow Coma Scale — score de Glasgow"],
   ["GDS","Gaz du sang"],
   ["GEU","Grossesse extra-utérine"],
@@ -9083,6 +9799,7 @@ const ABBR_DATA = [
   ["IPP","Inhibiteur de la pompe à protons"],
   ["IRA","Insuffisance rénale aiguë"],
   ["IRC","Insuffisance rénale chronique"],
+  ["ISPAD","International Society for Pediatric and Adolescent Diabetes"],
   ["ISR","Induction en séquence rapide (intubation)"],
   ["IV","Intraveineux / Intraveineuse"],
   ["IVL","Intraveineuse lente"],
@@ -9194,6 +9911,7 @@ const ABBR_DATA = [
   ["ESVS","European Society for Vascular Surgery"],
   ["ETO","Échocardiographie transœsophagienne"],
   ["EVA","Échelle visuelle analogique (évaluation de la douleur)"],
+  ["EVENDOL","ÉValuation ENfant DOuLeur — échelle comportementale d'hétéro-évaluation de la douleur de l'enfant de 0 à 7 ans, utilisée aux urgences pédiatriques"],
   ["F11","Protocole d'insulinothérapie standardisé (référence locale, acidocétose diabétique de l'enfant)"],
   ["FAST","Focused Assessment with Sonography in Trauma"],
   ["FEV1","Forced Expiratory Volume in 1 second — VEMS (volume expiratoire maximal par seconde)"],
@@ -9291,6 +10009,7 @@ const ABBR_DATA = [
   ["OD","Oreillette Droite"],
   ["PCIME","Prise en Charge Intégrée des Maladies de l'Enfant (OMS)"],
   ["PIT","Poids Idéal Théorique"],
+  ["PIDS","Pediatric Infectious Diseases Society"],
   ["PNA","Pyélonéphrite Aiguë"],
   ["RASS","Richmond Agitation-Sedation Scale — échelle de sédation en réanimation"],
   ["RCOG","Royal College of Obstetricians and Gynaecologists"],
@@ -9353,6 +10072,7 @@ const ABBR_DATA = [
   ["EVAR","Endovascular Aneurysm Repair — réparation endovasculaire d'anévrisme"],
   ["EZ-IO","Dispositif d'accès intra-osseux automatique (nom commercial)"],
   ["FAST HUG","Mnémonique de check-list quotidienne en réanimation : Feeding, Analgesia, Sedation, Thromboprophylaxis, Head-of-bed elevated, stress Ulcer prevention, Glycemic control"],
+  ["FLACC","Face, Legs, Activity, Cry, Consolability — échelle comportementale d'hétéro-évaluation de la douleur de l'enfant de 2 mois à 7 ans"],
   ["FEVG","Fraction d'éjection du ventricule gauche"],
   ["G-CSF","Granulocyte Colony-Stimulating Factor — facteur de croissance des granulocytes"],
   ["GB","Globules blancs"],
@@ -9476,6 +10196,21 @@ const ABBR_DATA = [
   ["PAC","Pneumopathie/Pneumonie Aiguë Communautaire"],
   ["SHR","Syndrome Hépato-Rénal"],
   ["VEGF","Vascular Endothelial Growth Factor — facteur de croissance de l'endothélium vasculaire"]
+]).concat([
+  ["ABCD2","Score clinique de risque de récidive d'AVC après un AIT : Age, Blood pressure, Clinical features, Duration of symptoms, Diabetes"],
+  ["APLS","Advanced Paediatric Life Support — programme britannique de formation à la réanimation pédiatrique avancée (équivalent du PALS américain)"],
+  ["PALS","Pediatric Advanced Life Support — programme américain de formation à la réanimation pédiatrique avancée (équivalent de l'APLS britannique)"],
+  ["BOARD","Schéma thérapeutique de la cardiomyopathie du péripartum : Bromocriptine, Oral heart-failure therapy, Anticoagulation, vasoRelaxing therapy, Diuretics"],
+  ["CYP2D6","Cytochrome P450 2D6 — enzyme hépatique du métabolisme de certains médicaments (ex. codéine, tramadol) ; les métaboliseurs ultra-rapides sont à risque de toxicité"],
+  ["DKA","Diabetic Ketoacidosis — équivalent anglais de l'acidocétose diabétique (ACD)"],
+  ["ERA","European Renal Association — société savante européenne de néphrologie"],
+  ["ERS","European Respiratory Society"],
+  ["ESE","European Society of Endocrinology"],
+  ["FDA","Food and Drug Administration — agence américaine du médicament"],
+  ["HES","Hydroxyéthylamidon — soluté de remplissage macromoléculaire, déconseillé dans de nombreuses indications (ex. sepsis, SHO)"],
+  ["IMC","Indice de Masse Corporelle (poids en kg / taille² en m) — équivalent français du BMI"],
+  ["IMCI","Integrated Management of Childhood Illness — équivalent anglais de la PCIME"],
+  ["RCS","Retour à une Circulation Spontanée — équivalent français du ROSC"]
 ]).sort((a,b)=>a[0].localeCompare(b[0],'fr',{sensitivity:'base'}));
 
 function renderAbreviations(){
