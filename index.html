@@ -159,6 +159,14 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
   display:block; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
   font-size:11px; color:var(--grave); margin-bottom:2px;
 }
+.proto-diagram{
+  margin:8px 0 16px; padding:12px 8px 8px; border:1px solid var(--border);
+  border-radius:10px; background:var(--panel2);
+}
+.proto-diagram .pd-label{
+  font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);
+  padding:0 8px 6px; font-weight:700;
+}
 .safety-alert.sa-piege .sa-label::before{content:"⚠️ PIÈGE FRÉQUENT — ";}
 .safety-alert.sa-interdit .sa-label::before{content:"🚫 NE JAMAIS FAIRE — ";}
 .safety-alert.sa-critique .sa-label::before{content:"⏱️ GESTE CRITIQUE — ";}
@@ -197,6 +205,16 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
 .hidden{display:none !important;}
 #overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:45;}
 
+/* ——— Bouton d'impression par résultat de calculateur ——— */
+.print-btn-wrap{display:flex; justify-content:flex-end; margin:-4px -6px 8px 0;}
+.print-result-btn{
+  background:none; border:1px solid var(--border); color:var(--muted);
+  padding:5px 10px; border-radius:7px; font-size:11.5px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:5px; transition:background .15s, color .15s, border-color .15s;
+}
+.print-result-btn:hover{background:var(--panel); color:var(--accent); border-color:var(--accent);}
+@media print{ .print-btn-wrap{display:none !important;} }
+
 @media (max-width:860px){
   #sidebar{position:fixed; left:0; top:0; height:100%; transform:translateX(-100%);}
   #sidebar.open{transform:translateX(0);}
@@ -221,6 +239,15 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
   color:var(--muted); padding:2px 4px; vertical-align:middle;
 }
 .fav-star.active{color:var(--warn);}
+
+/* Bouton export PDF par protocole */
+.pdf-export-btn{
+  background:none; border:1px solid var(--border); color:var(--muted);
+  padding:4px 9px; border-radius:7px; font-size:11.5px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:4px; white-space:nowrap;
+  flex-shrink:0; transition:background .15s, color .15s, border-color .15s;
+}
+.pdf-export-btn:hover{background:var(--panel2); color:var(--accent); border-color:var(--accent);}
 .card h3{display:flex; align-items:center; gap:8px; justify-content:space-between;}
 .card h3 .h3-label{flex:1;}
 #favoris-empty{color:var(--muted); font-size:13.5px; padding:10px 0;}
@@ -228,7 +255,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
 
 /* Print */
 @media print{
-  #sidebar, #topbar, #overlay, #theme-toggle, .fav-star, .toc, #search-box{display:none !important;}
+  #sidebar, #topbar, #overlay, #theme-toggle, .fav-star, .pdf-export-btn, .toc, #search-box{display:none !important;}
   #app{display:block;}
   #main{width:100%;}
   body{background:#fff; color:#000; font-size:12px;}
@@ -378,6 +405,21 @@ function injectFavStars(container, moduleKey){
     h3.innerHTML = '';
     h3.appendChild(label);
     h3.appendChild(star);
+  });
+}
+/* ——— Bouton d'export PDF par protocole ——— */
+function injectPdfExportButtons(container, moduleKey){
+  if(moduleKey !== 'protocoles') return;
+  container.querySelectorAll('.card').forEach(card=>{
+    const h3 = card.querySelector('h3');
+    if(!h3 || !card.id || !card.id.startsWith('proto-') || h3.querySelector('.pdf-export-btn')) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'pdf-export-btn';
+    btn.innerHTML = '📄 PDF';
+    btn.setAttribute('aria-label', 'Exporter ce protocole en PDF');
+    btn.onclick = (e)=>{ e.stopPropagation(); exportProtocolPDF(card.id); };
+    h3.appendChild(btn);
   });
 }
 function renderFavoris(){
@@ -790,6 +832,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-embolie-pulmonaire').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Embolie pulmonaire</a></li>
         <li><a onclick="document.getElementById('proto-ischemie-membre').scrollIntoView({behavior:'smooth',block:'start'})">🦵 Ischémie aiguë de membre</a></li>
         <li><a onclick="document.getElementById('proto-tvp').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Thrombose veineuse profonde (TVP)</a></li>
+        <li><a onclick="document.getElementById('proto-relais-avk-hbpm').scrollIntoView({behavior:'smooth',block:'start'})">🔄 Relais HBPM (Lovenox®) ↔ AVK</a></li>
         <li><a onclick="document.getElementById('proto-aaa-rompu').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Anévrysme de l'aorte abdominale rompu</a></li>
         <li><a onclick="document.getElementById('proto-torsades-pointes').scrollIntoView({behavior:'smooth',block:'start'})">⚡ Torsades de pointes / QT long</a></li>
         <li><a onclick="document.getElementById('proto-fa-rapide').scrollIntoView({behavior:'smooth',block:'start'})">⚡ Fibrillation atriale rapide (stable)</a></li>
@@ -1016,6 +1059,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-acr-adulte">
     <h3>💔 Arrêt cardio-respiratoire — Adulte (ERC 2025)</h3>
+    <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 507.0" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme arrêt cardio-respiratoire adulte</title><desc>Diagramme de décision ERC 2025 pour la prise en charge de l'arrêt cardio-respiratoire de l'adulte, du diagnostic à la reprise de circulation spontanée</desc><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="90.0" y="16.0" width="440.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--border)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Inconscient, ne respire pas normalement</text><text x="310.0" y="47.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Vérifier pouls ≤10 sec</text><line x1="310.0" y1="65.0" x2="310.0" y2="87.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="70.0" y="87.0" width="480.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent2)" stroke-width="1.5"/><text x="310.0" y="104.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >RCP 30 compressions / 2 insufflations</text><text x="310.0" y="118.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >100-120/min, 5-6 cm — brancher scope/DAE dès que possible</text><line x1="310.0" y1="136.0" x2="310.0" y2="158.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><text x="310.0" y="168.0" text-anchor="middle" font-size="12.5" fill="var(--accent2)">Analyse du rythme</text><path d="M 310.0 182.0 L 310.0 194.0 L 160.0 194.0 L 160.0 204.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 310.0 182.0 L 310.0 194.0 L 460.0 194.0 L 460.0 204.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="20.0" y="204.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="160.0" y="221.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">FV / TV sans pouls</text><text x="160.0" y="235.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Choquable</text><rect x="320.0" y="204.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="460.0" y="221.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">Asystolie / AESP</text><text x="460.0" y="235.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Non choquable</text><line x1="160.0" y1="253.0" x2="160.0" y2="269.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><line x1="460.0" y1="253.0" x2="460.0" y2="269.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="20.0" y="269.0" width="280.0" height="78.0" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="160.0" y="286.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Choc immédiat (150-200J biphasique)</text><text x="160.0" y="300.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >RCP 2 min</text><text x="160.0" y="315.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Adrénaline 1mg après 2e choc, puis q3-5min</text><text x="160.0" y="329.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Amiodarone 300mg après 3e choc</text><rect x="320.0" y="269.0" width="280.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="460.0" y="286.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Pas de choc</text><text x="460.0" y="300.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >RCP continue</text><text x="460.0" y="315.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Adrénaline 1mg dès que possible, puis q3-5min</text><path d="M 160.0 347.0 L 160.0 363.0 L 310.0 363.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 460.0 347.0 L 460.0 363.0 L 310.0 363.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><line x1="310.0" y1="363.0" x2="310.0" y2="371.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="371.0" width="520.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent)" stroke-width="1.5"/><text x="310.0" y="388.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Rechercher et traiter les 4H / 4T</text><text x="310.0" y="402.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Hypoxie, hypovolémie, hypo/hyperK+, hypothermie — thrombose, tamponnade, toxiques, pneumothorax</text><line x1="310.0" y1="420.0" x2="310.0" y2="442.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="90.0" y="442.0" width="440.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--leger)" stroke-width="1.5"/><text x="310.0" y="459.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--leger)" font-weight="700">Reprise de circulation spontanée (ROSC)</text><text x="310.0" y="473.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >→ Soins post-arrêt cardiaque</text></svg></div>
     <p style="font-size:12.5px; color:var(--muted); margin-bottom:8px;">Pas de changement majeur par rapport à ERC 2021 — l'ERC 2025 renforce surtout l'importance d'une ventilation efficace associée aux compressions, de la défibrillation précoce (&lt;3 min si rythme choquable) et du bon positionnement des électrodes.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Sécurité</strong> → vérifier conscience → appeler à l'aide → libérer voies aériennes → évaluer respiration/pouls (≤10 sec)</li>
@@ -1032,7 +1076,7 @@ function renderProtocoles(){
       <div>🔹 <strong>Hypoxie</strong><br>🔹 <strong>Hypovolémie</strong><br>🔹 <strong>Hypo/Hyperkaliémie</strong> (+ métabolique)<br>🔹 <strong>Hypothermie</strong></div>
       <div>🔹 <strong>Thrombose</strong> (coronaire/pulmonaire)<br>🔹 <strong>Tamponnade</strong><br>🔹 <strong>Toxiques</strong><br>🔹 <strong>Pneumothorax</strong> compressif</div>
     </div>
-    <p style="margin-top:10px; font-size:13px; color:var(--muted);">Voie d'abord : IV ou intra-osseuse si échec. Capnographie si disponible pour confirmer position de sonde et qualité du MCE.</p>
+    <p style="margin-top:10px; font-size:13px; color:var(--muted);">Voie d'abord : IV ou <a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-voie-io')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">intra-osseuse</a> si échec. Capnographie si disponible pour confirmer position de sonde et qualité du MCE.</p>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne pas interrompre les compressions &gt;10 sec. Ne pas administrer de façon systématique calcium, bicarbonate de sodium ou corticoïdes pendant l'arrêt cardiaque (rappel ERC 2025) — réservés à une cause spécifique identifiée (hyperkaliémie, acidose sévère documentée, etc.).</div></div>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Adrénaline Aguettant® est disponible à tous les niveaux hospitaliers (LNMEIS) — molécule prioritaire en cas de ressources limitées. Le défibrillateur (DAE ou manuel) et la Cordarone® ne sont généralement disponibles qu'en CHU/CHRR ; en leur absence, la RCP de haute qualité et l'adrénaline restent les seuls leviers d'action et ne doivent jamais être interrompues en attendant un transfert.</p>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">➡️ Dès la reprise de circulation spontanée (ROSC), voir <a onclick="document.getElementById('proto-post-rosc').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Soins post-arrêt cardiaque</a>.</p>
@@ -1094,6 +1138,7 @@ function renderProtocoles(){
       <div class="result-box hidden" id="acrp_result"></div>
     </div>
 
+    <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 539.0" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme arrêt cardio-respiratoire pédiatrique</title><desc>Diagramme de décision ERC 2025 pour la prise en charge de l'arrêt cardio-respiratoire chez l'enfant</desc><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="90.0" y="16.0" width="440.0" height="34.5" rx="8" fill="var(--panel2)" stroke="var(--border)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Enfant inconscient, ne respire pas normalement</text><line x1="310.0" y1="50.5" x2="310.0" y2="70.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="70.0" y="70.5" width="480.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent2)" stroke-width="1.5"/><text x="310.0" y="87.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >5 insufflations initiales</text><text x="310.0" y="102.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >puis RCP 15 compressions / 2 insufflations (2 sauveteurs)</text><line x1="310.0" y1="119.5" x2="310.0" y2="139.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="139.5" width="520.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="310.0" y="156.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Compressions même si pouls présent</text><text x="310.0" y="171.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >si bradycardie &lt;60/min avec mauvaise perfusion malgré O2/ventilation</text><line x1="310.0" y1="188.5" x2="310.0" y2="208.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><text x="310.0" y="216.5" text-anchor="middle" font-size="12.5" fill="var(--accent2)">Analyse du rythme</text><path d="M 310.0 228.5 L 310.0 238.5 L 160.0 238.5 L 160.0 248.5" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 310.0 228.5 L 310.0 238.5 L 460.0 238.5 L 460.0 248.5" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="20.0" y="248.5" width="280.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="160.0" y="265.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">FV / TV sans pouls</text><text x="160.0" y="280.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Choc 4 J/kg (max 120-200J)</text><text x="160.0" y="294.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >reprise RCP immédiate, pause &lt;5 sec</text><rect x="320.0" y="248.5" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="460.0" y="265.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">Asystolie / AESP</text><text x="460.0" y="280.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Pas de choc, RCP continue</text><path d="M 160.0 312.0 L 160.0 328.0 L 310.0 328.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 460.0 297.5 L 460.0 328.0 L 310.0 328.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><line x1="310.0" y1="328.0" x2="310.0" y2="336.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="70.0" y="336.0" width="480.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent)" stroke-width="1.5"/><text x="310.0" y="353.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Adrénaline 10 µg/kg IV/IO (max 1mg)</text><text x="310.0" y="367.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >dès que possible, répétée toutes les 4 min</text><line x1="310.0" y1="385.0" x2="310.0" y2="405.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="70.0" y="405.0" width="480.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent)" stroke-width="1.5"/><text x="310.0" y="422.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Rechercher les 4H / 4T</text><text x="310.0" y="436.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >penser surtout hypoxie et hypovolémie chez l'enfant</text><line x1="310.0" y1="454.0" x2="310.0" y2="474.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="80.0" y="474.0" width="460.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--leger)" stroke-width="1.5"/><text x="310.0" y="491.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--leger)" font-weight="700">Retour à une circulation spontanée (RCS)</text><text x="310.0" y="505.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >titrer O2, traiter la cause, USI pédiatrique</text></svg></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>5 insufflations initiales avant de débuter les compressions (si arrêt respiratoire probable)</li>
       <li>Ratio <strong>15 compressions / 2 insufflations</strong> (2 sauveteurs qualifiés) — dépression 1/3 du diamètre thoracique ; changer l'opérateur des compressions au moins toutes les 2 min (surveiller la fatigue/dégradation de la qualité)</li>
@@ -1104,7 +1149,7 @@ function renderProtocoles(){
       <li>Rechercher les mêmes causes réversibles (4H/4T) — chez l'enfant, penser surtout hypoxie et hypovolémie</li>
       <li>Après RCS (retour à une circulation spontanée) : titrer l'oxygène pour éviter l'hyperoxie, traiter la cause, transfert en unité de soins intensifs pédiatriques dès que possible</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Adrénaline Aguettant®, matériel de ventilation pédiatrique (ballon auto-remplisseur avec masques de tailles adaptées) et accès intra-osseux sont à vérifier systématiquement en dotation de tout service accueillant des enfants, y compris en structure de base — l'accès IO reste souvent le geste le plus rapide en cas d'échec de la voie IV chez le petit enfant en arrêt. Le défibrillateur avec palettes/électrodes pédiatriques est généralement limité aux CHU/CHRR ; à défaut de mode pédiatrique dédié, utiliser des électrodes adultes espacées (antéro-postérieur) chez le nourrisson plutôt que de renoncer à la défibrillation si un rythme choquable est identifié.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Adrénaline Aguettant®, matériel de ventilation pédiatrique (ballon auto-remplisseur avec masques de tailles adaptées) et accès intra-osseux sont à vérifier systématiquement en dotation de tout service accueillant des enfants, y compris en structure de base — <a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-voie-io')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">l'accès IO</a> reste souvent le geste le plus rapide en cas d'échec de la voie IV chez le petit enfant en arrêt. Le défibrillateur avec palettes/électrodes pédiatriques est généralement limité aux CHU/CHRR ; à défaut de mode pédiatrique dédié, utiliser des électrodes adultes espacées (antéro-postérieur) chez le nourrisson plutôt que de renoncer à la défibrillation si un rythme choquable est identifié.</p>
   </div>
 
   <div class="card" id="proto-etats-choc">
@@ -1114,7 +1159,7 @@ function renderProtocoles(){
       <tr>
         <td class="grave">Hypovolémique</td>
         <td>Tachycardie, hypoTA, marbrures, TRC&gt;3s, pli cutané</td>
-        <td>2 VVP de gros calibre, remplissage cristalloïdes 500mL en bolus (réévaluer), contrôle de l'hémorragie si applicable, transfusion précoce si choc hémorragique</td>
+        <td><a onclick="document.querySelector('[data-mod=abords]').click(); setTimeout(()=>document.getElementById('abord-vvp')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">2 VVP de gros calibre</a>, remplissage cristalloïdes 500mL en bolus (réévaluer), contrôle de l'hémorragie si applicable, transfusion précoce si choc hémorragique</td>
       </tr>
       <tr>
         <td class="grave">Septique</td>
@@ -1144,6 +1189,8 @@ function renderProtocoles(){
     <h3>⚡ Tachycardie et Bradycardie instables (ERC 2025)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Algorithmes ERC/ILCOR pour les troubles du rythme aigus, en dehors de l'arrêt cardiaque. La conduite dépend avant tout de la présence de <strong>signes d'instabilité</strong>, pas uniquement de la fréquence cardiaque.</p>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">A. Tachycardie</p>
+    <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 325.0" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme tachycardie instable ERC 2025</title><desc>Diagramme de décision pour la tachycardie aiguë : évaluation de l'instabilité puis analyse du QRS chez le patient stable</desc><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="60.0" y="16.0" width="500.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--border)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Tachycardie — rechercher signes d'instabilité</text><text x="310.0" y="47.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >choc, syncope, ischémie myocardique, OAP</text><line x1="310.0" y1="65.0" x2="310.0" y2="85.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 310.0 85.0 L 310.0 95.0 L 155.0 95.0 L 155.0 105.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 310.0 85.0 L 310.0 95.0 L 465.0 95.0 L 465.0 105.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="15.0" y="105.0" width="280.0" height="78.0" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="155.0" y="122.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Instable</text><text x="155.0" y="136.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Cardioversion synchronisée</text><text x="155.0" y="151.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >jusqu'à 3 tentatives</text><text x="155.0" y="165.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >échec → Amiodarone 300mg IV</text><rect x="325.0" y="105.0" width="280.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--accent2)" stroke-width="1.5"/><text x="465.0" y="122.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent2)" font-weight="700">Stable</text><text x="465.0" y="136.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Analyser QRS (large/fin)</text><text x="465.0" y="151.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >et régularité du rythme</text><line x1="465.0" y1="183.0" x2="465.0" y2="199.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="20.0" y="199.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="160.0" y="216.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">QRS fin régulier</text><text x="160.0" y="230.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Vagales puis Adénosine 6→12→12mg</text><rect x="320.0" y="199.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="460.0" y="216.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">QRS fin irrégulier</text><text x="460.0" y="230.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >FA probable — contrôle de fréquence</text><rect x="20.0" y="260.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="160.0" y="277.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">QRS large régulier</text><text x="160.0" y="291.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >TV probable — Amiodarone 300mg/20-60min</text><rect x="320.0" y="260.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="460.0" y="277.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">QRS large irrégulier</text><text x="460.0" y="291.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Mg2+ 2g si torsade, éviter bloquants si WPW</text></svg></div>
+    
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Rechercher les signes d'instabilité</strong> (« signes défavorables ») : <strong>choc</strong> (marbrures, hypoTA, TRC allongé, confusion), <strong>syncope</strong>, <strong>ischémie myocardique</strong> (douleur thoracique, sus/sous-décalage ST), <strong>insuffisance cardiaque aiguë</strong> (OAP)</li>
       <li><strong>Si instable</strong> : <strong>cardioversion électrique synchronisée</strong> sans délai — jusqu'à 3 tentatives ; sédation/analgésie brève si le patient est conscient et le temps le permet ; si échec après 3 chocs : <strong>Amiodarone (Cordarone®) 300 mg IV en 10-20 min</strong>, puis nouvelle tentative de cardioversion, suivie d'une perfusion d'entretien de 900 mg sur 24h</li>
@@ -1152,12 +1199,14 @@ function renderProtocoles(){
           <li><em>QRS fin régulier</em> (TSV probable) : manœuvres vagales (Valsalva, massage carotidien après élimination d'un souffle) puis <strong>Adénosine</strong> 6 mg IV bolus rapide (rinçage immédiat), puis 12 mg, puis 12 mg si échec (sous scope, prévenir le patient d'une sensation transitoire désagréable)</li>
           <li><em>QRS fin irrégulier</em> (FA probable) : contrôle de fréquence — <strong>Bêtabloquant</strong> ou <strong>Diltiazem (Tildiem®)</strong> IV (éviter si insuffisance cardiaque sévère) ; anticoagulation à discuter selon le score CHA2DS2-VASc et la durée d'évolution (cardioversion à risque embolique si FA &gt;48h sans anticoagulation efficace ni exclusion d'un thrombus par échographie transœsophagienne)</li>
           <li><em>QRS large régulier</em> (TV probable jusqu'à preuve du contraire) : <strong>Amiodarone (Cordarone®) 300 mg IV en 20-60 min</strong>, avis cardiologique</li>
-          <li><em>QRS large irrégulier</em> : évoquer une FA sur voie accessoire (WPW — éviter adénosine/bêtabloquant/digoxine/vérapamil qui peuvent accélérer la conduction sur la voie accessoire) ou une TV polymorphe (torsade de pointes — <strong>Sulfate de magnésium 2g IV</strong> en 10 min, corriger une hypokaliémie associée)</li>
+          <li><em>QRS large irrégulier</em> : évoquer une FA sur voie accessoire (WPW — éviter adénosine/bêtabloquant/digoxine/vérapamil qui peuvent accélérer la conduction sur la voie accessoire) ou une TV polymorphe (<a onclick="document.getElementById('proto-torsades-pointes')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">torsade de pointes</a> — <strong>Sulfate de magnésium 2g IV</strong> en 10 min, corriger une hypokaliémie associée)</li>
         </ul>
       </li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Jamais de Vérapamil devant un QRS large non formellement identifié comme une TSV avec bloc de branche : s'il s'agit en réalité d'une TV, le Vérapamil peut précipiter un collapsus cardiovasculaire.</div></div>
     <p style="margin-top:14px; font-weight:600; color:var(--accent2);">B. Bradycardie</p>
+    <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 334.5" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme bradycardie instable ERC 2025</title><desc>Diagramme de décision pour la bradycardie aiguë : évaluation de l'instabilité, atropine puis mesures de seconde ligne</desc><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="50.0" y="16.0" width="520.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--border)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Bradycardie — rechercher signes d'instabilité</text><text x="310.0" y="47.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >et risque d'asystolie (BAV Mobitz II/III, pause &gt;3s)</text><line x1="310.0" y1="65.0" x2="310.0" y2="85.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="180.0" y="85.0" width="260.0" height="34.5" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="310.0" y="102.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">Instable ou risque d'asystolie ?</text><path d="M 310.0 119.5 L 310.0 129.5 L 155.0 129.5 L 155.0 139.5" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 310.0 119.5 L 310.0 129.5 L 465.0 129.5 L 465.0 139.5" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="325.0" y="139.5" width="280.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--leger)" stroke-width="1.5"/><text x="465.0" y="156.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--leger)" font-weight="700">Non</text><text x="465.0" y="171.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Surveillance scopée</text><text x="465.0" y="185.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >traiter la cause</text><rect x="15.0" y="139.5" width="280.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="155.0" y="156.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Oui</text><text x="155.0" y="171.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Atropine 500 µg IV</text><text x="155.0" y="185.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >répétée q3-5min, max 3mg</text><line x1="155.0" y1="203.0" x2="155.0" y2="219.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="35.0" y="219.0" width="260.0" height="34.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="165.0" y="236.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Réponse insuffisante à l'Atropine</text><line x1="155.0" y1="253.5" x2="155.0" y2="269.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="30.0" y="269.5" width="560.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="286.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Isoprénaline 5µg/min ou Adrénaline 2-10µg/min IVSE</text><text x="310.0" y="301.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >ou entraînement électrosystolique transcutané immédiat</text></svg></div>
+    
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Rechercher les mêmes signes d'instabilité</strong> que pour la tachycardie (choc, syncope, ischémie, insuffisance cardiaque), et évaluer le <strong>risque d'asystolie</strong> (BAV de haut degré type Mobitz II ou BAV III, pause sinusale &gt;3s, asystolie récente)</li>
       <li><strong>Si instable ou risque d'asystolie</strong> : <strong>Atropine (Atropine Aguettant®) 500 µg IV</strong>, à répéter toutes les 3-5 min jusqu'à un maximum de <strong>3 mg</strong></li>
@@ -1170,6 +1219,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-anaphylaxie">
     <h3>🐝 Choc anaphylactique / Anaphylaxie</h3>
+    <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 453.0" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme choc anaphylactique</title><desc>Diagramme de décision WAO/EAACI 2020 pour la reconnaissance et le traitement du choc anaphylactique, du diagnostic à la prise en charge réfractaire</desc><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="40.0" y="16.0" width="540.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--border)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Atteinte cutanéo-muqueuse + signe respiratoire,</text><text x="310.0" y="47.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >cardiovasculaire ou digestif après exposition à un allergène</text><line x1="310.0" y1="65.0" x2="310.0" y2="85.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="85.0" width="520.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="102.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Adrénaline IM immédiate — cuisse</text><text x="310.0" y="116.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >0,5 mg adulte (0,01 mg/kg enfant, max 0,3mg)</text><text x="310.0" y="131.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >sans délai, ne pas retarder pour retirer l'allergène</text><line x1="310.0" y1="148.5" x2="310.0" y2="168.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="168.5" width="520.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent2)" stroke-width="1.5"/><text x="310.0" y="185.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Position choc + O2 haut débit + remplissage</text><text x="310.0" y="200.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Trendelenburg si hypoTA — jamais assis brutalement</text><line x1="310.0" y1="217.5" x2="310.0" y2="237.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="180.0" y="237.5" width="260.0" height="34.5" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="310.0" y="254.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">Amélioration après 5-15 min ?</text><path d="M 310.0 272.0 L 310.0 282.0 L 155.0 282.0 L 155.0 292.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 310.0 272.0 L 310.0 282.0 L 465.0 282.0 L 465.0 292.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="15.0" y="292.0" width="280.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="155.0" y="309.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">Non</text><text x="155.0" y="323.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Répéter Adrénaline IM</text><text x="155.0" y="338.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >toutes les 5-15 min</text><rect x="325.0" y="292.0" width="280.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--leger)" stroke-width="1.5"/><text x="465.0" y="309.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--leger)" font-weight="700">Oui</text><text x="465.0" y="323.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Surveillance biphasique</text><text x="465.0" y="338.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >4-24h selon sévérité</text><line x1="155.0" y1="355.5" x2="155.0" y2="373.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="373.5" width="520.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="390.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Réfractaire (≥2-3 doses IM) :</text><text x="310.0" y="405.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Adrénaline IV titrée (10 µg/mL, 5-15 µg/min)</text><text x="310.0" y="419.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >+ Glucagon 1-2mg IV si bêtabloquant en cause</text></svg></div>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations WAO (World Allergy Organization) 2020 et EAACI. <strong>Diagnostic</strong> : début brutal (minutes à quelques heures) après exposition à un allergène probable, associant atteinte cutanéo-muqueuse (urticaire, angio-œdème, prurit) ET au moins un signe respiratoire (bronchospasme, stridor, dyspnée), cardiovasculaire (hypoTA, collapsus, syncope) ou digestif (vomissements, douleurs abdominales) — <strong>l'atteinte cutanée peut être absente dans 10-20% des cas</strong>, ne pas exclure le diagnostic sur ce seul critère. Causes fréquentes : piqûres d'hyménoptères, aliments (arachide, fruits de mer), médicaments (bêta-lactamines, AINS, curares), latex.</p>
 
     <div class="row2" style="align-items:end;">
@@ -1228,7 +1278,7 @@ function renderProtocoles(){
       <li><strong>Signes évocateurs</strong> : triade de Beck (hypotension, turgescence jugulaire, assourdissement des bruits du cœur — inconstante), tachycardie, <strong>pouls paradoxal</strong> (chute de la PAS &gt;10 mmHg à l'inspiration), polypnée, signes de choc obstructif sans râles pulmonaires</li>
       <li><strong>Échographie cardiaque au lit (POCUS)</strong> dès que possible pour confirmer le diagnostic : épanchement péricardique, collapsus diastolique du ventricule/oreillette droite, variation respiratoire des flux mitral/tricuspide, veine cave inférieure dilatée sans variation respiratoire — ne doit pas retarder le geste si instabilité extrême avec forte suspicion clinique</li>
       <li><strong>Remplissage vasculaire prudent</strong> (cristalloïdes, 250-500 mL) en attendant le geste — maintient la précharge et peut transitoirement améliorer l'hémodynamique, sans traiter la cause</li>
-      <li><strong>Péricardiocentèse en urgence</strong> (geste salvateur) : voie sous-xiphoïdienne, aiguille dirigée à 45° vers l'épaule gauche, sous guidage échographique si disponible (réduit le risque de ponction myocardique/coronaire) — l'évacuation même de petits volumes (50-100 mL) peut restaurer significativement l'hémodynamique en cas de tamponnade aiguë</li>
+      <li><a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-pericardiocentese')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;"><strong>Péricardiocentèse en urgence</strong></a> (geste salvateur) : voie sous-xiphoïdienne, aiguille dirigée à 45° vers l'épaule gauche, sous guidage échographique si disponible (réduit le risque de ponction myocardique/coronaire) — l'évacuation même de petits volumes (50-100 mL) peut restaurer significativement l'hémodynamique en cas de tamponnade aiguë</li>
       <li>Si péricardiocentèse impossible/inefficace et arrêt cardiaque imminent : <strong>péricardiotomie chirurgicale (fenêtre péricardique)</strong> ou thoracotomie de sauvetage selon le contexte (notamment tamponnade traumatique) et le plateau technique disponible</li>
       <li><strong>Éviter la ventilation mécanique en pression positive avant le drainage</strong> si possible — l'augmentation de la pression intrathoracique aggrave la compression des cavités droites et peut précipiter le collapsus ; si l'intubation est indispensable, réaliser le drainage péricardique en priorité si réalisable rapidement</li>
       <li>Laisser un drain péricardique en place après évacuation initiale (prévention de la récidive), surveillance échographique répétée</li>
@@ -1373,6 +1423,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-avc">
     <h3>🧠 AVC — Accident vasculaire cérébral (ischémique / hémorragique)</h3>
+    <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 424.0" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme accident vasculaire cérébral</title><desc>Diagramme de décision pour la prise en charge de l'AVC : reconnaissance FAST, imagerie, puis orientation selon le type d'AVC</desc><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="60.0" y="16.0" width="500.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--border)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Déficit neurologique focal brutal (FAST)</text><text x="310.0" y="47.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Time is brain — noter l'heure exacte de début</text><line x1="310.0" y1="65.0" x2="310.0" y2="85.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="85.0" width="520.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent2)" stroke-width="1.5"/><text x="310.0" y="102.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >ABCDE + glycémie capillaire + O2 si SpO2&lt;94%</text><text x="310.0" y="116.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >TDM cérébrale sans injection en urgence</text><line x1="310.0" y1="134.0" x2="310.0" y2="154.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><text x="310.0" y="162.0" text-anchor="middle" font-size="12.5" fill="var(--accent2)">Résultat de la TDM cérébrale</text><path d="M 310.0 176.0 L 310.0 186.0 L 155.0 186.0 L 155.0 196.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 310.0 176.0 L 310.0 186.0 L 465.0 186.0 L 465.0 196.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="15.0" y="196.0" width="280.0" height="78.0" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="155.0" y="213.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Hémorragique</text><text x="155.0" y="227.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Contrôle TA strict (PAS≈140)</text><text x="155.0" y="242.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >correction anticoagulation</text><text x="155.0" y="256.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >avis neurochirurgical</text><rect x="325.0" y="196.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="465.0" y="213.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">Ischémique</text><text x="465.0" y="227.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Jamais d'antiagrégant avant TDM</text><line x1="465.0" y1="274.0" x2="465.0" y2="292.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><text x="465.0" y="300.0" text-anchor="middle" font-size="11" fill="var(--muted)">&lt;4h30 sans contre-indication ?</text><path d="M 465.0 310.0 L 465.0 320.0 L 210.0 320.0 L 210.0 330.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><path d="M 465.0 310.0 L 465.0 320.0 L 505.0 320.0 L 505.0 330.0" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="20.0" y="330.0" width="380.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--leger)" stroke-width="1.5"/><text x="210.0" y="347.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--leger)" font-weight="700">Oui : thrombolyse IV</text><text x="210.0" y="361.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Altéplase 0,9mg/kg ou Ténectéplase 0,25mg/kg</text><text x="210.0" y="376.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >± thrombectomie si occlusion gros vaisseau</text><rect x="420.0" y="330.0" width="170.0" height="78.0" rx="8" fill="var(--panel2)" stroke="var(--border)" stroke-width="1.5"/><text x="505.0" y="347.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--border)" font-weight="700">Non éligible</text><text x="505.0" y="361.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Mesures générales</text><text x="505.0" y="376.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >TA permissive</text><text x="505.0" y="390.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >transfert</text></svg></div>
     <p style="font-size:13.5px; margin-bottom:8px;">Déficit neurologique focal brutal (FAST : Face/Arm/Speech/Time). Chaque minute compte — "Time is brain". TDM cérébrale en urgence pour différencier ischémique/hémorragique avant tout traitement spécifique.</p>
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
@@ -1400,6 +1451,21 @@ function renderProtocoles(){
       <li>Position tête à 30°, contrôle glycémique strict, prévention des complications (fausses routes — évaluation de la déglutition avant toute alimentation, thromboprophylaxie)</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Jamais d'aspirine/anticoagulant « au cas où » avant la TDM cérébrale : un AVC hémorragique traité comme un AVC ischémique aggrave le saignement et peut être fatal.</div></div>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Anticoagulation après un AVC ischémique cardioembolique (FA) — ne pas confondre avec le relais MTEV/FA standard</p>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Section révisée le 19/07/2026 — sources : règle du « 1-3-6-12 jours » (EHRA-ESC practical guide 2013/2018, avis d'expert) ; méta-analyse sur données individuelles de 4 essais randomisés TIMING/ELAN/OPTIMAS/START — CATALYST collaboration, The Lancet 2025</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Ce protocole diffère fondamentalement de celui du <a onclick="document.getElementById('proto-relais-avk-hbpm')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">relais HBPM ↔ AVK</a> utilisé pour la MTEV/FA isolée.</strong> En post-AVC ischémique, l'héparine à dose curative dans les 24h est un facteur de risque de transformation hémorragique (et une contre-indication à la thrombolyse) — <strong>pas de chevauchement héparinique à dose curative</strong>, quel que soit le schéma retenu ci-dessous. Seule une HBPM à <strong>dose préventive</strong> (thromboprophylaxie de décubitus) est utilisée pendant la fenêtre d'attente.</p>
+    <p style="font-size:13.5px; margin-bottom:4px;">🕰️ <strong>Repère historique — règle du « 1-3-6-12 jours » (EHRA-ESC, avis d'expert, non issue d'essais randomisés) :</strong> le délai avant introduction de l'anticoagulant oral est gradué selon la sévérité clinique/l'étendue de l'infarctus, sur l'hypothèse ancienne (Cerebral Embolism Study Group, années 1980) qu'un infarctus étendu expose davantage à la transformation hémorragique sous anticoagulant : <strong>AIT/AVC mineur → J1 ; AVC modéré → J3 ; AVC plus sévère → J6 ; large infarctus/transformation hémorragique → J12</strong> ou plus. Cette règle reste la référence par défaut, en particulier quand la surveillance neurologique/imagerie de contrôle rapprochée n'est pas garantie.</p>
+    <p style="font-size:13.5px; margin-bottom:4px;">🔬 <strong>Preuve de niveau essai randomisé — CATALYST 2025 :</strong> méta-analyse sur données individuelles regroupant 4 ECR (TIMING, ELAN, OPTIMAS, START), comparant l'introduction d'un <strong>AOD précoce (≤J4)</strong> versus <strong>tardive (≥J5)</strong>. Résultat : l'initiation précoce réduit le critère composite (récidive d'AVC ischémique, hémorragie intracrânienne symptomatique ou AVC non classé) à 30 jours, <strong>sans augmentation de l'hémorragie intracrânienne symptomatique</strong> (taux bas et comparables dans les deux groupes). Ce résultat remet en question, pour les <strong>AVC légers à modérés</strong>, l'intérêt de graduer le délai selon la sévérité — une introduction à J4 ou avant peut être préférable à une attente prolongée.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">⚠️ <strong>Limite à connaître avant d'appliquer CATALYST à un patient donné :</strong> les AVC sévères et les transformations hémorragiques étaient peu représentés dans les essais inclus — pour ces situations, la règle du 1-3-6-12 jours (délai plus prudent, réévaluation TDM/IRM avant introduction) reste l'attitude la plus sûre en pratique, la décision devant être individualisée. En dehors de ces cas à haut risque, une fois le délai retenu atteint, l'anticoagulant oral est démarré <strong>directement, sans pont héparinique à dose curative</strong> — il n'y a pas d'urgence à atteindre un niveau d'anticoagulation efficace rapidement, contrairement à une EP ou une TVP proximale.</p>
+    <table style="margin-top:6px; margin-bottom:10px;">
+      <tr><th>Molécule</th><th>Posologie standard</th><th>Adaptation / réduction de dose</th></tr>
+      <tr><td><strong>Warfarine</strong> (Coumadine®)</td><td>Dose initiale <strong>5 mg/j</strong> (jusqu'à 10mg chez le sujet jeune sans comorbidité) puis ajustée à l'INR</td><td>Cible INR <strong>2,0–3,0</strong> ; débuter à 2-3mg/j si sujet âgé, dénutri, insuffisance hépatique</td></tr>
+      <tr><td><strong>Apixaban</strong> (Eliquis®)</td><td><strong>5 mg x2/j</strong></td><td>Réduire à <strong>2,5 mg x2/j</strong> si ≥2 critères parmi : âge ≥80 ans, poids ≤60kg, créatininémie ≥133 µmol/L (1,5 mg/dL)</td></tr>
+      <tr><td><strong>Rivaroxaban</strong> (Xarelto®)</td><td><strong>20 mg x1/j</strong> (à prendre au repas)</td><td>Réduire à <strong>15 mg x1/j</strong> si clairance créatinine 15-49 mL/min</td></tr>
+      <tr><td><strong>Dabigatran</strong> (Pradaxa®)</td><td><strong>150 mg x2/j</strong></td><td>Réduire à <strong>110 mg x2/j</strong> si âge ≥80 ans, association au vérapamil, ou 75-80 ans avec facteur de risque hémorragique additionnel</td></tr>
+    </table>
+    <p style="font-size:13.5px; margin-bottom:8px;">Les AOD sont de plus en plus préférés aux AVK en prévention secondaire post-AVC sur FA, sauf situations où l'AVK reste la seule option validée (valve mécanique, thrombus intracardiaque, syndrome des antiphospholipides — les AOD y sont formellement déconseillés, avec un sur-risque de récidive thrombotique démontré notamment sous rivaroxaban).</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar (anticoagulation orale post-AVC)</strong> : la <strong>Warfarine (Coumadine®)</strong> est l'anticoagulant oral le plus largement disponible et le moins coûteux — elle reste l'option de référence en pratique courante, mais impose une surveillance INR régulière souvent limitée aux grandes villes (CHU/CHRR), à anticiper avant la sortie. Parmi les AOD, <strong>Apixaban (Eliquis®)</strong> et <strong>Rivaroxaban (Xarelto®)</strong> sont occasionnellement trouvables en pharmacie privée dans les grandes agglomérations, à un coût élevé et hors remboursement ; le <strong>Dabigatran (Pradaxa®)</strong> et l'<strong>Edoxaban (Lixiana®)</strong> sont quasiment absents du marché local. En l'absence d'accès fiable à la surveillance INR (zone rurale, sortie précoce), discuter au cas par cas l'intérêt d'un AOD si son coût et sa disponibilité le permettent.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la thrombolyse IV (Actilyse®) et la thrombectomie mécanique ne sont réalisables que dans de très rares centres équipés (essentiellement CHU Antananarivo, sous réserve de délai et de disponibilité) — la majorité des patients malgaches n'ont pas accès à un traitement de reperfusion dans les délais requis. Le Ténectéplase (Metalyse®) n'est pas plus répandu localement à ce jour que l'Altéplase, mais sa simplicité d'administration (bolus unique) en fait un candidat intéressant si son introduction devenait possible, en particulier pour les transferts inter-hospitaliers où la perfusion continue d'Altéplase est difficile à sécuriser. En l'absence de tout thrombolytique, la prise en charge repose sur les mesures générales (contrôle tensionnel, glycémique, prévention des complications) et un transfert rapide vers un centre équipé doit être envisagé dès que l'heure de début des symptômes le permet encore.</p>
   </div>
 
@@ -1548,8 +1614,8 @@ function renderProtocoles(){
     </table>
     <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Pneumothorax suffocant = diagnostic clinique. Ne jamais attendre une radiographie ou une TDM pour exsuffler — chaque minute d'attente rapproche le patient de l'arrêt cardiaque par choc obstructif.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Exsufflation à l'aiguille en urgence</strong> (pneumothorax suffocant) : cathéter court de gros calibre (14-16G), <strong>2e espace intercostal, ligne médio-claviculaire</strong> (site historique ATLS) — <strong>ou 4e/5e espace intercostal, ligne axillaire moyenne</strong> (site alternatif recommandé par les mises à jour récentes, paroi thoracique plus fine à cet endroit, taux d'échec plus faible), en passant au bord supérieur de la côte inférieure (évite le paquet vasculo-nerveux intercostal)</li>
-      <li><strong>Drainage thoracique</strong> (definitif) après exsufflation, ou d'emblée si pneumothorax volumineux/mal toléré : dans le <strong>triangle de sécurité</strong> (bord latéral du grand pectoral, bord antérieur du grand dorsal, ligne horizontale mamelonnaire, 5e espace intercostal ligne axillaire moyenne), drain connecté à un système sous eau (bocal à valve unidirectionnelle) ou à une valve de Heimlich, ± aspiration douce selon protocole local</li>
+      <li><a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-exsufflation')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;"><strong>Exsufflation à l'aiguille en urgence</strong></a> (pneumothorax suffocant) : cathéter court de gros calibre (14-16G), <strong>2e espace intercostal, ligne médio-claviculaire</strong> (site historique ATLS) — <strong>ou 4e/5e espace intercostal, ligne axillaire moyenne</strong> (site alternatif recommandé par les mises à jour récentes, paroi thoracique plus fine à cet endroit, taux d'échec plus faible), en passant au bord supérieur de la côte inférieure (évite le paquet vasculo-nerveux intercostal)</li>
+      <li><a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-drainage-thoracique')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;"><strong>Drainage thoracique</strong></a> (definitif) après exsufflation, ou d'emblée si pneumothorax volumineux/mal toléré : dans le <strong>triangle de sécurité</strong> (bord latéral du grand pectoral, bord antérieur du grand dorsal, ligne horizontale mamelonnaire, 5e espace intercostal ligne axillaire moyenne), drain connecté à un système sous eau (bocal à valve unidirectionnelle) ou à une valve de Heimlich, ± aspiration douce selon protocole local</li>
       <li>Oxygène haut débit systématique en attendant/pendant le geste, voie veineuse, monitorage (SpO2, scope)</li>
       <li><strong>Pneumothorax spontané primaire minime/asymptomatique :</strong> prise en charge conservatrice possible (abstention), voire ambulatoire chez un patient bien entouré avec accès rapide aux soins — selon les nouvelles recommandations BTS 2023 favorisant une approche moins invasive</li>
       <li>Antalgie adaptée (la douleur pleurale limite l'ampliation thoracique et favorise l'encombrement)</li>
@@ -2100,7 +2166,7 @@ function renderProtocoles(){
     <div class="result-box hidden" id="hd_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Évaluation de gravité</strong> : FC, TA, marbrures, TRC, état de conscience — un score de Glasgow-Blatchford ou de Rockall peut aider à stratifier le risque</li>
-      <li><strong>2 VVP de gros calibre</strong>, bilan (NFS, groupe/Rh/RAI, coagulation, fonction rénale, lactates), commander des culots globulaires si instabilité</li>
+      <li><a onclick="document.querySelector('[data-mod=abords]').click(); setTimeout(()=>document.getElementById('abord-vvp')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;"><strong>2 VVP de gros calibre</strong></a>, bilan (NFS, groupe/Rh/RAI, coagulation, fonction rénale, lactates), commander des culots globulaires si instabilité</li>
       <li>Remplissage cristalloïdes prudent ; transfusion si Hb &lt;7 g/dL (seuil restrictif recommandé, hors coronaropathie/instabilité sévère où le seuil peut être &lt;8-9 g/dL) — objectif TA systolique ~90-100 mmHg, éviter la sur-transfusion (risque de resaignement des varices)</li>
       <li>Correction d'une coagulopathie : <strong>Vitamine K (Vitamine K1 Roche®)</strong>, PFC/CCP si sous AVK, arrêt des anticoagulants/antiagrégants selon la balance bénéfice-risque, transfusion plaquettaire si &lt;50 G/L et saignement actif</li>
       <li><strong>IPP IV</strong> (<strong>Oméprazole (Mopral®)</strong>/<strong>Pantoprazole (Eupantol®, Inipomp®)</strong> 80 mg bolus puis 8 mg/h ou 40 mg x2/j) dès suspicion d'HD haute non variqueuse — réduit le risque de resaignement, à débuter avant l'endoscopie</li>
@@ -2125,7 +2191,7 @@ function renderProtocoles(){
     <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Rechercher et corriger le(s) facteur(s) déclenchant(s) — étape la plus importante, présente dans la grande majorité des épisodes :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li><strong>Hémorragie digestive</strong> (notamment varices œsophagiennes) — cf. protocole dédié</li>
-      <li><strong>Infection</strong>, en particulier <strong>infection du liquide d'ascite (péritonite bactérienne spontanée)</strong> — ponction d'ascite systématique au moindre doute chez le cirrhotique ascitique</li>
+      <li><strong>Infection</strong>, en particulier <strong>infection du liquide d'ascite (péritonite bactérienne spontanée)</strong> — <a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-paracentese')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">ponction d'ascite</a> systématique au moindre doute chez le cirrhotique ascitique</li>
       <li><strong>Constipation</strong> (augmente la production/absorption d'ammoniac) — cause fréquente et facilement corrigible</li>
       <li><strong>Troubles hydro-électrolytiques</strong> : hypokaliémie, hyponatrémie, déshydratation — souvent iatrogènes (diurétiques, laxatifs surdosés)</li>
       <li><strong>Prise de sédatifs/benzodiazépines ou opioïdes</strong> — à rechercher systématiquement à l'interrogatoire de l'entourage</li>
@@ -2269,7 +2335,7 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>ABCDE</strong> en premier lieu : suspicion d'inhalation (suies dans les narines/bouche, brûlures faciales, voix rauque, toux) → intubation précoce avant l'apparition d'un œdème obstructif des voies aériennes</li>
       <li>Arrêt du processus de brûlure : refroidissement à l'eau tempérée (15-25°C) pendant 10-20 min si &lt;3h post-brûlure — <strong>éviter l'eau glacée</strong> (risque d'hypothermie, surtout si surface étendue)</li>
-      <li><strong>Formule de Parkland :</strong> volume total de Ringer Lactate sur 24h = <strong>4 mL × poids (kg) × %TBSA brûlée</strong> (2e/3e degré uniquement) — calcul à partir de l'heure de la brûlure (non de l'arrivée). La moitié du volume sur les 8 premières heures, l'autre moitié sur les 16h suivantes</li>
+      <li><strong>Formule de Parkland :</strong> volume total de Ringer Lactate sur 24h = <strong>4 mL × poids (kg) × %TBSA brûlée</strong> (2e/3e degré uniquement) — calcul à partir de l'heure de la brûlure (non de l'arrivée). La moitié du volume sur les 8 premières heures, l'autre moitié sur les 16h suivantes — <a onclick="document.querySelector('[data-mod=calculateurs]').click(); setTimeout(()=>document.getElementById('calc-parkland')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">calculateur dédié</a> disponible dans le module Calculateurs</li>
       <li>Indiqué si TBSA ≥15-20% chez l'adulte (≥10% chez l'enfant) ; volumes de départ souvent revus à la baisse (2 mL/kg/%TBSA) avec titration stricte pour limiter le risque de "fluid creep" (œdèmes, syndrome des loges)</li>
       <li><strong>Titration sur la diurèse</strong> (objectif principal, à réévaluer horairement) : 0,5 mL/kg/h chez l'adulte, 1 mL/kg/h chez l'enfant — objectif plus élevé (1-2 mL/kg/h) si brûlure électrique/rhabdomyolyse associée</li>
       <li>Analgésie systématique (<strong>Morphine (Morphine Aguettant®)</strong> titrée IV), prévention de l'hypothermie, pansements non circonférentiels si possible (sinon surveiller un syndrome des loges → escarrotomie)</li>
@@ -2493,6 +2559,7 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Définitions (Sepsis-3, 2016, toujours en vigueur) :</strong> le <strong>sepsis</strong> est une dysfonction d'organe menaçant le pronostic vital, causée par une réponse dérégulée de l'hôte à une infection (augmentation du score SOFA ≥2 points liée à l'infection). Le terme historique <strong>« sepsis sévère »</strong> a été abandonné par Sepsis-3 : il correspond en fait à ce qui est aujourd'hui simplement appelé « sepsis » (le sepsis « non compliqué » sans dysfonction d'organe n'existe plus comme catégorie distincte) — le terme reste toutefois largement utilisé en pratique courante francophone/africaine par habitude. Le <strong>choc septique</strong> est un sous-groupe de sepsis avec anomalies circulatoires et métaboliques profondes : besoin de vasopresseurs pour maintenir une PAM ≥65 mmHg <strong>ET</strong> lactates &gt;2 mmol/L malgré un remplissage vasculaire adéquat.</p>
     <p style="margin-top:8px; font-size:13.5px; margin-bottom:8px;"><strong>Repérage :</strong> le <strong>qSOFA</strong> (FR≥22/min, PAS≤100 mmHg, GCS&lt;15 — cf. module Scores cliniques) est un outil de dépistage au lit du patient hors réanimation, simple et rapide, mais <strong>ne pose pas le diagnostic</strong> de sepsis — il identifie les patients à risque de mauvaise évolution nécessitant une évaluation approfondie (lactates, bilan infectieux, recherche de dysfonction d'organe). Devant toute suspicion clinique d'infection avec signe de gravité, débuter la prise en charge sans attendre la confirmation biologique complète.</p>
     <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Choc septique instable (hypotension sévère, marbrures/teint gris, cyanose/désaturation, tachycardie, confusion) : ne pas attendre l'échec du remplissage pour débuter les vasopresseurs — démarrer le remplissage ET les vasopresseurs simultanément (SSC 2026), au cas par cas selon l'examen clinique.</div></div>
+    <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 630.5" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme sepsis et choc septique</title><desc>Diagramme de décision Surviving Sepsis Campaign 2026 pour la reconnaissance et la prise en charge initiale du sepsis et du choc septique</desc><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="60.0" y="16.0" width="500.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--border)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Suspicion d'infection + signe de gravité</text><text x="310.0" y="47.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >(qSOFA≥2, hypotension, confusion, marbrures)</text><line x1="310.0" y1="65.0" x2="310.0" y2="85.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="70.0" y="85.0" width="480.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="310.0" y="102.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">Choc instable d'emblée ?</text><text x="310.0" y="116.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >hypoTA sévère, marbrures, cyanose, confusion</text><line x1="310.0" y1="134.0" x2="310.0" y2="154.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="154.0" width="520.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="171.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Débuter remplissage ET vasopresseurs simultanément</text><text x="310.0" y="185.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >ne pas attendre l'échec du remplissage seul</text><line x1="310.0" y1="203.0" x2="310.0" y2="223.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><text x="310.0" y="231.0" text-anchor="middle" font-size="12.5" fill="var(--accent2)">Bundle de la 1ère heure (en parallèle)</text><rect x="20.0" y="245.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent)" stroke-width="1.5"/><text x="160.0" y="262.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent)" font-weight="700">Lactates</text><text x="160.0" y="276.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >mesurer + répéter si &gt;2 mmol/L</text><rect x="320.0" y="245.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent)" stroke-width="1.5"/><text x="460.0" y="262.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent)" font-weight="700">Hémocultures ×2</text><text x="460.0" y="276.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >avant ATB si &lt;45 min de retard</text><rect x="20.0" y="306.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent)" stroke-width="1.5"/><text x="160.0" y="323.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent)" font-weight="700">Antibiothérapie large spectre</text><text x="160.0" y="337.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >dans l'heure — ne jamais différer par doute</text><rect x="320.0" y="306.0" width="280.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--accent)" stroke-width="1.5"/><text x="460.0" y="323.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent)" font-weight="700">Remplissage 30 mL/kg</text><text x="460.0" y="337.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >cristalloïdes équilibrés, en 3h</text><line x1="310.0" y1="355.0" x2="310.0" y2="375.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="90.0" y="375.0" width="440.0" height="34.5" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="310.0" y="392.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">PAM &lt;65 mmHg persistante malgré remplissage ?</text><line x1="310.0" y1="409.5" x2="310.0" y2="429.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="429.5" width="520.0" height="49.0" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="446.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >Noradrénaline IVSE 0,05-0,1 µg/kg/min</text><text x="310.0" y="461.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >titrée par paliers — cible PAM ≥65 mmHg (60-65 si ≥65 ans)</text><line x1="310.0" y1="478.5" x2="310.0" y2="498.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="80.0" y="498.5" width="460.0" height="34.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="515.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Réfractaire : Noradrénaline ≥0,25-0,5 µg/kg/min</text><line x1="310.0" y1="533.0" x2="310.0" y2="551.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/><rect x="50.0" y="551.0" width="520.0" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="568.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >+ Vasopressine 0,03 UI/min (dose fixe)</text><text x="310.0" y="582.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >puis + Adrénaline IVSE titrée si insuffisant</text><text x="310.0" y="597.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)" >+ Hydrocortisone 200 mg/j si vasopresseurs nécessaires</text></svg></div>
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
         <label>⚖️ Poids du patient (kg) — calcul remplissage et Noradrénaline</label>
@@ -2585,7 +2652,7 @@ function renderProtocoles(){
 
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Ne jamais retarder l'antibiothérapie</strong> pour réaliser l'imagerie ou la ponction lombaire — hémocultures avant la 1ère dose d'ATB si possible mais sans délai significatif</li>
-      <li>TDM cérébrale <strong>avant PL</strong> uniquement si signe de localisation, trouble de conscience sévère (GCS &lt;12), crise convulsive récente, immunodépression ou signe d'engagement — sinon PL directe</li>
+      <li>TDM cérébrale <strong>avant <a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-ponction-lombaire')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">PL</a></strong> uniquement si signe de localisation, trouble de conscience sévère (GCS &lt;12), crise convulsive récente, immunodépression ou signe d'engagement — sinon PL directe</li>
       <li><strong>Antibiothérapie probabiliste IV immédiate :</strong> <strong>Ceftriaxone (Rocéphine®)</strong> 2g x2/j (4g/j) ou <strong>Céfotaxime (Claforan®)</strong> — associer <strong>Amoxicilline (Clamoxyl®)</strong> si suspicion de Listeria (sujet &gt;50 ans, immunodépression, signes de rhombencéphalite)</li>
       <li><strong>Dexaméthasone (Soludécadron®)</strong> 10 mg IV toutes les 6h × 4 jours, à débuter <strong>en même temps ou juste avant</strong> la 1ère dose d'antibiotique (inefficace si donnée après) — réduit les séquelles auditives et neurologiques, surtout si pneumocoque</li>
       <li>Isolement gouttelettes systématique jusqu'à 24h d'antibiothérapie efficace si suspicion de méningocoque ; déclaration obligatoire et antibioprophylaxie des sujets contacts proches (<strong>Rifampicine (Rifadine®)</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte — 10 mg/kg x2/j chez l'enfant >1 mois, 5 mg/kg x2/j chez le nourrisson <1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine (Ciflox®)</strong> 500 mg PO dose unique chez l'adulte, 20 mg/kg PO dose unique chez l'enfant ≥2 ans, max 500 mg) — <span id="menin_inline_prophy">saisir le poids ci-dessus pour la dose calculée</span></li>
@@ -2835,14 +2902,14 @@ function renderProtocoles(){
     </div>
     <div class="result-box hidden" id="ep_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Évaluer la probabilité clinique</strong> (score de Wells ou de Genève révisé) avant tout examen complémentaire — oriente la stratégie diagnostique</li>
+      <li><strong>Évaluer la probabilité clinique</strong> (<a onclick="document.querySelector('[data-mod=calculateurs]').click(); setTimeout(()=>document.getElementById('calc-wells')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">score de Wells</a> ou de Genève révisé) avant tout examen complémentaire — oriente la stratégie diagnostique</li>
       <li>Probabilité <strong>faible/intermédiaire</strong> : dosage des <strong>D-dimères</strong> — si négatifs, EP exclue (bonne valeur prédictive négative) ; si positifs ou probabilité forte d'emblée → angioscanner thoracique (ou scintigraphie V/Q si CI à l'iode/grossesse)</li>
       <li><strong>Rechercher les signes de gravité</strong> immédiatement : hypotension/choc (EP à haut risque), signes de cœur pulmonaire aigu à l'échographie (dilatation VD), désaturation sévère — orientent vers un traitement urgent sans attendre la confirmation formelle si l'instabilité est majeure</li>
       <li><strong>EP à haut risque (choc/hypotension)</strong> : <strong>thrombolyse</strong> par <strong>Altéplase (Actilyse®)</strong> — 100 mg IV en perfusion continue sur 2h (10 mg en bolus sur 1-2 min puis 90 mg sur 2h), ou schéma accéléré 0,6 mg/kg (max 50 mg) en bolus sur 15 min si arrêt cardiaque imminent — après échocardiographie de confirmation si possible, en l'absence de contre-indication majeure</li>
       <li><strong>EP sans instabilité hémodynamique</strong> : anticoagulation curative d'emblée —
         <strong>Héparine non fractionnée (Héparine Choay®)</strong> : bolus 80 UI/kg IV puis 18 UI/kg/h IVSE (adapté au TCA), à privilégier si risque hémorragique élevé, insuffisance rénale sévère ou instabilité potentielle (réversible rapidement) ;
         ou <strong>Énoxaparine (Lovenox®)</strong> 100 UI/kg (1 mg/kg) SC toutes les 12h (à adapter à la clairance rénale) ;
-        ou <strong>Rivaroxaban (Xarelto®)</strong> 15 mg x2/j PO pendant 21 jours puis 20 mg/j en relais, si forme non grave et pas de contre-indication</li>
+        ou <strong>Rivaroxaban (Xarelto®)</strong> 15 mg x2/j PO pendant 21 jours puis 20 mg/j en relais, si forme non grave et pas de contre-indication. Si <strong>relais par AVK</strong> préféré à un AOD (accès limité, coût, grossesse), voir le <a onclick="document.getElementById('proto-relais-avk-hbpm')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole dédié de relais HBPM ↔ AVK</a></li>
       <li>Oxygénothérapie selon SpO2, antalgie si douleur pleurétique, éviter le remplissage vasculaire agressif en cas de choc (peut aggraver la défaillance ventriculaire droite) — privilégier un remplissage prudent (250-500 mL) avec réévaluation</li>
       <li>Score de <strong>PESI</strong> (Pulmonary Embolism Severity Index) utile pour évaluer le pronostic et orienter la décision d'hospitalisation vs prise en charge ambulatoire des formes de faible gravité</li>
     </ol>
@@ -2893,13 +2960,38 @@ function renderProtocoles(){
       <li><strong>Évaluer la probabilité clinique</strong> (score de Wells pour TVP) avant tout examen complémentaire</li>
       <li>Probabilité <strong>faible/intermédiaire</strong> : <strong>D-dimères</strong> — si négatifs, TVP exclue ; si positifs ou probabilité forte d'emblée → <strong>écho-Doppler veineux</strong> des membres inférieurs (examen de référence, non invasif)</li>
       <li><strong>Anticoagulation curative d'emblée</strong> dès confirmation (ou dès forte suspicion si l'imagerie ne peut être obtenue rapidement) : <strong>Énoxaparine (Lovenox®)</strong> 100 UI/kg (1 mg/kg) SC toutes les 12h (à adapter à la clairance rénale), ou <strong>Héparine non fractionnée (Héparine Choay®)</strong> IVSE si risque hémorragique élevé/insuffisance rénale sévère, ou <strong>Rivaroxaban (Xarelto®)</strong> 15 mg x2/j PO pendant 21 jours puis 20 mg/j si forme non compliquée</li>
-      <li>Durée du traitement : au moins <strong>3 mois</strong>, à prolonger selon le contexte (facteur déclenchant transitoire vs TVP non provoquée/récidivante/cancer actif — avis spécialisé)</li>
+      <li>Durée du traitement : au moins <strong>3 mois</strong>, à prolonger selon le contexte (facteur déclenchant transitoire vs TVP non provoquée/récidivante/cancer actif — avis spécialisé). Si <strong>relais par AVK</strong> envisagé (Warfarine/Coumadine®) plutôt qu'une poursuite en AOD, voir le <a onclick="document.getElementById('proto-relais-avk-hbpm')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole dédié de relais HBPM ↔ AVK</a> (durée de chevauchement, critères d'arrêt de l'héparine, cibles INR)</li>
       <li><strong>Recherche systématique de signes d'embolie pulmonaire associée</strong> (dyspnée, douleur thoracique, tachycardie) — <em>voir protocole dédié</em> si suspicion</li>
       <li>Contention élastique/bas de compression pour réduire l'œdème et le risque de syndrome post-thrombotique, mobilisation précoce encouragée (ne pas immobiliser le membre, contrairement à une croyance répandue)</li>
       <li><strong>TVP proligérante ilio-fémorale avec phlegmatia cœrulea dolens</strong> (ischémie veineuse aiguë par obstruction massive) : urgence — surélévation du membre, anticoagulation, avis vasculaire pour thrombolyse/thrombectomie en urgence (risque de gangrène veineuse)</li>
       <li>Rechercher une cause sous-jacente si TVP non provoquée : néoplasie occulte (bilan orienté selon l'âge/le terrain), thrombophilie (bilan à distance de l'épisode aigu et de l'anticoagulation), syndrome des anti-phospholipides</li>
       <li>Contre-indication à la thrombolyse systémique en 1ère intention pour une TVP simple (réservée aux formes proximales sévères menaçant le membre)</li>
     </ol>
+  </div>
+
+  <div class="card" id="proto-relais-avk-hbpm">
+    <h3>🔄 Relais HBPM (Lovenox®) ↔ AVK</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Fiche créée le 19/07/2026 — sources : RCP LOVENOX (ANSM/base de données publique des médicaments, mise à jour 01/07/2023), Guide de bon usage des anticoagulants OMEDIT Normandie (2024, citant O. Sanchez — Recommandations de bonne pratique pour la prise en charge de la MTEV chez l'adulte), HAS avis de la Commission de la Transparence LOVENOX (juin 2022)</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Principe :</strong> à l'instauration d'un AVK, l'effet anticoagulant met plusieurs jours à s'installer (inhibition initiale de la protéine C à demi-vie courte, avant l'inhibition des facteurs II/VII/IX/X à demi-vie plus longue) — d'où un <strong>risque thrombogène paradoxal transitoire</strong> si l'héparine est arrêtée trop tôt. Le chevauchement HBPM-AVK est donc <strong>obligatoire et non négociable</strong>.</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Instauration : Lovenox® → AVK</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Démarrage quasi-simultané</strong> : débuter l'AVK (warfarine/Coumadine® <strong>5 mg/j</strong> en dose initiale, jusqu'à 10mg chez le sujet jeune sans comorbidité, ou fluindione/Previscan® <strong>20 mg/j</strong>) dès <strong>J1 ou J2</strong> de l'HBPM à dose curative (<strong>Énoxaparine/Lovenox® 100 UI/kg SC x2/j ou 150 UI/kg SC x1/j</strong>), une fois le diagnostic thromboembolique confirmé — ne pas attendre. Poursuivre le Lovenox® à dose curative inchangée pendant toute la phase de chevauchement</li>
+      <li><strong>Surveillance de l'INR</strong> : premier contrôle à J3 de l'AVK, puis tous les 1-2 jours jusqu'à stabilisation</li>
+      <li><strong>Arrêt de l'héparine</strong> uniquement lorsque <strong>2 critères cumulatifs</strong> sont réunis : chevauchement ≥ <strong>5 jours</strong> ET INR en zone cible sur <strong>2 dosages consécutifs</strong> à au moins 24h d'intervalle — un INR cible atteint précocement (ex. J2) ne permet pas d'arrêter l'héparine avant J5</li>
+      <li>Adapter la posologie du Lovenox® en cas d'insuffisance rénale sévère (clairance créatinine 15-30 mL/min) : réduire à <strong>100 UI/kg SC x1/j</strong> (au lieu de x2/j) — cf. calculateur clairance créatinine (Cockcroft-Gault)</li>
+    </ol>
+    <table style="margin-top:6px; margin-bottom:10px;">
+      <tr><th>Indication</th><th>Cible INR</th></tr>
+      <tr><td>MTEV (TVP/EP), fibrillation atriale non valvulaire</td><td><strong>2,0 – 3,0</strong></td></tr>
+      <tr><td>Valve mécanique mitrale, thrombose récidivante sous AVK bien conduit</td><td><strong>2,5 – 3,5</strong> (parfois plus selon le type de prothèse — avis spécialisé)</td></tr>
+    </table>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Situation inverse : AVK → Lovenox®</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Situation fréquente avant un geste invasif ou en cas de déséquilibre de l'AVK : <strong>interrompre l'AVK</strong>, puis administrer la première injection d'énoxaparine <strong>lorsque l'INR repasse sous la plage thérapeutique</strong> (typiquement &lt;2,0, parfois attendre &lt;1,5 selon le contexte hémorragique/chirurgical).</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais arrêter l'HBPM sur un seul INR cible isolé, même s'il est atteint tôt (ex. J2-J3) — c'est l'erreur la plus fréquente et la plus dangereuse de cette prise en charge, exposant à une récidive thrombotique précoce par sous-anticoagulation transitoire.</div></div>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Points de vigilance :</strong> renforcer le suivi clinique et biologique de l'AVK pendant toute la période de chevauchement ; surveiller les interactions médicamenteuses majorant l'effet AVK durant la titration (AINS, certains antibiotiques, amiodarone…) ; informer systématiquement le patient du risque hémorragique et de la nécessité du suivi INR rapproché.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Warfarine (Coumadine®) est l'AVK la plus largement disponible et reste l'option la plus accessible, mais nécessite une surveillance INR régulière souvent limitée aux grandes villes (CHU/CHRR) — anticiper le relais en conséquence en cas de sortie précoce vers une zone sans accès facile au laboratoire. Le Lovenox® est disponible en pharmacie hospitalière courante.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Voir aussi : <a onclick="document.getElementById('proto-tvp')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">Thrombose veineuse profonde</a> · <a onclick="document.getElementById('proto-embolie-pulmonaire')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">Embolie pulmonaire</a> · <a onclick="document.getElementById('proto-fa-rapide')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">Fibrillation atriale rapide</a></p>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ce protocole ne s'applique <strong>pas</strong> à l'anticoagulation post-AVC ischémique cardioembolique — l'héparine à dose curative y est évitée en phase aiguë (risque de transformation hémorragique) et le délai d'introduction de l'anticoagulant oral suit la règle du « 1-3-6-12 jours » selon la sévérité, sans pont héparinique. Voir la section dédiée du <a onclick="document.getElementById('proto-avc')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole AVC</a>.</div></div>
   </div>
 
   <div class="card" id="proto-envenimations">
@@ -3378,7 +3470,7 @@ function renderProtocoles(){
     <h3>🚰 Rétention aiguë d'urine</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Impossibilité brutale et douloureuse d'uriner, avec globe vésical palpable — à distinguer de l'anurie (pas de production d'urine, vessie vide). Cause fréquente chez l'homme : hypertrophie bénigne de la prostate ; autres causes : fécalome, sténose urétrale, caillotage, cause médicamenteuse (anticholinergiques), post-opératoire, compression médullaire (à évoquer si troubles sensitifs/moteurs associés).</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Sondage vésical évacuateur</strong> en urgence dès le diagnostic confirmé (globe vésical) — soulagement immédiat de la douleur, geste diagnostique et thérapeutique</li>
+      <li><a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-sondages')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;"><strong>Sondage vésical évacuateur</strong></a> en urgence dès le diagnostic confirmé (globe vésical) — soulagement immédiat de la douleur, geste diagnostique et thérapeutique</li>
       <li>Si échec du sondage urétral (obstacle) : cathéter sus-pubien par un opérateur entraîné, ou avis urologique en urgence</li>
       <li>Évacuation progressive si globe très volumineux/ancien (certains protocoles recommandent un clampage intermittent pour limiter le risque d'hématurie a vacuo et d'hypotension par levée d'obstacle) — surveillance de la diurèse post-évacuation (polyurie de levée d'obstacle possible, surveiller ionogramme et hydratation si diurèse importante)</li>
       <li>Rechercher une cause déclenchante à traiter (fécalome à évacuer, revoir un traitement anticholinergique/opiacé en cause, infection urinaire associée)</li>
@@ -4467,7 +4559,7 @@ function renderProtocoles(){
     </div>
     <div class="result-box hidden" id="tm_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Activer le protocole précocement</strong> — score ABC (Assessment of Blood Consumption) ou score de Shock Index (FC/PAS &gt;1) comme aide à la décision</li>
+      <li><strong>Activer le protocole précocement</strong> — score ABC (Assessment of Blood Consumption) ou <a onclick="document.querySelector('[data-mod=calculateurs]').click(); setTimeout(()=>document.getElementById('calc-shock-index')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">score de Shock Index</a> (FC/PAS &gt;1) comme aide à la décision</li>
       <li><strong>Contrôle de l'hémorragie en parallèle</strong> — chirurgie/radiologie interventionnelle/tamponnement, garrot si hémorragie de membre</li>
       <li><strong>Réanimation hémostatique</strong> — objectif <em>damage control resuscitation</em> : hypotension permissive (PAS 80-90 mmHg tant que non contrôlée), limiter les cristalloïdes (<strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong>, 500mL-1L maximum avant produits sanguins)</li>
       <li><strong>Ratio transfusionnel cible 1:1:1</strong> — Concentrés érythrocytaires : Plasma frais congelé : Plaquettes, pour éviter la coagulopathie de dilution</li>
@@ -4664,8 +4756,8 @@ function renderProtocoles(){
       <tr><td rowspan="2">Insuffisance cardiaque / FEVG altérée</td><td><strong>Digoxine (Digoxine Nativelle®)</strong></td><td>0,5mg IV puis 0,25mg toutes les 6h (max 1,5mg/24h), relais per os 0,125-0,25mg/j</td></tr>
       <tr><td><strong>Amiodarone (Cordarone®)</strong></td><td>300mg IV en 1h puis 900-1200mg/24h IVSE</td></tr>
     </table>
-    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Anticoagulation — score CHA₂DS₂-VASc :</p>
-    <p style="font-size:13.5px;">Évaluer précocement le risque thromboembolique et initier une anticoagulation si indiquée — <strong>HBPM (Lovenox®)</strong> 100 UI/kg x2/j SC en relais initial puis <strong>Warfarine (Coumadine®)</strong> 5mg/j ajustée à l'INR (cible 2-3) si disponibilité de la surveillance INR, en tenant compte du risque hémorragique (score HAS-BLED) et du délai de FA (&lt;48h vs &gt;48h/indéterminé, qui module la faisabilité d'une cardioversion précoce).</p>
+    <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Anticoagulation — <a onclick="document.querySelector('[data-mod=calculateurs]').click(); setTimeout(()=>document.getElementById('calc-chadsvasc')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">score CHA₂DS₂-VASc</a> :</p>
+    <p style="font-size:13.5px;">Évaluer précocement le risque thromboembolique et initier une anticoagulation si indiquée — <strong>HBPM (Lovenox®)</strong> 100 UI/kg x2/j SC en relais initial puis <strong>Warfarine (Coumadine®)</strong> 5mg/j ajustée à l'INR (cible 2-3) si disponibilité de la surveillance INR — voir le <a onclick="document.getElementById('proto-relais-avk-hbpm')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole dédié de relais HBPM ↔ AVK</a> pour la durée de chevauchement et les critères d'arrêt de l'héparine, en tenant compte du risque hémorragique (score HAS-BLED) et du délai de FA (&lt;48h vs &gt;48h/indéterminé, qui module la faisabilité d'une cardioversion précoce).</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Cordarone® et Digoxine Nativelle® sont largement disponibles. Les anticoagulants oraux directs (AOD) sont peu répandus et coûteux — la Warfarine reste l'option la plus accessible mais nécessite une surveillance INR régulière, souvent limitée aux grandes villes.</p>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Rechercher systématiquement un facteur déclenchant : sepsis, hyperthyroïdie, embolie pulmonaire, sevrage alcoolique, hypokaliémie.</p>
   </div>
@@ -5715,7 +5807,7 @@ function renderAbords(){
   <h2 class="module-title">🩸 Voies veineuses & Abords vasculaires</h2>
   <p class="module-sub">Indications, sites, technique et complications. Asepsie rigoureuse pour tous les gestes.</p>
 
-  <div class="card">
+  <div class="card" id="abord-vvp">
     <h3>🩺 Voie veineuse périphérique (VVP)</h3>
     <table>
       <tr><th>Cathéter</th><th>Couleur</th><th>Débit max</th><th>Usage</th></tr>
@@ -5728,7 +5820,7 @@ function renderAbords(){
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Privilégier avant-bras/pli du coude. Éviter membres inférieurs. Changer toutes les 72-96h en dehors de l'urgence.</p>
   </div>
 
-  <div class="card">
+  <div class="card" id="abord-vvc">
     <h3>🔵 Voie Veineuse Centrale (VVC)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> catécholamines, solutions hyperosmolaires, accès veineux difficile, mesure PVC.</p>
     <table>
@@ -5752,7 +5844,7 @@ function renderAbords(){
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'échographe portable pour guidage de pose n'est pas systématiquement disponible en dehors des CHU/CHRR équipés — la technique par repères anatomiques classiques reste acceptable et largement enseignée en son absence, à condition d'une maîtrise rigoureuse des repères de sécurité (notamment voie jugulaire interne, moins pourvoyeuse de pneumothorax que la sous-clavière en cas d'échec de repérage).</p>
   </div>
 
-  <div class="card">
+  <div class="card" id="abord-io">
     <h3>🦴 Voie Intra-Osseuse (IO)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indication :</strong> urgence vitale (ACR, choc) quand VVP impossible en &lt;2 min. Toutes drogues administrables.</p>
     <table>
@@ -5768,7 +5860,7 @@ function renderAbords(){
     </ul>
   </div>
 
-  <div class="card">
+  <div class="card" id="abord-kt-arteriel">
     <h3>❤️ Cathéter artériel (KT artériel)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> PA continue sous vasopresseurs, gazométries répétées, hémodynamique instable.</p>
     <table>
@@ -6339,7 +6431,7 @@ function renderSurveillance(){
       <tr><th>Paramètre</th><th>Fréquence</th><th>Cible adulte</th></tr>
       <tr><td>Fréquence cardiaque</td><td>Continue (scope)</td><td>60–100/min (alerte &lt;50 ou &gt;130)</td></tr>
       <tr><td>PA non invasive</td><td>Toutes les 15-30 min</td><td>PAM ≥ 65 mmHg (≥80 si HTIC)</td></tr>
-      <tr><td>PA invasive (KT artériel)</td><td>Continue</td><td>Idem — plus fiable sous vasopresseurs</td></tr>
+      <tr><td><a onclick="document.querySelector('[data-mod=abords]').click(); setTimeout(()=>document.getElementById('abord-kt-arteriel')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">PA invasive (KT artériel)</a></td><td>Continue</td><td>Idem — plus fiable sous vasopresseurs</td></tr>
       <tr><td>SpO2</td><td>Continue</td><td>92–96% (88-92% si BPCO)</td></tr>
       <tr><td>Fréquence respiratoire</td><td>Continue si VM</td><td>12–20/min, alerte si &gt;30 ou apnée</td></tr>
       <tr><td>Température</td><td>Toutes les 4-6h</td><td>36–37,5°C</td></tr>
@@ -6952,7 +7044,7 @@ function renderCalculateurs(){
     <div class="result-box hidden" id="ta_result"></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="calc-parkland">
     <h3>🔥 Formule de Parkland — Remplissage brûlures graves</h3>
     <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Volume de Ringer Lactate sur 24h, décompté depuis l'heure de la brûlure (pas l'heure d'arrivée). Ne compter que les brûlures du 2e et 3e degré.</p>
     <div class="row2">
@@ -6966,7 +7058,7 @@ function renderCalculateurs(){
     <div class="result-box hidden" id="park_result"></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="calc-wells">
     <h3>🫁 Score de Wells simplifié — Probabilité clinique d'embolie pulmonaire</h3>
     <div class="row2">
       <div class="field"><label>Signes cliniques de TVP (jambe gonflée/douloureuse à la palpation profonde) ?</label>
@@ -6988,7 +7080,7 @@ function renderCalculateurs(){
     <div class="result-box hidden" id="wells_result"></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="calc-chadsvasc">
     <h3>🫀 CHA₂DS₂-VASc — Risque thromboembolique en FA</h3>
     <div class="row2">
       <div class="field"><label>Insuffisance cardiaque / dysfonction VG ?</label>
@@ -7010,7 +7102,7 @@ function renderCalculateurs(){
     <div class="result-box hidden" id="cha_result"></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="calc-shock-index">
     <h3>⚡ Shock Index (Index de choc)</h3>
     <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">FC / PA systolique — utile pour détecter précocement un choc hémorragique (traumatisme, HPP, hémorragie digestive) avant que la PA ne chute franchement.</p>
     <div class="row2">
@@ -10283,6 +10375,7 @@ function showModule(key, focusId){
   document.getElementById('content').innerHTML = renderers[key] ? renderers[key]() : placeholderModule(key);
   ensureCardIds(document.getElementById('content'), key);
   injectFavStars(document.getElementById('content'), key);
+  injectPdfExportButtons(document.getElementById('content'), key);
   document.querySelectorAll('#nav-list button').forEach(b=>b.classList.toggle('active', b.dataset.mod===key));
   document.getElementById('topbar-title').textContent = MODULES[key].title;
   document.getElementById('sidebar').classList.remove('open');
@@ -10383,6 +10476,140 @@ resultsList.addEventListener('click', (e)=>{
   navList.style.display = '';
   showModule(mod, target);
 });
+
+/* ——— Impression individuelle d'un résultat de calculateur ——— */
+function printResultCard(resultId){
+  const resultEl = document.getElementById(resultId);
+  if(!resultEl) return;
+  const card = resultEl.closest('.card');
+  const titleEl = card ? (card.querySelector('h3 .h3-label') || card.querySelector('h3')) : null;
+  const title = titleEl ? titleEl.textContent.trim() : (document.getElementById('topbar-title') ? document.getElementById('topbar-title').textContent : "Résultat");
+  const clone = resultEl.cloneNode(true);
+  clone.querySelectorAll('.print-btn-wrap').forEach(n=>n.remove());
+  const bodyHtml = clone.innerHTML;
+  const now = new Date();
+  const dateStr = now.toLocaleString('fr-FR');
+  const win = window.open('', '_blank', 'width=480,height=680');
+  if(!win){ alert("Veuillez autoriser les fenêtres pop-up pour imprimer ce résultat."); return; }
+  win.document.write(
+    '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>' + title + '</title>' +
+    '<style>' +
+    ':root{--bg:#f4f6f8; --bg2:#ffffff; --panel:#ffffff; --panel2:#eef1f5; --border:#d3dae1; --text:#111827; --muted:#5b6b7a; --accent:#0d9488; --accent2:#0369a1; --danger:#dc2626; --warn:#b45309; --ok:#15803d; --grave:#dc2626; --modere:#b45309; --leger:#15803d;}' +
+    'body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; padding:22px; color:#111; line-height:1.55; max-width:520px; margin:0 auto;}' +
+    'h1{font-size:16px; margin:0 0 2px;}' +
+    '.meta{font-size:11px; color:#555; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid #ccc;}' +
+    '.result-box{font-size:13.5px;}' +
+    '.warn-box{border:1px solid #b45309; background:#fff7ed; padding:8px 10px; border-radius:6px; margin-bottom:8px; font-size:12px;}' +
+    '.safety-alert{border:1.5px solid #dc2626; background:#fef2f2; padding:8px 10px; border-radius:6px; margin:8px 0; font-size:12px;}' +
+    '.safety-alert .sa-label{display:block; font-weight:700; text-transform:uppercase; font-size:10.5px; color:#b91c1c; margin-bottom:2px;}' +
+    '.grave{color:#b91c1c; font-weight:700;} .modere{color:#b45309; font-weight:700;} .leger{color:#15803d; font-weight:700;}' +
+    'strong{font-weight:700;} small{color:#555;}' +
+    '.footer-note{margin-top:18px; padding-top:8px; border-top:1px solid #ccc; font-size:10.5px; color:#555;}' +
+    '@media print{ body{padding:8mm;} }' +
+    '</style></head><body>' +
+    '<h1>' + title + '</h1>' +
+    '<div class="meta">Ny Aina Med\'s — Emergency &amp; Intensive Care · Imprimé le ' + dateStr + '</div>' +
+    '<div class="result-box">' + bodyHtml + '</div>' +
+    '<div class="footer-note">⚠️ Résultat généré par un outil d\'aide à la décision — à vérifier avant toute décision clinique. Ne remplace pas le jugement médical.</div>' +
+    '</body></html>'
+  );
+  win.document.close();
+  win.focus();
+  setTimeout(function(){ win.print(); }, 300);
+}
+
+/* ——— Export PDF d'un protocole complet ——— */
+function exportProtocolPDF(cardId){
+  const card = document.getElementById(cardId);
+  if(!card) return;
+  const titleEl = card.querySelector('h3 .h3-label') || card.querySelector('h3');
+  const title = titleEl ? titleEl.textContent.trim() : 'Protocole';
+  const clone = card.cloneNode(true);
+  // Retirer les éléments d'interface non pertinents pour un document imprimé
+  clone.querySelectorAll('.fav-star, .pdf-export-btn, .print-btn-wrap, .print-result-btn').forEach(n=>n.remove());
+  // Retirer les résultats de calculateur non encore renseignés
+  clone.querySelectorAll('.result-box.hidden').forEach(n=>n.remove());
+  // Remplacer les champs interactifs par leur valeur actuelle (ou un espace à compléter)
+  clone.querySelectorAll('input, select').forEach(inp=>{
+    const val = inp.value ? inp.value : '……………';
+    const line = document.createElement('div');
+    line.className = 'pdf-field-value';
+    line.textContent = val;
+    inp.replaceWith(line);
+  });
+  clone.querySelectorAll('button').forEach(b=>b.remove());
+  const bodyHtml = clone.innerHTML;
+  const now = new Date();
+  const dateStr = now.toLocaleString('fr-FR');
+  const win = window.open('', '_blank', 'width=650,height=820');
+  if(!win){ alert("Veuillez autoriser les fenêtres pop-up pour exporter ce protocole en PDF."); return; }
+  win.document.write(
+    '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>' + title + '</title>' +
+    '<style>' +
+    ':root{--bg:#f4f6f8; --bg2:#ffffff; --panel:#ffffff; --panel2:#eef1f5; --border:#d3dae1; --text:#111827; --muted:#5b6b7a; --accent:#0d9488; --accent2:#0369a1; --danger:#dc2626; --warn:#b45309; --ok:#15803d; --grave:#dc2626; --modere:#b45309; --leger:#15803d;}' +
+    '*{box-sizing:border-box;}' +
+    'body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; padding:22px; color:#111; line-height:1.55; max-width:720px; margin:0 auto;}' +
+    'h1{font-size:18px; margin:0 0 2px;}' +
+    '.meta{font-size:11px; color:#555; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid #ccc;}' +
+    '.protocol-content{font-size:13.5px;}' +
+    '.protocol-content h3{display:none;}' +
+    '.protocol-content p{margin-bottom:8px;}' +
+    '.protocol-content ol, .protocol-content ul{margin:8px 0 8px 20px; line-height:1.8;}' +
+    '.protocol-content table{width:100%; border-collapse:collapse; font-size:12.5px; margin:8px 0;}' +
+    '.protocol-content th, .protocol-content td{padding:6px 8px; border-bottom:1px solid #ccc; text-align:left; vertical-align:top;}' +
+    '.protocol-content th{color:#555; font-weight:700; font-size:11.5px;}' +
+    '.protocol-content .field{margin-bottom:8px;}' +
+    '.protocol-content .row2{display:grid; grid-template-columns:1fr 1fr; gap:10px;}' +
+    '.protocol-content label{font-size:11.5px; color:#555; display:block; margin-bottom:2px;}' +
+    '.protocol-content .pdf-field-value{font-size:13px; color:#111; padding:5px 8px; border:1px solid #ccc; border-radius:5px; background:#f7f7f7; margin-bottom:4px;}' +
+    '.protocol-content .result-box{margin-top:10px; padding:10px 12px; border-radius:8px; background:#eef1f5; border-left:4px solid #0d9488; font-size:13px;}' +
+    '.protocol-content .warn-box{margin-bottom:8px; padding:8px 10px; border-radius:6px; background:#fff7ed; border:1px solid #b45309; color:#7c3d05; font-size:12px;}' +
+    '.protocol-content .safety-alert{border:1.5px solid #dc2626; background:#fef2f2; padding:8px 10px; border-radius:6px; margin:8px 0; font-size:12px; page-break-inside:avoid;}' +
+    '.protocol-content .safety-alert .sa-label{display:block; font-weight:700; text-transform:uppercase; font-size:10.5px; color:#b91c1c; margin-bottom:2px;}' +
+    '.protocol-content .proto-diagram{margin:8px 0 14px; padding:10px 6px 6px; border:1px solid #ccc; border-radius:8px; background:#f7f9fb; page-break-inside:avoid;}' +
+    '.protocol-content .proto-diagram .pd-label{font-size:10px; text-transform:uppercase; letter-spacing:.04em; color:#555; padding:0 6px 6px; font-weight:700;}' +
+    '.protocol-content .proto-diagram svg{max-width:100%; height:auto;}' +
+    '.protocol-content .grave{color:#b91c1c; font-weight:700;} .protocol-content .modere{color:#b45309; font-weight:700;} .protocol-content .leger{color:#15803d; font-weight:700;}' +
+    '.protocol-content strong{font-weight:700;} .protocol-content small{color:#555;}' +
+    '.protocol-content a{color:#0369a1; text-decoration:none;}' +
+    '.footer-note{margin-top:18px; padding-top:8px; border-top:1px solid #ccc; font-size:10.5px; color:#555;}' +
+    '@media print{ body{padding:8mm;} }' +
+    '</style></head><body>' +
+    '<h1>' + title + '</h1>' +
+    '<div class="meta">Ny Aina Med\'s — Emergency &amp; Intensive Care · Exporté le ' + dateStr + '</div>' +
+    '<div class="protocol-content">' + bodyHtml + '</div>' +
+    '<div class="footer-note">⚠️ Document généré à partir d\'un outil d\'aide à la décision — à vérifier avant toute décision clinique. Ne remplace pas le jugement médical ni les protocoles institutionnels.</div>' +
+    '</body></html>'
+  );
+  win.document.close();
+  win.focus();
+  setTimeout(function(){ win.print(); }, 400);
+}
+
+function attachPrintButtons(){
+  document.querySelectorAll('.result-box[id$="_result"]').forEach(function(el){
+    const isHidden = el.classList.contains('hidden') || el.offsetParent === null;
+    const existingWrap = el.querySelector(':scope > .print-btn-wrap');
+    if(isHidden || !el.textContent.trim()){
+      if(existingWrap) existingWrap.remove();
+      return;
+    }
+    if(existingWrap) return; // déjà présent pour ce contenu
+    const wrap = document.createElement('div');
+    wrap.className = 'print-btn-wrap';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'print-result-btn';
+    btn.innerHTML = '🖨️ Imprimer ce résultat';
+    btn.setAttribute('aria-label', 'Imprimer ce résultat');
+    btn.onclick = function(){ printResultCard(el.id); };
+    wrap.appendChild(btn);
+    el.insertBefore(wrap, el.firstChild);
+  });
+}
+
+const printBtnObserver = new MutationObserver(function(){ attachPrintButtons(); });
+printBtnObserver.observe(document.getElementById('content'), {childList:true, subtree:true, attributes:true, attributeFilter:['class']});
 
 showModule('accueil');
 </script>
