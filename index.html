@@ -263,11 +263,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
   a{color:#000 !important; text-decoration:none !important;}
 }
 </style>
-
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Urgence & Réanimation"></head>
+</head>
 <body>
 <div id="app">
   <aside id="sidebar">
@@ -823,6 +819,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-acr-pediatrique').scrollIntoView({behavior:'smooth',block:'start'})">💔 ACR Pédiatrique</a></li>
         <li><a onclick="document.getElementById('proto-etats-choc').scrollIntoView({behavior:'smooth',block:'start'})">🩸 États de choc</a></li>
         <li><a onclick="document.getElementById('proto-anaphylaxie').scrollIntoView({behavior:'smooth',block:'start'})">🐝 Choc anaphylactique / Anaphylaxie</a></li>
+        <li><a onclick="document.getElementById('proto-angioedeme-bradykinique').scrollIntoView({behavior:'smooth',block:'start'})">😷 Angio-œdème bradykinique (non allergique)</a></li>
         <li><a onclick="document.getElementById('proto-tamponnade').scrollIntoView({behavior:'smooth',block:'start'})">🫀 Tamponnade cardiaque</a></li>
         <li><a onclick="document.getElementById('proto-syncope').scrollIntoView({behavior:'smooth',block:'start'})">💫 Syncope — Stratification du risque</a></li>
         <li><a onclick="document.getElementById('proto-douleur-thoracique-triage').scrollIntoView({behavior:'smooth',block:'start'})">💥 Douleur thoracique aiguë (triage)</a></li>
@@ -836,6 +833,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-tvp').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Thrombose veineuse profonde (TVP)</a></li>
         <li><a onclick="document.getElementById('proto-relais-avk-hbpm').scrollIntoView({behavior:'smooth',block:'start'})">🔄 Relais HBPM (Lovenox®) ↔ AVK</a></li>
         <li><a onclick="document.getElementById('proto-aaa-rompu').scrollIntoView({behavior:'smooth',block:'start'})">🩸 Anévrysme de l'aorte abdominale rompu</a></li>
+        <li><a onclick="document.getElementById('proto-troubles-rythme').scrollIntoView({behavior:'smooth',block:'start'})">⚡ Tachycardie et Bradycardie instables (ERC 2025)</a></li>
         <li><a onclick="document.getElementById('proto-torsades-pointes').scrollIntoView({behavior:'smooth',block:'start'})">⚡ Torsades de pointes / QT long</a></li>
         <li><a onclick="document.getElementById('proto-fa-rapide').scrollIntoView({behavior:'smooth',block:'start'})">⚡ Fibrillation atriale rapide (stable)</a></li>
         <li><a onclick="document.getElementById('proto-endocardite').scrollIntoView({behavior:'smooth',block:'start'})">🫀 Endocardite infectieuse aiguë</a></li>
@@ -861,6 +859,7 @@ function renderProtocoles(){
         <li><a onclick="document.getElementById('proto-sdra').scrollIntoView({behavior:'smooth',block:'start'})">🫁 SDRA (ventilation protectrice)</a></li>
         <li><a onclick="document.getElementById('proto-grippe-grave').scrollIntoView({behavior:'smooth',block:'start'})">🦠 Grippe grave / Détresse respiratoire virale sévère</a></li>
         <li><a onclick="document.getElementById('proto-asthme').scrollIntoView({behavior:'smooth',block:'start'})">🌬️ Crise d'asthme aiguë</a></li>
+        <li><a onclick="document.getElementById('proto-bpco').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Exacerbation aiguë de BPCO</a></li>
         <li><a onclick="document.getElementById('proto-pneumothorax').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Pneumothorax (spontané / suffocant)</a></li>
         <li><a onclick="document.getElementById('proto-corps-etranger').scrollIntoView({behavior:'smooth',block:'start'})">🫁 Corps étranger voies aériennes</a></li>
       </ul></li>
@@ -1100,7 +1099,13 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>ECG 12 dérivations immédiat</strong> — si <strong>sus-décalage ST persistant</strong> : <strong>coronarographie/reperfusion en urgence</strong>, y compris chez le patient comateux (ne pas attendre le réveil neurologique) — cf. <a onclick="document.getElementById('proto-sca').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole SCA</a></li>
       <li><strong>Sans sus-décalage ST :</strong> mise à jour 2025 — ne plus considérer la coronarographie immédiate comme systématique ; elle reste indiquée en cas de forte suspicion d'occlusion coronaire aiguë (instabilité hémodynamique/électrique), mais peut être <strong>différée</strong> en l'absence d'argument clair, au profit d'un <strong>scanner corps entier en 2 phases</strong> (crâne à bassin, incluant une angio-TDM pulmonaire) pour rechercher une cause alternative (EP, hémorragie cérébrale, cause non cardiaque)</li>
-      <li><strong>PAM cible ≥65 mmHg</strong> (certains experts recommandent ≥80-100 mmHg en cas d'antécédent d'HTA ou de doute sur la perfusion cérébrale, à individualiser) — remplissage prudent puis <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> si besoin, éviter l'hypotension qui aggrave la lésion cérébrale secondaire</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💉 PAM cible ≥65 mmHg</strong> (certains experts recommandent ≥80-100 mmHg en cas d'antécédent d'HTA ou de doute sur la perfusion cérébrale, à individualiser)</div>
+          <div style="margin:3px 0; font-size:14.5px;">Remplissage prudent puis <strong style="color:var(--accent2)">Noradrénaline (Noradrénaline Aguettant®)</strong> si besoin</div>
+          <div style="font-size:12.5px; color:var(--muted);">Éviter l'hypotension qui aggrave la lésion cérébrale secondaire</div>
+        </div>
+      </li>
       <li><strong>Échocardiographie précoce</strong> pour évaluer la sidération myocardique post-arrêt (fréquente, régresse habituellement en 24-72h) et guider le support inotrope — cf. <a onclick="document.getElementById('proto-choc-cardiogenique').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole Choc cardiogénique</a> si dysfonction sévère</li>
       <li>Surveillance rythmique continue — une bradycardie sous contrôle de température n'est <strong>plus considérée comme un effet indésirable à corriger systématiquement</strong> (associée à une bonne évolution neurologique dans les études récentes) tant qu'elle est bien tolérée hémodynamiquement</li>
     </ol>
@@ -1108,7 +1113,13 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Contrôle ciblé de la température</strong> chez tout patient qui reste comateux après ROSC : <strong>prévention active de la fièvre</strong>, cible ≤37,5°C, pendant <strong>au moins 72h</strong>, avec surveillance continue de la température centrale — recommandation réaffirmée en 2025</li>
       <li>L'<strong>hypothermie thérapeutique ciblée (32-36°C)</strong> reste une option possible selon les protocoles locaux : les données actuelles ne permettent <strong>ni de la recommander ni de la déconseiller formellement</strong> par rapport au contrôle strict de la normothermie/prévention de la fièvre seule — pas de sur-refroidissement actif systématique en l'absence de protocole local établi</li>
-      <li><strong>Traiter systématiquement les convulsions/myoclonies</strong> si présentes (fréquentes, mauvais pronostic si prolongées) — <strong>Lévétiracétam (Keppra®) ou Valproate (Dépakine®)</strong> en 1ère intention plutôt que les benzodiazépines seules en prévention systématique (pas de bénéfice démontré de l'antiépileptique prophylactique en l'absence de crise)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Convulsions/myoclonies</strong> — si présentes (fréquentes, mauvais pronostic si prolongées)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Lévétiracétam (Keppra®)</strong> ou <strong style="color:var(--accent2)">Valproate (Dépakine®)</strong> — 1ère intention</div>
+          <div style="font-size:12.5px; color:var(--muted);">Plutôt que les benzodiazépines seules en prévention systématique (pas de bénéfice démontré de l'antiépileptique prophylactique en l'absence de crise)</div>
+        </div>
+      </li>
       <li>Contrôle glycémique modéré (cible 140-180 mg/dL), éviter l'hypoglycémie</li>
       <li>Tête surélevée à 30°, éviter toute compression jugulaire (fixation de sonde, collier cervical trop serré)</li>
     </ol>
@@ -1148,7 +1159,13 @@ function renderProtocoles(){
       <li>Ratio <strong>15 compressions / 2 insufflations</strong> (2 sauveteurs qualifiés) — dépression 1/3 du diamètre thoracique ; changer l'opérateur des compressions au moins toutes les 2 min (surveiller la fatigue/dégradation de la qualité)</li>
       <li>RCP 1 min avant d'alerter si seul, puis appeler à l'aide</li>
       <li><strong>Débuter les compressions thoraciques même en présence d'un pouls</strong> si bradycardie &lt;60/min avec signes de mauvaise perfusion, malgré une oxygénation/ventilation optimisées — ne pas attendre l'arrêt circulatoire complet</li>
-      <li>Adrénaline (<strong>Adrénaline Aguettant®</strong>) IV/IO : <strong>10 microgrammes/kg</strong> (0,01 mg/kg), max 1mg, <strong>répétée toutes les 4 min</strong> (soit un cycle de RCP sur deux) en l'absence de signes de vie, sauf guidage par pression artérielle invasive — <span id="acrp_inline_adr">saisir le poids ci-dessus pour la dose calculée</span></li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Adrénaline (Adrénaline Aguettant®)</strong> IV/IO</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">10 µg/kg</strong> (0,01 mg/kg), max 1mg &nbsp;·&nbsp; répétée toutes les 4 min</div>
+          <div style="font-size:12.5px; color:var(--muted);">En l'absence de signes de vie, sauf guidage par pression artérielle invasive — <span id="acrp_inline_adr">saisir le poids ci-dessus pour la dose calculée</span></div>
+        </div>
+      </li>
       <li>Énergie de choc (FV/TV sans pouls) : <strong>4 J/kg</strong> par choc, jusqu'à un maximum de <strong>120-200 J</strong> ; reprendre la RCP immédiatement après le choc, minimiser la pause péri-choc (&lt;5 sec) — <span id="acrp_inline_j">saisir le poids ci-dessus pour l'énergie calculée</span></li>
       <li>Rechercher les mêmes causes réversibles (4H/4T) — chez l'enfant, penser surtout hypoxie et hypovolémie</li>
       <li>Après RCS (retour à une circulation spontanée) : titrer l'oxygène pour éviter l'hyperoxie, traiter la cause, transfert en unité de soins intensifs pédiatriques dès que possible</li>
@@ -1268,7 +1285,13 @@ function renderProtocoles(){
 
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Retrait immédiat de l'allergène</strong> si identifiable (arrêt de la perfusion en cours, retrait du dard) — ne pas retarder l'adrénaline pour autant</li>
-      <li><strong>Adrénaline IM (Adrénaline Aguettant®)</strong> — traitement de 1ère ligne, à administrer sans délai dès suspicion : <strong>0,5 mg</strong> chez l'adulte (0,01 mg/kg chez l'enfant, max 0,3 mg), face antéro-latérale de la <strong>cuisse</strong>, à répéter toutes les <strong>5-15 min</strong> si absence d'amélioration — <span id="anaph_inline_adr">saisir le poids ci-dessus pour la dose calculée</span></li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Adrénaline IM (Adrénaline Aguettant®)</strong> — traitement de 1ère ligne, à administrer sans délai dès suspicion</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">0,5 mg</strong> adulte (<strong style="color:var(--accent2)">0,01 mg/kg</strong> enfant, max 0,3 mg), face antéro-latérale de la <strong>cuisse</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">À répéter toutes les <strong>5-15 min</strong> si absence d'amélioration — <span id="anaph_inline_adr">saisir le poids ci-dessus pour la dose calculée</span></div>
+        </div>
+      </li>
       <li><strong>Positionnement</strong> : décubitus dorsal jambes surélevées (Trendelenburg) si hypotension/collapsus ; position semi-assise uniquement si détresse respiratoire prédominante sans hypoTA ; décubitus latéral gauche si vomissements ; femme enceinte en décubitus latéral gauche</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Jamais l'adrénaline dans la fesse (résorption trop lente) ni par voie orale/inhalée ou remplacée par des antihistaminiques/corticoïdes seuls. Jamais laisser le patient debout ou l'asseoir brutalement en cas d'hypotension (risque de syndrome de vidange ventriculaire vide et de mort subite par vasoplégie).</div></div>
@@ -1276,8 +1299,20 @@ function renderProtocoles(){
       <li><strong>Oxygène</strong> haut débit au masque à haute concentration, monitorage continu (scope, SpO2, PA répétée)</li>
       <li><strong>Remplissage vasculaire</strong> rapide si hypoTA/collapsus : cristalloïdes (NaCl 0,9%, Ringer Lactate) — bolus 500-1000 mL chez l'adulte (20 mL/kg chez l'enfant), à répéter selon réponse hémodynamique — <span id="anaph_inline_remplissage">saisir le poids ci-dessus pour le bolus calculé</span></li>
       <li>Si bronchospasme persistant malgré l'adrénaline : <strong>Salbutamol (Ventoline®)</strong> nébulisé en complément (n'agit pas sur la composante vasculaire, ne remplace jamais l'adrénaline)</li>
-      <li><strong>Anaphylaxie réfractaire</strong> (persistance des signes malgré ≥2-3 injections IM d'adrénaline et remplissage) : <strong>Adrénaline (Adrénaline Aguettant®) IV titrée</strong> en milieu surveillé (scope continu, voie veineuse fiable) — dilution 1 mg dans 100 mL SSI (10 µg/mL), débit initial 30-100 mL/h (5-15 µg/min) à titrer selon la réponse tensionnelle ; si le patient est sous <strong>bêtabloquant</strong> et résiste à l'adrénaline : <strong>Glucagon (GlucaGen®)</strong> 1-2 mg IV bolus lent, répétable, puis relais en perfusion continue si besoin</li>
-      <li><strong>Traitements adjuvants</strong> (n'agissent pas sur l'urgence vitale, jamais en substitut de l'adrénaline) : antihistaminique H1 — <strong>Déxchlorphéniramine (Polaramine®)</strong> 5 mg IV/IM chez l'adulte (0,15-0,25 mg/kg chez l'enfant), et corticoïdes — <strong>Méthylprednisolone (Solu-Médrol®)</strong> 1-2 mg/kg IV (soit environ 40-80 mg chez l'adulte), utiles surtout pour les symptômes cutanés et la prévention théorique d'une réaction biphasique (bénéfice non formellement démontré) — <span id="anaph_inline_adjuvants">saisir le poids ci-dessus pour les doses calculées</span></li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Anaphylaxie réfractaire</strong> — persistance des signes malgré ≥2-3 injections IM d'adrénaline et remplissage</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Adrénaline IV titrée</strong> : dilution 1 mg/100 mL SSI (10 µg/mL), débit initial 30-100 mL/h (5-15 µg/min)</div>
+          <div style="font-size:12.5px; color:var(--muted);">En milieu surveillé (scope continu, voie veineuse fiable), à titrer selon la réponse tensionnelle ; si sous <strong>bêtabloquant</strong> et résistant à l'adrénaline : <strong style="color:var(--accent2)">Glucagon (GlucaGen®) 1-2 mg IV</strong> bolus lent, répétable, puis relais en perfusion continue si besoin</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Traitements adjuvants</strong> — n'agissent pas sur l'urgence vitale, jamais en substitut de l'adrénaline</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Déxchlorphéniramine (Polaramine®) 5 mg IV/IM</strong> adulte (0,15-0,25 mg/kg enfant) &nbsp;·&nbsp; <strong style="color:var(--accent2)">Méthylprednisolone (Solu-Médrol®) 1-2 mg/kg IV</strong> (≈40-80 mg adulte)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Utiles surtout pour les symptômes cutanés et la prévention théorique d'une réaction biphasique (bénéfice non formellement démontré) — <span id="anaph_inline_adjuvants">saisir le poids ci-dessus pour les doses calculées</span></div>
+        </div>
+      </li>
       <li><strong>Surveillance de la réaction biphasique</strong> : récidive des symptômes sans nouvelle exposition, généralement dans les <strong>4-12h</strong> (jusqu'à 24-72h décrit) — observation minimale de <strong>4-6h</strong> après résolution complète pour une réaction non sévère, à prolonger à <strong>8-24h</strong> si : réaction sévère/hypoTA initiale, bronchospasme sévère ou asthme sous-jacent, nécessité de plusieurs doses d'adrénaline, antécédent de réaction biphasique, ou accès aux soins d'urgence limité en cas de récidive</li>
       <li><strong>À la sortie</strong> : prescription d'un stylo auto-injecteur d'adrénaline si disponible avec éducation à son utilisation, plan d'action écrit, éviction de l'allergène identifié, orientation vers une consultation d'allergologie</li>
     </ol>
@@ -1312,13 +1347,20 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Signes évocateurs</strong> : triade de Beck (hypotension, turgescence jugulaire, assourdissement des bruits du cœur — inconstante), tachycardie, <strong>pouls paradoxal</strong> (chute de la PAS &gt;10 mmHg à l'inspiration), polypnée, signes de choc obstructif sans râles pulmonaires</li>
       <li><strong>Échographie cardiaque au lit (POCUS)</strong> dès que possible pour confirmer le diagnostic : épanchement péricardique, collapsus diastolique du ventricule/oreillette droite, variation respiratoire des flux mitral/tricuspide, veine cave inférieure dilatée sans variation respiratoire — ne doit pas retarder le geste si instabilité extrême avec forte suspicion clinique</li>
-      <li><strong>Remplissage vasculaire prudent</strong> (cristalloïdes, 250-500 mL) en attendant le geste — maintient la précharge et peut transitoirement améliorer l'hémodynamique, sans traiter la cause</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💧 Remplissage vasculaire prudent</strong> — en attendant le geste</div>
+          <div style="margin:3px 0; font-size:14.5px;">Cristalloïdes <strong style="color:var(--accent2)">250-500 mL</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Maintient la précharge et peut transitoirement améliorer l'hémodynamique, sans traiter la cause</div>
+        </div>
+      </li>
       <li><a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-pericardiocentese')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;"><strong>Péricardiocentèse en urgence</strong></a> (geste salvateur) : voie sous-xiphoïdienne, aiguille dirigée à 45° vers l'épaule gauche, sous guidage échographique si disponible (réduit le risque de ponction myocardique/coronaire) — l'évacuation même de petits volumes (50-100 mL) peut restaurer significativement l'hémodynamique en cas de tamponnade aiguë</li>
       <li>Si péricardiocentèse impossible/inefficace et arrêt cardiaque imminent : <strong>péricardiotomie chirurgicale (fenêtre péricardique)</strong> ou thoracotomie de sauvetage selon le contexte (notamment tamponnade traumatique) et le plateau technique disponible</li>
       <li><strong>Éviter la ventilation mécanique en pression positive avant le drainage</strong> si possible — l'augmentation de la pression intrathoracique aggrave la compression des cavités droites et peut précipiter le collapsus ; si l'intubation est indispensable, réaliser le drainage péricardique en priorité si réalisable rapidement</li>
       <li>Laisser un drain péricardique en place après évacuation initiale (prévention de la récidive), surveillance échographique répétée</li>
       <li>Rechercher la cause sous-jacente : traumatique (hémopéricarde), néoplasique, urémique, infectieuse (tuberculose, purulente), post-péricardiotomie/post-IDM (syndrome de Dressler), dissection aortique (tamponnade par rupture dans le péricarde — <em>voir protocole dédié</em>), iatrogène (post-geste invasif)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la péricardiocentèse à l'aiguille (geste manuel) est réalisable à tout niveau disposant d'une aiguille longue et d'un opérateur formé, avec ou sans échoguidage. L'échographie cardiaque au lit reste d'accès limité hors CHU/CHRR — devant une forte suspicion clinique avec instabilité extrême, le geste ne doit pas être retardé par l'absence d'imagerie.</p>
   </div>
 
   <div class="card" id="proto-douleur-thoracique-triage">
@@ -1355,9 +1397,21 @@ function renderProtocoles(){
     </div>
     <div class="result-box hidden" id="sca_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>MONA-BASH</strong> à l'admission : <strong>Aspirine (Aspégic®, Kardégic®)</strong> 300 mg PO/IV à croquer (dose de charge) ; Oxygène uniquement si SpO2&lt;90% (pas d'O2 systématique) ; <strong>Nitrés (Risordan® IV, Natispray® sublingual)</strong> si douleur persistante et TA systolique &gt;90 mmHg (contre-indiqués si suspicion d'IDM du VD) ; <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur réfractaire ; Bêtabloquant précoce (<strong>Bisoprolol (Cardensiel®)</strong>) si pas de contre-indication (insuffisance cardiaque aiguë, choc, bloc AV)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💊 MONA-BASH</strong> — à l'admission</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Aspirine (Aspégic®, Kardégic®) 300 mg PO/IV</strong> à croquer &nbsp;·&nbsp; <strong style="color:var(--accent2)">Nitrés (Risordan®/Natispray®)</strong> si TAS &gt;90 &nbsp;·&nbsp; <strong style="color:var(--accent2)">Morphine bolus 2-3 mg IV/5-10 min</strong> si réfractaire &nbsp;·&nbsp; <strong style="color:var(--accent2)">Bisoprolol (Cardensiel®)</strong> précoce</div>
+          <div style="font-size:12.5px; color:var(--muted);">Oxygène uniquement si SpO2&lt;90% (pas d'O2 systématique) ; Nitrés contre-indiqués si suspicion d'IDM du VD ; Bêtabloquant si pas de contre-indication (insuffisance cardiaque aiguë, choc, bloc AV)</div>
+        </div>
+      </li>
       <li><strong>2e antiagrégant : Clopidogrel (Plavix®) 300-600 mg, ou Ticagrélor (Brilique®) 180 mg</strong> à administrer sans délai en cas de <strong>STEMI</strong> avec reperfusion prévue. En cas de <strong>NSTEMI</strong> avec stratégie invasive précoce disponible (&lt;24h) et coronarographie planifiée, l'<strong>ESC 2023 déconseille le prétraitement systématique</strong> par P2Y12 avant l'angiographie (à administrer plutôt au moment du geste) — en pratique à Madagascar, où l'accès à la coronarographie précoce reste très limité (cf. note ci-dessous), l'administration du 2e antiagrégant dès l'admission reste une option raisonnable en l'absence de stratégie invasive rapide accessible</li>
-      <li><strong>STEMI</strong> (sus-décalage ST ≥1mm en 2 dérivations contiguës ou BBG nouveau) : reperfusion en urgence — <strong>angioplastie primaire</strong> si réalisable &lt;120 min depuis le premier contact médical (idéal &lt;90 min), sinon <strong>Thrombolyse IV : Altéplase (Actilyse®)</strong> schéma accéléré : 15 mg IV bolus, puis 0,75 mg/kg (max 50 mg) sur 30 min, puis 0,5 mg/kg (max 35 mg) sur 60 min — dose totale max 100 mg — (si &lt;12h depuis le début des symptômes et pas de contre-indication) suivie de transfert vers un centre avec plateau technique</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 STEMI</strong> (sus-décalage ST ≥1mm en 2 dérivations contiguës ou BBG nouveau) — reperfusion en urgence</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Angioplastie primaire</strong> si réalisable &lt;120 min (idéal &lt;90 min) &nbsp;·&nbsp; sinon <strong style="color:var(--accent2)">Thrombolyse IV — Altéplase (Actilyse®)</strong> schéma accéléré : 15 mg bolus, puis 0,75 mg/kg (max 50 mg)/30 min, puis 0,5 mg/kg (max 35 mg)/60 min — max 100 mg</div>
+          <div style="font-size:12.5px; color:var(--muted);">Si &lt;12h depuis le début des symptômes et pas de contre-indication, suivie de transfert vers un centre avec plateau technique</div>
+        </div>
+      </li>
       <li><strong>NSTEMI/angor instable</strong> (sous-décalage ST, inversion T, troponine élevée) : anticoagulation (héparine), double antiagrégation, stratification du risque (score GRACE 2.0), coronarographie précoce (&lt;24-72h selon le niveau de risque) si accessible, sans thrombolyse</li>
       <li>Anticoagulation : Héparine non fractionnée ou HBPM selon stratégie de reperfusion choisie et disponibilité</li>
       <li>Surveillance scope continue — risque de trouble du rythme ventriculaire dans les premières heures ; DAE/défibrillateur à proximité immédiate</li>
@@ -1372,8 +1426,20 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>Position demi-assise/assise, jambes pendantes si possible (diminue le retour veineux)</li>
       <li>Oxygène pour SpO2 cible ≥94% ; ventilation non invasive (CPAP/VNI) précoce si détresse respiratoire — réduit le recours à l'intubation</li>
-      <li><strong>Diurétique de l'anse :</strong> <strong>Furosémide (Lasilix®)</strong> IV 40-80 mg (dose plus élevée si insuffisance rénale ou déjà sous furosémide au long cours), répétable selon réponse diurétique</li>
-      <li><strong>Dérivés nitrés</strong> (<strong>Isosorbide dinitrate — Risordan®</strong> IV ou sublingual ; <strong>Trinitrine — Natispray®</strong> spray sublingual) si TA systolique &gt;110 mmHg (vasodilatation, réduction de la précharge) — à éviter si hypoTA ou suspicion de rétrécissement aortique serré</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Diurétique de l'anse — Furosémide (Lasilix®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">40-80 mg IV</strong> (dose plus élevée si insuffisance rénale ou déjà sous furosémide au long cours)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Répétable selon réponse diurétique</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Dérivés nitrés</strong> — si TA systolique &gt;110 mmHg</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Isosorbide dinitrate (Risordan®)</strong> IV/sublingual &nbsp;·&nbsp; <strong style="color:var(--accent2)">Trinitrine (Natispray®)</strong> spray sublingual</div>
+          <div style="font-size:12.5px; color:var(--muted);">Vasodilatation, réduction de la précharge — à éviter si hypoTA ou suspicion de rétrécissement aortique serré</div>
+        </div>
+      </li>
       <li>Si agitation/anxiété majeure ou douleur associée (SCA) : <strong>Morphine (Morphine Aguettant®)</strong> 2-4 mg IV lent, titration prudente (dépression respiratoire, hypotension)</li>
       <li>Rechercher et traiter le facteur déclenchant : SCA (ECG systématique), poussée hypertensive, trouble du rythme, écart thérapeutique/régime</li>
       <li>Si choc cardiogénique associé (hypoTA, hypoperfusion) : éviter les diurétiques/vasodilatateurs en 1ère intention — <strong>Dobutamine (Dobutrex®)</strong> ± <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> — voir <a onclick="document.getElementById('proto-choc-cardiogenique').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">protocole dédié Choc cardiogénique</a></li>
@@ -1416,9 +1482,26 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Monitorage rapproché</strong> : scope, TA (idéalement invasive dès que possible), SpO2, diurèse horaire, lactates répétés ; échocardiographie au lit dès que possible pour évaluer la fonction ventriculaire et écarter une cause mécanique/obstructive</li>
       <li><strong>Remplissage prudent</strong> : petits bolus de 100-250 mL de cristalloïdes réévalués si suspicion de composante hypovolémique associée (right ventricle infarction, déshydratation) — <strong>éviter le remplissage massif</strong> qui aggrave la congestion pulmonaire</li>
-      <li><strong>Inotrope de 1ère intention : Dobutamine (Dobutrex®)</strong> IVSE 2-20 µg/kg/min (débuter à 2-5 µg/kg/min) — améliore le débit cardiaque par effet inotrope positif</li>
-      <li>Si hypotension sévère associée (TA systolique &lt;90 mmHg persistante) : ajouter <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> IVSE 0,05-0,5 µg/kg/min pour restaurer une pression de perfusion coronaire/organique adéquate, à privilégier sur la Dopamine (moins d'arythmies)</li>
-      <li><strong>Milrinone</strong> en alternative si le patient est déjà sous bêtabloquant au long cours (inotrope non catécholaminergique, moins dépendant des récepteurs bêta) — prudence sur la dose si insuffisance rénale, effet vasodilatateur pouvant aggraver l'hypotension</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Inotrope de 1ère intention — Dobutamine (Dobutrex®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">IVSE 2-20 µg/kg/min</strong> (débuter à 2-5 µg/kg/min)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Améliore le débit cardiaque par effet inotrope positif</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Noradrénaline (Noradrénaline Aguettant®)</strong> — si hypotension sévère associée (TAS &lt;90 mmHg persistante)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">IVSE 0,05-0,5 µg/kg/min</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Pour restaurer une pression de perfusion coronaire/organique adéquate, à privilégier sur la Dopamine (moins d'arythmies)</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Milrinone</strong> — en alternative si déjà sous bêtabloquant au long cours</div>
+          <div style="font-size:12.5px; color:var(--muted);">Inotrope non catécholaminergique, moins dépendant des récepteurs bêta — prudence sur la dose si insuffisance rénale, effet vasodilatateur pouvant aggraver l'hypotension</div>
+        </div>
+      </li>
       <li>Oxygénothérapie/VNI/intubation selon tolérance respiratoire — cf. protocole OAP pour la prise en charge congestive une fois l'hémodynamique stabilisée</li>
     </ol>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">3. Choc réfractaire (stade SCAI D-E) :</p>
@@ -1437,10 +1520,26 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Poussée hypertensive sans souffrance d'organe :</strong> pas de baisse tensionnelle brutale — repos, traitement PO habituel repris/optimisé, réévaluation ambulatoire. Éviter la Nifédipine sublinguale (risque de chute tensionnelle brutale et d'ischémie)</li>
       <li><strong>Urgence hypertensive avec souffrance d'organe :</strong> baisse progressive et contrôlée par voie IV, sous surveillance continue (scope, TA toutes les 5-15 min pendant la titration) — objectif de baisse de la TAM d'environ 20-25% dans la 1ère heure (sauf AVC, cf. protocole dédié, et dissection aortique où la baisse doit être plus rapide)</li>
-      <li><strong>Nicardipine (Loxen®)</strong> — inhibiteur calcique, molécule de référence, large spectre d'indications : dilution 1 ampoule 10mg/10mL, à la seringue électrique (jamais en IV directe). <strong>Débit initial 5 mg/h</strong> (ou 3-5 mg/h pendant les 15 premières minutes selon RCP français), puis <strong>titration par paliers de 2,5 mg/h toutes les 5-15 min</strong> (paliers de 0,5-1 mg/h selon RCP français, plus prudent) jusqu'à l'objectif tensionnel — <strong>débit maximal 15 mg/h</strong>. Une fois la cible atteinte, réduire progressivement au débit minimal efficace (souvent 3 mg/h en entretien).
-        <br><span style="font-size:12.5px; color:var(--warn)">⚠️ Sans pousse-seringue : possible en gravité (burette microgouttes 60 gtt/mL indispensable) mais la titration fine nécessaire à la Nicardipine la rend plus délicate à gérer manuellement que l'Urapidil ou le Labétalol (schémas en bolus, plus adaptés en l'absence de PSE) — dilution 10 mg dans 40 mL SSI (50 mL au total, 200 µg/mL) : à 5 mg/h ≈ 25 gtt/min, à 15 mg/h ≈ 75 gtt/min. Un <a onclick="document.querySelector('[data-mod=calculateurs]').click(); setTimeout(()=&gt;document.getElementById('gtt-card')?.scrollIntoView({behavior:'smooth'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">calculateur dédié</a> est disponible dans le module Calculateurs.</span></li>
-      <li><strong>Labétalol (Trandate®)</strong> — alpha/bêta-bloquant, à privilégier si contexte cardiaque associé sans contre-indication (asthme, BAV, insuffisance cardiaque décompensée) : <strong>bolus IV de 20 mg sur 2 min</strong>, répétable par paliers de 20-40 mg IV toutes les 10 min jusqu'à effet souhaité (<strong>dose cumulée maximale 300 mg</strong>) ; en alternative, <strong>perfusion continue à 1-2 mg/min</strong> (dilution 200 mg dans 200 mL SSI 0,9% = 1 mg/mL, débit initial 60-120 mL/h) jusqu'à obtention de la cible tensionnelle, puis titration selon la réponse</li>
-      <li><strong>Urapidil (Eupressyl®, Médiatensyl®)</strong> — bon profil chez le sujet âgé/insuffisant rénal, alternative de choix si contre-indication aux bêta-bloquants : <strong>bolus IV de 25 mg sur 20 secondes</strong> ; si TA insuffisamment contrôlée à 5 min, répéter un bolus de <strong>25 mg</strong> ; si toujours insuffisant à 5 min, bolus de <strong>50 mg</strong> — puis relais en <strong>seringue électrique à débit initial de 120 mg/h (24 mL/h)</strong> jusqu'à obtention de la cible, puis <strong>dose d'entretien de 9 à 30 mg/h (moyenne 9-15 mg/h)</strong> à ajuster selon la réponse tensionnelle</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Nicardipine (Loxen®)</strong> — inhibiteur calcique, molécule de référence, large spectre d'indications</div>
+          <div style="margin:3px 0; font-size:14.5px;">Dilution 1 amp. 10mg/10mL, SE (jamais IV directe). <strong style="color:var(--accent2)">Débit initial 5 mg/h</strong> (3-5 mg/h les 15 premières min), titration par paliers de <strong style="color:var(--accent2)">2,5 mg/h/5-15 min</strong> — <strong>max 15 mg/h</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Une fois la cible atteinte, réduire progressivement au débit minimal efficace (souvent 3 mg/h en entretien). Sans pousse-seringue : dilution 10 mg/40mL SSI (200 µg/mL) — 5 mg/h ≈ 25 gtt/min, 15 mg/h ≈ 75 gtt/min via burette microgouttes. Un <a onclick="document.querySelector('[data-mod=calculateurs]').click(); setTimeout(()=&gt;document.getElementById('gtt-card')?.scrollIntoView({behavior:'smooth'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">calculateur dédié</a> est disponible dans le module Calculateurs.</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💉 Labétalol (Trandate®)</strong> — alpha/bêta-bloquant, si contexte cardiaque associé sans contre-indication</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Bolus 20 mg IV/2min</strong>, répétable 20-40 mg/10min (max 300 mg) &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">perfusion continue 1-2 mg/min</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Contre-indiqué si asthme, BAV, insuffisance cardiaque décompensée ; dilution perfusion : 200 mg/200mL SSI = 1 mg/mL, débit initial 60-120 mL/h</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💉 Urapidil (Eupressyl®, Médiatensyl®)</strong> — bon profil chez le sujet âgé/insuffisant rénal, alternative si CI aux bêtabloquants</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Bolus 25 mg IV/20s</strong>, répétable 25 mg puis 50 mg si insuffisant à 5 min &nbsp;·&nbsp; relais SE <strong style="color:var(--accent2)">120 mg/h</strong> puis entretien <strong style="color:var(--accent2)">9-30 mg/h</strong></div>
+        </div>
+      </li>
       <li><strong>Dissection aortique suspectée :</strong> cible TA systolique &lt;120 mmHg et FC &lt;60/min rapidement (idéalement en &lt;20 min) — Bêtabloquant IV en 1ère intention : <strong>Esmolol (Brevibloc®)</strong> — bolus de charge <strong>0,5 mg/kg IV sur 1 min</strong> (soit 35 mg pour 70 kg), puis <strong>perfusion continue 50 à 300 µg/kg/min</strong> (titration par paliers de 50 µg/kg/min toutes les 4 min selon réponse — demi-vie ultra-courte ~9 min, idéal pour titration fine et réversibilité rapide), ou <strong>Labétalol (Trandate®)</strong> selon schéma ci-dessus — puis associer <strong>Nicardipine (Loxen®)</strong> en vasodilatateur complémentaire si la cible n'est pas atteinte par le bêtabloquant seul, jamais l'inverse (un vasodilatateur seul provoque une tachycardie réflexe qui aggrave le cisaillement aortique). Imagerie en urgence (angioscanner), avis chirurgical — <em>protocole détaillé (classification de Stanford, prise en charge chirurgicale/TEVAR) : voir <a onclick="document.getElementById('proto-dissection-aortique').scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer;">Dissection aortique</a></em></li>
       <li><strong>Éclampsie/prééclampsie sévère :</strong> voir protocole dédié — Sulfate de magnésium + antihypertenseurs spécifiques à la grossesse</li>
       <li>Rechercher systématiquement une cause et des signes de gravité : fond d'œil (si disponible), ECG, fonction rénale, protéinurie si grossesse</li>
@@ -1448,6 +1547,7 @@ function renderProtocoles(){
       <li><strong>Cibles tensionnelles à retenir :</strong> encéphalopathie hypertensive/HTA maligne — baisse de 20-25% de la TAM en 1h ; dissection aortique/prééclampsie sévère — TA systolique &lt;140 mmHg (voire &lt;120 pour la dissection) dès la 1ère heure ; AVC — ne pas baisser sauf &gt;220/120 mmHg hors thrombolyse (cf. protocole AVC dédié)</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Nifédipine sublinguale contre-indiquée en 1ère intention (chute tensionnelle brutale incontrôlable, risque d'ischémie myocardique/cérébrale) — ne jamais l'utiliser pour « faire baisser vite » une poussée hypertensive simple.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Loxen® (Nicardipine) est le plus largement disponible des antihypertenseurs IV, jusqu'au niveau CHRD. Trandate® (Labétalol) et Eupressyl®/Médiatensyl® (Urapidil) sont d'accès plus limité, principalement en CHU/CHRR — en leur absence, la Nicardipine reste l'option de référence, y compris par burette microgouttes en l'absence de pousse-seringue. L'Esmolol (Brevibloc®) est réservé aux pharmacies hospitalières de CHU.</p>
   </div>
 
   <div class="card" id="proto-dissection-aortique">
@@ -1467,15 +1567,28 @@ function renderProtocoles(){
     </div>
     <div class="result-box hidden" id="dissec_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Bêtabloquant IV en 1ère intention</strong> (réduit la fréquence cardiaque ET la force d'éjection systolique, donc le cisaillement pariétal aortique — dP/dt) : <strong>Esmolol (Brevibloc®)</strong> — bolus de charge 0,5 mg/kg IV sur 1 min, puis perfusion continue 50-300 µg/kg/min (titration rapide, demi-vie ultra-courte ~9 min) — ou <strong>Labétalol (Trandate®)</strong> en alternative (bolus 20 mg IV sur 2 min, répétable, dose cumulée max 300 mg)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Bêtabloquant IV en 1ère intention</strong> (réduit FC ET force d'éjection systolique, donc le cisaillement pariétal aortique — dP/dt)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Esmolol (Brevibloc®)</strong> — bolus 0,5 mg/kg/1min puis perfusion continue 50-300 µg/kg/min &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Labétalol (Trandate®)</strong> — bolus 20 mg/2min, répétable, max 300 mg</div>
+          <div style="font-size:12.5px; color:var(--muted);">Esmolol : titration rapide, demi-vie ultra-courte ~9 min</div>
+        </div>
+      </li>
       <li>Si la cible tensionnelle n'est pas atteinte par le bêtabloquant seul : associer un vasodilatateur — <strong>Nicardipine (Loxen®)</strong> IVSE (cf. protocole HTA pour la dilution/titration) — <strong>toujours après</strong> le bêtabloquant, jamais en monothérapie initiale (un vasodilatateur seul entraîne une tachycardie réflexe qui augmente le cisaillement aortique et peut aggraver la dissection)</li>
-      <li><strong>Antalgie</strong> : <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min — la douleur intense entretient la décharge sympathique et la poussée tensionnelle</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Antalgie — Morphine (Morphine Aguettant®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;">Bolus titré <strong style="color:var(--accent2)">2-3 mg IV/5-10 min</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">La douleur intense entretient la décharge sympathique et la poussée tensionnelle</div>
+        </div>
+      </li>
       <li><strong>Type A (aorte ascendante) :</strong> avis chirurgical cardiaque en extrême urgence — chirurgie de remplacement aortique dans les meilleurs délais (mortalité augmentant d'environ 1-2%/heure sans traitement)</li>
       <li><strong>Type B (aorte descendante) non compliquée :</strong> traitement médical seul (bêtabloquant + contrôle tensionnel strict), surveillance en unité de soins intensifs, imagerie de contrôle. <strong>Type B compliquée</strong> (malperfusion d'organe, rupture, extension, douleur réfractaire, HTA réfractaire) : <strong>TEVAR</strong> (endoprothèse aortique par voie endovasculaire) en 1ère intention si disponible, sinon chirurgie ouverte</li>
       <li>Ne pas administrer d'antiagrégant plaquettaire ni d'anticoagulant tant que la dissection n'est pas formellement exclue ou prise en charge chirurgicalement (aggravation du risque hémorragique/de rupture)</li>
       <li>Rechercher un contexte favorisant : HTA mal contrôlée (cause la plus fréquente), maladie du tissu conjonctif (Marfan, Ehlers-Danlos), bicuspidie aortique, grossesse, traumatisme thoracique, cocaïne</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Jamais de vasodilatateur (Nicardipine) seul en 1ère intention : sans bêtabloquant associé au préalable, la tachycardie réflexe augmente le cisaillement pariétal aortique (dP/dt) et peut précipiter l'extension ou la rupture de la dissection.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'angioscanner est disponible dans les CHU/CHRR équipés en scanner injecté. Le TEVAR (endoprothèse) et la chirurgie de l'aorte ascendante ne sont pas disponibles sur le territoire — en cas de type A confirmé, organiser un transfert international dès que la stabilisation médicale le permet. Esmolol et Trandate® sont réservés aux pharmacies hospitalières de CHU ; en leur absence, le Labétalol reste plus facilement substituable par voie orale/IV lente selon disponibilité locale.</p>
   </div>
 
   <div class="card" id="proto-avc">
@@ -1805,14 +1918,26 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin-bottom:8px;">Sévère = glycémie &lt;0,54 g/L (3 mmol/L) avec troubles de conscience/incapacité à se resucrer seul.</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li><strong>Patient conscient :</strong> resucrage oral 15g de glucides rapides (3 sucres ou équivalent), recontrôler à 15 min</li>
-      <li><strong>Patient inconscient/trouble de déglutition :</strong> Glucosé 30% — 2-3 ampoules de 10mL (G30%) IV directe lente, ou G10% 200mL en 15 min. Si pas de voie veineuse : <strong>Glucagon (GlucaGen®)</strong> 1mg IM/SC (inefficace si dénutrition/insuffisance hépatique/alcoolisme)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Patient inconscient/trouble de déglutition</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Glucosé 30% — 2-3 amp. de 10mL IV directe lente</strong>, ou <strong style="color:var(--accent2)">G10% 200mL/15min</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Si pas de voie veineuse : <strong>Glucagon (GlucaGen®) 1mg IM/SC</strong> (inefficace si dénutrition/insuffisance hépatique/alcoolisme)</div>
+        </div>
+      </li>
       <li>Recontrôler la glycémie à 15 min, répéter si besoin, puis relais par apport glucidique pour éviter la récidive (surtout si sulfamides hypoglycémiants — surveillance prolongée 24-48h)</li>
       <li>Rechercher la cause : surdosage insuline/ADO, jeûne prolongé, insuffisance rénale/hépatique, sepsis, insuffisance surrénalienne</li>
     </ul>
     <div class="warn-box" style="margin-top:10px;">🍬 <strong>Hypoglycémie réfractaire aux sulfamides hypoglycémiants (Octréotide)</strong> — en cas de surdosage/intoxication par <strong>Glibenclamide (Daonil®)</strong> ou <strong>Gliclazide (Diamicron®)</strong>, l'hypersécrétion d'insuline induite peut provoquer des hypoglycémies récidivantes malgré des resucrages répétés au G30%, parfois pendant plus de 24-48h (demi-vie longue, surtout si insuffisance rénale associée).
       <ul style="margin-left:18px; margin-top:6px;">
         <li>Éviter le <strong>Glucagon</strong> en 1ère intention dans ce contexte précis : il stimule lui aussi la libération d'insuline endogène et peut aggraver/prolonger l'hypoglycémie en cas de surdosage aux sulfamides (à la différence de l'hypoglycémie de l'insulinothérapie, où il reste utile)</li>
-        <li><strong>Octréotide (Sandostatine®)</strong> 50-100 µg SC ou IV, à renouveler toutes les 6-12h selon la récidive — inhibe la sécrétion pancréatique d'insuline induite par les sulfamides et réduit le nombre d'épisodes hypoglycémiques ainsi que les besoins en glucosé. À associer au resucrage glucosé habituel, pas en remplacement</li>
+        <li>
+          <div style="margin:4px 0; padding-left:14px; border-left:2px solid var(--modere);">
+            <div><strong>💉 Octréotide (Sandostatine®)</strong></div>
+            <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">50-100 µg SC ou IV</strong> &nbsp;·&nbsp; renouvelable toutes les 6-12h selon la récidive</div>
+            <div style="font-size:12.5px; color:var(--muted);">Inhibe la sécrétion pancréatique d'insuline induite par les sulfamides et réduit le nombre d'épisodes hypoglycémiques ainsi que les besoins en glucosé. À associer au resucrage glucosé habituel, pas en remplacement</div>
+          </div>
+        </li>
         <li>Surveillance glycémique rapprochée prolongée (au moins 24-48h après la dernière hypoglycémie) avant d'envisager une sortie, compte tenu du risque de récidive tardive</li>
         <li>Avis toxicologique/réanimation si ingestion volontaire ou dose supra-thérapeutique importante</li>
       </ul>
@@ -1832,9 +1957,27 @@ function renderProtocoles(){
     </div>
     <div class="result-box hidden" id="acd_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Réhydratation</strong> en premier (avant insuline) : NaCl 0,9% — 1 000 mL en 1h IVL, ET 1 000 mL en 2h, ET 1 000 mL en 2h, PUIS 1 000 mL de soluté en 4h en fonction de la glycémie (dextro &gt;14 mmol/L : NaCl 0,9% ; dextro &lt;14 mmol/L : NaCl 0,9% et G5% en Y). Poursuivre ensuite selon l'état hémodynamique et la fonction cardiaque. Chez l'enfant : débit plus prudent, à calculer selon le poids (risque d'œdème cérébral en cas de correction trop rapide)</li>
-      <li><strong>Insulinothérapie</strong> : débuter après ≥1h de réhydratation (sauf choc) — objectif glycémique 11 mM si cétonémie &gt;0,5 mM. <strong>Insuline rapide (Novorapid®, Apidra®, Humalog®)</strong> IVSE 0,1 UI/kg/h, sans dépasser 10 UI/h, tant que la cétonémie reste &gt;0,5 mM. Objectif de correction de la cétonémie : diminution de 0,5 mmol/L/h — augmenter le débit de perfusion si cet objectif n'est pas atteint au bout de quelques heures. Dès que cétonémie &lt;0,5 mM : relais protocole insuline classique (F11). Pas de bolus initial, surtout chez l'enfant (risque d'œdème cérébral)</li>
-      <li><strong>Recharge potassique :</strong> si signe électrique d'hyperkaliémie ou K+ &gt;5,5 mmol/L → pas de KCl dans les perfusions. Sinon : 2 g de KCl par litre de NaCl 0,9%, à partir du 3ᵉ litre perfusé. Si kaliémie &lt;3 mmol/L → arrêt de l'insuline et KCl 1 g/h IVSE, reprise de l'insuline une fois la kaliémie corrigée</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💧 Réhydratation en premier</strong> — avant l'insuline</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">NaCl 0,9%</strong> — 1000 mL/1h IVL, puis 1000 mL/2h, puis 1000 mL/2h, puis 1000 mL/4h</div>
+          <div style="font-size:12.5px; color:var(--muted);">Selon la glycémie (dextro &gt;14 mmol/L : NaCl 0,9% seul ; dextro &lt;14 mmol/L : NaCl 0,9% + G5% en Y). Poursuivre ensuite selon l'état hémodynamique et la fonction cardiaque. Chez l'enfant : débit plus prudent, à calculer selon le poids (risque d'œdème cérébral en cas de correction trop rapide)</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💉 Insulinothérapie</strong> — débuter après ≥1h de réhydratation (sauf choc)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Insuline rapide (Novorapid®, Apidra®, Humalog®) IVSE 0,1 UI/kg/h</strong>, sans dépasser 10 UI/h</div>
+          <div style="font-size:12.5px; color:var(--muted);">Objectif glycémique 11 mM si cétonémie &gt;0,5 mM ; objectif de correction de la cétonémie : diminution de 0,5 mmol/L/h — augmenter le débit si non atteint. Dès cétonémie &lt;0,5 mM : relais protocole insuline classique (F11). <strong>Pas de bolus initial</strong>, surtout chez l'enfant (risque d'œdème cérébral)</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Recharge potassique</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">2g KCl/L de NaCl 0,9%</strong>, à partir du 3e litre perfusé</div>
+          <div style="font-size:12.5px; color:var(--muted);">Si signe électrique d'hyperkaliémie ou K+&gt;5,5 mmol/L → pas de KCl. Si kaliémie &lt;3 mmol/L → arrêt de l'insuline et <strong>KCl 1g/h IVSE</strong>, reprise de l'insuline une fois la kaliémie corrigée</div>
+        </div>
+      </li>
       <li>Rechercher et traiter le facteur déclenchant : infection/sepsis (voir protocole Sepsis), diarrhée, inobservance thérapeutique, IDM, corticoïdes, grossesse...</li>
       <li>Bicarbonates : non recommandés en routine, à discuter uniquement si acidose extrême (pH&lt;6,9) avec retentissement hémodynamique</li>
       <li>Critères de résolution : glycémie &lt;2 g/L (11 mmol/L) et cétonémie &lt;0,5 mmol/L, associées à au moins 2 des critères suivants : bicarbonates ≥15 mmol/L, pH veineux &gt;7,3, trou anionique ≤12 mmol/L</li>
@@ -1892,11 +2035,35 @@ function renderProtocoles(){
     <div class="result-box hidden" id="hhs_result"></div>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Monitorage :</strong> PANI, scope, SpO2 ; sonde urinaire ou pénilex.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Réhydratation</strong> massive mais prudente (déficit hydrique souvent &gt;8-10 L) : sérum physiologique (NaCl 0,9%) 1 000 mL en 30 min, PUIS 2 000 mL en 2h, PUIS solution Ringer Lactate ou sérum physiologique avec 2 g/L de KCl, PUIS 4 000 mL en 24h — à adapter au terrain (patient souvent âgé/cardiopathe). Correction de l'hypernatrémie de l'ordre de 10 mEq par jour. Vitamine B1 100 mg IVL systématique</li>
-      <li><strong>Insulinothérapie</strong> : différer tant que la réhydratation seule fait baisser la glycémie. Objectif glycémique 11 mM. Débuter par <strong>Insuline rapide (Actrapid®)</strong> 0,1 UI/kg/h ; si inefficace au bout de 2h, passer à 0,2 UI/kg/h, puis adapter en fonction de la glycémie. Dès que la glycémie est &lt;11 mM, remplacer le sérum physiologique par du G5%. Dès que l'hydratation est corrigée, relais par insuline rapide SC toutes les 4h à la posologie de 0,5 UI/kg/j. Une insulinothérapie trop précoce/agressive expose à une chute osmotique brutale et un collapsus</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💧 Réhydratation massive mais prudente</strong> — déficit hydrique souvent &gt;8-10 L</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">NaCl 0,9% 1000mL/30min</strong>, puis <strong style="color:var(--accent2)">2000mL/2h</strong>, puis Ringer Lactate/NaCl 0,9% + 2g/L KCl, puis <strong style="color:var(--accent2)">4000mL/24h</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">À adapter au terrain (patient souvent âgé/cardiopathe). Correction de l'hypernatrémie ≈10 mEq/jour. <strong>Vitamine B1 100mg IVL</strong> systématique</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💉 Insulinothérapie</strong> — différer tant que la réhydratation seule fait baisser la glycémie</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Insuline rapide (Actrapid®) 0,1 UI/kg/h</strong> ; si inefficace à 2h, passer à <strong style="color:var(--accent2)">0,2 UI/kg/h</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Objectif glycémique 11 mM. Dès glycémie &lt;11 mM : remplacer le NaCl par du G5%. Dès hydratation corrigée : relais insuline rapide SC/4h à 0,5 UI/kg/j. Une insulinothérapie trop précoce/agressive expose à une chute osmotique brutale et un collapsus</div>
+        </div>
+      </li>
       <li><strong>Oxygénothérapie</strong> avec un objectif de SpO2 compris entre 94 et 97 %</li>
-      <li><strong>Recharge potassique :</strong> KCl IVSE 1 g/h si kaliémie &lt;3,3 mmol/L ; 0,5 g/h si kaliémie &lt;4 mmol/L — surveillance rapprochée</li>
-      <li><strong>Anticoagulation préventive systématique :</strong> Lovenox® 0,4 mL SC/j (risque thromboembolique majeur lié à l'hyperosmolarité, sauf contre-indication)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Recharge potassique</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">KCl IVSE 1g/h</strong> si K+&lt;3,3 mmol/L &nbsp;·&nbsp; <strong style="color:var(--accent2)">0,5g/h</strong> si K+&lt;4 mmol/L</div>
+          <div style="font-size:12.5px; color:var(--muted);">Surveillance rapprochée</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💉 Anticoagulation préventive systématique</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Lovenox® 0,4 mL SC/j</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Risque thromboembolique majeur lié à l'hyperosmolarité, sauf contre-indication</div>
+        </div>
+      </li>
       <li>Rechercher et traiter le facteur déclenchant : infection +++, AVC, IDM, déshydratation, médicaments hyperglycémiants/diurétiques</li>
       <li>Objectif : baisse osmolaire progressive et lente (≈3-8 mOsm/kg/h) ; mortalité plus élevée que l'ACD, surveillance prolongée</li>
       <li><strong>Surveillance :</strong>
@@ -1908,6 +2075,7 @@ function renderProtocoles(){
         </ul>
       </li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le NaCl 0,9%, le Ringer Lactate, l'Insuline rapide et le KCl injectable sont disponibles à la plupart des niveaux hospitaliers (LNMEIS). Le Lovenox® pour la thromboprophylaxie est également largement disponible. La surveillance biologique répétée (ionogramme/GDS toutes les 6h) nécessite un accès régulier au laboratoire — à organiser en priorité vu le risque vital de ce tableau.</p>
   </div>
 
   <div class="card" id="proto-acidose-lactique">
@@ -1922,6 +2090,7 @@ function renderProtocoles(){
       <li>Surveillance rapprochée : lactates, gaz du sang, fonction rénale, kaliémie</li>
     </ol>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">⚠️ Ne pas confondre avec l'ACD : ici pas de cétose marquée, contexte évocateur (metformine + IRA), trou anionique élevé principalement porté par les lactates.</p>
+    <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le dosage des lactates et les gaz du sang ne sont pas disponibles partout hors CHU/CHRR — s'appuyer sur le trou anionique et le contexte clinique en leur absence. L'épuration extra-rénale (hémodialyse) reste réservée à un nombre très limité de centres équipés — en cas d'indication (lactates &gt;20 mmol/L, choc réfractaire), organiser un transfert sans délai tout en poursuivant la réanimation hémodynamique.</p>
   </div>
 
   <div class="card" id="proto-acidocetose-alcoolique">
@@ -1929,8 +2098,20 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin-bottom:8px;">Entité distincte de l'ACD et de l'acidose lactique. Terrain typique : alcoolisme chronique avec réduction ou arrêt récent des apports alcooliques (souvent après un épisode de forte consommation), associé à un jeûne prolongé et des vomissements répétés. Biologie : acidose métabolique à trou anionique augmenté, cétonémie/cétonurie positive (surtout β-hydroxybutyrate), <strong>glycémie basse, normale ou seulement discrètement élevée</strong> (jamais franchement élevée comme dans l'ACD).</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Diagnostic différentiel :</strong> ACD (glycémie franchement élevée, contexte diabétique), acidose lactique/MALA (cétose peu marquée, contexte metformine/choc/hypoxie), intoxication au méthanol/éthylène glycol (trou osmolaire élevé, troubles visuels), pancréatite aiguë associée (fréquente, à rechercher systématiquement devant des douleurs abdominales).</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Thiamine (vitamine B1) 100-500 mg IV ou IM, à administrer avant ou en même temps que tout soluté glucosé</strong> — prévention de l'encéphalopathie de Gayet-Wernicke, systématique chez tout patient alcoolique recevant du glucose. Ne jamais retarder la correction d'une hypoglycémie sévère associée pour attendre la thiamine ; les administrer alors simultanément</li>
-      <li><strong>Réhydratation par soluté glucosé</strong> — <strong>Glucosé 5% ou 10% dans NaCl 0,9%</strong>, c'est le traitement clé : le glucose restaure l'insulinosécrétion endogène et stoppe la cétogenèse plus efficacement que le remplissage seul. À éviter transitoirement seulement si hypokaliémie sévère non corrigée (l'appel insulinique induit par le glucose aggraverait l'hypokaliémie) — corriger d'abord le potassium</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Thiamine (vitamine B1)</strong> — avant ou en même temps que tout soluté glucosé</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">100-500 mg IV ou IM</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Prévention de l'encéphalopathie de Gayet-Wernicke, systématique chez tout patient alcoolique recevant du glucose. Ne jamais retarder la correction d'une hypoglycémie sévère associée pour attendre la thiamine ; les administrer alors simultanément</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💧 Réhydratation par soluté glucosé</strong> — traitement clé</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Glucosé 5% ou 10% dans NaCl 0,9%</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Le glucose restaure l'insulinosécrétion endogène et stoppe la cétogenèse plus efficacement que le remplissage seul. À éviter transitoirement seulement si hypokaliémie sévère non corrigée (l'appel insulinique induit par le glucose aggraverait l'hypokaliémie) — corriger d'abord le potassium</div>
+        </div>
+      </li>
       <li><strong>Pas d'insulinothérapie exogène nécessaire</strong> (à la différence de l'ACD) — le resucrage seul suffit à corriger la cétose chez la grande majorité des patients</li>
       <li><strong>Correction électrolytique systématique</strong> : kaliémie, magnésémie, phosphorémie (déficits fréquents chez le patient alcoolique dénutri) — surveiller un éventuel syndrome de renutrition en cas de dénutrition sévère associée</li>
       <li>Antiémétiques si vomissements, et rechercher/traiter les complications associées : sevrage alcoolique (cf. protocole dédié), pancréatite aiguë, hépatite alcoolique, hypoglycémie</li>
@@ -2453,7 +2634,7 @@ function renderProtocoles(){
         <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
           <div><strong>💊 Lactulose (Duphalac®, Lactulose Merck®)</strong> — 1ère ligne</div>
           <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">20-30 mL PO/SNG toutes les 1-2h</strong> jusqu'aux 1ères selles, puis titration pour 2-3 selles molles/j (entretien 20-30 mL x2-3/j)</div>
-          <div style="font-size:12.5px; color:var(--muted);">Si trouble de conscience empêchant la voie orale (grade III-IV) : lavement rectal — 300 mL de lactulose dilués dans 700 mL d'eau, à conserver 30-60 min, répétable toutes les 4-6h</div>
+          <div style="font-size:12.5px; color:var(--muted);">Si trouble de conscience empêchant la voie orale (grade III-IV) : <a onclick="document.querySelector('[data-mod=gestes]').click(); setTimeout(()=>document.getElementById('geste-lavement-rectal')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">lavement rectal</a> — 300 mL de lactulose dilués dans 700 mL d'eau, à conserver 30-60 min, répétable toutes les 4-6h (technique d'administration détaillée dans la fiche gestes correspondante)</div>
         </div>
       </li>
       <li>Titrer prudemment : le surdosage (&gt;4-6 selles/j) peut lui-même précipiter une encéphalopathie (déshydratation, hypernatrémie, hypokaliémie) — <strong>Macrogol/PEG 3350 (Forlax®, Movicol®)</strong> en alternative si intolérance/distension abdominale au lactulose</li>
@@ -2710,13 +2891,26 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin-bottom:8px;">À évoquer devant un collapsus/choc résistant au remplissage, hypoglycémie, hyponatrémie/hyperkaliémie, douleurs abdominales, chez un patient insuffisant surrénalien connu (contexte de stress/infection/arrêt de corticoïdes) ou révélant une insuffisance surrénalienne jusque-là méconnue.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Ne jamais retarder le traitement en attendant la confirmation biologique</strong> — prélever un cortisol (± ACTH) si possible puis traiter immédiatement sans attendre le résultat</li>
-      <li><strong>Hydrocortisone IV (Hydrocortisone Roussel®, Solu-Cortef®)</strong> 100 mg en bolus, puis 50 mg IV toutes les 6h (ou 200 mg/24h en perfusion continue) — à poursuivre jusqu'à stabilisation puis décroissance progressive avec relais oral</li>
-      <li>Remplissage vasculaire rapide par NaCl 0,9% (1L sur la 1ère heure puis adapter), correction de l'hypoglycémie associée (fréquente) par sérum glucosé</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Hydrocortisone IV (Hydrocortisone Roussel®, Solu-Cortef®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">100 mg bolus</strong> puis <strong style="color:var(--accent2)">50 mg IV/6h</strong> (ou 200mg/24h continu)</div>
+          <div style="font-size:12.5px; color:var(--muted);">À poursuivre jusqu'à stabilisation puis décroissance progressive avec relais oral</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💧 Remplissage vasculaire rapide</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">NaCl 0,9% 1L/1h</strong> puis adapter</div>
+          <div style="font-size:12.5px; color:var(--muted);">Correction de l'hypoglycémie associée (fréquente) par sérum glucosé</div>
+        </div>
+      </li>
       <li>Correction prudente d'une hyperkaliémie sévère si présente (souvent améliorée par l'hydrocortisone et la réhydratation seules)</li>
       <li>Rechercher et traiter le facteur déclenchant (infection, chirurgie, arrêt brutal d'une corticothérapie au long cours, stress majeur)</li>
       <li>Pas besoin de fludrocortisone en phase aiguë (l'hydrocortisone à forte dose a déjà un effet minéralocorticoïde suffisant) — à réintroduire au relais oral une fois la dose d'hydrocortisone diminuée</li>
       <li>Surveillance rapprochée : TA, glycémie, ionogramme, diurèse — bonne réponse habituellement rapide (quelques heures) sous traitement adapté</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Hydrocortisone injectable et le NaCl 0,9% sont disponibles à la plupart des niveaux hospitaliers (LNMEIS). Le dosage du cortisol/ACTH n'est réalisable qu'en CHU — ne jamais attendre ce résultat pour débuter le traitement devant une suspicion clinique forte.</p>
   </div>
 
   <div class="card" id="proto-thyroide">
@@ -2725,18 +2919,42 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Crise thyréotoxique (thyroid storm) :</strong> décompensation aiguë d'une hyperthyroïdie (souvent maladie de Basedow méconnue/mal traitée), déclenchée par une infection, chirurgie, arrêt des antithyroïdiens, prise d'iode. Score de <strong>Burch-Wartofsky</strong> utile pour quantifier la probabilité (fièvre, tachycardie/FA, troubles digestifs, troubles neuropsychiques, insuffisance cardiaque) — diagnostic avant tout clinique, ne pas attendre les hormones thyroïdiennes pour traiter</li>
       <li><strong>Traitement de la crise thyréotoxique (séquence à respecter) :</strong>
-        <ol style="margin-left:18px;">
-          <li><strong>Antithyroïdien de synthèse</strong> — <strong>Propylthiouracile (PTU)</strong> 500-1000 mg dose de charge puis 250 mg toutes les 4h (bloque aussi la conversion périphérique T4→T3, préféré en 1ère intention dans la crise), ou <strong>Carbimazole (Néo-Mercazole®)</strong> 20-30 mg toutes les 6-8h si PTU indisponible</li>
-          <li><strong>Au moins 1h après</strong> l'antithyroïdien (jamais avant — risque d'accélérer la synthèse hormonale par effet Wolff-Chaikoff paradoxal) : <strong>solution iodée</strong> (Lugol fort) pour bloquer la libération hormonale</li>
-          <li><strong>Bêtabloquant</strong> — <strong>Propranolol (Avlocardyl®)</strong> 60-80 mg PO toutes les 4h ou 0,5-1 mg IV lent (répétable) : contrôle la tachycardie et bloque également la conversion périphérique T4→T3 ; prudence/contre-indication relative si insuffisance cardiaque décompensée (préférer alors Esmolol titrable)</li>
-          <li><strong>Hydrocortisone (Solu-Cortef®)</strong> 100 mg IV toutes les 8h — bloque la conversion T4→T3 et couvre une possible insuffisance surrénalienne relative associée</li>
-          <li>Refroidissement si hyperthermie (paracétamol — <strong>éviter l'aspirine</strong> qui déplace la T4 de sa protéine porteuse et aggrave la thyrotoxicose), réhydratation, correction des troubles ioniques, traitement du facteur déclenchant (antibiothérapie si infection)</li>
-        </ol>
+        <ul style="margin:8px 0 0 4px; line-height:1.5; list-style:none; padding-left:0;">
+          <li style="margin-bottom:12px; padding-left:14px; border-left:2px solid var(--grave);">
+            <div><strong>💊 1. Antithyroïdien de synthèse</strong></div>
+            <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Propylthiouracile (PTU) 500-1000mg charge</strong> puis <strong style="color:var(--accent2)">250mg/4h</strong> &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Carbimazole (Néo-Mercazole®) 20-30mg/6-8h</strong></div>
+            <div style="font-size:12.5px; color:var(--muted);">PTU bloque aussi la conversion périphérique T4→T3, préféré en 1ère intention</div>
+          </li>
+          <li style="margin-bottom:12px; padding-left:14px; border-left:2px solid var(--modere);">
+            <div><strong>💊 2. Solution iodée (Lugol fort)</strong> — au moins 1h après l'antithyroïdien</div>
+            <div style="font-size:12.5px; color:var(--muted);"><strong>Jamais avant</strong> — risque d'accélérer la synthèse hormonale par effet Wolff-Chaikoff paradoxal</div>
+          </li>
+          <li style="margin-bottom:12px; padding-left:14px; border-left:2px solid var(--modere);">
+            <div><strong>💉 3. Bêtabloquant — Propranolol (Avlocardyl®)</strong></div>
+            <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">60-80mg PO/4h</strong> ou <strong style="color:var(--accent2)">0,5-1mg IV lent</strong> répétable</div>
+            <div style="font-size:12.5px; color:var(--muted);">Contrôle la tachycardie et bloque la conversion T4→T3 ; prudence/CI relative si insuffisance cardiaque décompensée (préférer Esmolol titrable)</div>
+          </li>
+          <li style="margin-bottom:12px; padding-left:14px; border-left:2px solid var(--border);">
+            <div><strong>💉 4. Hydrocortisone (Solu-Cortef®)</strong></div>
+            <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">100mg IV/8h</strong></div>
+            <div style="font-size:12.5px; color:var(--muted);">Bloque la conversion T4→T3 et couvre une possible insuffisance surrénalienne relative associée</div>
+          </li>
+          <li style="padding-left:14px; border-left:2px solid var(--border);">
+            <div>5. Refroidissement si hyperthermie (paracétamol — <strong>éviter l'aspirine</strong> qui déplace la T4 de sa protéine porteuse), réhydratation, correction des troubles ioniques, traitement du facteur déclenchant (antibiothérapie si infection)</div>
+          </li>
+        </ul>
       </li>
       <li><strong>Coma myxœdémateux :</strong> décompensation aiguë d'une hypothyroïdie sévère non traitée, favorisée par le froid, une infection, des sédatifs/opiacés — hypothermie, bradycardie, hypoventilation avec hypercapnie, troubles de conscience jusqu'au coma, hyponatrémie fréquente. <strong>Mortalité élevée</strong> (jusqu'à 30-40%) — traiter sur suspicion clinique sans attendre les hormones thyroïdiennes</li>
-      <li><strong>Traitement du coma myxœdémateux :</strong> <strong>Lévothyroxine IV</strong> — dose de charge 200-400 µg IV, puis 50-100 µg/j IV (relais oral dès que possible) ; associer systématiquement <strong>Hydrocortisone (Solu-Cortef®)</strong> 100 mg IV toutes les 8h <strong>avant/avec</strong> la lévothyroxine (une insuffisance surrénalienne associée est fréquente et la lévothyroxine seule peut précipiter une crise surrénalienne) ; réchauffement passif prudent (jamais actif agressif — risque de vasodilatation et de collapsus) ; ventilation assistée si hypercapnie/détresse respiratoire ; restriction hydrique si hyponatrémie (éviter la correction trop rapide, cf. protocole troubles ioniques) ; traiter le facteur déclenchant (infection +++)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Traitement du coma myxœdémateux — Lévothyroxine IV</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Dose de charge 200-400 µg IV</strong>, puis <strong style="color:var(--accent2)">50-100 µg/j IV</strong> (relais oral dès que possible)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Associer systématiquement <strong>Hydrocortisone (Solu-Cortef®) 100 mg IV/8h avant/avec</strong> la lévothyroxine (une insuffisance surrénalienne associée est fréquente et la lévothyroxine seule peut précipiter une crise surrénalienne) ; réchauffement passif prudent (jamais actif agressif — risque de vasodilatation et de collapsus) ; ventilation assistée si hypercapnie/détresse respiratoire ; restriction hydrique si hyponatrémie (éviter la correction trop rapide, cf. protocole troubles ioniques) ; traiter le facteur déclenchant (infection +++)</div>
+        </div>
+      </li>
       <li>Éviter les sédatifs et opiacés dans les deux situations (masquent/aggravent les tableaux), surveillance rapprochée en unité de soins intensifs</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Propranolol et l'Hydrocortisone sont largement disponibles. Le PTU et le Carbimazole sont d'accès plus variable selon les CHU/CHRR ; la Lévothyroxine injectable est rare hors CHU — en son absence pour un coma myxœdémateux, la forme orale/par sonde nasogastrique reste une alternative si la déglutition ou une sonde le permettent, sans retarder l'hydrocortisone.</p>
   </div>
 
   <div class="card" id="proto-pheochromocytome">
@@ -2745,7 +2963,13 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Facteurs déclenchants à connaître</strong> (peuvent révéler une tumeur jusque-là méconnue) : induction anesthésique, palpation/pression abdominale, grossesse et surtout travail/accouchement, miction (paragangliome vésical) — et certains <strong>médicaments à proscrire</strong> chez un phéochromocytome connu ou fortement suspecté : <strong>métoclopramide, glucagon, produits de contraste iodés, corticoïdes à forte dose, antidépresseurs tricycliques</strong></li>
       <li><strong>Piège pharmacologique majeur à ne jamais commettre : ne jamais administrer de bêtabloquant seul/en 1ère intention</strong> — en bloquant la vasodilatation bêta-2 sans contrer l'effet alpha-vasoconstricteur, il peut précipiter une <strong>crise hypertensive paradoxale avec collapsus hémodynamique</strong>. L'alpha-blocage doit toujours précéder tout bêtabloquant</li>
-      <li><strong>Traitement de la crise hypertensive aiguë</strong> : <strong>Phentolamine</strong> (alpha-bloquant non sélectif) IV 2-5 mg en bolus, répétable, si disponible — à défaut, <strong>Nicardipine (Loxen®) IVSE</strong> titrée (inhibiteur calcique, ne nécessite pas d'alpha-blocage préalable, option la plus praticable en ressources limitées) ; <strong>Nitroprussiate de sodium IVSE</strong> en alternative si disponible et sous monitorage rapproché (idéalement PA invasive)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Traitement de la crise hypertensive aiguë</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Phentolamine 2-5 mg IV bolus</strong> répétable (si disponible) &nbsp;·&nbsp; à défaut <strong style="color:var(--accent2)">Nicardipine (Loxen®) IVSE</strong> titrée &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Nitroprussiate de sodium IVSE</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">La Nicardipine ne nécessite pas d'alpha-blocage préalable — option la plus praticable en ressources limitées ; Nitroprussiate sous monitorage rapproché (idéalement PA invasive)</div>
+        </div>
+      </li>
       <li><strong>Si tachycardie ou trouble du rythme persistant malgré un alpha-blocage efficace</strong> (et seulement à ce moment) : un bêtabloquant peut être ajouté en association (<strong>Propranolol</strong> ou <strong>Esmolol</strong> titrable) — jamais avant, jamais seul</li>
       <li><strong>Remplissage vasculaire prudent et anticipé</strong> : la vasoconstriction périphérique majeure induite par l'excès de catécholamines masque souvent une hypovolémie relative sous-jacente — surveiller une hypotension sévère de rebond après le contrôle tensionnel ou après l'exérèse chirurgicale de la tumeur (chute brutale des catécholamines circulantes)</li>
       <li><strong>Bilan diagnostique</strong> une fois la patiente/le patient stabilisé, sans retarder le traitement symptomatique : <strong>métanéphrines plasmatiques ou urinaires fractionnées</strong> (examen de référence), puis imagerie surrénalienne (TDM/IRM) pour localiser la tumeur</li>
@@ -2763,14 +2987,26 @@ function renderProtocoles(){
       <li><strong>Tableau clinique évocateur</strong> (pseudo-méningé) : <strong>céphalée brutale et intense</strong>, rétro-orbitaire ou diffuse, souvent au premier plan et précédant les autres signes ; syndrome méningé inconstant ; atteinte oculomotrice par extension au sinus caverneux (diplopie, ptosis, ophtalmoplégie) ; atteinte des voies optiques par compression chiasmatique (baisse d'acuité visuelle, hémianopsie bitemporale) ; troubles de conscience dans les formes sévères</li>
       <li><strong>Diagnostics différentiels à évoquer et éliminer en urgence</strong> devant ce tableau : hémorragie sous-arachnoïdienne, méningite — le contexte (céphalée brutale + atteinte oculomotrice/visuelle + hypotension inexpliquée) doit orienter précocement vers l'apoplexie hypophysaire</li>
       <li><strong>Considérer systématiquement qu'il existe un déficit corticotrope</strong>, même en l'absence de preuve biologique immédiate — l'atteinte endocrinienne aiguë n'est ni constante ni toujours complète mais doit être présumée dans le cadre de l'urgence</li>
-      <li><strong>Hydrocortisone en urgence, sur la seule suspicion clinique, sans attendre l'imagerie ni la biologie hormonale</strong> : <strong>Hémisuccinate d'hydrocortisone (Solu-Cortef®)</strong> 100 mg IV <strong>et</strong> 100 mg IM simultanément, à répéter en IM 6h après (ou schéma alternatif 50 mg IV toutes les 6h) — corrige/prévient l'insuffisance corticotrope aiguë potentiellement fatale</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Hydrocortisone en urgence</strong> — sur la seule suspicion clinique, sans attendre l'imagerie ni la biologie hormonale</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Hémisuccinate d'hydrocortisone (Solu-Cortef®) 100 mg IV et 100 mg IM</strong> simultanément, à répéter en IM 6h après</div>
+          <div style="font-size:12.5px; color:var(--muted);">Ou schéma alternatif <strong>50 mg IV/6h</strong> — corrige/prévient l'insuffisance corticotrope aiguë potentiellement fatale</div>
+        </div>
+      </li>
       <li>VVP, réhydratation (Glucosé 5% — ou 10% si hypoglycémie associée — avec apport de NaCl et KCl selon l'ionogramme), traitement symptomatique des vomissements si présents</li>
       <li><strong>Imagerie cérébrale en urgence</strong> (IRM hypothalamo-hypophysaire de préférence pour confirmer le diagnostic, à défaut TDM cérébral) — <strong>à réaliser après le début du traitement par hydrocortisone</strong>, sans le retarder pour l'imagerie</li>
       <li><strong>Surveillance rapprochée</strong> : neurologique (conscience, oculomotricité, réflexe photomoteur, champ visuel au doigt), cardio-respiratoire (pouls, TA, fréquence respiratoire), ionogramme sanguin et glycémie répétés dans les 12-24h</li>
       <li><strong>Avis neurochirurgical en urgence</strong> si : troubles de conscience non corrigés par l'hydrocortisone, atteinte oculomotrice persistante, baisse d'acuité visuelle sévère ou d'aggravation rapide — décompression chirurgicale transsphénoïdale à discuter sans délai dans ces situations ; en dehors de ces critères, une prise en charge médicale seule est souvent suffisante, avec des résultats à long terme comparables entre les deux approches selon la littérature récente lorsque la sélection des patients est rigoureuse</li>
-      <li><strong>Lévothyroxine substitutive</strong> à introduire secondairement (typiquement 48h après le début de l'hydrocortisone) si insuffisance thyréotrope confirmée — <strong>jamais avant ou sans couverture par hydrocortisone</strong> (même piège que le coma myxœdémateux et le syndrome de Sheehan : risque de précipiter une insuffisance surrénalienne aiguë)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Lévothyroxine substitutive</strong> — à introduire secondairement (typiquement 48h après le début de l'hydrocortisone) si insuffisance thyréotrope confirmée</div>
+          <div style="font-size:12.5px; color:var(--muted);"><strong>Jamais avant ou sans couverture par hydrocortisone</strong> (même piège que le coma myxœdémateux et le syndrome de Sheehan : risque de précipiter une insuffisance surrénalienne aiguë)</div>
+        </div>
+      </li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais retarder l'hydrocortisone en attendant la confirmation par l'imagerie ou la biologie hormonale devant un tableau évocateur — l'insuffisance corticotrope aiguë engage le pronostic vital.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Hydrocortisone injectable est disponible à la plupart des niveaux hospitaliers (LNMEIS). L'IRM hypothalamo-hypophysaire et l'avis neurochirurgical sont réservés aux CHU — ne jamais retarder l'hydrocortisone en attendant le transfert.</p>
   </div>
 
   <div class="card" id="proto-diabete-insipide">
@@ -2780,14 +3016,26 @@ function renderProtocoles(){
       <li><strong>Présentation clinique</strong> : polyurie majeure d'apparition brutale (souvent &gt;200-300 mL/h, parfois &gt;10 L/24h), soif intense chez le patient conscient avec accès libre à l'eau — <strong>situation la plus dangereuse : patient inconscient, sédaté, ou sans accès libre à l'eau</strong> (réanimation, post-opératoire immédiat, coma), où l'hypernatrémie peut s'installer très rapidement sans mécanisme de compensation par la soif</li>
       <li><strong>Diagnostic évoqué en contexte à risque devant :</strong> polyurie + hypernatrémie ou natrémie en ascension rapide + urines inappropriément diluées (densité urinaire basse &lt;1005, osmolalité urinaire basse malgré une osmolalité plasmatique élevée)</li>
       <li><strong>Piège diagnostique à connaître :</strong> le test de restriction hydrique, examen de référence en contexte non urgent, est <strong>contre-indiqué en phase aiguë devant un diabète insipide central complet</strong> — risque de déshydratation majeure et d'hypernatrémie potentiellement fatale ; en situation d'urgence, un diagnostic présomptif clinique dans un contexte compatible suffit à démarrer le traitement</li>
-      <li><strong>Traitement substitutif : Desmopressine (Minirin®/DDAVP)</strong> — <strong>1-2 µg SC ou IV toutes les 8-12h</strong> (voie injectable à privilégier en phase aiguë ou si le patient ne peut pas prendre la voie orale/nasale), à titrer selon la diurèse horaire et l'évolution de la natrémie ; alternative intranasale (10-20 µg) si patient coopérant avec muqueuse nasale fonctionnelle</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Traitement substitutif — Desmopressine (Minirin®/DDAVP)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">1-2 µg SC ou IV/8-12h</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Voie injectable à privilégier en phase aiguë ou si le patient ne peut pas prendre la voie orale/nasale, à titrer selon la diurèse horaire et l'évolution de la natrémie ; alternative intranasale (10-20 µg) si patient coopérant avec muqueuse nasale fonctionnelle</div>
+        </div>
+      </li>
       <li><strong>Correction du déficit hydrique en parallèle</strong> : apport d'eau libre per os si le patient est conscient et peut boire, ou <strong>Glucosé 5%</strong> IV dans le cas contraire — déficit hydrique estimé = eau corporelle totale × (Natrémie actuelle / 140 − 1)</li>
       <li><strong>Vitesse de correction de la natrémie à respecter :</strong> ne pas dépasser <strong>8-10 mmol/L par 24h</strong> en cas d'hypernatrémie chronique ou de durée indéterminée (risque d'œdème cérébral si correction trop rapide) — une correction plus rapide peut être tolérée uniquement si l'installation est clairement aiguë (&lt;48h) et documentée, toujours sous surveillance biologique rapprochée</li>
       <li>Surveillance horaire de la diurèse en phase aiguë, ionogramme sanguin toutes les 4-6h initialement, poids quotidien</li>
-      <li><strong>Piège du surdosage en desmopressine :</strong> rétention hydrique et hyponatrémie de dilution, pouvant aller jusqu'à des convulsions chez l'enfant — <strong>Furosémide</strong> pour induire une diurèse en cas de surdosage symptomatique, et espacer/réduire les doses suivantes</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Piège du surdosage en desmopressine</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Rétention hydrique et hyponatrémie de dilution, pouvant aller jusqu'à des convulsions chez l'enfant — <strong>Furosémide</strong> pour induire une diurèse en cas de surdosage symptomatique, et espacer/réduire les doses suivantes</div>
+        </div>
+      </li>
       <li><strong>Rechercher systématiquement une atteinte antéhypophysaire associée</strong> dans le même contexte lésionnel, en particulier une insuffisance corticotrope — comme pour l'apoplexie hypophysaire et le syndrome de Sheehan, <strong>toujours couvrir l'axe corticotrope par hydrocortisone avant toute hormonothérapie thyroïdienne</strong> en cas d'insuffisance hypophysaire globale suspectée</li>
       <li>Contexte particulier de la <strong>mort encéphalique/don d'organes</strong> : cf. protocole dédié de cette application pour la prise en charge spécifique du diabète insipide dans ce cadre</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Desmopressine (Minirin®) est d'accès limité hors CHU — anticiper sa disponibilité dès qu'un contexte à risque est identifié (post-neurochirurgie hypophysaire notamment). En son absence, la surveillance stricte de la diurèse et des apports hydriques adaptés restent essentiels en attendant le transfert.</p>
   </div>
 
   <div class="card" id="proto-ivresse-aigue">
@@ -3295,11 +3543,25 @@ function renderProtocoles(){
       <li><strong>Évaluer la probabilité clinique</strong> (<a onclick="document.querySelector('[data-mod=calculateurs]').click(); setTimeout(()=>document.getElementById('calc-wells')?.scrollIntoView({behavior:'smooth',block:'start'}),100)" style="color:var(--accent); cursor:pointer; text-decoration:underline;">score de Wells</a> ou de Genève révisé) avant tout examen complémentaire — oriente la stratégie diagnostique</li>
       <li>Probabilité <strong>faible/intermédiaire</strong> : dosage des <strong>D-dimères</strong> — si négatifs, EP exclue (bonne valeur prédictive négative) ; si positifs ou probabilité forte d'emblée → angioscanner thoracique (ou scintigraphie V/Q si CI à l'iode/grossesse)</li>
       <li><strong>Rechercher les signes de gravité</strong> immédiatement : hypotension/choc (EP à haut risque), signes de cœur pulmonaire aigu à l'échographie (dilatation VD), désaturation sévère — orientent vers un traitement urgent sans attendre la confirmation formelle si l'instabilité est majeure</li>
-      <li><strong>EP à haut risque (choc/hypotension)</strong> : <strong>thrombolyse</strong> par <strong>Altéplase (Actilyse®)</strong> — 100 mg IV en perfusion continue sur 2h (10 mg en bolus sur 1-2 min puis 90 mg sur 2h), ou schéma accéléré 0,6 mg/kg (max 50 mg) en bolus sur 15 min si arrêt cardiaque imminent — après échocardiographie de confirmation si possible, en l'absence de contre-indication majeure</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 EP à haut risque (choc/hypotension)</strong> — thrombolyse</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Altéplase (Actilyse®) 100 mg IV/2h</strong> (10 mg bolus/1-2min puis 90 mg/2h) &nbsp;·&nbsp; ou schéma accéléré <strong style="color:var(--accent2)">0,6 mg/kg (max 50 mg)/15min</strong> si ACR imminent</div>
+          <div style="font-size:12.5px; color:var(--muted);">Après échocardiographie de confirmation si possible, en l'absence de contre-indication majeure</div>
+        </div>
+      </li>
       <li><strong>EP sans instabilité hémodynamique</strong> : anticoagulation curative d'emblée —
-        <strong>Héparine non fractionnée (Héparine Choay®)</strong> : bolus 80 UI/kg IV puis 18 UI/kg/h IVSE (adapté au TCA), à privilégier si risque hémorragique élevé, insuffisance rénale sévère ou instabilité potentielle (réversible rapidement) ;
-        ou <strong>Énoxaparine (Lovenox®)</strong> 100 UI/kg (1 mg/kg) SC toutes les 12h (à adapter à la clairance rénale) ;
-        ou <strong>Rivaroxaban (Xarelto®)</strong> 15 mg x2/j PO pendant 21 jours puis 20 mg/j en relais, si forme non grave et pas de contre-indication. Si <strong>relais par AVK</strong> préféré à un AOD (accès limité, coût, grossesse), voir le <a onclick="document.getElementById('proto-relais-avk-hbpm')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole dédié de relais HBPM ↔ AVK</a></li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💉 Héparine non fractionnée (Héparine Choay®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Bolus 80 UI/kg IV</strong> puis <strong style="color:var(--accent2)">18 UI/kg/h IVSE</strong> (adapté au TCA)</div>
+          <div style="font-size:12.5px; color:var(--muted);">À privilégier si risque hémorragique élevé, insuffisance rénale sévère ou instabilité potentielle (réversible rapidement)</div>
+        </div>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Alternatives</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Énoxaparine (Lovenox®) 100 UI/kg (1 mg/kg) SC/12h</strong> &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Rivaroxaban (Xarelto®) 15 mg x2/j PO x21j</strong> puis 20 mg/j</div>
+          <div style="font-size:12.5px; color:var(--muted);">Rivaroxaban si forme non grave et pas de contre-indication. Si <strong>relais par AVK</strong> préféré à un AOD (accès limité, coût, grossesse), voir le <a onclick="document.getElementById('proto-relais-avk-hbpm')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole dédié de relais HBPM ↔ AVK</a></div>
+        </div>
+      </li>
       <li>Oxygénothérapie selon SpO2, antalgie si douleur pleurétique, éviter le remplissage vasculaire agressif en cas de choc (peut aggraver la défaillance ventriculaire droite) — privilégier un remplissage prudent (250-500 mL) avec réévaluation</li>
       <li>Score de <strong>PESI</strong> (Pulmonary Embolism Severity Index) utile pour évaluer le pronostic et orienter la décision d'hospitalisation vs prise en charge ambulatoire des formes de faible gravité</li>
     </ol>
@@ -3325,14 +3587,26 @@ function renderProtocoles(){
     </div>
     <div class="result-box hidden" id="ischmembre_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Anticoagulation immédiate dès la suspicion</strong> (ne pas attendre l'imagerie) : <strong>Héparine non fractionnée (Héparine Choay®)</strong> — bolus 50-100 UI/kg IV, puis perfusion continue adaptée au TCA — prévient l'extension du thrombus et protège la circulation collatérale</li>
-      <li>Antalgie systématique (douleur ischémique souvent intense) : <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Anticoagulation immédiate dès la suspicion</strong> (ne pas attendre l'imagerie)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Héparine non fractionnée (Héparine Choay®)</strong> — bolus <strong style="color:var(--accent2)">50-100 UI/kg IV</strong>, puis perfusion continue adaptée au TCA</div>
+          <div style="font-size:12.5px; color:var(--muted);">Prévient l'extension du thrombus et protège la circulation collatérale</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Antalgie systématique</strong> (douleur ischémique souvent intense)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Morphine (Morphine Aguettant®)</strong> bolus titré <strong style="color:var(--accent2)">2-3 mg IV/5-10 min</strong></div>
+        </div>
+      </li>
       <li>Membre en position déclive (favorise la perfusion distale par gravité), protection des zones à risque (talon), éviter tout traumatisme/compression supplémentaire</li>
       <li><strong>Bilan étiologique en parallèle</strong> : ECG (fibrillation atriale), échocardiographie (thrombus intracardiaque, valvulopathie), écho-Doppler artériel des membres ± angioscanner/angio-IRM selon disponibilité et délai — sans retarder la revascularisation si stade II-III</li>
       <li><strong>Revascularisation en urgence</strong> selon le stade et la cause : embolectomie chirurgicale (sonde de Fogarty) si embolie proximale, ou thrombolyse in situ/thrombectomie percutanée si thrombose sur lésion athéromateuse, selon le plateau technique disponible et le délai d'ischémie</li>
       <li><strong>Stade III (ischémie dépassée/irréversible) :</strong> l'amputation prime sur la tentative de revascularisation — le rétablissement du flux sur un membre nécrosé libère potassium, myoglobine et acide lactique (syndrome de revascularisation), pouvant provoquer un arrêt cardiaque hyperkaliémique et une insuffisance rénale aiguë</li>
       <li>Après revascularisation : surveiller un <strong>syndrome des loges</strong> (douleur disproportionnée, tension des loges musculaires) — aponévrotomie de décharge si suspicion, et une rhabdomyolyse de reperfusion (CPK, fonction rénale, hyperkaliémie)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Héparine Choay® et la Morphine sont disponibles à la plupart des niveaux hospitaliers (LNMEIS). L'embolectomie chirurgicale (sonde de Fogarty) nécessite un plateau de chirurgie vasculaire, généralement limité aux CHU/CHRR ; la thrombolyse in situ/thrombectomie percutanée n'est pas disponible sur le territoire — en leur absence, anticoaguler sans délai et organiser un transfert chirurgical en urgence dès la suspicion, le pronostic du membre se jouant en heures.</p>
   </div>
 
   <div class="card" id="proto-tvp">
@@ -3349,7 +3623,13 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Évaluer la probabilité clinique</strong> (score de Wells pour TVP) avant tout examen complémentaire</li>
       <li>Probabilité <strong>faible/intermédiaire</strong> : <strong>D-dimères</strong> — si négatifs, TVP exclue ; si positifs ou probabilité forte d'emblée → <strong>écho-Doppler veineux</strong> des membres inférieurs (examen de référence, non invasif)</li>
-      <li><strong>Anticoagulation curative d'emblée</strong> dès confirmation (ou dès forte suspicion si l'imagerie ne peut être obtenue rapidement) : <strong>Énoxaparine (Lovenox®)</strong> 100 UI/kg (1 mg/kg) SC toutes les 12h (à adapter à la clairance rénale), ou <strong>Héparine non fractionnée (Héparine Choay®)</strong> IVSE si risque hémorragique élevé/insuffisance rénale sévère, ou <strong>Rivaroxaban (Xarelto®)</strong> 15 mg x2/j PO pendant 21 jours puis 20 mg/j si forme non compliquée</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Anticoagulation curative d'emblée</strong> — dès confirmation (ou dès forte suspicion si l'imagerie ne peut être obtenue rapidement)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Énoxaparine (Lovenox®) 100 UI/kg (1 mg/kg) SC/12h</strong> &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Héparine non fractionnée (Héparine Choay®) IVSE</strong> &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Rivaroxaban (Xarelto®) 15 mg x2/j PO x21j</strong> puis 20 mg/j</div>
+          <div style="font-size:12.5px; color:var(--muted);">Énoxaparine à adapter à la clairance rénale ; HNF si risque hémorragique élevé/insuffisance rénale sévère ; Rivaroxaban si forme non compliquée</div>
+        </div>
+      </li>
       <li>Durée du traitement : au moins <strong>3 mois</strong>, à prolonger selon le contexte (facteur déclenchant transitoire vs TVP non provoquée/récidivante/cancer actif — avis spécialisé). Si <strong>relais par AVK</strong> envisagé (Warfarine/Coumadine®) plutôt qu'une poursuite en AOD, voir le <a onclick="document.getElementById('proto-relais-avk-hbpm')?.scrollIntoView({behavior:'smooth',block:'start'})" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole dédié de relais HBPM ↔ AVK</a> (durée de chevauchement, critères d'arrêt de l'héparine, cibles INR)</li>
       <li><strong>Recherche systématique de signes d'embolie pulmonaire associée</strong> (dyspnée, douleur thoracique, tachycardie) — <em>voir protocole dédié</em> si suspicion</li>
       <li>Contention élastique/bas de compression pour réduire l'œdème et le risque de syndrome post-thrombotique, mobilisation précoce encouragée (ne pas immobiliser le membre, contrairement à une croyance répandue)</li>
@@ -3357,6 +3637,7 @@ function renderProtocoles(){
       <li>Rechercher une cause sous-jacente si TVP non provoquée : néoplasie occulte (bilan orienté selon l'âge/le terrain), thrombophilie (bilan à distance de l'épisode aigu et de l'anticoagulation), syndrome des anti-phospholipides</li>
       <li>Contre-indication à la thrombolyse systémique en 1ère intention pour une TVP simple (réservée aux formes proximales sévères menaçant le membre)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Énoxaparine (Lovenox®) et l'Héparine Choay® sont disponibles à la plupart des niveaux hospitaliers (LNMEIS). Le Rivaroxaban (Xarelto®) est d'accès plus limité et coûteux — le relais par AVK (Coumadine®) reste l'option la plus accessible au long cours en pratique courante à Madagascar (cf. protocole de relais dédié). L'écho-Doppler veineux est disponible dans les centres équipés en échographie ; en son absence devant une forte suspicion clinique, ne pas différer l'anticoagulation.</p>
   </div>
 
   <div class="card" id="proto-relais-avk-hbpm">
@@ -3365,7 +3646,13 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Principe :</strong> à l'instauration d'un AVK, l'effet anticoagulant met plusieurs jours à s'installer (inhibition initiale de la protéine C à demi-vie courte, avant l'inhibition des facteurs II/VII/IX/X à demi-vie plus longue) — d'où un <strong>risque thrombogène paradoxal transitoire</strong> si l'héparine est arrêtée trop tôt. Le chevauchement HBPM-AVK est donc <strong>obligatoire et non négociable</strong>.</p>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Instauration : Lovenox® → AVK</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Démarrage quasi-simultané</strong> : débuter l'AVK (warfarine/Coumadine® <strong>5 mg/j</strong> en dose initiale, jusqu'à 10mg chez le sujet jeune sans comorbidité, ou fluindione/Previscan® <strong>20 mg/j</strong>) dès <strong>J1 ou J2</strong> de l'HBPM à dose curative (<strong>Énoxaparine/Lovenox® 100 UI/kg SC x2/j ou 150 UI/kg SC x1/j</strong>), une fois le diagnostic thromboembolique confirmé — ne pas attendre. Poursuivre le Lovenox® à dose curative inchangée pendant toute la phase de chevauchement</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Démarrage quasi-simultané</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Warfarine (Coumadine®) 5 mg/j</strong> (jusqu'à 10mg chez le sujet jeune sans comorbidité) &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Fluindione (Previscan®) 20 mg/j</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Dès <strong>J1 ou J2</strong> de l'HBPM à dose curative (<strong>Énoxaparine/Lovenox® 100 UI/kg SC x2/j ou 150 UI/kg SC x1/j</strong>), une fois le diagnostic thromboembolique confirmé — ne pas attendre. Poursuivre le Lovenox® à dose curative inchangée pendant toute la phase de chevauchement</div>
+        </div>
+      </li>
       <li><strong>Surveillance de l'INR</strong> : premier contrôle à J3 de l'AVK, puis tous les 1-2 jours jusqu'à stabilisation</li>
       <li><strong>Arrêt de l'héparine</strong> uniquement lorsque <strong>2 critères cumulatifs</strong> sont réunis : chevauchement ≥ <strong>5 jours</strong> ET INR en zone cible sur <strong>2 dosages consécutifs</strong> à au moins 24h d'intervalle — un INR cible atteint précocement (ex. J2) ne permet pas d'arrêter l'héparine avant J5</li>
       <li>Adapter la posologie du Lovenox® en cas d'insuffisance rénale sévère (clairance créatinine 15-30 mL/min) : réduire à <strong>100 UI/kg SC x1/j</strong> (au lieu de x2/j) — cf. calculateur clairance créatinine (Cockcroft-Gault)</li>
@@ -3713,14 +4000,39 @@ function renderProtocoles(){
     <h3>🪨 Colique néphrétique</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">Douleur lombaire unilatérale brutale, intense, à irradiation antérieure/descendante vers les organes génitaux externes, souvent avec agitation caractéristique (patient incapable de rester immobile, contrairement à la péritonite).</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
-      <li><strong>Antalgie de 1ère intention :</strong> <strong>Kétoprofène (Profenid®)</strong> 100 mg IV lente (perfusion sur 20 min) ou IM, renouvelable une fois à 8h si besoin (max 200 mg/j) — efficacité supérieure aux antalgiques classiques sur ce type de douleur, en l'absence de contre-indication (insuffisance rénale, grossesse, allergie, ulcère évolutif)</li>
-      <li>Antalgie de 2e intention/complément : <strong>Paracétamol (Perfalgan® IV, Doliprane® PO)</strong> 1 g toutes les 6h ± <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min si douleur non contrôlée par les AINS seuls</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💊 Antalgie de 1ère intention — Kétoprofène (Profenid®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">100 mg IV lente (20 min) ou IM</strong> &nbsp;·&nbsp; renouvelable une fois à 8h (max 200 mg/j)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Efficacité supérieure aux antalgiques classiques sur ce type de douleur, en l'absence de contre-indication (insuffisance rénale, grossesse, allergie, ulcère évolutif)</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Antalgie de 2e intention/complément</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Paracétamol (Perfalgan®, Doliprane®) 1g/6h</strong> ± <strong style="color:var(--accent2)">Morphine bolus titré 2-3 mg IV/5-10 min</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Si douleur non contrôlée par les AINS seuls</div>
+        </div>
+      </li>
       <li><strong>Rechercher les critères de gravité</strong> nécessitant une prise en charge urgente (drainage) : fièvre (pyélonéphrite obstructive = urgence urologique), anurie ou rein fonctionnellement unique, insuffisance rénale aiguë, doute diagnostique (anévrisme de l'aorte notamment chez le sujet âgé)</li>
       <li>Bandelette urinaire et ECBU systématiques (recherche de leucocyturie/nitrites évocateurs d'infection associée), bilan sanguin (créatinine, NFS, CRP) si signes de gravité ou doute diagnostique</li>
       <li>Imagerie : <strong>échographie rénale</strong> en 1ère intention (recherche de dilatation des cavités pyélocalicielles) — TDM sans injection si doute diagnostique, discordance clinico-échographique, ou colique néphrétique compliquée</li>
-      <li>Colique néphrétique simple (sans fièvre ni signe de gravité) : traitement ambulatoire par antalgiques ± <strong>Tamsulosine (Omix® LP, Josir® LP)</strong> 0,4 mg PO une fois par jour (facilite l'expulsion si calcul &lt;10mm), filtration des urines, hydratation normale (pas de sur-hydratation forcée)</li>
-      <li><strong>Colique néphrétique fébrile ou avec anurie</strong> : hospitalisation, antibiothérapie probabiliste par <strong>Céfotaxime (Claforan®)</strong> ou <strong>Ceftriaxone (Rocéphine®)</strong> 1-2 g/j IV si fièvre (adapter à l'antibiogramme secondairement), <strong>drainage urgent</strong> (sonde JJ ou néphrostomie percutanée) par l'urologue — ne pas différer</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Colique néphrétique simple</strong> (sans fièvre ni signe de gravité) — traitement ambulatoire</div>
+          <div style="margin:3px 0; font-size:14.5px;">± <strong style="color:var(--accent2)">Tamsulosine (Omix® LP, Josir® LP) 0,4 mg/j PO</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Facilite l'expulsion si calcul &lt;10mm ; filtration des urines, hydratation normale (pas de sur-hydratation forcée)</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Colique néphrétique fébrile ou avec anurie</strong> — hospitalisation</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Céfotaxime (Claforan®) ou Ceftriaxone (Rocéphine®) 1-2 g/j IV</strong> si fièvre</div>
+          <div style="font-size:12.5px; color:var(--muted);">Adapter à l'antibiogramme secondairement ; <strong>drainage urgent</strong> (sonde JJ ou néphrostomie percutanée) par l'urologue — ne pas différer</div>
+        </div>
+      </li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Kétoprofène injectable, le Paracétamol et la Ceftriaxone sont disponibles à la plupart des niveaux hospitaliers (LNMEIS). La Tamsulosine est d'accès plus variable en pharmacie de ville. Le drainage urgent (sonde JJ/néphrostomie) nécessite un urologue et un plateau technique réservés aux CHU/CHRR — organiser le transfert sans délai devant une colique néphrétique fébrile ou anurique.</p>
   </div>
 
   <div class="card" id="proto-torsion-testiculaire">
@@ -3729,10 +4041,17 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Ne jamais retarder l'avis chirurgical/urologique en attendant l'imagerie</strong> si la présentation clinique est évocatrice (douleur brutale, testicule ascensionné, horizontalisé, réflexe crémastérien aboli) — le diagnostic reste avant tout clinique</li>
       <li>L'échographie doppler testiculaire (si disponible rapidement et sans délai significatif) peut aider au diagnostic différentiel mais ne doit jamais retarder une exploration chirurgicale en cas de forte suspicion clinique</li>
-      <li>À jeun strict dès la suspicion, VVP, antalgie par <strong>Morphine (Morphine Aguettant®)</strong> titrée par bolus de 2-3 mg IV toutes les 5-10 min (la douleur est souvent intense), préparation à une exploration chirurgicale en urgence (détorsion ± orchidopexie bilatérale, ou orchidectomie si nécrose constituée)</li>
+      <li>À jeun strict dès la suspicion, VVP, préparation à une exploration chirurgicale en urgence (détorsion ± orchidopexie bilatérale, ou orchidectomie si nécrose constituée)
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Antalgie — Morphine (Morphine Aguettant®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;">Bolus titré <strong style="color:var(--accent2)">2-3 mg IV/5-10 min</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">La douleur est souvent intense</div>
+        </div>
+      </li>
       <li>Diagnostics différentiels à évoquer : torsion d'hydatide (douleur souvent plus localisée au pôle supérieur, point bleu douloureux), orchi-épididymite (contexte infectieux, fièvre, évolution plus progressive) — en cas de doute, privilégier l'hypothèse de torsion (principe de précaution)</li>
       <li>Chez l'enfant/adolescent, toute douleur scrotale aiguë doit être considérée comme une torsion testiculaire jusqu'à preuve du contraire</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'exploration chirurgicale scrotale est réalisable dès le niveau CHRD par un chirurgien formé, sans nécessiter de plateau technique sophistiqué. L'échographie doppler testiculaire reste d'accès plus limité — en son absence devant une clinique fortement évocatrice, ne pas retarder le geste chirurgical.</p>
   </div>
 
   <div class="card" id="proto-glaucome-aigu">
@@ -3750,16 +4069,29 @@ function renderProtocoles(){
       <li>Examen : œil rouge, cornée trouble/œdémateuse, pupille semi-mylatriase aréactive, globe oculaire dur à la palpation comparative — mesure de la pression intraoculaire si tonomètre disponible (typiquement très élevée, &gt;40-50 mmHg)</li>
       <li><strong>Avis ophtalmologique en urgence absolue</strong> — le pronostic visuel dépend de la rapidité de la baisse de pression intraoculaire</li>
       <li>Traitement médical initial pour faire baisser la pression en urgence :
-        <strong>Acétazolamide (Diamox®)</strong> 500 mg IV lente (ou PO si voie orale possible) puis 250 mg PO toutes les 6-8h ;
-        <strong>Timolol collyre (Timoptol® 0,5%)</strong> 1 goutte dans l'œil atteint, à répéter selon protocole local ;
-        <strong>Apraclonidine collyre (Iopidine® 0,5-1%)</strong> 1 goutte en complément ;
-        <strong>Mannitol 20% (Mannitol Aguettant®, Baxter®)</strong> 1-2 g/kg IV en perfusion sur 30-60 min si pression très élevée et échec du traitement précédent —
-        puis <strong>iridotomie au laser</strong> ou iridectomie chirurgicale en traitement définitif dès que possible ;
-        une fois la pression abaissée, <strong>Pilocarpine collyre 2%</strong> 1 goutte peut être ajoutée (myotique, inefficace tant que la pression reste très élevée)</li>
+        <ul style="margin:8px 0 0 4px; line-height:1.5; list-style:none; padding-left:0;">
+          <li style="margin-bottom:12px; padding-left:14px; border-left:2px solid var(--grave);">
+            <div><strong>💉 Acétazolamide (Diamox®)</strong></div>
+            <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">500 mg IV lente</strong> (ou PO) puis <strong style="color:var(--accent2)">250 mg PO/6-8h</strong></div>
+            <div style="font-size:12.5px; color:var(--muted);"><strong>Durée :</strong> à poursuivre jusqu'à normalisation de la PIO (&lt;21 mmHg) ou jusqu'au geste définitif (iridotomie/iridectomie), généralement <strong>24-48h</strong> — contrôle horaire de la PIO pour guider l'arrêt. Contre-indiqué en cas de drépanocytose (favorise la falciformation en milieu acide).</div>
+          </li>
+          <li style="margin-bottom:12px; padding-left:14px; border-left:2px solid var(--modere);">
+            <div><strong>👁️ Collyres associés</strong></div>
+            <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Timolol (Timoptol® 0,5%)</strong> 1 goutte &nbsp;·&nbsp; <strong style="color:var(--accent2)">Apraclonidine (Iopidine® 0,5-1%)</strong> 1 goutte en complément</div>
+            <div style="font-size:12.5px; color:var(--muted);"><strong>Durée :</strong> renouvelable à 1h si PIO toujours élevée (jusqu'à 3 administrations rapprochées en phase aiguë), puis relais en traitement d'attente jusqu'au geste définitif — le Timolol peut être poursuivi au long cours si angle réouvert et pression résiduelle élevée, l'Apraclonidine est arrêtée dès la PIO contrôlée (usage limité à la phase aiguë).</div>
+          </li>
+          <li style="padding-left:14px; border-left:2px solid var(--border);">
+            <div><strong>💉 Mannitol 20% (Mannitol Aguettant®, Baxter®)</strong> — si pression très élevée et échec du traitement précédent</div>
+            <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">1-2 g/kg IV/30-60min</strong></div>
+            <div style="font-size:12.5px; color:var(--muted);"><strong>Durée :</strong> perfusion unique ; réévaluer la PIO à la fin de la perfusion — une 2e dose peut être discutée en cas de réponse insuffisante, en espaçant d'au moins 1-2h et en s'assurant de l'absence de surcharge volémique/insuffisance rénale entre les deux administrations. Puis <strong>iridotomie au laser</strong> ou iridectomie chirurgicale en traitement définitif dès que possible (idéalement dans les <strong>24-48h</strong> suivant le contrôle de la crise, dès que la cornée est suffisamment claire pour le geste) ; une fois la pression abaissée, <strong>Pilocarpine collyre 2%</strong> 1 goutte peut être ajoutée (myotique, inefficace tant que la PIO reste &gt;40-50 mmHg) — <span id="glaucome_inline">saisir le poids ci-dessus pour la dose de Mannitol calculée</span></div>
+          </li>
+        </ul>
+      </li>
       <li>Antalgiques (<strong>Paracétamol (Perfalgan® IV, Doliprane® PO)</strong> IV/PO, voire morphine titrée si douleur intense) et antiémétiques (<strong>Métoclopramide (Primpéran®)</strong> 10 mg IV) associés</li>
       <li>Diagnostic différentiel à éliminer : conjonctivite (œil rouge mais indolore/peu douloureux, pas de baisse d'acuité), uvéite antérieure aiguë, kératite — l'association douleur intense + baisse de vision + œil dur oriente fortement vers le glaucome aigu</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Contre-indication formelle des mydriatiques dans le glaucome aigu par fermeture de l'angle — ne pas dilater la pupille, l'examen ne doit pas aggraver la fermeture de l'angle.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Acétazolamide (Diamox®) et le Timolol collyre sont disponibles jusqu'au niveau CHRD. L'Apraclonidine et le Mannitol 20% sont d'accès plus limité, surtout hors CHU. L'iridotomie au laser n'est disponible que dans de rares centres ophtalmologiques équipés — en son absence, le traitement médical permet de stabiliser la situation en attendant un transfert vers un centre réalisant le geste définitif.</p>
   </div>
 
   <div class="card" id="proto-oacr">
@@ -3768,10 +4100,22 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Diagnostic</strong> : baisse d'acuité visuelle sévère et brutale d'un œil (souvent réduite à la perception lumineuse ou moins), pupille en semi-mydriase avec <strong>déficit pupillaire afférent relatif</strong> (signe de Marcus Gunn), fond d'œil si disponible (rétine pâle/œdémateuse, "macula rouge cerise") — mais le diagnostic ne doit jamais retarder l'orientation en cas de fond d'œil non disponible en urgence</li>
       <li><strong>Noter l'heure précise de début des symptômes</strong> — élément déterminant comme pour tout AVC, conditionne l'éligibilité à une éventuelle thrombolyse</li>
-      <li><strong>Éliminer une cause artéritique (maladie de Horton/artérite gigantocellulaire)</strong> chez tout patient &gt;50 ans : céphalées temporales, claudication de la mâchoire, altération de l'état général, hyperesthésie du cuir chevelu — <strong>CRP/VS en urgence</strong>. Si suspicion : <strong>corticothérapie systémique à haute dose immédiate</strong> (Méthylprednisolone IV ou Prednisone PO 1 mg/kg/j) <strong>sans attendre la biopsie de l'artère temporale</strong>, pour protéger l'œil controlatéral (risque de bilatéralisation rapide et de cécité définitive)</li>
+      <li><strong>Éliminer une cause artéritique (maladie de Horton/artérite gigantocellulaire)</strong> chez tout patient &gt;50 ans : céphalées temporales, claudication de la mâchoire, altération de l'état général, hyperesthésie du cuir chevelu — <strong>CRP/VS en urgence</strong>.
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Si suspicion — corticothérapie systémique à haute dose immédiate</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Méthylprednisolone IV</strong> ou <strong style="color:var(--accent2)">Prednisone PO 1 mg/kg/j</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Sans attendre la biopsie de l'artère temporale, pour protéger l'œil controlatéral (risque de bilatéralisation rapide et de cécité définitive)</div>
+        </div>
+      </li>
       <li><strong>Orientation en urgence absolue selon la filière AVC</strong> — appel de l'équipe de neurologie/AVC comme pour toute suspicion d'AVC ischémique : bilan d'imagerie cérébrale (TDM ± angio-TDM ou IRM avec séquence de diffusion, qui peut révéler un infarctus cérébral silencieux associé dans un tiers des cas), bilan cardio-embolique (ECG, échocardiographie), recherche de sténose carotidienne (écho-Doppler des troncs supra-aortiques)</li>
       <li><strong>Thrombolyse IV (Altéplase)</strong> à discuter avec l'équipe neuro-vasculaire si le patient se présente dans la <strong>fenêtre de 4h30</strong> suivant le début des symptômes et remplit les critères d'éligibilité habituels de l'AVC ischémique (cf. protocole AVC et son calculateur de dose) — bénéfice non formellement démontré par essai randomisé à ce jour mais recommandé à évaluer au cas par cas par les sociétés savantes récentes (AHA/ASA), en pesant le risque hémorragique</li>
-      <li><strong>Mesures conservatrices adjuvantes</strong> (efficacité individuelle non prouvée mais faible risque, à débuter en attendant l'avis spécialisé si le tableau est très récent, <strong>sans jamais retarder l'orientation neuro-vasculaire</strong>) : massage oculaire digital intermittent (pression ferme 10 secondes puis relâchement, répété, dans l'espoir de déloger l'embole), abaissement de la pression intraoculaire (<strong>Acétazolamide (Diamox®)</strong> 500 mg IV ou <strong>Timolol collyre</strong>), <strong>respiration en système clos avec réinhalation de CO2</strong> (sac en papier) ou oxygénothérapie à haut débit si disponible (vasodilatation rétinienne)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Mesures conservatrices adjuvantes</strong> (efficacité individuelle non prouvée mais faible risque, à débuter en attendant l'avis spécialisé si le tableau est très récent, <strong>sans jamais retarder l'orientation neuro-vasculaire</strong>)</div>
+          <div style="margin:3px 0; font-size:14.5px;">Massage oculaire digital intermittent &nbsp;·&nbsp; <strong style="color:var(--accent2)">Acétazolamide (Diamox®) 500 mg IV</strong> ou Timolol collyre &nbsp;·&nbsp; réinhalation de CO2 (sac papier) ou O2 haut débit</div>
+          <div style="font-size:12.5px; color:var(--muted);">Massage : pression ferme 10 secondes puis relâchement, répété, dans l'espoir de déloger l'embole ; réinhalation/O2 pour vasodilatation rétinienne</div>
+        </div>
+      </li>
       <li><strong>Avis ophtalmologique</strong> en parallèle pour confirmation diagnostique au fond d'œil/OCT si accessible, mais ne doit jamais retarder l'orientation vers la filière neuro-vasculaire</li>
       <li>Pronostic visuel généralement sombre au-delà de quelques heures d'ischémie (dommages rétiniens irréversibles rapides) — l'enjeu principal de la prise en charge en urgence devient alors la <strong>prévention secondaire d'un AVC constitué</strong>, la probabilité d'événement cérébrovasculaire dans les jours/semaines suivants étant significative</li>
     </ol>
@@ -3784,9 +4128,21 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Signes évocateurs</strong> : douleur oculaire intense et progressive, baisse d'acuité visuelle rapide, œil rouge, <strong>hypopion</strong> (niveau blanchâtre de pus visible dans la chambre antérieure), œdème palpébral, trouble des milieux (vitré trouble empêchant la visualisation du fond d'œil) — dans un contexte de chirurgie oculaire récente (typiquement 1-7 jours après une chirurgie de cataracte) ou de traumatisme pénétrant</li>
       <li><strong>Avis ophtalmologique en urgence absolue</strong> (délai cible : quelques heures) — le pronostic visuel dépend directement de la rapidité du traitement intraoculaire</li>
-      <li><strong>Traitement de référence (étude EVS — Endophthalmitis Vitrectomy Study, toujours la base des recommandations américaines/européennes actuelles)</strong> : <strong>injection intravitréenne d'antibiotiques</strong> par l'ophtalmologiste — association <strong>Vancomycine intravitréenne</strong> (1 mg/0,1 mL, couverture Gram positif) + <strong>Ceftazidime intravitréenne</strong> (2-2,25 mg/0,1 mL, couverture Gram négatif), après prélèvement d'un échantillon de vitré/humeur aqueuse pour analyse bactériologique</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Traitement de référence (étude EVS)</strong> — injection intravitréenne d'antibiotiques par l'ophtalmologiste</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Vancomycine intravitréenne 1 mg/0,1 mL</strong> (Gram positif) + <strong style="color:var(--accent2)">Ceftazidime intravitréenne 2-2,25 mg/0,1 mL</strong> (Gram négatif)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Après prélèvement d'un échantillon de vitré/humeur aqueuse pour analyse bactériologique</div>
+        </div>
+      </li>
       <li><strong>Décision vitrectomie vs injection seule</strong> guidée par l'acuité visuelle initiale : <strong>vitrectomie précoce</strong> recommandée si acuité visuelle ≤ perception des mouvements de la main ; simple injection intravitréenne (± reprise si non-amélioration à 48-72h) si acuité meilleure</li>
-      <li><strong>En l'absence d'accès immédiat à un ophtalmologiste/plateau d'injection intravitréenne</strong> : ne pas retarder le transfert vers un centre disposant de cette capacité — un traitement systémique seul (antibiothérapie IV) ne remplace pas l'injection intravitréenne, la pénétration oculaire des antibiotiques systémiques étant limitée, mais peut être débuté en pont pendant l'organisation du transfert : <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j (voire association à la Vancomycine IV si accessible)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💉 En pont pendant l'organisation du transfert</strong> — si pas d'accès immédiat à l'injection intravitréenne</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Ceftriaxone (Rocéphine®) 2g IV/j</strong> (± Vancomycine IV si accessible)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Ne remplace pas l'injection intravitréenne (pénétration oculaire limitée) — ne jamais retarder le transfert vers un centre équipé</div>
+        </div>
+      </li>
       <li><strong>Corticoïdes intravitréens/systémiques</strong> à discuter par l'ophtalmologiste une fois l'antibiothérapie intravitréenne débutée (réduction de l'inflammation), jamais en 1ère intention isolée</li>
       <li><strong>Antalgiques</strong> systémiques, <strong>collyre cycloplégique</strong> (atropine) pour le confort et prévenir les synéchies, sur prescription ophtalmologique</li>
       <li>Rechercher une porte d'entrée si <strong>endophtalmie endogène</strong> suspectée (pas de chirurgie/traumatisme récent) : hémocultures systématiques, échocardiographie (endocardite), recherche d'un foyer infectieux profond — pronostic généralement plus sombre que les formes post-opératoires</li>
@@ -3820,6 +4176,7 @@ function renderProtocoles(){
       <li><strong>Avis et transfert ophtalmologique/chirurgical en urgence</strong> — exploration et fermeture chirurgicale de la plaie dans les meilleurs délais (idéalement &lt;24h) pour optimiser le pronostic visuel</li>
       <li>Imagerie (TDM orbitaire, jamais d'IRM si suspicion de corps étranger métallique) pour rechercher un corps étranger intraoculaire ou une fracture associée</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'irrigation oculaire (eau du robinet ou NaCl 0,9%) est réalisable à tout niveau de structure et ne doit jamais être retardée par l'absence de matériel spécialisé. La coque de protection oculaire rigide peut être improvisée (fond de gobelet, coque plastique) en son absence. L'avis ophtalmologique et le bloc opératoire pour une plaie du globe restent réservés aux CHU/CHRR — organiser le transfert sans délai après protection du globe.</p>
   </div>
 
   <div class="card" id="proto-cellulite-orbitaire">
@@ -3836,8 +4193,20 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Signes imposant de suspecter une forme orbitaire (post-septale) et de réaliser une imagerie en urgence</strong> : exophtalmie/proptosis, douleur aux mouvements oculaires ou limitation de l'oculomotricité (ophtalmoplégie), baisse d'acuité visuelle, trouble de la vision des couleurs, déficit pupillaire afférent relatif, chémosis marqué, altération de l'état général/fièvre élevée</li>
       <li><strong>TDM orbito-sinusienne injectée</strong> (ou IRM si signes neurologiques/suspicion de thrombose du sinus caverneux ou d'extension intracrânienne) dès qu'un signe de forme post-septale est présent, ou en cas de doute diagnostique, ou d'absence d'amélioration à 24-48h sous traitement — recherche d'un abcès sous-périosté/orbitaire à drainer</li>
-      <li><strong>Cellulite préseptale non compliquée</strong> (patient non toxique, examen oculaire normal) : antibiothérapie orale ambulatoire possible chez l'adulte/grand enfant coopérant avec suivi rapproché — <strong>Amoxicilline-acide clavulanique (Augmentin®)</strong> PO, 7 jours ; réévaluation à 24-48h obligatoire, hospitalisation si absence d'amélioration ou terrain à risque (jeune enfant, immunodépression)</li>
-      <li><strong>Cellulite orbitaire (post-septale) ou tout signe de gravité</strong> : hospitalisation systématique, <strong>antibiothérapie IV probabiliste à large spectre</strong> couvrant les germes de la sinusite (staphylocoque, streptocoque, anaérobies) — <strong>Ceftriaxone (Rocéphine®)</strong> 2g IV/j (50 mg/kg/j chez l'enfant, max 2g) + <strong>Métronidazole (Flagyl®)</strong> 500 mg IV toutes les 8h (couverture anaérobie, importante si origine sinusienne/dentaire) — durée totale 10-14 jours pour une cellulite orbitaire non compliquée, 2-3 semaines si abcès sous-périosté/orbitaire, relais oral possible après amélioration clinique nette</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--leger);">
+          <div><strong>💊 Cellulite préseptale non compliquée</strong> (patient non toxique, examen oculaire normal) — ambulatoire possible</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Amoxicilline-acide clavulanique (Augmentin®) PO, 7 jours</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Chez l'adulte/grand enfant coopérant avec suivi rapproché ; réévaluation à 24-48h obligatoire, hospitalisation si absence d'amélioration ou terrain à risque (jeune enfant, immunodépression)</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Cellulite orbitaire (post-septale) ou tout signe de gravité</strong> — hospitalisation systématique</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Ceftriaxone (Rocéphine®) 2g IV/j</strong> (50 mg/kg/j chez l'enfant, max 2g) + <strong style="color:var(--accent2)">Métronidazole (Flagyl®) 500 mg IV/8h</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Couvre staphylocoque, streptocoque, anaérobies (importante si origine sinusienne/dentaire) — durée totale 10-14 jours pour une forme non compliquée, 2-3 semaines si abcès sous-périosté/orbitaire, relais oral possible après amélioration clinique nette</div>
+        </div>
+      </li>
       <li><strong>Avis ophtalmologique et ORL conjoint systématique</strong> dès suspicion de forme post-septale — décision multidisciplinaire pour un éventuel drainage chirurgical de l'abcès (sous-périosté volumineux, non-amélioration sous antibiothérapie à 24-48h, baisse d'acuité visuelle ou détérioration neurologique)</li>
       <li>Corticothérapie systémique à discuter par l'équipe spécialisée en complément de l'antibiothérapie dans certaines formes orbitaires (réduction de l'œdème), jamais en 1ère intention isolée ni avant couverture antibiotique effective</li>
       <li>Signes d'alarme imposant une prise en charge en réanimation/neurochirurgicale en urgence : altération de conscience, signes méningés, atteinte bilatérale (évocatrice de thrombose du sinus caverneux), sepsis sévère</li>
@@ -3851,13 +4220,20 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Position assise, tête penchée en avant</strong> (jamais en arrière — favorise la déglutition de sang et masque l'importance réelle du saignement, risque d'inhalation)</li>
       <li><strong>Compression bidigitale</strong> des ailes du nez contre le septum, en continu pendant <strong>10-15 min sans relâcher</strong> (chronométrer) — se moucher au préalable pour évacuer les caillots si saignement actif abondant</li>
-      <li>Si persistance : <strong>mèche nasale imbibée d'un vasoconstricteur local</strong> (Xylométazoline/Oxymétazoline — Déturgylone®, Aturgyl®) ± anesthésique local, mise en place antérieure, à laisser en place 24-48h</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Si persistance</strong> — mèche nasale imbibée d'un vasoconstricteur local</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Xylométazoline/Oxymétazoline (Déturgylone®, Aturgyl®)</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">± anesthésique local, mise en place antérieure, à laisser en place 24-48h</div>
+        </div>
+      </li>
       <li>Si échec du méchage antérieur simple : <strong>tamponnement antérieur</strong> avec mèche résorbable ou dispositif gonflable (type Rapid Rhino®), ou cautérisation au nitrate d'argent si le point de saignement est visible et accessible (jamais bilatérale dans le même temps — risque de perforation septale)</li>
       <li><strong>Épistaxis postérieure</strong> (saignement abondant, bilatéral, s'écoulant dans le pharynx malgré compression antérieure correcte) : <strong>tamponnement postérieur</strong> (sonde à double ballonnet ou sonde de Foley) — nécessite souvent une hospitalisation, surveillance cardiorespiratoire (réflexe naso-cardiaque), avis ORL</li>
       <li>Rechercher et corriger un facteur favorisant/aggravant : <strong>HTA</strong> non contrôlée (à traiter mais ne pas faire chuter brutalement la TA), trouble de la coagulation (bilan si saignement inhabituel/récidivant), <strong>anticoagulants/antiagrégants</strong> (évaluer individuellement le rapport bénéfice-risque avant toute suspension, avis spécialisé si besoin d'antagonisation en urgence), traumatisme, tumeur (épistaxis unilatérale récidivante inexpliquée chez l'adulte — bilan ORL à distance)</li>
       <li>Si saignement abondant/prolongé : bilan biologique (NFS, bilan de coagulation, groupe sanguin) et surveillance hémodynamique (TA, FC), remplissage/transfusion si retentissement hémodynamique</li>
       <li>Consignes de sortie après contrôle : éviter le mouchage forcé et les efforts intenses pendant 48-72h, éviter l'eau très chaude/l'alcool (vasodilatation), pommade cicatrisante nasale si besoin, consultation ORL si récidives fréquentes</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les vasoconstricteurs locaux et le matériel de méchage antérieur sont disponibles à la plupart des niveaux hospitaliers. Le dispositif de tamponnement postérieur type Rapid Rhino® est d'accès limité — la sonde de Foley (à ballonnet) reste une alternative largement disponible pour le tamponnement postérieur en son absence.</p>
   </div>
 
   <div class="card" id="proto-corps-etranger">
@@ -3882,8 +4258,20 @@ function renderProtocoles(){
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Signes évocateurs</strong> : odynophagie intense et unilatérale, <strong>trismus</strong> (limitation douloureuse de l'ouverture buccale — signe clé le distinguant de l'angine simple), voix étouffée ("voix de patate chaude"), hypersialorrhée, <strong>bombement asymétrique du pilier amygdalien</strong> avec <strong>déviation de la luette</strong> du côté opposé, adénopathies cervicales douloureuses, fièvre.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Ponction/aspiration à l'aiguille</strong> du point le plus fluctuant — geste diagnostique (confirme la présence de pus, à distinguer d'une simple cellulite périamygdalienne sans collection) et thérapeutique en 1ère intention ; à défaut, <strong>incision-drainage</strong> — efficacité comparable entre les deux techniques. <strong>Repère anatomique de sécurité</strong> : l'artère carotide chemine à environ 2 cm en arrière et en dehors de l'amygdale — ne jamais piquer/inciser au-delà de 1 cm de profondeur</li>
-      <li><strong>Antibiothérapie</strong> couvrant flore mixte aérobie/anaérobie oropharyngée — <strong>Amoxicilline-acide clavulanique (Augmentin®)</strong> IV puis relais PO, ou <strong>Ceftriaxone (Rocéphine®)</strong> + <strong>Métronidazole (Flagyl®)</strong> si forme sévère/allergie — durée totale 10-14 jours</li>
-      <li><strong>Corticothérapie courte</strong> (Dexaméthasone IV/PO dose unique à répéter selon besoin) en complément, réduit la douleur et l'œdème pharyngé</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💉 Antibiothérapie</strong> — flore mixte aérobie/anaérobie oropharyngée</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Amoxicilline-acide clavulanique (Augmentin®) IV</strong> puis relais PO &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Ceftriaxone (Rocéphine®) + Métronidazole (Flagyl®)</strong> si forme sévère/allergie</div>
+          <div style="font-size:12.5px; color:var(--muted);">Durée totale 10-14 jours</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Corticothérapie courte</strong> — en complément</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Dexaméthasone IV/PO</strong> dose unique à répéter selon besoin</div>
+          <div style="font-size:12.5px; color:var(--muted);">Réduit la douleur et l'œdème pharyngé</div>
+        </div>
+      </li>
       <li>Antalgiques adaptés à l'intensité (Paracétamol ± palier 2), hydratation IV si dysphagie empêchant les apports oraux</li>
       <li><strong>Signes imposant une hospitalisation/avis ORL en urgence</strong> : détresse respiratoire ou stridor, trismus sévère empêchant l'examen, déshydratation, échec du drainage ambulatoire, extension suspectée (abcès rétropharyngé/parapharyngé, médiastinite), immunodépression, enfant en bas âge, doute diagnostique</li>
       <li><strong>Amygdalectomie "à chaud"</strong> (dans les 24-48h) à discuter en cas de récidive, d'échec du drainage simple, ou d'antécédents de phlegmons répétés — sinon amygdalectomie différée à distance de l'épisode aigu (6-8 semaines) proposée si récidives</li>
@@ -3893,7 +4281,13 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Imagerie en urgence</strong> : TDM cervicale injectée (confirme la collection, précise l'extension vers le médiastin — risque majeur de médiastinite descendante nécrosante)</li>
       <li><strong>Prise en charge des voies aériennes en priorité absolue</strong> si signe de détresse respiratoire — intubation potentiellement difficile (distorsion anatomique), à anticiper avec une équipe expérimentée/matériel de voies aériennes difficiles, voire trachéotomie de sauvetage si échec</li>
-      <li><strong>Drainage chirurgical en urgence</strong> (bloc opératoire) associé à une <strong>antibiothérapie IV large spectre</strong> (Ceftriaxone/Rocéphine® + Métronidazole/Flagyl®, ou Amoxicilline-acide clavulanique IV à forte dose) — l'antibiothérapie seule est insuffisante en cas de collection confirmée</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Drainage chirurgical en urgence</strong> (bloc opératoire) associé à une antibiothérapie IV large spectre</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Ceftriaxone (Rocéphine®) + Métronidazole (Flagyl®)</strong> &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Amoxicilline-acide clavulanique IV à forte dose</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">L'antibiothérapie seule est insuffisante en cas de collection confirmée</div>
+        </div>
+      </li>
       <li>Surveillance rapprochée en unité de soins intensifs/réanimation dans les formes évoluées, du fait du risque d'obstruction rapide et de diffusion médiastinale</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Augmentin®, Rocéphine® et Flagyl® disponibles à la plupart des niveaux hospitaliers. Le drainage à l'aiguille du phlegmon périamygdalien est réalisable en structure de base par un praticien formé ; le drainage chirurgical d'un abcès rétropharyngé et la prise en charge d'une voie aérienne difficile associée nécessitent un plateau technique de bloc opératoire — transfert à organiser sans délai devant tout signe de détresse respiratoire ou d'extension cervicale profonde.</p>
@@ -3906,7 +4300,13 @@ function renderProtocoles(){
       <li><strong>Signes évocateurs</strong> : otalgie intense, disproportionnée par rapport à l'aspect local, <strong>persistante malgré un traitement d'otite externe simple bien conduit</strong>, otorrhée souvent purulente/fétide, douleur nocturne et à la mastication, <strong>tissu de granulation caractéristique au plancher du conduit auditif externe</strong> (jonction ostéo-cartilagineuse) à l'otoscopie</li>
       <li><strong>Signe d'alarme majeur : atteinte des nerfs crâniens</strong> (par ordre de fréquence : VII/facial en premier, puis IX, X, XI, XII) — paralysie faciale périphérique, dysphonie, trouble de la déglutition — témoigne d'une extension à la base du crâne et impose une prise en charge encore plus agressive</li>
       <li><strong>Bilan</strong> : glycémie/HbA1c (équilibration du diabète indispensable au traitement), NFS/CRP, prélèvement local pour culture et antibiogramme (guide l'adaptation thérapeutique), <strong>TDM des rochers</strong> en 1ère intention (érosion osseuse) — IRM si suspicion d'extension aux tissus mous profonds/base du crâne ou atteinte des nerfs crâniens</li>
-      <li><strong>Antibiothérapie anti-pseudomonas prolongée</strong>, pierre angulaire du traitement — <strong>Ciprofloxacine</strong> forte dose : 750 mg PO x2/j en ambulatoire pour les formes non compliquées, ou IV (400 mg x2-3/j) dans les formes sévères/hospitalisées ; en cas de choc septique/forme extensive, associer initialement une <strong>bêta-lactamine anti-pseudomonas</strong> (Ceftazidime ou Pipéracilline-tazobactam si disponible) — <strong>durée prolongée de 6 à 8 semaines minimum</strong>, guidée par l'évolution clinique et biologique (CRP), et non par un délai fixe</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💊 Antibiothérapie anti-pseudomonas prolongée</strong> — pierre angulaire du traitement</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Ciprofloxacine 750 mg PO x2/j</strong> (ambulatoire, forme non compliquée) &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">400 mg x2-3/j IV</strong> (forme sévère/hospitalisée)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Si choc septique/forme extensive, associer initialement une <strong>bêta-lactamine anti-pseudomonas</strong> (Ceftazidime ou Pipéracilline-tazobactam) — <strong>durée prolongée de 6 à 8 semaines minimum</strong>, guidée par l'évolution clinique et biologique (CRP), et non par un délai fixe</div>
+        </div>
+      </li>
       <li><strong>Équilibration stricte du diabète</strong> — élément thérapeutique à part entière, conditionne la réponse au traitement anti-infectieux</li>
       <li><strong>Soins locaux quotidiens</strong> : nettoyage/débridement régulier du conduit auditif externe (retrait des débris et tissu de granulation) par un praticien ORL, gouttes auriculaires antibiotiques (Ciprofloxacine ± corticoïde) en complément — insuffisantes seules, ne remplacent jamais l'antibiothérapie systémique prolongée</li>
       <li><strong>Avis ORL systématique</strong> — débridement chirurgical à discuter en cas d'évolution défavorable sous traitement médical bien conduit, ou de collection/séquestre osseux</li>
@@ -3930,8 +4330,20 @@ function renderProtocoles(){
       <li><strong>Signes cliniques associés devant faire suspecter une cause centrale d'emblée</strong> (indépendamment du HINTS) : céphalées brutales inhabituelles, diplopie, dysarthrie, ataxie/troubles de la marche disproportionnés par rapport au vertige, déficit moteur/sensitif, facteurs de risque cardiovasculaire majeurs (HTA, FA, âge avancé, antécédent d'AVC)</li>
       <li><strong>HINTS évocateur d'une cause centrale (ou tout signe associé ci-dessus)</strong> : orientation en urgence vers la filière neuro-vasculaire (cf. protocole AVC) — <strong>imagerie cérébrale avec séquence de diffusion (IRM)</strong>, sachant qu'une IRM précoce (&lt;24-48h) peut être faussement normale dans les infarctus cérébelleux de petite taille — la clinique prime en cas de doute</li>
       <li><strong>HINTS rassurant et absence de signe associé</strong> : orientation vers une cause périphérique (névrite vestibulaire/neuronite vestibulaire la plus fréquente ; labyrinthite si signes cochléaires associés — hypoacousie, acouphènes) — traitement symptomatique</li>
-      <li><strong>Traitement symptomatique de la crise vertigineuse</strong> (cause périphérique) : antiémétique (<strong>Métoclopramide (Primpéran®)</strong> IV/IM 10 mg, ou <strong>Dompéridone</strong> PO) et antihistaminique/anti-vertigineux (<strong>Méclozine</strong> ou <strong>Dimenhydrinate (Dramamine®)</strong>) sur une durée courte (48-72h maximum) — un traitement symptomatique prolongé retarde la compensation vestibulaire centrale spontanée et la récupération</li>
-      <li><strong>Corticothérapie courte</strong> (Prednisone/Prednisolone PO, schéma dégressif sur 10-14 jours) à discuter précocement dans la névrite vestibulaire — bénéfice démontré sur la récupération vestibulaire si débutée tôt</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Traitement symptomatique de la crise vertigineuse</strong> (cause périphérique)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Métoclopramide (Primpéran®) 10 mg IV/IM</strong> ou Dompéridone PO &nbsp;·&nbsp; + <strong style="color:var(--accent2)">Méclozine ou Dimenhydrinate (Dramamine®)</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Sur une durée courte (48-72h maximum) — un traitement symptomatique prolongé retarde la compensation vestibulaire centrale spontanée et la récupération</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Corticothérapie courte</strong> — à discuter précocement dans la névrite vestibulaire</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Prednisone/Prednisolone PO</strong>, schéma dégressif sur 10-14 jours</div>
+          <div style="font-size:12.5px; color:var(--muted);">Bénéfice démontré sur la récupération vestibulaire si débutée tôt</div>
+        </div>
+      </li>
       <li><strong>Rééducation vestibulaire précoce</strong> (mobilisation active, exercices d'habituation) à encourager dès que possible dans les formes périphériques — accélère la compensation centrale, à ne pas retarder par excès de traitement symptomatique</li>
       <li><strong>Vertige positionnel paroxystique bénin (VPPB)</strong> — diagnostic différentiel fréquent mais distinct du syndrome vestibulaire aigu continu : épisodes brefs (&lt;1 min), déclenchés par les changements de position, test de Dix-Hallpike positif — traitement par manœuvre de repositionnement canalaire (manœuvre d'Epley), pas par les anti-vertigineux au long cours</li>
       <li>Rechercher systématiquement une cause otologique associée à réorienter vers un protocole dédié si présente : otite moyenne aiguë compliquée, cholestéatome, traumatisme</li>
@@ -3948,9 +4360,22 @@ function renderProtocoles(){
       <li>Évacuation progressive si globe très volumineux/ancien (certains protocoles recommandent un clampage intermittent pour limiter le risque d'hématurie a vacuo et d'hypotension par levée d'obstacle) — surveillance de la diurèse post-évacuation (polyurie de levée d'obstacle possible, surveiller ionogramme et hydratation si diurèse importante)</li>
       <li>Rechercher une cause déclenchante à traiter (fécalome à évacuer, revoir un traitement anticholinergique/opiacé en cause, infection urinaire associée)</li>
       <li><strong>Signes d'alerte neurologique</strong> (troubles sensitifs en selle, déficit moteur des membres inférieurs, incontinence associée) : évoquer un syndrome de la queue de cheval — urgence neurochirurgicale, IRM médullaire en urgence</li>
-      <li>Antibiothérapie non systématique — si infection urinaire confirmée associée : <strong>Ciprofloxacine (Ciflox®)</strong> 500 mg PO toutes les 12h, ou <strong>Amoxicilline-Acide clavulanique (Augmentin®)</strong> 1 g/125 mg toutes les 8h selon l'antibiogramme ; antalgie par <strong>Paracétamol (Perfalgan® IV, Doliprane® PO)</strong> 1 g adaptée avant et pendant le geste</li>
-      <li>Orientation en urologie pour bilan étiologique et suivi — <strong>Tamsulosine (Omix® LP, Josir® LP)</strong> 0,4 mg PO une fois par jour souvent prescrite avant l'ablation de sonde chez l'homme (favorise la reprise des mictions), ablation de sonde différée selon le contexte</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 Antibiothérapie non systématique</strong> — si infection urinaire confirmée associée</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Ciprofloxacine (Ciflox®) 500 mg PO/12h</strong> &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Amoxicilline-Acide clavulanique (Augmentin®) 1g/125mg/8h</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Selon l'antibiogramme ; antalgie par <strong>Paracétamol (Perfalgan®, Doliprane®) 1g</strong> adaptée avant et pendant le geste</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Orientation en urologie</strong> pour bilan étiologique et suivi</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Tamsulosine (Omix® LP, Josir® LP) 0,4 mg/j PO</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Souvent prescrite avant l'ablation de sonde chez l'homme (favorise la reprise des mictions), ablation de sonde différée selon le contexte</div>
+        </div>
+      </li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le sondage vésical est réalisable à tout niveau de structure disposant de sondes urinaires. La Ciprofloxacine, l'Augmentin® et le Paracétamol sont disponibles jusqu'au CHRD (LNMEIS). La Tamsulosine est d'accès plus variable en pharmacie de ville — son absence ne doit pas retarder le sondage ni la sortie du patient.</p>
   </div>
 
   <div class="card" id="proto-geu">
@@ -5473,11 +5898,23 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Suspicion clinique</strong> — homme &gt;60 ans, douleur abdominale/lombaire intense brutale, syncope, choc hémorragique, antécédent d'AAA connu ou de tabagisme/HTA</li>
       <li><strong>Ne pas retarder la prise en charge par des examens complémentaires</strong> si patient instable et suspicion forte — appel chirurgical vasculaire immédiat</li>
-      <li><strong>Réanimation hémodynamique prudente</strong> — hypotension permissive (PAS cible 80-100 mmHg) avec <strong>Ringer Lactate/NaCl 0,9% (Baxter®)</strong> par bolus de 250-500mL réévalués, éviter le remplissage agressif qui majore le saignement avant contrôle chirurgical</li>
-      <li><strong>Groupe sanguin, commande de culots</strong> en urgence auprès du CNTS, activer le protocole de transfusion massive si besoin (<strong>Acide tranexamique (Exacyl®)</strong> 1g IV en 10 min puis 1g IV sur 8h)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💧 Réanimation hémodynamique prudente</strong> — hypotension permissive (PAS cible 80-100 mmHg)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Ringer Lactate/NaCl 0,9% (Baxter®)</strong> — bolus 250-500mL réévalués</div>
+          <div style="font-size:12.5px; color:var(--muted);">Éviter le remplissage agressif qui majore le saignement avant contrôle chirurgical</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💉 Groupe sanguin, commande de culots</strong> en urgence auprès du CNTS, activer le protocole de transfusion massive si besoin</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Acide tranexamique (Exacyl®)</strong> 1g IV/10min puis 1g IV/8h</div>
+        </div>
+      </li>
       <li>Échographie abdominale au lit (FAST) si disponible pour confirmation rapide ; angioscanner uniquement si patient stabilisé transportable</li>
       <li><strong>Transfert immédiat au bloc</strong> — chirurgie ouverte (seule option réaliste dans la majorité des structures malgaches, l'endoprothèse/EVAR n'étant disponible que dans de très rares centres équipés)</li>
     </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Ringer Lactate et l'Exacyl® sont disponibles à tous les niveaux hospitaliers. Les culots globulaires dépendent de la banque de sang (CNTS) régionale — anticiper la commande dès la suspicion. La chirurgie ouverte reste l'unique option réaliste sur la quasi-totalité du territoire ; ne jamais retarder le transfert au bloc en attendant une imagerie complète chez un patient instable.</p>
   </div>
 
   <div class="card" id="proto-torsades-pointes">
@@ -5491,9 +5928,26 @@ function renderProtocoles(){
     <ol style="margin-left:18px; font-size:13.5px; line-height:2; margin-top:8px;">
       <li><strong>Si instabilité hémodynamique ou TV soutenue</strong> → choc électrique non synchronisé immédiat (défibrillation, 200J biphasique)</li>
       <li><strong>Arrêter tout médicament allongeant le QT</strong> en cours</li>
-      <li><strong>Sulfate de magnésium (Sulfate de magnésium Lavoisier®)</strong> — 2g IV en 10-15 min (même si magnésémie normale), répétable une fois, puis entretien 1-2g/h IVSE pendant plusieurs heures</li>
-      <li><strong>Corriger la kaliémie</strong> — cible haute normale (4,5-5 mmol/L), chlorure de potassium 1-1,5g dilué IVSE sur 1h (jamais en bolus direct)</li>
-      <li><strong>Accélérer la fréquence cardiaque</strong> si torsades pause-dépendantes — <strong>Isoprénaline (Isuprel®)</strong> 0,5-10 µg/min IVSE, titrée pour objectif FC 90-110/min, ou entraînement électrosystolique (pacing) temporaire</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Sulfate de magnésium (Sulfate de magnésium Lavoisier®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">2g IV/10-15min</strong> (même si magnésémie normale), répétable une fois &nbsp;·&nbsp; puis entretien <strong style="color:var(--accent2)">1-2g/h IVSE</strong></div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💧 Corriger la kaliémie</strong> — cible haute normale (4,5-5 mmol/L)</div>
+          <div style="margin:3px 0; font-size:14.5px;">Chlorure de potassium <strong style="color:var(--accent2)">1-1,5g dilué IVSE/1h</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Jamais en bolus direct</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💉 Accélérer la fréquence cardiaque</strong> — si torsades pause-dépendantes</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Isoprénaline (Isuprel®) 0,5-10 µg/min IVSE</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Titrée pour objectif FC 90-110/min, ou entraînement électrosystolique (pacing) temporaire</div>
+        </div>
+      </li>
       <li>Éviter les antiarythmiques de classe Ia/III (procaïnamide, <strong>Amiodarone (Cordarone®)</strong>) qui allongent davantage le QT</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le sulfate de magnésium injectable est très largement disponible (également utilisé en obstétrique pour l'éclampsie — présent jusqu'au niveau CHRD). L'Isoprénaline (Isuprel®) et le matériel d'entraînement électrosystolique sont réservés aux CHU disposant d'une unité de cardiologie/réanimation.</p>
@@ -5567,8 +6021,20 @@ function renderProtocoles(){
     </table>
     <p style="margin-top:10px; font-weight:600; color:var(--accent2);">Péricardite aiguë simple, non compliquée :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
-      <li><strong>Ibuprofène (Brufen®, Nurofen®)</strong> 600-800mg x3/j per os <em>ou</em> <strong>Aspirine (Aspégic®)</strong> 750-1000mg x3/j per os, pendant 1-2 semaines puis décroissance</li>
-      <li>+ <strong>Colchicine (Colchicine Opocalcium®)</strong> 0,5mg x2/j (0,5mg/j si &lt;70kg) pendant 3 mois — réduction du risque de récidive</li>
+      <li>
+        <div style="margin:0 0 8px 0; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Anti-inflammatoire</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Ibuprofène (Brufen®, Nurofen®) 600-800mg x3/j PO</strong> ou <strong style="color:var(--accent2)">Aspirine (Aspégic®) 750-1000mg x3/j PO</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Pendant 1-2 semaines puis décroissance</div>
+        </div>
+      </li>
+      <li>
+        <div style="padding-left:14px; border-left:2px solid var(--border);">
+          <div><strong>💊 + Colchicine (Colchicine Opocalcium®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">0,5mg x2/j</strong> (0,5mg/j si &lt;70kg) &nbsp;·&nbsp; 3 mois</div>
+          <div style="font-size:12.5px; color:var(--muted);">Réduction du risque de récidive</div>
+        </div>
+      </li>
       <li>Repos, éviter l'effort physique jusqu'à résolution des symptômes et normalisation biologique</li>
       <li>Rechercher un épanchement associé par échocardiographie — surveiller le risque de tamponnade</li>
     </ul>
@@ -5583,7 +6049,13 @@ function renderProtocoles(){
     <div class="result-box hidden" id="myocard_result"></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Monitorage continu</strong> — risque de trouble du rythme ventriculaire et de choc cardiogénique rapidement évolutif</li>
-      <li><strong>Support hémodynamique</strong> selon présentation — <strong>Dobutamine (Dobutrex®)</strong> 5-15 µg/kg/min IVSE ou <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> 0,1-1 µg/kg/min IVSE titrée, voire assistance circulatoire mécanique (ECMO/ECLS) dans les formes les plus sévères, non disponible à Madagascar — transfert international à discuter selon contexte</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Support hémodynamique</strong> — selon présentation</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Dobutamine (Dobutrex®) 5-15 µg/kg/min IVSE</strong> &nbsp;·&nbsp; ou <strong style="color:var(--accent2)">Noradrénaline (Noradrénaline Aguettant®) 0,1-1 µg/kg/min IVSE</strong> titrée</div>
+          <div style="font-size:12.5px; color:var(--muted);">Voire assistance circulatoire mécanique (ECMO/ECLS) dans les formes les plus sévères, non disponible à Madagascar — transfert international à discuter selon contexte</div>
+        </div>
+      </li>
       <li><strong>IRM cardiaque et/ou biopsie myocardique</strong> à distance de la phase aiguë pour orientation étiologique (non disponible localement — orientation clinique et échographique en pratique courante)</li>
       <li>Transfert précoce vers un centre disposant d'une réanimation cardiologique si instabilité progressive</li>
     </ol>
@@ -6837,6 +7309,7 @@ function renderGestes(){
       <li><a onclick="document.getElementById('geste-paracentese').scrollIntoView({behavior:'smooth',block:'start'})">💧 Ponction d'ascite (paracentèse)</a></li>
       <li><a onclick="document.getElementById('geste-voie-io').scrollIntoView({behavior:'smooth',block:'start'})">🦴 Voie intra-osseuse</a></li>
       <li><a onclick="document.getElementById('geste-sondages').scrollIntoView({behavior:'smooth',block:'start'})">🩹 Sondage vésical & sondage naso-gastrique</a></li>
+      <li><a onclick="document.getElementById('geste-lavement-rectal').scrollIntoView({behavior:'smooth',block:'start'})">🚽 Lavement rectal (évacuation / désimpaction fécale)</a></li>
       <li><a onclick="document.getElementById('geste-suture-plaie').scrollIntoView({behavior:'smooth',block:'start'})">🧵 Suture de plaie simple</a></li>
       <li><a onclick="document.getElementById('geste-bloc-digital').scrollIntoView({behavior:'smooth',block:'start'})">🖐️ Bloc digital (anesthésie tronculaire du doigt)</a></li>
       <li><a onclick="document.getElementById('geste-corps-etranger-orl').scrollIntoView({behavior:'smooth',block:'start'})">👂 Corps étranger auriculaire & nasal</a></li>
@@ -7192,6 +7665,27 @@ function renderGestes(){
     </ol>
     <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais débuter une nutrition ou une administration médicamenteuse par une SNG dont la position n'a pas été formellement vérifiée — le risque de fausse route bronchique méconnue expose à une pneumopathie d'inhalation grave, en particulier chez le patient à conscience altérée.</div></div>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais tenter de pose de sonde naso-gastrique (privilégier la voie orogastrique) en cas de traumatisme facial sévère ou de suspicion de fracture de la base du crâne (rhinorrhée de LCR, ecchymoses périorbitaires bilatérales/« yeux de raton laveur », otorragie) — risque de passage intracrânien de la sonde à travers une brèche de la lame criblée.</div></div>
+  </div>
+
+  <div class="card" id="geste-lavement-rectal">
+    <h3>🚽 Lavement rectal (évacuation / désimpaction fécale)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Indications :</strong> fécalome et constipation opiniâtre avec échec des mesures orales, préparation à un geste ou soulagement d'un globe vésical/subocclusion fonctionnelle secondaire à un fécalome. Le lavement évacuateur simple (eau tiède, sérum physiologique, solution savonneuse) est un geste de 1ère intention ; les indications de lavement à visée thérapeutique spécifique (lactulose au cours de l'encéphalopathie hépatique, lavement hydrostatique de l'invagination intestinale aiguë) sont détaillées dans leurs protocoles dédiés.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Contre-indications :</strong> chirurgie rectale/anale ou anastomose colique récente, rectorragie/hémorragie digestive basse active non explorée, suspicion de perforation digestive ou de péritonite, mégacôlon toxique ou distension colique importante (risque de perforation par hyperpression), neutropénie sévère/aplasie fébrile (relative — porte d'entrée infectieuse), imperforation anale ou malformation ano-rectale non opérée chez le nouveau-né.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;"><strong>Matériel :</strong> sonde rectale souple ou canule à lavement à embout arrondi, lubrifiant, gants non stériles, alèse/protection, bassin à proximité. <strong>Choix de la solution :</strong> eau tiède ou sérum physiologique (NaCl 0,9%) — solution la plus sûre à tout âge ; solution savonneuse douce en complément si échec ; huile minérale/paraffine en lavement de rétention pour ramollir un fécalome dur avant évacuation. <strong>Éviter les lavements au phosphate de sodium</strong> (type Fleet®) chez le sujet âgé, l'insuffisant rénal et l'enfant de moins de 2 ans — voir alerte ci-dessous.</p>
+    <ol style="margin-left:18px; font-size:13.5px; line-height:1.9;">
+      <li>Expliquer le geste, obtenir l'accord du patient, assurer l'intimité ; installer en décubitus latéral gauche (position de Sims), genou droit fléchi vers la poitrine</li>
+      <li>Réchauffer la solution à température corporelle (un liquide froid favorise les crampes et une évacuation prématurée)</li>
+      <li>Purger l'air de la tubulure avant de connecter/insérer, pour ne pas introduire d'air dans le rectum</li>
+      <li>Lubrifier généreusement l'embout et introduire doucement, en dirigeant la sonde vers l'ombilic (suit l'axe anatomique du rectum) — profondeur d'insertion selon l'âge : <strong>adulte 7-10 cm, enfant 5-7 cm, nourrisson 2-3 cm</strong></li>
+      <li>Faire respirer profondément le patient pour relâcher le sphincter anal ; ne jamais forcer en cas de résistance — retirer légèrement et réessayer plus doucement</li>
+      <li>Instiller lentement (5-10 minutes), en interrompant en cas de douleur ou de crampes importantes ; volume habituel adulte 500-1000 mL (eau/sérum physiologique/solution savonneuse), enfant 10 mL/kg (max 500 mL selon l'âge)</li>
+      <li>Retirer doucement la sonde en fin d'instillation, faire retenir la solution 5-15 minutes (jusqu'à 30-60 min pour un lavement de rétention à l'huile minérale) avant la selle</li>
+      <li>Surveiller la tolérance pendant et après le geste (risque de réaction vagale — bradycardie, malaise)</li>
+    </ol>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Lavements au phosphate de sodium : à éviter chez le sujet âgé, l'insuffisant rénal (même modéré) et l'enfant de moins de 2 ans — risque d'hyperphosphatémie sévère, d'hypocalcémie et d'insuffisance rénale aiguë, parfois fatal, notamment en cas de rétention prolongée du produit ou de troubles de la motilité colique. Ne jamais répéter une dose de phosphate sans selle obtenue entre les administrations.</div></div>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Douleur abdominale brutale et intense, défense/contracture, ou saignement important pendant ou après le geste : évoquer une perforation rectale/colique — arrêter immédiatement toute instillation, imagerie en urgence (TDM abdomino-pelvienne) et avis chirurgical sans délai.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais forcer l'introduction de la sonde en cas de résistance (fécalome dur, angulation, fold muqueux) — le risque de perforation augmente avec la force exercée et la rigidité de l'embout ; en cas de fécalome très dur résistant au lavement, une désimpaction manuelle digitale (sous gel de lidocaïne 2%, ± sédation légère) est souvent nécessaire en complément.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le lavement à l'eau tiède/sérum physiologique ou à la solution savonneuse est réalisable à tous les niveaux de soins, sans matériel spécifique. Les lavements au phosphate de sodium (Normacol®, Practomil® et équivalents) sont disponibles en pharmacie mais leur usage doit rester prudent, en particulier chez le sujet âgé et en cas d'insuffisance rénale — préférer le sérum physiologique ou l'huile minérale dans ces situations.</p>
   </div>
 
   <div class="card" id="geste-suture-plaie">
@@ -11575,8 +12069,5 @@ printBtnObserver.observe(document.getElementById('content'), {childList:true, su
 
 showModule('accueil');
 </script>
-
-<script>
-if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js");});}
-</script></body>
+</body>
 </html>
