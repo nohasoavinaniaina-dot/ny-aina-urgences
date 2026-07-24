@@ -372,7 +372,7 @@ const MODULES = {
 const renderers = {}; // mod -> function() -> html string
 
 /* ——— Version de l'application ——— */
-const APP_VERSION = "2026.07.15m";
+const APP_VERSION = "2026.07.24d";
 document.addEventListener('DOMContentLoaded', ()=>{});
 (function initVersionBadge(){
   const el = document.getElementById('app-version');
@@ -500,33 +500,126 @@ function renderScores(){
       <button type="button" class="toc-toggle" aria-label="Afficher/masquer le sommaire" onclick="event.stopPropagation(); toggleScoresToc();">▾</button>
     </div>
     <ul class="toc-list">
-      <li><a onclick="openScoreCard('score-news2')">NEWS2 — National Early Warning Score 2</a></li>
-      <li><a onclick="openScoreCard('score-gcs')">Score de Glasgow (GCS) — Adulte</a></li>
-      <li><a onclick="openScoreCard('score-qsofa')">qSOFA — Quick SOFA (suspicion sepsis)</a></li>
-      <li><a onclick="openScoreCard('score-bishop')">🤰 Score de Bishop — Maturation cervicale</a></li>
-      <li><a onclick="openScoreCard('score-apgar')">👶 Score d'Apgar — Nouveau-né</a></li>
-      <li><a onclick="openScoreCard('score-silverman')">👶 Score de Silverman-Andersen — Détresse respiratoire néonatale</a></li>
-      <li><a onclick="openScoreCard('score-ciwa')">🍺 CIWA-Ar — Sevrage alcoolique</a></li>
-      <li><a onclick="openScoreCard('score-sadpersons')">🧠 SAD PERSONS — Risque suicidaire</a></li>
-      <li><a onclick="openScoreCard('score-sofa')">🫁 SOFA — Sequential Organ Failure Assessment</a></li>
-      <li><a onclick="openScoreCard('score-rass')">😴 RASS — Richmond Agitation-Sedation Scale</a></li>
-      <li><a onclick="openScoreCard('score-camicu')">🧩 CAM-ICU — Dépistage du délirium</a></li>
-      <li><a onclick="openScoreCard('score-four')">🧠 FOUR score — Coma (patient intubé/sédaté)</a></li>
-      <li><a onclick="openScoreCard('score-nihss')">🧠 NIHSS — AVC ischémique aigu</a></li>
-      <li><a onclick="openScoreCard('score-abcd2')">🧠 ABCD2 — Risque d'AVC après AIT</a></li>
-      <li><a onclick="openScoreCard('score-heart')">❤️ HEART score — Douleur thoracique</a></li>
-      <li><a onclick="openScoreCard('score-timi')">❤️ TIMI risk score — SCA ST-​</a></li>
-      <li><a onclick="openScoreCard('score-killip')">❤️ Classification de Killip — IDM</a></li>
-      <li><a onclick="openScoreCard('score-wellspe')">🫀 Score de Wells — Embolie pulmonaire</a></li>
-      <li><a onclick="openScoreCard('score-wellstvp')">🦵 Score de Wells — TVP</a></li>
-      <li><a onclick="openScoreCard('score-spesi')">🫁 sPESI — Gravité de l'EP</a></li>
-      <li><a onclick="openScoreCard('score-chadsvasc')">💊 CHA₂DS₂-VASc — Risque thromboembolique (FA)</a></li>
-      <li><a onclick="openScoreCard('score-hasbled')">💊 HAS-BLED — Risque hémorragique (AVK/AOD)</a></li>
-      <li><a onclick="openScoreCard('score-curb65')">🫁 CURB-65 — Pneumonie communautaire</a></li>
-      <li><a onclick="openScoreCard('score-blatchford')">🩸 Glasgow-Blatchford — Hémorragie digestive haute</a></li>
-      <li><a onclick="openScoreCard('score-childpugh')">🫘 Child-Pugh — Cirrhose</a></li>
-      <li><a onclick="openScoreCard('score-meld')">🫘 MELD — Gravité hépatopathie</a></li>
-      <li><a onclick="openScoreCard('score-reference')">Référence rapide — interprétation</a></li>
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🚨 Alerte précoce & gravité générale</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-news2')">NEWS2 — National Early Warning Score 2</a></li>
+        <li><a onclick="openScoreCard('score-qsofa')">qSOFA — Quick SOFA (suspicion sepsis)</a></li>
+        <li><a onclick="openScoreCard('score-sofa')">🫁 SOFA — Sequential Organ Failure Assessment</a></li>
+        <li><a onclick="openScoreCard('score-apache2')">🏥 APACHE II — Gravité à l'admission en réanimation</a></li>
+        <li><a onclick="openScoreCard('score-charlson')">📋 Indice de Charlson — Comorbidités et pronostic</a></li>
+        <li><a onclick="openScoreCard('score-sirs')">🌡️ Critères SIRS — Syndrome de réponse inflammatoire systémique</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🧠 Neurologie & coma</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-gcs')">Score de Glasgow (GCS) — Adulte</a></li>
+        <li><a onclick="openScoreCard('score-four')">🧠 FOUR score — Coma (patient intubé/sédaté)</a></li>
+        <li><a onclick="openScoreCard('score-nihss')">🧠 NIHSS — AVC ischémique aigu</a></li>
+        <li><a onclick="openScoreCard('score-abcd2')">🧠 ABCD2 — Risque d'AVC après AIT</a></li>
+        <li><a onclick="openScoreCard('score-gcsp')">🧠 GCS-Pupilles (GCS-P) — Glasgow combiné à la réactivité pupillaire</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>😴 Sédation & délirium (réanimation)</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-rass')">😴 RASS — Richmond Agitation-Sedation Scale</a></li>
+        <li><a onclick="openScoreCard('score-camicu')">🧩 CAM-ICU — Dépistage du délirium</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>❤️ Cardiologie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-heart')">❤️ HEART score — Douleur thoracique</a></li>
+        <li><a onclick="openScoreCard('score-timi')">❤️ TIMI risk score — SCA ST-​</a></li>
+        <li><a onclick="openScoreCard('score-killip')">❤️ Classification de Killip — IDM</a></li>
+        <li><a onclick="openScoreCard('score-chadsvasc')">💊 CHA₂DS₂-VASc — Risque thromboembolique (FA)</a></li>
+        <li><a onclick="openScoreCard('score-hasbled')">💊 HAS-BLED — Risque hémorragique (AVK/AOD)</a></li>
+        <li><a onclick="openScoreCard('score-grace')">❤️ GRACE — Pronostic du syndrome coronarien aigu</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫁 Pneumologie & thromboembolie veineuse</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-curb65')">🫁 CURB-65 — Pneumonie communautaire</a></li>
+        <li><a onclick="openScoreCard('score-wellspe')">🫀 Score de Wells — Embolie pulmonaire</a></li>
+        <li><a onclick="openScoreCard('score-wellstvp')">🦵 Score de Wells — TVP</a></li>
+        <li><a onclick="openScoreCard('score-spesi')">🫁 sPESI — Gravité de l'EP</a></li>
+        <li><a onclick="openScoreCard('score-perc')">🫀 Règle PERC — Exclusion de l'EP à très faible risque</a></li>
+        <li><a onclick="openScoreCard('score-geneve')">🫀 Score de Genève révisé — Probabilité clinique d'EP</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🩸 Hématologie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-4ts')">🩸 Score des 4T — Thrombopénie induite à l'héparine (TIH)</a></li>
+        <li><a onclick="openScoreCard('score-caprini')">🩸 Score de Caprini (simplifié) — Risque thromboembolique périopératoire</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫘 Hépato-gastro-entérologie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-blatchford')">🩸 Glasgow-Blatchford — Hémorragie digestive haute</a></li>
+        <li><a onclick="openScoreCard('score-childpugh')">🫘 Child-Pugh — Cirrhose</a></li>
+        <li><a onclick="openScoreCard('score-meld')">🫘 MELD — Gravité hépatopathie</a></li>
+        <li><a onclick="openScoreCard('score-ranson')">🥞 Score de Ranson — Pancréatite aiguë</a></li>
+        <li><a onclick="openScoreCard('score-rockall')">🩸 Score de Rockall — Hémorragie digestive (post-endoscopie)</a></li>
+        <li><a onclick="openScoreCard('score-aims65')">🩸 AIMS65 — Hémorragie digestive haute (simplifié)</a></li>
+        <li><a onclick="openScoreCard('score-alvarado')">🔴 Score d'Alvarado — Appendicite aiguë</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>👶 Pédiatrie & néonatologie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-apgar')">👶 Score d'Apgar — Nouveau-né</a></li>
+        <li><a onclick="openScoreCard('score-silverman')">👶 Score de Silverman-Andersen — Détresse respiratoire néonatale</a></li>
+        <li><a onclick="openScoreCard('score-pews')">👶 PEWS — Pediatric Early Warning Score</a></li>
+        <li><a onclick="openScoreCard('score-pecarn')">👶 PECARN — Traumatisme crânien pédiatrique</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🤰 Obstétrique</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-bishop')">🤰 Score de Bishop — Maturation cervicale</a></li>
+        <li><a onclick="openScoreCard('score-meows')">🤰 MEOWS — Alerte précoce obstétricale</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🦴 Traumatologie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-ottawa-cheville')">🦶 Règles d'Ottawa — Cheville/pied</a></li>
+        <li><a onclick="openScoreCard('score-ottawa-genou')">🦵 Règles d'Ottawa — Genou</a></li>
+        <li><a onclick="openScoreCard('score-nexus')">🦴 Critères NEXUS — Rachis cervical</a></li>
+        <li><a onclick="openScoreCard('score-ccr')">🦴 Règle canadienne du rachis cervical (CCR)</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🚑 Polytraumatisme — Gravité</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-iss')">🚑 ISS — Injury Severity Score</a></li>
+        <li><a onclick="openScoreCard('score-rts')">🚑 RTS — Revised Trauma Score</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>😮‍💨 Voies aériennes & anesthésie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-mallampati')">😮‍💨 Score de Mallampati — Prédiction d'intubation difficile</a></li>
+        <li><a onclick="openScoreCard('score-cormack')">😮‍💨 Classification de Cormack-Lehane — Grade de laryngoscopie</a></li>
+        <li><a onclick="openScoreCard('score-stopbang')">😴 STOP-BANG — Dépistage de l'apnée du sommeil</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🆘 Psychiatrie & addictologie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-sadpersons')">🧠 SAD PERSONS — Risque suicidaire</a></li>
+        <li><a onclick="openScoreCard('score-ciwa')">🍺 CIWA-Ar — Sevrage alcoolique</a></li>
+        <li><a onclick="openScoreCard('score-cage')">🍺 CAGE — Dépistage du mésusage d'alcool</a></li>
+        <li><a onclick="openScoreCard('score-auditc')">🍺 AUDIT-C — Dépistage de la consommation à risque d'alcool</a></li>
+        <li><a onclick="openScoreCard('score-cows')">💊 COWS — Sevrage aux opiacés</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🗣️ ORL / Infectiologie ambulatoire</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-centor')">🗣️ Centor/McIsaac — Angine streptococcique</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🛏️ Soins infirmiers & prévention</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-braden')">🛏️ Échelle de Braden — Risque d'escarres</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>📚 Référence</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openScoreCard('score-reference')">Référence rapide — interprétation</a></li>
+      </ul></li>
     </ul>
   </nav>
 
@@ -1194,6 +1287,552 @@ function renderScores(){
     <div class="result-box hidden" id="meld_result"></div>
   </div>
 
+  <div class="card" id="score-apache2">
+    <h3>🏥 APACHE II — Acute Physiology and Chronic Health Evaluation</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Score de gravité calculé dans les 24 premières heures d'admission en réanimation, à partir des pires valeurs observées. Estimation indicative de mortalité — ne remplace pas le jugement clinique.</p>
+    <div class="row2">
+      <div class="field"><label>Âge (années)</label><input type="number" id="ap2_age"></div>
+      <div class="field"><label>Température rectale (°C)</label><input type="number" step="0.1" id="ap2_temp"></div>
+      <div class="field"><label>PA moyenne (mmHg)</label><input type="number" id="ap2_map"></div>
+      <div class="field"><label>Fréquence cardiaque (/min)</label><input type="number" id="ap2_hr"></div>
+      <div class="field"><label>Fréquence respiratoire (/min)</label><input type="number" id="ap2_rr"></div>
+      <div class="field"><label>pH artériel</label><input type="number" step="0.01" id="ap2_ph"></div>
+      <div class="field"><label>Natrémie (mmol/L)</label><input type="number" id="ap2_na"></div>
+      <div class="field"><label>Kaliémie (mmol/L)</label><input type="number" step="0.1" id="ap2_k"></div>
+      <div class="field"><label>Créatininémie (µmol/L)</label><input type="number" id="ap2_crea"></div>
+      <div class="field"><label>Insuffisance rénale aiguë ? (double les points de créatinine)</label>
+        <select id="ap2_aki"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Hématocrite (%)</label><input type="number" step="0.1" id="ap2_ht"></div>
+      <div class="field"><label>Leucocytes (×10³/µL)</label><input type="number" step="0.1" id="ap2_wbc"></div>
+      <div class="field"><label>Glasgow (GCS)</label><input type="number" id="ap2_gcs" min="3" max="15"></div>
+      <div class="field"><label>Mode d'évaluation de l'oxygénation</label>
+        <select id="ap2_o2mode"><option value="low">FiO2 &lt;0,5 → utiliser PaO2</option><option value="high">FiO2 ≥0,5 → utiliser gradient A-aDO2</option></select></div>
+      <div class="field"><label>PaO2 (mmHg) si FiO2&lt;0,5, ou A-aDO2 (mmHg) si FiO2≥0,5</label><input type="number" id="ap2_o2val"></div>
+      <div class="field"><label>Antécédent d'insuffisance d'organe sévère / immunodépression ?</label>
+        <select id="ap2_chronic">
+          <option value="0">Non</option>
+          <option value="2">Oui, chirurgie élective programmée (+2)</option>
+          <option value="5">Oui, non opéré ou chirurgie en urgence (+5)</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcApache2()">Calculer</button>
+    <div class="result-box hidden" id="ap2_result"></div>
+  </div>
+
+  <div class="card" id="score-ranson">
+    <h3>🥞 Score de Ranson — Pancréatite aiguë (critères non biliaires)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">11 critères répartis à l'admission (J0) et à 48h. Le score final ne peut être complet qu'à 48h.</p>
+    <p style="font-size:13px; font-weight:600; color:var(--accent2); margin:8px 0 4px;">À l'admission</p>
+    <div class="row2">
+      <div class="field"><label>Âge &gt;55 ans</label><select id="ran_age"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Leucocytes &gt;16 000/mm³</label><select id="ran_gb"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Glycémie &gt;11 mmol/L (non diabétique)</label><select id="ran_glyc"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>LDH &gt;350 UI/L</label><select id="ran_ldh"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>ASAT &gt;250 UI/L</label><select id="ran_asat"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <p style="font-size:13px; font-weight:600; color:var(--accent2); margin:12px 0 4px;">À 48 heures</p>
+    <div class="row2">
+      <div class="field"><label>Baisse de l'hématocrite &gt;10%</label><select id="ran_ht"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Élévation de l'urée &gt;1,8 mmol/L malgré remplissage</label><select id="ran_uree"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Calcémie &lt;2 mmol/L</label><select id="ran_ca"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>PaO2 &lt;60 mmHg</label><select id="ran_pao2"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Déficit de base &gt;4 mEq/L</label><select id="ran_db"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Séquestration liquidienne estimée &gt;6 L</label><select id="ran_seq"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcRanson()">Calculer</button>
+    <div class="result-box hidden" id="ran_result"></div>
+  </div>
+
+  <div class="card" id="score-pews">
+    <h3>👶 PEWS — Pediatric Early Warning Score</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Détecte précocement une dégradation clinique chez l'enfant hospitalisé. Plusieurs versions institutionnelles existent ; ce modèle simplifié à 3 domaines est fourni à titre indicatif — se référer au protocole local si disponible.</p>
+    <div class="row2">
+      <div class="field"><label>Comportement</label>
+        <select id="pews_comport"><option value="0">Joue / approprié pour l'âge (0)</option><option value="0">Dort (0)</option><option value="1">Irritable (+1)</option><option value="2">Léthargique / confus (+2)</option><option value="3">Réduction de la réponse à la douleur (+3)</option></select></div>
+      <div class="field"><label>Cardiovasculaire</label>
+        <select id="pews_cardio"><option value="0">Rose, TRC 1-2s (0)</option><option value="1">Pâle, ou TRC 3s (+1)</option><option value="2">Gris, ou TRC 4s, ou tachycardie +20/min vs normale (+2)</option><option value="3">Gris/marbré, ou TRC ≥5s, ou tachycardie +30/min, ou bradycardie (+3)</option></select></div>
+      <div class="field"><label>Respiratoire</label>
+        <select id="pews_resp"><option value="0">Paramètres normaux, pas de tirage (0)</option><option value="1">FR &gt;10/min au-dessus de la normale, tirage léger (+1)</option><option value="2">FR &gt;20/min au-dessus de la normale, tirage marqué (+2)</option><option value="3">FR ≤5/min sous la normale avec tirage et geignement (+3)</option></select></div>
+      <div class="field"><label>Nébulisations continues ou vomissements post-opératoires persistants ?</label>
+        <select id="pews_modif"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcPews()">Calculer</button>
+    <div class="result-box hidden" id="pews_result"></div>
+  </div>
+
+  <div class="card" id="score-pecarn">
+    <h3>👶 PECARN — Traumatisme crânien pédiatrique</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Algorithme décisionnel (non un score additif) pour guider l'indication d'un scanner cérébral après traumatisme crânien mineur, selon l'âge.</p>
+    <div class="row2">
+      <div class="field"><label>Âge de l'enfant</label>
+        <select id="pec_age"><option value="lt2">&lt;2 ans</option><option value="ge2">≥2 ans</option></select></div>
+      <div class="field"><label>GCS ≤14, altération de la conscience, ou (si &lt;2 ans) fracture du crâne palpable / (si ≥2 ans) signes de fracture de la base du crâne ?</label>
+        <select id="pec_high"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label id="pec_inter_label">Critère intermédiaire présent ? (voir détail selon l'âge ci-dessous)</label>
+        <select id="pec_inter"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <p style="font-size:12px; color:var(--muted);"><strong>&lt;2 ans</strong> — critères intermédiaires : hématome du scalp occipital/pariétal/temporal, perte de connaissance ≥5s, mécanisme sévère, comportement anormal selon les parents.<br><strong>≥2 ans</strong> — critères intermédiaires : perte de connaissance, vomissements, céphalées sévères, mécanisme sévère.</p>
+    <button class="btn" onclick="calcPecarn()">Évaluer</button>
+    <div class="result-box hidden" id="pec_result"></div>
+  </div>
+
+  <div class="card" id="score-ottawa-cheville">
+    <h3>🦶 Règles d'Ottawa — Cheville et pied</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Détermine l'indication d'une radiographie après traumatisme de cheville/pied.</p>
+    <div class="row2">
+      <div class="field"><label>Douleur en zone malléolaire ?</label><select id="ott_a_mall"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Douleur à la palpation du bord postérieur/pointe d'une des deux malléoles (6 cm distaux) ?</label><select id="ott_a_palp"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Douleur en zone médio-tarsienne ?</label><select id="ott_a_mid"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Douleur à la base du 5e métatarsien ou de l'os naviculaire ?</label><select id="ott_a_base"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Incapacité de faire 4 pas (immédiatement et aux urgences) ?</label><select id="ott_a_marche"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcOttawaCheville()">Évaluer</button>
+    <div class="result-box hidden" id="ott_a_result"></div>
+  </div>
+
+  <div class="card" id="score-ottawa-genou">
+    <h3>🦵 Règles d'Ottawa — Genou</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Détermine l'indication d'une radiographie après traumatisme du genou. Un seul critère positif suffit.</p>
+    <div class="row2">
+      <div class="field"><label>Âge ≥55 ans ?</label><select id="ott_g_age"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Douleur isolée de la rotule, sans autre douleur osseuse du genou ?</label><select id="ott_g_rotule"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Douleur à la palpation de la tête du péroné ?</label><select id="ott_g_perone"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Incapacité de flexion à 90° ?</label><select id="ott_g_flex"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Incapacité de faire 4 pas (immédiatement et aux urgences) ?</label><select id="ott_g_marche"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcOttawaGenou()">Évaluer</button>
+    <div class="result-box hidden" id="ott_g_result"></div>
+  </div>
+
+  <div class="card" id="score-centor">
+    <h3>🗣️ Centor/McIsaac — Angine à streptocoque du groupe A</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Guide l'indication d'un test de diagnostic rapide (TDR) ou d'une antibiothérapie probabiliste.</p>
+    <div class="row2">
+      <div class="field"><label>Fièvre &gt;38°C</label><select id="cen_fievre"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Absence de toux</label><select id="cen_toux"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Adénopathies cervicales antérieures sensibles</label><select id="cen_adeno"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Exsudat ou hypertrophie amygdalienne</label><select id="cen_amygd"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Âge (modificateur McIsaac)</label>
+        <select id="cen_age"><option value="1">3-14 ans (+1)</option><option value="0">15-44 ans (0)</option><option value="-1">≥45 ans (-1)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcCentor()">Calculer</button>
+    <div class="result-box hidden" id="cen_result"></div>
+  </div>
+
+  <div class="card" id="score-braden">
+    <h3>🛏️ Échelle de Braden — Risque d'escarres</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Un score plus bas indique un risque plus élevé.</p>
+    <div class="row2">
+      <div class="field"><label>Perception sensorielle</label>
+        <select id="bra_percep"><option value="1">1 — Complètement limitée</option><option value="2">2 — Très limitée</option><option value="3">3 — Légèrement limitée</option><option value="4">4 — Aucune atteinte</option></select></div>
+      <div class="field"><label>Humidité de la peau</label>
+        <select id="bra_humid"><option value="1">1 — Constamment humide</option><option value="2">2 — Très humide</option><option value="3">3 — Occasionnellement humide</option><option value="4">4 — Rarement humide</option></select></div>
+      <div class="field"><label>Activité</label>
+        <select id="bra_activite"><option value="1">1 — Alité</option><option value="2">2 — Confiné au fauteuil</option><option value="3">3 — Marche occasionnellement</option><option value="4">4 — Marche fréquemment</option></select></div>
+      <div class="field"><label>Mobilité</label>
+        <select id="bra_mobilite"><option value="1">1 — Complètement immobile</option><option value="2">2 — Très limitée</option><option value="3">3 — Légèrement limitée</option><option value="4">4 — Aucune limitation</option></select></div>
+      <div class="field"><label>Nutrition</label>
+        <select id="bra_nutrition"><option value="1">1 — Très pauvre</option><option value="2">2 — Probablement inadéquate</option><option value="3">3 — Adéquate</option><option value="4">4 — Excellente</option></select></div>
+      <div class="field"><label>Friction / cisaillement</label>
+        <select id="bra_friction"><option value="1">1 — Problème</option><option value="2">2 — Problème potentiel</option><option value="3">3 — Pas de problème apparent</option></select></div>
+    </div>
+    <button class="btn" onclick="calcBraden()">Calculer</button>
+    <div class="result-box hidden" id="bra_result"></div>
+  </div>
+
+  <div class="card" id="score-caprini">
+    <h3>🩸 Score de Caprini simplifié — Risque thromboembolique périopératoire</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Version simplifiée reprenant les facteurs de risque les plus fréquents (le score de Caprini complet comporte ~40 items pondérés 1 à 5 points ; se référer à l'outil complet validé pour une stratification précise avant décision de prophylaxie prolongée).</p>
+    <div class="row2">
+      <div class="field"><label>Âge</label>
+        <select id="cap_age"><option value="0">&lt;41 ans (0)</option><option value="1">41-60 ans (+1)</option><option value="2">61-74 ans (+2)</option><option value="3">≥75 ans (+3)</option></select></div>
+      <div class="field"><label>Chirurgie majeure prévue/récente (&gt;45 min)</label><select id="cap_chir"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Antécédent personnel de TVP/EP</label><select id="cap_atcd"><option value="0">Non</option><option value="3">Oui (+3)</option></select></div>
+      <div class="field"><label>Cancer actif</label><select id="cap_cancer"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Alitement prévu &gt;72h</label><select id="cap_alit"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Obésité (IMC &gt;25)</label><select id="cap_imc"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Thrombophilie connue (facteur V Leiden, etc.)</label><select id="cap_thrombo"><option value="0">Non</option><option value="3">Oui (+3)</option></select></div>
+      <div class="field"><label>Grossesse / post-partum, ou contraception œstroprogestative</label><select id="cap_horm"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Insuffisance cardiaque congestive ou infarctus récent (&lt;1 mois)</label><select id="cap_ic"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcCaprini()">Calculer</button>
+    <div class="result-box hidden" id="cap_result"></div>
+  </div>
+
+  <div class="card" id="score-4ts">
+    <h3>🩸 Score des 4T — Thrombopénie induite à l'héparine (TIH)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Probabilité pré-test de TIH de type II chez un patient sous héparine développant une thrombopénie.</p>
+    <div class="row2">
+      <div class="field"><label>Thrombocytopénie (chute des plaquettes)</label>
+        <select id="t4_thrombo"><option value="2">Chute &gt;50%, nadir ≥20 G/L (+2)</option><option value="1">Chute 30-50%, ou nadir 10-19 G/L (+1)</option><option value="0">Chute &lt;30%, ou nadir &lt;10 G/L (0)</option></select></div>
+      <div class="field"><label>Timing de la chute plaquettaire</label>
+        <select id="t4_timing"><option value="2">J5-10, ou ≤1j si héparine dans les 30j précédents (+2)</option><option value="1">&gt;J10, ou timing peu clair (+1)</option><option value="0">Chute &lt;4j sans exposition récente à l'héparine (0)</option></select></div>
+      <div class="field"><label>Thrombose ou autres séquelles</label>
+        <select id="t4_thrombose"><option value="2">Nouvelle thrombose confirmée, nécrose cutanée, réaction systémique aiguë post-bolus (+2)</option><option value="1">Thrombose récidivante/progressive, lésion cutanée érythémateuse, suspicion non prouvée (+1)</option><option value="0">Aucune (0)</option></select></div>
+      <div class="field"><label>Autre cause de thrombocytopénie</label>
+        <select id="t4_autre"><option value="2">Aucune autre cause évidente (+2)</option><option value="1">Cause possible (+1)</option><option value="0">Cause certaine (0)</option></select></div>
+    </div>
+    <button class="btn" onclick="calc4Ts()">Calculer</button>
+    <div class="result-box hidden" id="t4_result"></div>
+  </div>
+
+  <div class="card" id="score-charlson">
+    <h3>📋 Indice de Charlson — Comorbidités et pronostic</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Estime la mortalité à 10 ans à partir des comorbidités ; utile pour contextualiser un pronostic global. Cocher chaque comorbidité présente.</p>
+    <div class="row2">
+      <div class="field"><label>Âge</label>
+        <select id="cha_age_ch"><option value="0">&lt;50 ans (0)</option><option value="1">50-59 ans (+1)</option><option value="2">60-69 ans (+2)</option><option value="3">70-79 ans (+3)</option><option value="4">≥80 ans (+4)</option></select></div>
+      <div class="field"><label>Infarctus du myocarde</label><select id="cha_imc_ch"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Insuffisance cardiaque congestive</label><select id="cha_icc"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Artériopathie périphérique</label><select id="cha_aomi"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>AVC ou AIT</label><select id="cha_avc_ch"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Démence</label><select id="cha_demence"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>BPCO</label><select id="cha_bpco"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Connectivite</label><select id="cha_connect"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Ulcère gastroduodénal</label><select id="cha_ulcere"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Hépatopathie légère</label><select id="cha_hep_leg"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Diabète non compliqué</label><select id="cha_diab_nc"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Diabète avec atteinte d'organe</label><select id="cha_diab_c"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Hémiplégie</label><select id="cha_hemi"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Insuffisance rénale modérée/sévère</label><select id="cha_ir"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Tumeur solide (non métastatique)</label><select id="cha_tumeur"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Leucémie</label><select id="cha_leuc"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Lymphome</label><select id="cha_lymph"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Hépatopathie modérée/sévère</label><select id="cha_hep_sev"><option value="0">Non</option><option value="3">Oui (+3)</option></select></div>
+      <div class="field"><label>Tumeur solide métastatique</label><select id="cha_meta"><option value="0">Non</option><option value="6">Oui (+6)</option></select></div>
+      <div class="field"><label>VIH/SIDA</label><select id="cha_vih"><option value="0">Non</option><option value="6">Oui (+6)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcCharlson()">Calculer</button>
+    <div class="result-box hidden" id="cha_result_ch"></div>
+  </div>
+
+  <div class="card" id="score-sirs">
+    <h3>🌡️ Critères SIRS — Syndrome de réponse inflammatoire systémique</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Officiellement supplanté par Sepsis-3 (SOFA), mais encore largement utilisé en pratique pour le dépistage précoce. SIRS ≥2 critères, dans un contexte infectieux suspecté ou confirmé, oriente vers un sepsis possible.</p>
+    <div class="row2">
+      <div class="field"><label>Température &gt;38°C ou &lt;36°C</label><select id="sirs_temp"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Fréquence cardiaque &gt;90/min</label><select id="sirs_fc"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Fréquence respiratoire &gt;20/min ou PaCO2 &lt;32 mmHg</label><select id="sirs_fr"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Leucocytes &gt;12 000/mm³ ou &lt;4 000/mm³ ou &gt;10% de formes immatures</label><select id="sirs_gb"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcSirs()">Évaluer</button>
+    <div class="result-box hidden" id="sirs_result"></div>
+  </div>
+
+  <div class="card" id="score-gcsp">
+    <h3>🧠 GCS-Pupilles (GCS-P) — Glasgow combiné à la réactivité pupillaire</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">GCS-P = GCS total − score de réactivité pupillaire. Affine la valeur pronostique du GCS seul, en particulier dans le traumatisme crânien grave.</p>
+    <div class="row2">
+      <div class="field"><label>Glasgow (GCS total)</label><input type="number" id="gcsp_gcs" min="3" max="15"></div>
+      <div class="field"><label>Réactivité pupillaire</label>
+        <select id="gcsp_pupilles"><option value="0">Les deux pupilles réactives (0)</option><option value="1">Une seule pupille réactive (+1)</option><option value="2">Aucune pupille réactive (+2)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcGcsP()">Calculer</button>
+    <div class="result-box hidden" id="gcsp_result"></div>
+  </div>
+
+  <div class="card" id="score-grace">
+    <h3>❤️ GRACE — Pronostic du syndrome coronarien aigu</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Estime la mortalité hospitalière et à 6 mois dans le SCA (ST+ ou ST-). Version classique par points ; le modèle GRACE 2.0 (non linéaire) affine légèrement le calcul via l'outil officiel en ligne — les catégories de risque restent similaires en pratique.</p>
+    <div class="row2">
+      <div class="field"><label>Âge (années)</label><input type="number" id="grace_age"></div>
+      <div class="field"><label>Fréquence cardiaque (/min)</label><input type="number" id="grace_fc"></div>
+      <div class="field"><label>PA systolique (mmHg)</label><input type="number" id="grace_pas"></div>
+      <div class="field"><label>Créatininémie (µmol/L)</label><input type="number" id="grace_crea"></div>
+      <div class="field"><label>Classe de Killip</label>
+        <select id="grace_killip"><option value="0">I (0)</option><option value="20">II (+20)</option><option value="39">III (+39)</option><option value="59">IV (+59)</option></select></div>
+      <div class="field"><label>Arrêt cardiaque à l'admission ?</label><select id="grace_ac"><option value="0">Non</option><option value="39">Oui (+39)</option></select></div>
+      <div class="field"><label>Déviation du segment ST ?</label><select id="grace_st"><option value="0">Non</option><option value="28">Oui (+28)</option></select></div>
+      <div class="field"><label>Élévation des marqueurs cardiaques ?</label><select id="grace_enz"><option value="0">Non</option><option value="14">Oui (+14)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcGrace()">Calculer</button>
+    <div class="result-box hidden" id="grace_result"></div>
+  </div>
+
+  <div class="card" id="score-perc">
+    <h3>🫀 Règle PERC — Pulmonary Embolism Rule-out Criteria</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">S'applique uniquement si la probabilité clinique pré-test d'EP est déjà jugée faible (ex. Wells &lt;2). Si tous les critères sont absents, l'EP peut être raisonnablement exclue sans dosage des D-dimères.</p>
+    <div class="row2">
+      <div class="field"><label>Âge ≥50 ans ?</label><select id="perc_age"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Fréquence cardiaque ≥100/min ?</label><select id="perc_fc"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>SpO2 &lt;95% en air ambiant ?</label><select id="perc_spo2"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Œdème unilatéral d'un membre inférieur ?</label><select id="perc_oedeme"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Hémoptysie ?</label><select id="perc_hemopt"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Chirurgie ou traumatisme &lt;4 semaines ayant nécessité une anesthésie ?</label><select id="perc_chir"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Antécédent personnel de TVP/EP ?</label><select id="perc_atcd"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Prise d'œstrogènes (contraception, THS) ?</label><select id="perc_oestro"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcPerc()">Évaluer</button>
+    <div class="result-box hidden" id="perc_result"></div>
+  </div>
+
+  <div class="card" id="score-geneve">
+    <h3>🫀 Score de Genève révisé — Probabilité clinique d'embolie pulmonaire</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Alternative au score de Wells, basée uniquement sur des critères objectifs (sans jugement clinique global).</p>
+    <div class="row2">
+      <div class="field"><label>Âge &gt;65 ans</label><select id="gen_age"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Antécédent de TVP ou EP</label><select id="gen_atcd"><option value="0">Non</option><option value="3">Oui (+3)</option></select></div>
+      <div class="field"><label>Chirurgie ou fracture &lt;1 mois</label><select id="gen_chir"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Cancer actif</label><select id="gen_cancer"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Douleur unilatérale d'un membre inférieur</label><select id="gen_douleur"><option value="0">Non</option><option value="3">Oui (+3)</option></select></div>
+      <div class="field"><label>Hémoptysie</label><select id="gen_hemopt"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Fréquence cardiaque</label>
+        <select id="gen_fc"><option value="0">&lt;75/min (0)</option><option value="3">75-94/min (+3)</option><option value="5">≥95/min (+5)</option></select></div>
+      <div class="field"><label>Douleur à la palpation veineuse profonde + œdème unilatéral</label><select id="gen_palp"><option value="0">Non</option><option value="4">Oui (+4)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcGeneve()">Calculer</button>
+    <div class="result-box hidden" id="gen_result"></div>
+  </div>
+
+  <div class="card" id="score-rockall">
+    <h3>🩸 Score de Rockall — Hémorragie digestive haute (post-endoscopie)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Contrairement au Glasgow-Blatchford (pré-endoscopique), le Rockall complet intègre les données endoscopiques pour évaluer le risque de récidive hémorragique et de mortalité.</p>
+    <div class="row2">
+      <div class="field"><label>Âge</label><select id="rock_age"><option value="0">&lt;60 ans (0)</option><option value="1">60-79 ans (+1)</option><option value="2">≥80 ans (+2)</option></select></div>
+      <div class="field"><label>État hémodynamique</label>
+        <select id="rock_choc"><option value="0">Pas de choc, PAS ≥100, FC &lt;100 (0)</option><option value="1">Tachycardie, PAS ≥100, FC ≥100 (+1)</option><option value="2">Hypotension, PAS &lt;100 (+2)</option></select></div>
+      <div class="field"><label>Comorbidités</label>
+        <select id="rock_comorb"><option value="0">Aucune comorbidité majeure (0)</option><option value="2">Insuffisance cardiaque, coronaropathie ou comorbidité majeure (+2)</option><option value="3">Insuffisance rénale, hépatique, ou cancer disséminé (+3)</option></select></div>
+      <div class="field"><label>Diagnostic endoscopique</label>
+        <select id="rock_diag"><option value="0">Mallory-Weiss ou pas de lésion identifiée, pas de stigmate (0)</option><option value="1">Autres diagnostics (ex. ulcère) (+1)</option><option value="2">Néoplasie du tractus digestif haut (+2)</option></select></div>
+      <div class="field"><label>Stigmates endoscopiques de saignement récent</label>
+        <select id="rock_stigmate"><option value="0">Aucun ou tache pigmentée (0)</option><option value="2">Sang dans le tractus digestif haut, caillot adhérent, vaisseau visible ou saignement actif (+2)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcRockall()">Calculer</button>
+    <div class="result-box hidden" id="rock_result"></div>
+  </div>
+
+  <div class="card" id="score-aims65">
+    <h3>🩸 AIMS65 — Hémorragie digestive haute (score simplifié)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Alternative simplifiée au Glasgow-Blatchford, ne nécessitant que 5 variables. 1 point par critère présent.</p>
+    <div class="row2">
+      <div class="field"><label>Albuminémie &lt;30 g/L</label><select id="aims_alb"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>INR &gt;1,5</label><select id="aims_inr"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>État mental altéré</label><select id="aims_mental"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>PA systolique ≤90 mmHg</label><select id="aims_pas"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Âge ≥65 ans</label><select id="aims_age"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcAims65()">Calculer</button>
+    <div class="result-box hidden" id="aims_result"></div>
+  </div>
+
+  <div class="card" id="score-alvarado">
+    <h3>🔴 Score d'Alvarado — Appendicite aiguë</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Mnémonique MANTRELS. Score /10.</p>
+    <div class="row2">
+      <div class="field"><label>Migration de la douleur vers la fosse iliaque droite</label><select id="alv_migr"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Anorexie</label><select id="alv_anor"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Nausées / vomissements</label><select id="alv_nausee"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Douleur provoquée en fosse iliaque droite</label><select id="alv_douleur"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Douleur à la décompression (Blumberg)</label><select id="alv_blumberg"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Température &gt;37,3°C</label><select id="alv_fievre"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+      <div class="field"><label>Hyperleucocytose &gt;10 000/mm³</label><select id="alv_leuc"><option value="0">Non</option><option value="2">Oui (+2)</option></select></div>
+      <div class="field"><label>Déviation gauche de la formule (neutrophiles &gt;75%)</label><select id="alv_neutro"><option value="0">Non</option><option value="1">Oui (+1)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcAlvarado()">Calculer</button>
+    <div class="result-box hidden" id="alv_result"></div>
+  </div>
+
+  <div class="card" id="score-meows">
+    <h3>🤰 MEOWS — Modified Early Obstetric Warning Score</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Adapte la logique du NEWS2 à la physiologie de la grossesse et du post-partum. Un seul paramètre franchement anormal ou plusieurs paramètres légèrement anormaux doivent déclencher une évaluation médicale.</p>
+    <div class="row2">
+      <div class="field"><label>Fréquence respiratoire (/min)</label>
+        <select id="meows_fr"><option value="0">12-20 (0)</option><option value="1">21-30, ou &lt;12 (+1)</option><option value="2">&gt;30 (+2)</option></select></div>
+      <div class="field"><label>SpO2 (%)</label>
+        <select id="meows_spo2"><option value="0">≥95 (0)</option><option value="1">93-94 (+1)</option><option value="2">&lt;93 (+2)</option></select></div>
+      <div class="field"><label>Température (°C)</label>
+        <select id="meows_temp"><option value="0">36-37,4 (0)</option><option value="1">37,5-37,9, ou 35-35,9 (+1)</option><option value="2">≥38, ou &lt;35 (+2)</option></select></div>
+      <div class="field"><label>PA systolique (mmHg)</label>
+        <select id="meows_pas"><option value="0">100-139 (0)</option><option value="1">140-149, ou 90-99 (+1)</option><option value="2">≥150, ou &lt;90 (+2)</option></select></div>
+      <div class="field"><label>Fréquence cardiaque (/min)</label>
+        <select id="meows_fc"><option value="0">60-99 (0)</option><option value="1">100-119, ou 50-59 (+1)</option><option value="2">≥120, ou &lt;50 (+2)</option></select></div>
+      <div class="field"><label>État neurologique</label>
+        <select id="meows_neuro"><option value="0">Alerte (0)</option><option value="1">Réagit à la voix (+1)</option><option value="2">Réagit à la douleur ou aréactive (+2)</option></select></div>
+      <div class="field"><label>Protéinurie (bandelette)</label>
+        <select id="meows_proteinurie"><option value="0">Négative/traces (0)</option><option value="2">≥1+ (+2)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcMeows()">Calculer</button>
+    <div class="result-box hidden" id="meows_result"></div>
+  </div>
+
+  <div class="card" id="score-nexus">
+    <h3>🦴 Critères NEXUS — Rachis cervical</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Si tous les critères sont absents, le risque de lésion cervicale cliniquement significative est très faible et l'imagerie peut être évitée. Endossé par les critères ACR 2024.</p>
+    <div class="row2">
+      <div class="field"><label>Sensibilité de la ligne médiane cervicale postérieure</label><select id="nex_sensib"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Intoxication (alcool/drogues) évidente</label><select id="nex_intox"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Niveau de conscience altéré</label><select id="nex_conscience"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Déficit neurologique focal</label><select id="nex_deficit"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Lésion douloureuse distrayante</label><select id="nex_distray"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcNexus()">Évaluer</button>
+    <div class="result-box hidden" id="nex_result"></div>
+  </div>
+
+  <div class="card" id="score-ccr">
+    <h3>🦴 Règle canadienne du rachis cervical (Canadian C-Spine Rule)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">S'applique aux patients traumatisés conscients (GCS 15), stables, ≥16 ans. Ne s'applique pas si un critère à haut risque est déjà présent (imagerie alors indiquée d'emblée).</p>
+    <div class="row2">
+      <div class="field"><label>Critère à haut risque présent ? (âge ≥65 ans, mécanisme dangereux, paresthésies des extrémités)</label>
+        <select id="ccr_haut"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Critère de faible risque permettant l'évaluation de la mobilité présent ? (collision arrière simple, position assise aux urgences, patient ambulatoire à un moment, début différé de la douleur, absence de sensibilité de la ligne médiane cervicale)</label>
+        <select id="ccr_faible"><option value="1">Oui</option><option value="0">Non</option></select></div>
+      <div class="field"><label>Rotation active du cou possible de 45° des deux côtés ?</label>
+        <select id="ccr_rotation"><option value="1">Oui</option><option value="0">Non / non testable</option></select></div>
+    </div>
+    <button class="btn" onclick="calcCcr()">Évaluer</button>
+    <div class="result-box hidden" id="ccr_result"></div>
+  </div>
+
+  <div class="card" id="score-iss">
+    <h3>🚑 ISS — Injury Severity Score</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Quantifie la gravité anatomique globale d'un polytraumatisme. Coter la sévérité AIS (Abbreviated Injury Scale, 0-6) de la lésion la plus grave dans chacune des 6 régions ; l'ISS est la somme des carrés des 3 scores AIS les plus élevés (max 75 ; toute lésion cotée 6 impose ISS=75).</p>
+    <div class="row2">
+      <div class="field"><label>Tête/cou (AIS 0-6)</label><select id="iss_tete">
+        <option value="0">0 — Aucune lésion</option><option value="1">1 — Mineure</option><option value="2">2 — Modérée</option><option value="3">3 — Sévère sans pronostic vital</option><option value="4">4 — Sévère, pronostic vital engagé, survie probable</option><option value="5">5 — Critique, survie incertaine</option><option value="6">6 — Lésion au-delà des ressources thérapeutiques (létale)</option></select></div>
+      <div class="field"><label>Face (AIS 0-6)</label><select id="iss_face">
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+      <div class="field"><label>Thorax (AIS 0-6)</label><select id="iss_thorax">
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+      <div class="field"><label>Abdomen/pelvis (AIS 0-6)</label><select id="iss_abdo">
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+      <div class="field"><label>Membres/ceinture pelvienne (AIS 0-6)</label><select id="iss_membres">
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+      <div class="field"><label>Externe/tégument (AIS 0-6)</label><select id="iss_externe">
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+    </div>
+    <button class="btn" onclick="calcIss()">Calculer</button>
+    <div class="result-box hidden" id="iss_result"></div>
+  </div>
+
+  <div class="card" id="score-rts">
+    <h3>🚑 RTS — Revised Trauma Score</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">RTS = 0,9368×GCSc + 0,7326×PASc + 0,2908×FRc. Utilisé pour le triage et le pronostic physiologique du traumatisé.</p>
+    <div class="row2">
+      <div class="field"><label>Glasgow (GCS)</label>
+        <select id="rts_gcs"><option value="4">13-15 (code 4)</option><option value="3">9-12 (code 3)</option><option value="2">6-8 (code 2)</option><option value="1">4-5 (code 1)</option><option value="0">3 (code 0)</option></select></div>
+      <div class="field"><label>PA systolique (mmHg)</label>
+        <select id="rts_pas"><option value="4">≥90 (code 4)</option><option value="3">76-89 (code 3)</option><option value="2">50-75 (code 2)</option><option value="1">1-49 (code 1)</option><option value="0">0, absente (code 0)</option></select></div>
+      <div class="field"><label>Fréquence respiratoire (/min)</label>
+        <select id="rts_fr"><option value="4">10-29 (code 4)</option><option value="3">&gt;29 (code 3)</option><option value="2">6-9 (code 2)</option><option value="1">1-5 (code 1)</option><option value="0">0, absente (code 0)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcRts()">Calculer</button>
+    <div class="result-box hidden" id="rts_result"></div>
+  </div>
+
+  <div class="card" id="score-mallampati">
+    <h3>😮‍💨 Score de Mallampati — Prédiction d'intubation difficile</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Évalué bouche grande ouverte, langue tirée, patient assis. Un score élevé est associé (mais pas synonyme) à une intubation potentiellement difficile — à combiner à d'autres critères (ouverture buccale, distance thyromentonnière, mobilité cervicale).</p>
+    <div class="row2">
+      <div class="field"><label>Classe observée</label>
+        <select id="mall_classe">
+          <option value="1">I — Voile du palais, luette, piliers amygdaliens visibles</option>
+          <option value="2">II — Voile du palais et luette visibles, piliers masqués par la base de langue</option>
+          <option value="3">III — Seul le voile du palais est visible</option>
+          <option value="4">IV — Palais osseux seul visible</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcMallampati()">Évaluer</button>
+    <div class="result-box hidden" id="mall_result"></div>
+  </div>
+
+  <div class="card" id="score-cormack">
+    <h3>😮‍💨 Classification de Cormack-Lehane — Grade de laryngoscopie</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Décrit la vue laryngoscopique obtenue au moment de l'intubation (et non une prédiction préalable).</p>
+    <div class="row2">
+      <div class="field"><label>Grade observé</label>
+        <select id="corm_grade">
+          <option value="1">I — Glotte entièrement visible</option>
+          <option value="2">II — Seule la partie postérieure de la glotte est visible</option>
+          <option value="3">III — Seule l'épiglotte est visible, glotte non visible</option>
+          <option value="4">IV — Ni épiglotte ni glotte visibles</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcCormack()">Évaluer</button>
+    <div class="result-box hidden" id="corm_result"></div>
+  </div>
+
+  <div class="card" id="score-stopbang">
+    <h3>😴 STOP-BANG — Dépistage de l'apnée obstructive du sommeil</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Utile avant sédation procédurale ou anesthésie pour anticiper un risque de désaturation/obstruction des voies aériennes.</p>
+    <div class="row2">
+      <div class="field"><label>Ronflement fort (Snoring) ?</label><select id="sb_snore"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Fatigue diurne (Tiredness) ?</label><select id="sb_tired"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Apnées observées (Observed) ?</label><select id="sb_obs"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>HTA traitée (Pressure) ?</label><select id="sb_pression"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>IMC &gt;35 kg/m² (BMI) ?</label><select id="sb_bmi"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Âge &gt;50 ans ?</label><select id="sb_age"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Tour de cou &gt;40 cm (Neck) ?</label><select id="sb_neck"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Sexe masculin (Gender) ?</label><select id="sb_gender"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcStopbang()">Calculer</button>
+    <div class="result-box hidden" id="sb_result"></div>
+  </div>
+
+  <div class="card" id="score-cage">
+    <h3>🍺 CAGE — Dépistage du mésusage d'alcool</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">4 questions, 1 point par réponse positive. ≥2 points évoque un mésusage nécessitant une évaluation plus approfondie.</p>
+    <div class="row2">
+      <div class="field"><label>Avez-vous déjà ressenti le besoin de diminuer (Cut down) votre consommation d'alcool ?</label><select id="cage_c"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Votre entourage vous a-t-il déjà critiqué (Annoyed) au sujet de votre consommation ?</label><select id="cage_a"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Vous êtes-vous déjà senti coupable (Guilty) de votre consommation ?</label><select id="cage_g"><option value="0">Non</option><option value="1">Oui</option></select></div>
+      <div class="field"><label>Avez-vous déjà eu besoin d'alcool dès le matin (Eye-opener) pour vous sentir mieux ?</label><select id="cage_e"><option value="0">Non</option><option value="1">Oui</option></select></div>
+    </div>
+    <button class="btn" onclick="calcCage()">Évaluer</button>
+    <div class="result-box hidden" id="cage_result"></div>
+  </div>
+
+  <div class="card" id="score-auditc">
+    <h3>🍺 AUDIT-C — Dépistage de la consommation à risque d'alcool</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Version courte de l'AUDIT (3 questions, 0-4 points chacune).</p>
+    <div class="row2">
+      <div class="field"><label>Fréquence de consommation d'alcool</label>
+        <select id="auc_freq"><option value="0">Jamais (0)</option><option value="1">≤1×/mois (+1)</option><option value="2">2-4×/mois (+2)</option><option value="3">2-3×/semaine (+3)</option><option value="4">≥4×/semaine (+4)</option></select></div>
+      <div class="field"><label>Nombre de verres standards un jour typique</label>
+        <select id="auc_qty"><option value="0">1-2 (0)</option><option value="1">3-4 (+1)</option><option value="2">5-6 (+2)</option><option value="3">7-9 (+3)</option><option value="4">≥10 (+4)</option></select></div>
+      <div class="field"><label>Fréquence de consommation ≥6 verres en une occasion</label>
+        <select id="auc_binge"><option value="0">Jamais (0)</option><option value="1">Moins d'une fois/mois (+1)</option><option value="2">Une fois/mois (+2)</option><option value="3">Une fois/semaine (+3)</option><option value="4">Quotidiennement ou presque (+4)</option></select></div>
+      <div class="field"><label>Sexe</label><select id="auc_sexe"><option value="h">Homme</option><option value="f">Femme</option></select></div>
+    </div>
+    <button class="btn" onclick="calcAuditC()">Calculer</button>
+    <div class="result-box hidden" id="auc_result"></div>
+  </div>
+
+  <div class="card" id="score-cows">
+    <h3>💊 COWS — Clinical Opiate Withdrawal Scale</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Objective la sévérité du sevrage aux opiacés et guide l'initiation d'un traitement de substitution.</p>
+    <div class="row2">
+      <div class="field"><label>Fréquence cardiaque</label>
+        <select id="cows_fc"><option value="0">≤80/min (0)</option><option value="1">81-100 (+1)</option><option value="2">101-120 (+2)</option><option value="4">&gt;120 (+4)</option></select></div>
+      <div class="field"><label>Sudation</label>
+        <select id="cows_sueur"><option value="0">Absente (0)</option><option value="1">Frissons/bouffées vasomotrices (+1)</option><option value="2">Sueurs visibles sur le visage (+2)</option><option value="3">Sueurs abondantes (+3)</option><option value="4">Ruisselante (+4)</option></select></div>
+      <div class="field"><label>Agitation</label>
+        <select id="cows_agit"><option value="0">Assis tranquille (0)</option><option value="1">Difficulté à rester assis (+1)</option><option value="3">Agitation nette (+3)</option><option value="5">Ne tient pas en place (+5)</option></select></div>
+      <div class="field"><label>Mydriase pupillaire</label>
+        <select id="cows_pupille"><option value="0">Pupilles normales (0)</option><option value="1">Discrètement dilatées (+1)</option><option value="2">Modérément dilatées (+2)</option><option value="5">Dilatation extrême (+5)</option></select></div>
+      <div class="field"><label>Douleurs osseuses/articulaires</label>
+        <select id="cows_dl"><option value="0">Absentes (0)</option><option value="1">Légères (+1)</option><option value="2">Se plaint (+2)</option><option value="4">Se frotte les articulations/muscles (+4)</option></select></div>
+      <div class="field"><label>Rhinorrhée / larmoiement</label>
+        <select id="cows_rhino"><option value="0">Absents (0)</option><option value="1">Congestion/yeux humides (+1)</option><option value="2">Écoulement nasal/larmoiement (+2)</option><option value="4">Écoulement continu (+4)</option></select></div>
+      <div class="field"><label>Troubles digestifs (GI)</label>
+        <select id="cows_gi"><option value="0">Aucun (0)</option><option value="1">Crampes (+1)</option><option value="2">Nausées/selles molles (+2)</option><option value="3">Vomissements/diarrhée (+3)</option><option value="5">Vomissements/diarrhée multiples (+5)</option></select></div>
+      <div class="field"><label>Tremblements</label>
+        <select id="cows_tremor"><option value="0">Absents (0)</option><option value="1">Peuvent être sentis, non visibles (+1)</option><option value="2">Modérés, visibles (+2)</option><option value="4">Sévères, même au repos (+4)</option></select></div>
+      <div class="field"><label>Bâillements</label>
+        <select id="cows_baillement"><option value="0">Aucun (0)</option><option value="1">1-2 pendant l'évaluation (+1)</option><option value="2">≥3 (+2)</option><option value="4">Plusieurs par minute (+4)</option></select></div>
+      <div class="field"><label>Anxiété / irritabilité</label>
+        <select id="cows_anxiete"><option value="0">Aucune (0)</option><option value="1">Légère (+1)</option><option value="2">Modérée (+2)</option><option value="4">Sévère, interfère avec l'évaluation (+4)</option></select></div>
+      <div class="field"><label>Piloérection ("chair de poule")</label>
+        <select id="cows_piloerection"><option value="0">Absente (0)</option><option value="3">Palpable, poils dressés (+3)</option><option value="5">Proéminente (+5)</option></select></div>
+    </div>
+    <button class="btn" onclick="calcCows()">Calculer</button>
+    <div class="result-box hidden" id="cows_result"></div>
+  </div>
+
   <div class="card" id="score-reference">
     <h3>Référence rapide — interprétation</h3>
     <table>
@@ -1224,6 +1863,35 @@ function renderScores(){
       <tr><td>Glasgow-Blatchford</td><td>0 <span class="leger">très faible</span> · ≥1 <span class="grave">hospitalisation/endoscopie</span></td></tr>
       <tr><td>Child-Pugh</td><td>A (5-6) <span class="leger">compensée</span> · B (7-9) <span class="modere">significative</span> · C (10-15) <span class="grave">décompensée</span></td></tr>
       <tr><td>MELD</td><td>&lt;10 <span class="leger">faible</span> · 10-19 <span class="modere">intermédiaire</span> · ≥20 <span class="grave">élevé</span></td></tr>
+      <tr><td>APACHE II</td><td>&lt;10 <span class="leger">faible</span> · 10-19 <span class="modere">modérée</span> · 20-29 <span class="grave">élevée</span> · ≥30 <span class="grave">très élevée</span></td></tr>
+      <tr><td>Ranson</td><td>&lt;3 <span class="leger">bénigne</span> · 3-4 <span class="modere">modérée</span> · 5-6 <span class="grave">sévère</span> · ≥7 <span class="grave">très sévère</span></td></tr>
+      <tr><td>PEWS (simplifié)</td><td>0 <span class="leger">aucun signe</span> · 1-2 <span class="modere">vigilance</span> · ≥3 <span class="grave">alerte</span></td></tr>
+      <tr><td>PECARN</td><td>Élevé <span class="grave">scanner</span> · Intermédiaire <span class="modere">observation/scanner</span> · Faible <span class="leger">pas de scanner</span></td></tr>
+      <tr><td>Ottawa cheville/genou</td><td>Un critère positif → <span class="grave">radiographie indiquée</span></td></tr>
+      <tr><td>Centor/McIsaac</td><td>≤0 <span class="leger">très faible</span> · 1 faible · 2-3 <span class="modere">TDR recommandé</span> · ≥4 <span class="grave">élevé</span></td></tr>
+      <tr><td>Braden</td><td>≤9 <span class="grave">très élevé</span> · 10-14 <span class="modere">élevé/modéré</span> · ≥15 <span class="leger">faible</span></td></tr>
+      <tr><td>Caprini (simplifié)</td><td>≤1 <span class="leger">faible</span> · 2-4 <span class="modere">modéré</span> · ≥5 <span class="grave">élevé</span></td></tr>
+      <tr><td>Score des 4T</td><td>0-3 <span class="leger">faible</span> · 4-5 <span class="modere">intermédiaire</span> · 6-8 <span class="grave">élevé</span></td></tr>
+      <tr><td>Indice de Charlson</td><td>0 <span class="leger">minime</span> · 1-2 léger · 3-4 <span class="modere">modéré</span> · ≥5 <span class="grave">sévère</span></td></tr>
+      <tr><td>Critères SIRS</td><td>&lt;2 <span class="leger">négatif</span> · ≥2 <span class="grave">positif</span></td></tr>
+      <tr><td>GCS-Pupilles</td><td>≥13 <span class="leger">léger</span> · 9-12 <span class="modere">modéré</span> · ≤8 <span class="grave">sévère</span></td></tr>
+      <tr><td>GRACE</td><td>&lt;109 <span class="leger">faible</span> · 109-140 <span class="modere">intermédiaire</span> · &gt;140 <span class="grave">élevé</span></td></tr>
+      <tr><td>Règle PERC</td><td>0 critère <span class="leger">EP exclue (si pré-test faible)</span> · ≥1 <span class="modere">poursuivre la démarche</span></td></tr>
+      <tr><td>Genève révisé</td><td>≤3 <span class="leger">faible</span> · 4-10 <span class="modere">intermédiaire</span> · ≥11 <span class="grave">forte</span></td></tr>
+      <tr><td>Rockall complet</td><td>≤2 <span class="leger">faible</span> · 3-4 <span class="modere">intermédiaire</span> · ≥5 <span class="grave">élevé</span></td></tr>
+      <tr><td>AIMS65</td><td>0-1 <span class="leger">faible</span> · ≥2 <span class="grave">élevé</span></td></tr>
+      <tr><td>Alvarado</td><td>≤3 <span class="leger">peu probable</span> · 4-6 <span class="modere">possible</span> · 7-10 <span class="grave">probable</span></td></tr>
+      <tr><td>MEOWS</td><td>0 <span class="leger">aucun signe</span> · 1-3 <span class="modere">vigilance</span> · ≥4 <span class="grave">alerte</span></td></tr>
+      <tr><td>NEXUS</td><td>Tous critères absents <span class="leger">imagerie non nécessaire</span> · ≥1 présent <span class="grave">imagerie indiquée</span></td></tr>
+      <tr><td>Règle canadienne du rachis cervical</td><td>Voir algorithme — <span class="leger">non applicable</span> ou <span class="grave">imagerie indiquée</span></td></tr>
+      <tr><td>ISS</td><td>&lt;9 <span class="leger">mineur</span> · 9-15 modéré · 16-24 <span class="modere">sévère</span> · ≥25 <span class="grave">majeur</span></td></tr>
+      <tr><td>RTS</td><td>≥7,8 <span class="leger">faible risque</span> · 5-7,8 <span class="modere">intermédiaire</span> · &lt;5 <span class="grave">élevé</span></td></tr>
+      <tr><td>Mallampati</td><td>I-II <span class="leger">intubation facile attendue</span> · III-IV <span class="grave">risque d'intubation difficile</span></td></tr>
+      <tr><td>Cormack-Lehane</td><td>I <span class="leger">facile</span> · II <span class="modere">intermédiaire</span> · III-IV <span class="grave">difficile</span></td></tr>
+      <tr><td>STOP-BANG</td><td>0-2 <span class="leger">faible</span> · 3-4 <span class="modere">intermédiaire</span> · 5-8 <span class="grave">élevé</span></td></tr>
+      <tr><td>CAGE</td><td>&lt;2 <span class="leger">négatif</span> · ≥2 <span class="grave">positif</span></td></tr>
+      <tr><td>AUDIT-C</td><td>Sous le seuil <span class="leger">pas de risque identifié</span> · au-dessus <span class="grave">consommation à risque</span></td></tr>
+      <tr><td>COWS</td><td>≤4 <span class="leger">minime</span> · 5-24 <span class="modere">léger-modéré</span> · ≥25 <span class="grave">sévère</span></td></tr>
     </table>
   </div>`;
 }
@@ -1657,6 +2325,460 @@ function calcMeld(){
   else {niveau="Mortalité à 3 mois très élevée"; classe="grave";}
   document.getElementById('meld_result').classList.remove('hidden');
   document.getElementById('meld_result').innerHTML = `<strong>MELD ≈ ${meld}</strong> — <span class="${classe}">${niveau}</span><br>Score utilisé pour la priorisation en transplantation hépatique ; interprétation à confier à l'équipe d'hépatologie/transplantation.`;
+}
+
+
+function calcApache2(){
+  const age = parseFloat(document.getElementById('ap2_age').value);
+  const temp = parseFloat(document.getElementById('ap2_temp').value);
+  const map = parseFloat(document.getElementById('ap2_map').value);
+  const hr = parseFloat(document.getElementById('ap2_hr').value);
+  const rr = parseFloat(document.getElementById('ap2_rr').value);
+  const ph = parseFloat(document.getElementById('ap2_ph').value);
+  const na = parseFloat(document.getElementById('ap2_na').value);
+  const k = parseFloat(document.getElementById('ap2_k').value);
+  const creaUmol = parseFloat(document.getElementById('ap2_crea').value);
+  const aki = parseInt(document.getElementById('ap2_aki').value)===1;
+  const ht = parseFloat(document.getElementById('ap2_ht').value);
+  const wbc = parseFloat(document.getElementById('ap2_wbc').value);
+  const gcs = parseFloat(document.getElementById('ap2_gcs').value);
+  const o2mode = document.getElementById('ap2_o2mode').value;
+  const o2val = parseFloat(document.getElementById('ap2_o2val').value);
+  const chronic = parseInt(document.getElementById('ap2_chronic').value);
+
+  if([age,temp,map,hr,rr,ph,na,k,creaUmol,ht,wbc,gcs,o2val].some(v=>isNaN(v))){
+    alert("Veuillez remplir tous les champs numériques.");
+    return;
+  }
+  const crea = creaUmol/88.4; // mg/dL
+
+  function bandTemp(t){ if(t>=41)return 4; if(t>=39)return 3; if(t>=38.5)return 1; if(t>=36)return 0; if(t>=34)return 1; if(t>=32)return 2; if(t>=30)return 3; return 4; }
+  function bandMAP(m){ if(m>=160)return 4; if(m>=130)return 3; if(m>=110)return 2; if(m>=70)return 0; if(m>=50)return 2; return 4; }
+  function bandHR(h){ if(h>=180)return 4; if(h>=140)return 3; if(h>=110)return 2; if(h>=70)return 0; if(h>=55)return 2; if(h>=40)return 3; return 4; }
+  function bandRR(r){ if(r>=50)return 4; if(r>=35)return 3; if(r>=25)return 1; if(r>=12)return 0; if(r>=10)return 1; if(r>=6)return 2; return 4; }
+  function bandPH(p){ if(p>=7.7)return 4; if(p>=7.6)return 3; if(p>=7.5)return 1; if(p>=7.33)return 0; if(p>=7.25)return 2; if(p>=7.15)return 3; return 4; }
+  function bandNa(n){ if(n>=180)return 4; if(n>=160)return 3; if(n>=155)return 2; if(n>=150)return 1; if(n>=130)return 0; if(n>=120)return 2; if(n>=111)return 3; return 4; }
+  function bandK(k){ if(k>=7)return 4; if(k>=6)return 3; if(k>=5.5)return 1; if(k>=3.5)return 0; if(k>=3)return 1; if(k>=2.5)return 2; return 4; }
+  function bandCrea(c,aki){ let p; if(c>=3.5)p=4; else if(c>=2.0)p=3; else if(c>=1.5)p=2; else if(c>=0.6)p=0; else p=2; return aki? p*2 : p; }
+  function bandHt(h){ if(h>=60)return 4; if(h>=50)return 2; if(h>=46)return 1; if(h>=30)return 0; if(h>=20)return 2; return 4; }
+  function bandWbc(w){ if(w>=40)return 4; if(w>=20)return 2; if(w>=15)return 1; if(w>=3)return 0; if(w>=1)return 2; return 4; }
+  function bandO2(mode,val){ if(mode==='high'){ if(val>=500)return 4; if(val>=350)return 3; if(val>=200)return 2; return 0; } else { if(val>70)return 0; if(val>=61)return 1; if(val>=55)return 3; return 4; } }
+  function bandAge(a){ if(a<44)return 0; if(a<=54)return 2; if(a<=64)return 3; if(a<=74)return 5; return 6; }
+
+  const aps = bandTemp(temp)+bandMAP(map)+bandHR(hr)+bandRR(rr)+bandPH(ph)+bandNa(na)+bandK(k)+bandCrea(crea,aki)+bandHt(ht)+bandWbc(wbc)+bandO2(o2mode,o2val)+(15-gcs);
+  const agePts = bandAge(age);
+  const total = aps + agePts + chronic;
+
+  let niveau, classe;
+  if(total<10){niveau="Gravité faible"; classe="leger";}
+  else if(total<20){niveau="Gravité modérée"; classe="modere";}
+  else if(total<30){niveau="Gravité élevée"; classe="grave";}
+  else {niveau="Gravité très élevée"; classe="grave";}
+
+  document.getElementById('ap2_result').classList.remove('hidden');
+  document.getElementById('ap2_result').innerHTML = `<strong>APACHE II = ${total}</strong> (APS ${aps} + âge ${agePts} + santé chronique ${chronic}) — <span class="${classe}">${niveau}</span><br>Estimation indicative de mortalité hospitalière, croissante avec le score — à interpréter avec le contexte clinique global, pas comme seuil de décision isolé.`;
+}
+
+function calcRanson(){
+  const admIds = ['ran_age','ran_gb','ran_glyc','ran_ldh','ran_asat'];
+  const h48Ids = ['ran_ht','ran_uree','ran_ca','ran_pao2','ran_db','ran_seq'];
+  let adm = 0, h48 = 0;
+  admIds.forEach(id=>{ adm += parseInt(document.getElementById(id).value); });
+  h48Ids.forEach(id=>{ h48 += parseInt(document.getElementById(id).value); });
+  const total = adm + h48;
+  let niveau, classe, conduite;
+  if(total<3){niveau="Pancréatite probablement bénigne"; classe="leger"; conduite="Mortalité estimée ~1%.";}
+  else if(total<=4){niveau="Gravité modérée"; classe="modere"; conduite="Mortalité estimée ~15% — surveillance rapprochée.";}
+  else if(total<=6){niveau="Pancréatite sévère"; classe="grave"; conduite="Mortalité estimée ~40% — orientation en soins intensifs/réanimation.";}
+  else {niveau="Pancréatite très sévère"; classe="grave"; conduite="Mortalité proche de 100% dans les séries historiques — prise en charge en réanimation impérative.";}
+  document.getElementById('ran_result').classList.remove('hidden');
+  document.getElementById('ran_result').innerHTML = `<strong>Score de Ranson = ${total}/11</strong> (admission ${adm}/5 + 48h ${h48}/6) — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcPews(){
+  const ids = ['pews_comport','pews_cardio','pews_resp','pews_modif'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total===0){niveau="Pas de signe d'alerte"; classe="leger"; conduite="Surveillance standard.";}
+  else if(total<=2){niveau="Vigilance"; classe="modere"; conduite="Surveillance rapprochée, réévaluer selon protocole local.";}
+  else {niveau="Alerte"; classe="grave"; conduite="Avis médical/pédiatrique sans délai, envisager une surveillance continue.";}
+  document.getElementById('pews_result').classList.remove('hidden');
+  document.getElementById('pews_result').innerHTML = `<strong>PEWS (simplifié) = ${total}</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcPecarn(){
+  const age = document.getElementById('pec_age').value;
+  const high = parseInt(document.getElementById('pec_high').value);
+  const inter = parseInt(document.getElementById('pec_inter').value);
+  let niveau, classe, conduite;
+  if(high===1){
+    niveau="Risque élevé de lésion cérébrale traumatique cliniquement significative";
+    classe="grave";
+    conduite="Scanner cérébral recommandé.";
+  } else if(inter===1){
+    niveau="Risque intermédiaire";
+    classe="modere";
+    conduite = age==='lt2'
+      ? "Observation (le plus souvent 4-6h) versus scanner selon expérience clinique, nombre de facteurs, évolution des symptômes et préférence des parents."
+      : "Observation versus scanner selon expérience clinique, nombre de facteurs, évolution des symptômes et préférence du patient/des parents.";
+  } else {
+    niveau="Risque très faible de lésion cérébrale traumatique cliniquement significative";
+    classe="leger";
+    conduite="Scanner cérébral non recommandé.";
+  }
+  document.getElementById('pec_result').classList.remove('hidden');
+  document.getElementById('pec_result').innerHTML = `<strong>${niveau}</strong><br><span class="${classe}">${conduite}</span>`;
+}
+
+function calcOttawaCheville(){
+  const ids = ['ott_a_mall','ott_a_palp','ott_a_mid','ott_a_base','ott_a_marche'];
+  const vals = ids.map(id=>parseInt(document.getElementById(id).value));
+  const [mall,palp,mid,base,marche] = vals;
+  const indiqueCheville = mall===1 && (palp===1 || marche===1);
+  const indiquePied = mid===1 && (base===1 || marche===1);
+  const indique = indiqueCheville || indiquePied;
+  let niveau, classe, conduite;
+  if(indique){niveau="Radiographie indiquée"; classe="grave"; conduite=(indiqueCheville?"Série cheville":"")+(indiqueCheville&&indiquePied?" + ":"")+(indiquePied?"Série pied":"");}
+  else {niveau="Radiographie non indiquée"; classe="leger"; conduite="Selon les règles d'Ottawa — réévaluer si aggravation ou absence d'amélioration.";}
+  document.getElementById('ott_a_result').classList.remove('hidden');
+  document.getElementById('ott_a_result').innerHTML = `<strong>${niveau}</strong><br><span class="${classe}">${conduite}</span>`;
+}
+
+function calcOttawaGenou(){
+  const ids = ['ott_g_age','ott_g_rotule','ott_g_perone','ott_g_flex','ott_g_marche'];
+  const total = ids.reduce((s,id)=>s+parseInt(document.getElementById(id).value),0);
+  let niveau, classe, conduite;
+  if(total>=1){niveau="Radiographie indiquée"; classe="grave"; conduite="Au moins un critère positif — radiographie du genou recommandée.";}
+  else {niveau="Radiographie non indiquée"; classe="leger"; conduite="Aucun critère positif — réévaluer si aggravation.";}
+  document.getElementById('ott_g_result').classList.remove('hidden');
+  document.getElementById('ott_g_result').innerHTML = `<strong>${niveau}</strong><br><span class="${classe}">${conduite}</span>`;
+}
+
+function calcCentor(){
+  const ids = ['cen_fievre','cen_toux','cen_adeno','cen_amygd','cen_age'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total<=0){niveau="Risque très faible"; classe="leger"; conduite="Pas de TDR ni d'antibiotique nécessaire (probabilité d'angine streptococcique <2-5%).";}
+  else if(total===1){niveau="Risque faible"; classe="leger"; conduite="TDR non systématiquement recommandé selon le contexte.";}
+  else if(total<=3){niveau="Risque intermédiaire"; classe="modere"; conduite="TDR recommandé ; antibiothérapie guidée par le résultat.";}
+  else {niveau="Risque élevé"; classe="grave"; conduite="TDR recommandé ; antibiothérapie probabiliste à discuter si TDR indisponible.";}
+  document.getElementById('cen_result').classList.remove('hidden');
+  document.getElementById('cen_result').innerHTML = `<strong>Centor/McIsaac = ${total}</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcBraden(){
+  const ids = ['bra_percep','bra_humid','bra_activite','bra_mobilite','bra_nutrition','bra_friction'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total<=9){niveau="Risque très élevé"; classe="grave"; conduite="Mesures de prévention intensives, changements de position très fréquents, support anti-escarres.";}
+  else if(total<=12){niveau="Risque élevé"; classe="grave"; conduite="Mesures de prévention renforcées, surveillance cutanée rapprochée.";}
+  else if(total<=14){niveau="Risque modéré"; classe="modere"; conduite="Mesures de prévention standards, changements de position réguliers.";}
+  else if(total<=18){niveau="Risque faible"; classe="modere"; conduite="Surveillance cutanée régulière.";}
+  else {niveau="Pas de risque significatif"; classe="leger"; conduite="Surveillance standard.";}
+  document.getElementById('bra_result').classList.remove('hidden');
+  document.getElementById('bra_result').innerHTML = `<strong>Braden = ${total}/23</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcCaprini(){
+  const ids = ['cap_age','cap_chir','cap_atcd','cap_cancer','cap_alit','cap_imc','cap_thrombo','cap_horm','cap_ic'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total<=1){niveau="Risque faible"; classe="leger"; conduite="Mobilisation précoce, prophylaxie mécanique le plus souvent suffisante.";}
+  else if(total<=4){niveau="Risque modéré"; classe="modere"; conduite="Prophylaxie pharmacologique (HBPM) à discuter selon le risque hémorragique.";}
+  else {niveau="Risque élevé"; classe="grave"; conduite="Prophylaxie pharmacologique recommandée, parfois prolongée après la sortie — se référer au score de Caprini complet pour confirmer la stratification.";}
+  document.getElementById('cap_result').classList.remove('hidden');
+  document.getElementById('cap_result').innerHTML = `<strong>Score de Caprini simplifié = ${total}</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calc4Ts(){
+  const ids = ['t4_thrombo','t4_timing','t4_thrombose','t4_autre'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total<=3){niveau="Probabilité faible de TIH"; classe="leger"; conduite="TIH peu probable — envisager la poursuite de l'héparine si aucune autre alternative, avec surveillance.";}
+  else if(total<=5){niveau="Probabilité intermédiaire de TIH"; classe="modere"; conduite="Arrêt de l'héparine, relais par anticoagulant non héparinique, dosage des anticorps anti-PF4 en urgence.";}
+  else {niveau="Probabilité élevée de TIH"; classe="grave"; conduite="Arrêt immédiat de toute héparine, relais par anticoagulant non héparinique sans attendre la confirmation biologique, avis hématologique.";}
+  document.getElementById('t4_result').classList.remove('hidden');
+  document.getElementById('t4_result').innerHTML = `<strong>Score des 4T = ${total}/8</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+
+function calcCharlson(){
+  const ids = ['cha_age_ch','cha_imc_ch','cha_icc','cha_aomi','cha_avc_ch','cha_demence','cha_bpco','cha_connect','cha_ulcere','cha_hep_leg','cha_diab_nc','cha_diab_c','cha_hemi','cha_ir','cha_tumeur','cha_leuc','cha_lymph','cha_hep_sev','cha_meta','cha_vih'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe;
+  if(total===0){niveau="Comorbidités minimes"; classe="leger";}
+  else if(total<=2){niveau="Comorbidités légères"; classe="leger";}
+  else if(total<=4){niveau="Comorbidités modérées"; classe="modere";}
+  else {niveau="Comorbidités sévères"; classe="grave";}
+  document.getElementById('cha_result_ch').classList.remove('hidden');
+  document.getElementById('cha_result_ch').innerHTML = `<strong>Indice de Charlson = ${total}</strong> — <span class="${classe}">${niveau}</span><br>Un score élevé est associé à une mortalité à 10 ans croissante — à replacer dans le contexte clinique global, pas comme critère isolé de décision.`;
+}
+
+function calcSirs(){
+  const ids = ['sirs_temp','sirs_fc','sirs_fr','sirs_gb'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total>=2){niveau="SIRS positif"; classe="grave"; conduite="Si contexte infectieux suspecté, évoquer un sepsis — compléter par le SOFA/qSOFA pour confirmer la dysfonction d'organe.";}
+  else {niveau="SIRS négatif"; classe="leger"; conduite="Moins de 2 critères présents.";}
+  document.getElementById('sirs_result').classList.remove('hidden');
+  document.getElementById('sirs_result').innerHTML = `<strong>SIRS = ${total}/4</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcGcsP(){
+  const gcs = parseFloat(document.getElementById('gcsp_gcs').value);
+  const pup = parseInt(document.getElementById('gcsp_pupilles').value);
+  if(isNaN(gcs)){ alert("Veuillez renseigner le GCS."); return; }
+  const total = gcs - pup;
+  let niveau, classe;
+  if(total>=13){niveau="Atteinte légère"; classe="leger";}
+  else if(total>=9){niveau="Atteinte modérée"; classe="modere";}
+  else {niveau="Atteinte sévère"; classe="grave";}
+  document.getElementById('gcsp_result').classList.remove('hidden');
+  document.getElementById('gcsp_result').innerHTML = `<strong>GCS-P = ${total}</strong> (GCS ${gcs} − pupilles ${pup}) — <span class="${classe}">${niveau}</span><br>Une valeur plus basse est associée à un pronostic plus sombre, notamment dans le traumatisme crânien grave.`;
+}
+
+function calcGrace(){
+  const age = parseFloat(document.getElementById('grace_age').value);
+  const fc = parseFloat(document.getElementById('grace_fc').value);
+  const pas = parseFloat(document.getElementById('grace_pas').value);
+  const creaUmol = parseFloat(document.getElementById('grace_crea').value);
+  if([age,fc,pas,creaUmol].some(v=>isNaN(v))){ alert("Veuillez remplir tous les champs numériques."); return; }
+  const crea = creaUmol/88.4;
+  const killip = parseInt(document.getElementById('grace_killip').value);
+  const ac = parseInt(document.getElementById('grace_ac').value);
+  const st = parseInt(document.getElementById('grace_st').value);
+  const enz = parseInt(document.getElementById('grace_enz').value);
+
+  function bandAge(a){ if(a<30)return 0; if(a<40)return 8; if(a<50)return 25; if(a<60)return 41; if(a<70)return 58; if(a<80)return 75; if(a<90)return 91; return 100; }
+  function bandFC(h){ if(h<50)return 0; if(h<70)return 3; if(h<90)return 9; if(h<110)return 15; if(h<150)return 24; if(h<200)return 38; return 46; }
+  function bandPAS(p){ if(p<80)return 58; if(p<100)return 53; if(p<120)return 43; if(p<140)return 34; if(p<160)return 24; if(p<200)return 10; return 0; }
+  function bandCrea(c){ if(c<0.4)return 1; if(c<0.8)return 4; if(c<1.2)return 7; if(c<1.6)return 10; if(c<2.0)return 13; if(c<4.0)return 21; return 28; }
+
+  const total = bandAge(age)+bandFC(fc)+bandPAS(pas)+bandCrea(crea)+killip+ac+st+enz;
+  let niveau, classe;
+  if(total<109){niveau="Risque faible (mortalité hospitalière <1%)"; classe="leger";}
+  else if(total<=140){niveau="Risque intermédiaire (mortalité hospitalière 1-3%)"; classe="modere";}
+  else {niveau="Risque élevé (mortalité hospitalière >3%)"; classe="grave";}
+  document.getElementById('grace_result').classList.remove('hidden');
+  document.getElementById('grace_result').innerHTML = `<strong>GRACE ≈ ${total}</strong> — <span class="${classe}">${niveau}</span><br>Un score élevé renforce l'indication d'une stratégie invasive précoce. Pour une estimation plus précise (modèle non linéaire GRACE 2.0), utiliser l'outil officiel en ligne.`;
+}
+
+function calcPerc(){
+  const ids = ['perc_age','perc_fc','perc_spo2','perc_oedeme','perc_hemopt','perc_chir','perc_atcd','perc_oestro'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total===0){niveau="PERC négatif"; classe="leger"; conduite="Chez un patient à faible probabilité clinique pré-test, l'EP peut être raisonnablement exclue sans D-dimères.";}
+  else {niveau="PERC positif"; classe="modere"; conduite="Au moins un critère présent — poursuivre la démarche diagnostique standard (D-dimères puis imagerie si besoin).";}
+  document.getElementById('perc_result').classList.remove('hidden');
+  document.getElementById('perc_result').innerHTML = `<strong>Règle PERC = ${total}/8 critère(s) positif(s)</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcGeneve(){
+  const ids = ['gen_age','gen_atcd','gen_chir','gen_cancer','gen_douleur','gen_hemopt','gen_fc','gen_palp'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total<=3){niveau="Probabilité clinique faible"; classe="leger"; conduite="D-dimères en première intention.";}
+  else if(total<=10){niveau="Probabilité clinique intermédiaire"; classe="modere"; conduite="D-dimères puis imagerie si positifs, ou imagerie d'emblée selon contexte.";}
+  else {niveau="Probabilité clinique forte"; classe="grave"; conduite="Imagerie d'emblée, ne pas s'appuyer sur des D-dimères négatifs.";}
+  document.getElementById('gen_result').classList.remove('hidden');
+  document.getElementById('gen_result').innerHTML = `<strong>Score de Genève révisé = ${total}</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcRockall(){
+  const ids = ['rock_age','rock_choc','rock_comorb','rock_diag','rock_stigmate'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total<=2){niveau="Risque faible"; classe="leger"; conduite="Faible risque de récidive hémorragique et de mortalité.";}
+  else if(total<=4){niveau="Risque intermédiaire"; classe="modere"; conduite="Surveillance hospitalière rapprochée.";}
+  else {niveau="Risque élevé"; classe="grave"; conduite="Risque significatif de récidive hémorragique et de mortalité — surveillance en unité de soins intensifs à considérer.";}
+  document.getElementById('rock_result').classList.remove('hidden');
+  document.getElementById('rock_result').innerHTML = `<strong>Score de Rockall complet = ${total}/11</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcAims65(){
+  const ids = ['aims_alb','aims_inr','aims_mental','aims_pas','aims_age'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total<=1){niveau="Risque faible"; classe="leger"; conduite="Mortalité intra-hospitalière faible.";}
+  else {niveau="Risque élevé"; classe="grave"; conduite="Score ≥2 associé à une mortalité et une durée de séjour accrues — surveillance rapprochée, endoscopie précoce.";}
+  document.getElementById('aims_result').classList.remove('hidden');
+  document.getElementById('aims_result').innerHTML = `<strong>AIMS65 = ${total}/5</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcAlvarado(){
+  const ids = ['alv_migr','alv_anor','alv_nausee','alv_douleur','alv_blumberg','alv_fievre','alv_leuc','alv_neutro'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total<=3){niveau="Appendicite peu probable"; classe="leger"; conduite="Surveillance clinique, réévaluation si persistance des symptômes.";}
+  else if(total<=6){niveau="Appendicite possible"; classe="modere"; conduite="Imagerie complémentaire recommandée (échographie ou scanner) et réévaluation clinique rapprochée.";}
+  else {niveau="Appendicite probable"; classe="grave"; conduite="Avis chirurgical, imagerie selon disponibilité et contexte (âge, sexe, grossesse).";}
+  document.getElementById('alv_result').classList.remove('hidden');
+  document.getElementById('alv_result').innerHTML = `<strong>Score d'Alvarado = ${total}/10</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcMeows(){
+  const ids = ['meows_fr','meows_spo2','meows_temp','meows_pas','meows_fc','meows_neuro','meows_proteinurie'];
+  let total = 0;
+  ids.forEach(id=>{ total += parseInt(document.getElementById(id).value); });
+  let niveau, classe, conduite;
+  if(total===0){niveau="Pas de signe d'alerte"; classe="leger"; conduite="Surveillance standard.";}
+  else if(total<=3){niveau="Vigilance"; classe="modere"; conduite="Surveillance rapprochée, réévaluer selon protocole local.";}
+  else {niveau="Alerte"; classe="grave"; conduite="Avis obstétrical/anesthésique sans délai.";}
+  document.getElementById('meows_result').classList.remove('hidden');
+  document.getElementById('meows_result').innerHTML = `<strong>MEOWS = ${total}</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcNexus(){
+  const ids = ['nex_sensib','nex_intox','nex_conscience','nex_deficit','nex_distray'];
+  const total = ids.reduce((s,id)=>s+parseInt(document.getElementById(id).value),0);
+  let niveau, classe, conduite;
+  if(total===0){niveau="Tous les critères NEXUS sont absents"; classe="leger"; conduite="Risque très faible de lésion cervicale cliniquement significative — imagerie non nécessaire.";}
+  else {niveau="Au moins un critère NEXUS présent"; classe="grave"; conduite="Imagerie du rachis cervical recommandée (scanner en 1ère intention chez l'adulte).";}
+  document.getElementById('nex_result').classList.remove('hidden');
+  document.getElementById('nex_result').innerHTML = `<strong>${niveau}</strong><br><span class="${classe}">${conduite}</span>`;
+}
+
+function calcCcr(){
+  const haut = parseInt(document.getElementById('ccr_haut').value);
+  const faible = parseInt(document.getElementById('ccr_faible').value);
+  const rotation = parseInt(document.getElementById('ccr_rotation').value);
+  let niveau, classe, conduite;
+  if(haut===1){
+    niveau="Critère à haut risque présent";
+    classe="grave";
+    conduite="Imagerie du rachis cervical indiquée d'emblée.";
+  } else if(faible===0){
+    niveau="Aucun critère de faible risque permettant l'évaluation de la mobilité";
+    classe="grave";
+    conduite="La mobilité ne peut pas être testée en toute sécurité — imagerie indiquée.";
+  } else if(rotation===1){
+    niveau="Rotation active possible, pas de critère à haut risque";
+    classe="leger";
+    conduite="Imagerie non nécessaire selon la règle canadienne.";
+  } else {
+    niveau="Rotation active impossible";
+    classe="grave";
+    conduite="Imagerie du rachis cervical indiquée.";
+  }
+  document.getElementById('ccr_result').classList.remove('hidden');
+  document.getElementById('ccr_result').innerHTML = `<strong>${niveau}</strong><br><span class="${classe}">${conduite}</span>`;
+}
+
+function calcIss(){
+  const ids = ['iss_tete','iss_face','iss_thorax','iss_abdo','iss_membres','iss_externe'];
+  const vals = ids.map(id=>parseInt(document.getElementById(id).value)).sort((a,b)=>b-a);
+  if(vals[0]===6){
+    document.getElementById('iss_result').classList.remove('hidden');
+    document.getElementById('iss_result').innerHTML = `<strong>ISS = 75</strong> (lésion cotée AIS 6 — au-delà des ressources thérapeutiques) — <span class="grave">Gravité maximale</span>`;
+    return;
+  }
+  const top3 = vals.slice(0,3);
+  const total = top3.reduce((s,v)=>s+v*v,0);
+  let niveau, classe;
+  if(total<9){niveau="Traumatisme mineur"; classe="leger";}
+  else if(total<16){niveau="Traumatisme modéré"; classe="modere";}
+  else if(total<25){niveau="Traumatisme sévère"; classe="grave";}
+  else {niveau="Polytraumatisme majeur"; classe="grave";}
+  document.getElementById('iss_result').classList.remove('hidden');
+  document.getElementById('iss_result').innerHTML = `<strong>ISS = ${total}/75</strong> (régions les plus graves : ${top3.join(', ')}) — <span class="${classe}">${niveau}</span><br>Un ISS ≥16 est classiquement retenu comme seuil de traumatisme sévère justifiant une orientation en centre de traumatologie.`;
+}
+
+function calcRts(){
+  const gcs = parseFloat(document.getElementById('rts_gcs').value);
+  const pas = parseFloat(document.getElementById('rts_pas').value);
+  const fr = parseFloat(document.getElementById('rts_fr').value);
+  const total = 0.9368*gcs + 0.7326*pas + 0.2908*fr;
+  const rounded = Math.round(total*100)/100;
+  let niveau, classe;
+  if(rounded>=7.8){niveau="Faible risque, physiologie proche de la normale"; classe="leger";}
+  else if(rounded>=5){niveau="Risque intermédiaire"; classe="modere";}
+  else {niveau="Risque élevé"; classe="grave";}
+  document.getElementById('rts_result').classList.remove('hidden');
+  document.getElementById('rts_result').innerHTML = `<strong>RTS ≈ ${rounded}</strong> (max 7,84) — <span class="${classe}">${niveau}</span><br>Utilisé notamment dans le calcul du TRISS (probabilité de survie), en association avec l'ISS et l'âge.`;
+}
+
+function calcMallampati(){
+  const classe_val = parseInt(document.getElementById('mall_classe').value);
+  const infos = {
+    1:["Classe I","leger","Intubation généralement facile attendue."],
+    2:["Classe II","leger","Intubation généralement facile attendue."],
+    3:["Classe III","modere","Risque accru de laryngoscopie/intubation difficile — anticiper le matériel et l'aide."],
+    4:["Classe IV","grave","Risque élevé de laryngoscopie/intubation difficile — anticiper un plan d'intubation difficile et le matériel adapté (vidéolaryngoscope, etc.)."]
+  };
+  const [niveau, classe, conduite] = infos[classe_val];
+  document.getElementById('mall_result').classList.remove('hidden');
+  document.getElementById('mall_result').innerHTML = `<strong>Mallampati ${niveau}</strong> — <span class="${classe}">${conduite}</span>`;
+}
+
+function calcCormack(){
+  const grade = parseInt(document.getElementById('corm_grade').value);
+  const infos = {
+    1:["Grade I","leger","Intubation habituellement facile."],
+    2:["Grade II","modere","Intubation possiblement plus difficile — manœuvre de pression laryngée externe (BURP) utile."],
+    3:["Grade III","grave","Intubation difficile — recours à un mandrin, vidéolaryngoscope ou technique alternative souvent nécessaire."],
+    4:["Grade IV","grave","Intubation très difficile — vidéolaryngoscopie ou technique d'intubation difficile indispensable."]
+  };
+  const [niveau, classe, conduite] = infos[grade];
+  document.getElementById('corm_result').classList.remove('hidden');
+  document.getElementById('corm_result').innerHTML = `<strong>Cormack-Lehane ${niveau}</strong> — <span class="${classe}">${conduite}</span>`;
+}
+
+function calcStopbang(){
+  const ids = ['sb_snore','sb_tired','sb_obs','sb_pression','sb_bmi','sb_age','sb_neck','sb_gender'];
+  const total = ids.reduce((s,id)=>s+parseInt(document.getElementById(id).value),0);
+  let niveau, classe, conduite;
+  if(total<=2){niveau="Risque faible d'AOS"; classe="leger"; conduite="";}
+  else if(total<=4){niveau="Risque intermédiaire d'AOS"; classe="modere"; conduite="Surveillance accrue de la ventilation/oxygénation en cas de sédation.";}
+  else {niveau="Risque élevé d'AOS"; classe="grave"; conduite="Précautions renforcées pour la sédation/anesthésie (monitorage capnographique, position, réversibilité des agents).";}
+  document.getElementById('sb_result').classList.remove('hidden');
+  document.getElementById('sb_result').innerHTML = `<strong>STOP-BANG = ${total}/8</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcCage(){
+  const ids = ['cage_c','cage_a','cage_g','cage_e'];
+  const total = ids.reduce((s,id)=>s+parseInt(document.getElementById(id).value),0);
+  let niveau, classe, conduite;
+  if(total>=2){niveau="Dépistage positif"; classe="grave"; conduite="Évoque un mésusage de l'alcool — approfondir l'évaluation (quantité, fréquence, retentissement).";}
+  else {niveau="Dépistage négatif"; classe="leger"; conduite="Ne permet pas d'exclure formellement un mésusage à faible retentissement.";}
+  document.getElementById('cage_result').classList.remove('hidden');
+  document.getElementById('cage_result').innerHTML = `<strong>CAGE = ${total}/4</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcAuditC(){
+  const ids = ['auc_freq','auc_qty','auc_binge'];
+  const total = ids.reduce((s,id)=>s+parseInt(document.getElementById(id).value),0);
+  const sexeF = document.getElementById('auc_sexe').value==='f';
+  const seuil = sexeF ? 3 : 4;
+  let niveau, classe, conduite;
+  if(total>=seuil){niveau="Consommation à risque probable"; classe="grave"; conduite="Approfondir l'évaluation (AUDIT complet) et proposer une intervention brève si besoin.";}
+  else {niveau="Pas de consommation à risque identifiée"; classe="leger"; conduite="";}
+  document.getElementById('auc_result').classList.remove('hidden');
+  document.getElementById('auc_result').innerHTML = `<strong>AUDIT-C = ${total}/12</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
+}
+
+function calcCows(){
+  const ids = ['cows_fc','cows_sueur','cows_agit','cows_pupille','cows_dl','cows_rhino','cows_gi','cows_tremor','cows_baillement','cows_anxiete','cows_piloerection'];
+  const total = ids.reduce((s,id)=>s+parseInt(document.getElementById(id).value),0);
+  let niveau, classe, conduite;
+  if(total<=4){niveau="Absence de sevrage / sevrage minime"; classe="leger"; conduite="";}
+  else if(total<=12){niveau="Sevrage léger"; classe="leger"; conduite="Surveillance, traitement symptomatique.";}
+  else if(total<=24){niveau="Sevrage modéré"; classe="modere"; conduite="Envisager un traitement de substitution (buprénorphine/méthadone selon protocole).";}
+  else if(total<=36){niveau="Sevrage modérément sévère"; classe="grave"; conduite="Traitement de substitution recommandé.";}
+  else {niveau="Sevrage sévère"; classe="grave"; conduite="Prise en charge urgente du sevrage, traitement de substitution sans délai.";}
+  document.getElementById('cows_result').classList.remove('hidden');
+  document.getElementById('cows_result').innerHTML = `<strong>COWS = ${total}/48</strong> — <span class="${classe}">${niveau}</span><br>${conduite}`;
 }
 
 /* ===================== MODULE TROUBLES IONIQUES ===================== */
@@ -9753,19 +10875,66 @@ function renderCalculateurs(){
       <button type="button" class="toc-toggle" aria-label="Afficher/masquer le sommaire" onclick="event.stopPropagation(); toggleCalcToc();">▾</button>
     </div>
     <ul class="toc-list">
-      <li><a onclick="openCalcCard('calc-gtt')">💧 Débit en gouttes/min — Perfusion par gravité</a></li>
-      <li><a onclick="openCalcCard('calc-pedia')">👶 Doses pédiatriques d'urgence — Calcul automatique</a></li>
-      <li><a onclick="openCalcCard('calc-pit')">⚖️ Poids Idéal Théorique (PIT) & Vt cible</a></li>
-      <li><a onclick="openCalcCard('calc-se')">💧 Débit seringue électrique (SE) — perfusion continue</a></li>
-      <li><a onclick="openCalcCard('calc-del')">🧂 Déficit en eau libre (Hypernatrémie)</a></li>
-      <li><a onclick="openCalcCard('calc-ca')">🧪 Calcium corrigé à l'albuminémie</a></li>
-      <li><a onclick="openCalcCard('calc-cg')">🩸 Clairance créatinine — Cockcroft-Gault</a></li>
-      <li><a onclick="openCalcCard('calc-osm')">🌡️ Osmolarité plasmatique calculée</a></li>
-      <li><a onclick="openCalcCard('calc-ta')">📊 Trou anionique (Anion Gap)</a></li>
-      <li><a onclick="openCalcCard('calc-parkland')">🔥 Formule de Parkland — Remplissage brûlures graves</a></li>
-      <li><a onclick="openCalcCard('calc-wells')">🫁 Score de Wells simplifié — Probabilité clinique d'embolie pulmonaire</a></li>
-      <li><a onclick="openCalcCard('calc-chadsvasc')">🫀 CHA₂DS₂-VASc — Risque thromboembolique en FA</a></li>
-      <li><a onclick="openCalcCard('calc-shock-index')">⚡ Shock Index (Index de choc)</a></li>
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫀 Hémodynamique & choc</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-shock-index')">⚡ Shock Index (Index de choc)</a></li>
+        <li><a onclick="openCalcCard('calc-pam')">💉 Pression artérielle moyenne (PAM)</a></li>
+        <li><a onclick="openCalcCard('calc-gtt')">💧 Débit en gouttes/min — Perfusion par gravité</a></li>
+        <li><a onclick="openCalcCard('calc-se')">💧 Débit seringue électrique (SE) — perfusion continue</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫁 Respiratoire & ventilation</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-pf')">🫁 Rapport PaO2/FiO2 (P/F ratio) & critères de Berlin</a></li>
+        <li><a onclick="openCalcCard('calc-aa')">🫁 Gradient alvéolo-artériel en O2 (A-a)</a></li>
+        <li><a onclick="openCalcCard('calc-winters')">🫁 Formule de Winters — Compensation respiratoire attendue</a></li>
+        <li><a onclick="openCalcCard('calc-pit')">⚖️ Poids Idéal Théorique (PIT) & Vt cible</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🧂 Métabolique, électrolytes & équilibre acido-basique</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-ta')">📊 Trou anionique (Anion Gap) + delta ratio</a></li>
+        <li><a onclick="openCalcCard('calc-osm')">🌡️ Osmolarité plasmatique calculée + trou osmolaire</a></li>
+        <li><a onclick="openCalcCard('calc-del')">🧂 Déficit en eau libre (Hypernatrémie)</a></li>
+        <li><a onclick="openCalcCard('calc-nacorr')">🧂 Vitesse de correction sécurisée de la natrémie (hyponatrémie)</a></li>
+        <li><a onclick="openCalcCard('calc-ca')">🧪 Calcium corrigé à l'albuminémie</a></li>
+        <li><a onclick="openCalcCard('calc-nakatz')">🍬 Sodium corrigé pour hyperglycémie (formule de Katz)</a></li>
+        <li><a onclick="openCalcCard('calc-adrogue')">💧 Adrogué-Madias — Volume de perfusat pour élévation ciblée de la natrémie</a></li>
+        <li><a onclick="openCalcCard('calc-bicar')">🧪 Déficit de base — Dose de bicarbonate de sodium</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>⚖️ Anthropométrie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-bsa')">📐 Surface corporelle (BSA) — Formule de Mosteller</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🩸 Rénal</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-cg')">🩸 Clairance créatinine — Cockcroft-Gault</a></li>
+        <li><a onclick="openCalcCard('calc-fena')">🩸 FENa — Fraction d'excrétion sodée</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>❤️ Cardiovasculaire</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-qtc')">📈 QTc corrigé (Bazett / Fridericia)</a></li>
+        <li><a onclick="openCalcCard('calc-chadsvasc')">🫀 CHA₂DS₂-VASc — Risque thromboembolique en FA</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫀 Thromboembolie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-wells')">🫁 Score de Wells simplifié — Probabilité clinique d'embolie pulmonaire</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🔥 Traumatologie & brûlures</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-parkland')">🔥 Formule de Parkland — Remplissage brûlures graves</a></li>
+        <li><a onclick="openCalcCard('calc-wallace')">🔥 Règle des 9 de Wallace — Surface brûlée (%SCB)</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>👶 Pédiatrie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openCalcCard('calc-pedia')">👶 Doses pédiatriques d'urgence — Calcul automatique</a></li>
+      </ul></li>
     </ul>
   </nav>
 
@@ -9893,11 +11062,12 @@ function renderCalculateurs(){
   </div>
 
   <div class="card" id="calc-osm">
-    <h3>🌡️ Osmolarité plasmatique calculée</h3>
+    <h3>🌡️ Osmolarité plasmatique calculée & trou osmolaire</h3>
     <div class="row2">
       <div class="field"><label>Na+ (mmol/L)</label><input type="number" id="osm_na"></div>
       <div class="field"><label>Glycémie (mmol/L)</label><input type="number" step="0.1" id="osm_gly"></div>
       <div class="field"><label>Urée (mmol/L)</label><input type="number" step="0.1" id="osm_uree"></div>
+      <div class="field"><label>Osmolalité mesurée (mOsm/kg) — optionnel</label><input type="number" step="0.1" id="osm_mesuree" placeholder="si dosée au laboratoire"></div>
     </div>
     <button class="btn" onclick="calcOsm()">Calculer</button>
     <div class="result-box hidden" id="osm_result"></div>
@@ -9982,6 +11152,162 @@ function renderCalculateurs(){
     </div>
     <button class="btn" onclick="calcSI()">Calculer</button>
     <div class="result-box hidden" id="si_result"></div>
+  </div>
+
+  <div class="card" id="calc-qtc">
+    <h3>📈 QTc corrigé (Bazett / Fridericia)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">À utiliser devant tout traitement torsadogène (psychotropes, antiarythmiques, certains antipaludéens/antibiotiques) ou trouble électrolytique (hypoK+, hypoMg2+, hypoCa2+).</p>
+    <div class="row2">
+      <div class="field"><label>Fréquence cardiaque (/min)</label><input type="number" id="qtc_fc"></div>
+      <div class="field"><label>QT mesuré (ms)</label><input type="number" id="qtc_qt"></div>
+      <div class="field"><label>Sexe</label>
+        <select id="qtc_sex"><option value="M">Homme</option><option value="F">Femme</option></select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcQTc()">Calculer</button>
+    <div class="result-box hidden" id="qtc_result"></div>
+  </div>
+
+  <div class="card" id="calc-winters">
+    <h3>🫁 Formule de Winters — Compensation respiratoire attendue</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Vérifie si la PaCO2 mesurée correspond à la compensation respiratoire attendue d'une acidose métabolique — dépiste un trouble ventilatoire surajouté (mixte).</p>
+    <div class="row2">
+      <div class="field"><label>HCO3- (mmol/L)</label><input type="number" step="0.1" id="wint_hco3"></div>
+      <div class="field"><label>PaCO2 mesurée (mmHg) — optionnel</label><input type="number" step="0.1" id="wint_paco2" placeholder="si gazométrie disponible"></div>
+    </div>
+    <button class="btn" onclick="calcWinters()">Calculer</button>
+    <div class="result-box hidden" id="wint_result"></div>
+  </div>
+
+  <div class="card" id="calc-nacorr">
+    <h3>🧂 Vitesse de correction sécurisée de la natrémie (hyponatrémie)</h3>
+    <div class="warn-box">⚠️ Une correction trop rapide d'une hyponatrémie expose à un risque de myélinolyse centropontine (souvent différée de plusieurs jours). Ce calculateur ne remplace pas une surveillance biologique rapprochée (Na+ toutes les 2-4h en cas de correction active).</div>
+    <div class="row2">
+      <div class="field"><label>Na+ actuel (mmol/L)</label><input type="number" id="nac_actuel"></div>
+      <div class="field"><label>Na+ cible souhaité (mmol/L)</label><input type="number" id="nac_cible"></div>
+      <div class="field"><label>Hyponatrémie</label>
+        <select id="nac_duree"><option value="aigue">Aiguë / symptomatique sévère (&lt;48h ou convulsions/coma)</option><option value="chronique">Chronique ou durée inconnue (&gt;48h, prudence)</option></select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcNaCorr()">Calculer</button>
+    <div class="result-box hidden" id="nac_result"></div>
+  </div>
+
+  <div class="card" id="calc-pf">
+    <h3>🫁 Rapport PaO2/FiO2 (P/F ratio) & critères de Berlin</h3>
+    <div class="row2">
+      <div class="field"><label>PaO2 (mmHg)</label><input type="number" id="pf_pao2"></div>
+      <div class="field"><label>FiO2 (%)</label><input type="number" id="pf_fio2" placeholder="ex. 40"></div>
+      <div class="field"><label>PEEP appliquée (cmH2O)</label><input type="number" id="pf_peep" placeholder="≥5 requis pour Berlin"></div>
+    </div>
+    <button class="btn" onclick="calcPF()">Calculer</button>
+    <div class="result-box hidden" id="pf_result"></div>
+  </div>
+
+  <div class="card" id="calc-pam">
+    <h3>💉 Pression artérielle moyenne (PAM)</h3>
+    <div class="row2">
+      <div class="field"><label>PA systolique (mmHg)</label><input type="number" id="pam_pas"></div>
+      <div class="field"><label>PA diastolique (mmHg)</label><input type="number" id="pam_pad"></div>
+    </div>
+    <button class="btn" onclick="calcPAM()">Calculer</button>
+    <div class="result-box hidden" id="pam_result"></div>
+  </div>
+
+  <div class="card" id="calc-aa">
+    <h3>🫁 Gradient alvéolo-artériel en O2 (A-a)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Aide à distinguer une hypoxémie par hypoventilation pure (gradient normal) d'une atteinte du parenchyme/échanges gazeux (gradient augmenté).</p>
+    <div class="row2">
+      <div class="field"><label>Âge (ans)</label><input type="number" id="aa_age"></div>
+      <div class="field"><label>FiO2 (%)</label><input type="number" id="aa_fio2" placeholder="21 si air ambiant"></div>
+      <div class="field"><label>PaCO2 (mmHg)</label><input type="number" step="0.1" id="aa_paco2"></div>
+      <div class="field"><label>PaO2 (mmHg)</label><input type="number" step="0.1" id="aa_pao2"></div>
+      <div class="field"><label>Pression atmosphérique (mmHg)</label><input type="number" id="aa_patm" value="760" placeholder="760 au niveau de la mer"></div>
+    </div>
+    <button class="btn" onclick="calcAa()">Calculer</button>
+    <div class="result-box hidden" id="aa_result"></div>
+  </div>
+
+  <div class="card" id="calc-fena">
+    <h3>🩸 FENa — Fraction d'excrétion sodée</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Orientation étiologique d'une insuffisance rénale aiguë (avant tout traitement diurétique, qui invalide le résultat).</p>
+    <div class="row2">
+      <div class="field"><label>Na urinaire (mmol/L)</label><input type="number" id="fena_nau"></div>
+      <div class="field"><label>Na plasmatique (mmol/L)</label><input type="number" id="fena_nap"></div>
+      <div class="field"><label>Créatinine urinaire (µmol/L)</label><input type="number" id="fena_cru"></div>
+      <div class="field"><label>Créatinine plasmatique (µmol/L)</label><input type="number" id="fena_crp"></div>
+    </div>
+    <button class="btn" onclick="calcFENa()">Calculer</button>
+    <div class="result-box hidden" id="fena_result"></div>
+  </div>
+
+  <div class="card" id="calc-nakatz">
+    <h3>🍬 Sodium corrigé pour hyperglycémie (formule de Katz)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Une hyperglycémie sévère abaisse artificiellement le Na+ mesuré (effet osmotique) — utile devant une ACD/état hyperosmolaire pour ne pas méconnaître une vraie hyponatrémie ou hypernatrémie sous-jacente.</p>
+    <div class="row2">
+      <div class="field"><label>Na+ mesuré (mmol/L)</label><input type="number" id="nak_na"></div>
+      <div class="field"><label>Glycémie (mmol/L)</label><input type="number" step="0.1" id="nak_gly"></div>
+    </div>
+    <button class="btn" onclick="calcNaKatz()">Calculer</button>
+    <div class="result-box hidden" id="nak_result"></div>
+  </div>
+
+  <div class="card" id="calc-wallace">
+    <h3>🔥 Règle des 9 de Wallace — Surface brûlée (%SCB)</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Ne cocher que les zones avec brûlures du 2e ou 3e degré. Chez l'enfant &lt;10 ans, les proportions diffèrent (tête relativement plus grande) — table de Lund-Browder préférable si disponible.</p>
+    <div class="row2">
+      <div class="field"><label>Terrain</label>
+        <select id="wal_terrain" onchange="renderWallaceFields()"><option value="adulte">Adulte / enfant ≥10 ans</option><option value="enfant">Enfant &lt;10 ans</option></select>
+      </div>
+    </div>
+    <div id="wal_fields"></div>
+    <button class="btn" onclick="calcWallace()">Calculer le %SCB</button>
+    <div class="result-box hidden" id="wal_result"></div>
+  </div>
+
+  <div class="card" id="calc-adrogue">
+    <h3>💧 Adrogué-Madias — Volume de perfusat pour élévation ciblée de la natrémie</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Estime le volume de perfusat nécessaire pour obtenir l'élévation de natrémie souhaitée — à utiliser avec le calculateur de <a onclick="openCalcCard('calc-nacorr')" style="color:var(--accent); cursor:pointer;">vitesse de correction sécurisée</a> pour ne pas dépasser les limites de sécurité.</p>
+    <div class="row2">
+      <div class="field"><label>Sexe / terrain</label>
+        <select id="adr_sex"><option value="M">Homme adulte (coeff 0,6)</option><option value="F">Femme / Personne âgée (coeff 0,5)</option></select>
+      </div>
+      <div class="field"><label>Poids (kg)</label><input type="number" id="adr_poids"></div>
+      <div class="field"><label>Na+ actuel (mmol/L)</label><input type="number" id="adr_na"></div>
+      <div class="field"><label>Élévation ciblée (mmol/L)</label><input type="number" step="0.1" id="adr_delta" placeholder="ex. 4 à 6 en aigu symptomatique"></div>
+      <div class="field"><label>Perfusat</label>
+        <select id="adr_perfusat">
+          <option value="513">NaCl 3% (513 mmol/L)</option>
+          <option value="154">NaCl 0,9% (154 mmol/L)</option>
+          <option value="77">NaCl 0,45% (77 mmol/L)</option>
+          <option value="130">Ringer Lactate (≈130 mmol/L)</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" onclick="calcAdrogue()">Calculer</button>
+    <div class="result-box hidden" id="adr_result"></div>
+  </div>
+
+  <div class="card" id="calc-bicar">
+    <h3>🧪 Déficit de base — Dose de bicarbonate de sodium</h3>
+    <div class="warn-box">⚠️ Réservé aux acidoses métaboliques sévères (pH &lt;7,1-7,2) résistantes aux mesures étiologiques — la bicarbonatothérapie systématique n'a pas démontré de bénéfice et peut aggraver l'acidose intracellulaire/l'hypokaliémie. Ne pas utiliser en cas d'acidose respiratoire prédominante.</div>
+    <div class="row2">
+      <div class="field"><label>Poids (kg)</label><input type="number" id="bicar_poids"></div>
+      <div class="field"><label>Déficit de base (mEq/L, valeur absolue)</label><input type="number" step="0.1" id="bicar_be" placeholder="ex. 10 si BE = -10"></div>
+    </div>
+    <button class="btn" onclick="calcBicar()">Calculer</button>
+    <div class="result-box hidden" id="bicar_result"></div>
+  </div>
+
+  <div class="card" id="calc-bsa">
+    <h3>📐 Surface corporelle (BSA) — Formule de Mosteller</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;">Utile pour certaines posologies exprimées en mg/m² (quelques chimiothérapies, produits de contraste) et pour les index physiologiques indexés à la surface corporelle.</p>
+    <div class="row2">
+      <div class="field"><label>Taille (cm)</label><input type="number" id="bsa_taille"></div>
+      <div class="field"><label>Poids (kg)</label><input type="number" id="bsa_poids"></div>
+    </div>
+    <button class="btn" onclick="calcBSA()">Calculer</button>
+    <div class="result-box hidden" id="bsa_result"></div>
   </div>`;
 }
 renderers.calculateurs = renderCalculateurs;
@@ -10033,6 +11359,7 @@ function init_calculateurs(){
     btn.onclick = closeCalcCard;
     card.appendChild(btn);
   });
+  renderWallaceFields();
 }
 
 /* ——— Fonctions de calcul ——— */
@@ -11104,22 +12431,35 @@ function calcOsm(){
   const na=parseFloat(document.getElementById('osm_na').value);
   const gly=parseFloat(document.getElementById('osm_gly').value);
   const uree=parseFloat(document.getElementById('osm_uree').value);
+  const mesuree=parseFloat(document.getElementById('osm_mesuree').value);
   if([na,gly,uree].some(isNaN)){alert('Remplir tous les champs');return;}
-  const warn = plausibilityWarnings([
+  const warnFields = [
     {val:na, min:100, max:200, label:'Na+', unit:'mmol/L'},
     {val:gly, min:1, max:60, label:'Glycémie', unit:'mmol/L'},
     {val:uree, min:0.5, max:60, label:'Urée', unit:'mmol/L'}
-  ]);
+  ];
+  if(!isNaN(mesuree)) warnFields.push({val:mesuree, min:250, max:400, label:'Osmolalité mesurée', unit:'mOsm/kg'});
+  const warn = plausibilityWarnings(warnFields);
   const osm=2*na+gly+uree;
   let interp,cls;
   if(osm<275){interp="Hypo-osmolarité";cls="modere";}
   else if(osm<=295){interp="Normale";cls="leger";}
   else if(osm<=320){interp="Hyperosmolarité modérée";cls="modere";}
   else{interp="Hyperosmolarité sévère";cls="grave";}
+
+  let gapHtml='';
+  if(!isNaN(mesuree)){
+    const gap=mesuree-osm;
+    let gapInterp,gapCls;
+    if(gap<=10){gapInterp="Normal (≤10 mOsm/kg) — n'exclut pas une intoxication mais la rend moins probable si le tableau est récent";gapCls="leger";}
+    else{gapInterp="TROU OSMOLAIRE ÉLEVÉ (>10 mOsm/kg) → évoquer une intoxication par alcool toxique (méthanol, éthylène glycol, isopropanol) ou une autre substance osmotiquement active non mesurée";gapCls="grave";}
+    gapHtml = `<br><strong>Trou osmolaire = ${gap.toFixed(0)} mOsm/kg</strong> — <span class="${gapCls}">${gapInterp}</span>`;
+  }
+
   document.getElementById('osm_result').classList.remove('hidden');
   document.getElementById('osm_result').innerHTML=warn+
-    `<strong>Osmolarité calculée = ${osm.toFixed(0)} mOsm/kg</strong> — <span class="${cls}">${interp}</span><br>
-    <small style="color:var(--muted)">Normale : 275–295 mOsm/kg. Formule : 2×Na + Glycémie + Urée (mmol/L)</small>`;
+    `<strong>Osmolarité calculée = ${osm.toFixed(0)} mOsm/kg</strong> — <span class="${cls}">${interp}</span>${gapHtml}<br>
+    <small style="color:var(--muted)">Normale : 275–295 mOsm/kg. Formule : 2×Na + Glycémie + Urée (mmol/L). Trou osmolaire = osmolalité mesurée − osmolarité calculée ; un trou élevé précède souvent l'apparition du trou anionique dans les intoxications aux alcools toxiques — ne pas attendre l'acidose pour évoquer le diagnostic.</small>`;
 }
 
 function calcTA(){
@@ -11139,11 +12479,24 @@ function calcTA(){
   let interp,cls;
   if(taCorr<=12){interp="Normal (TA ≤12 mmol/L)";cls="leger";}
   else{interp="TA ÉLEVÉ → acidose métabolique à TA augmenté (lactates, cétones, toxiques, urémie)";cls="grave";}
+
+  let deltaHtml='';
+  if(taCorr>12){
+    const deltaGap=taCorr-12;
+    const deltaRatio=deltaGap/(24-hco3);
+    let drInterp,drCls;
+    if(deltaRatio<0.4){drInterp="Acidose hyperchlorémique (TA normal) prédominante associée — vérifier la cohérence avec la clinique";drCls="modere";}
+    else if(deltaRatio<=0.8){drInterp="Acidose métabolique à TA augmenté pure, sans trouble associé évident";drCls="leger";}
+    else if(deltaRatio<=2){drInterp="Cohérent avec une acidose à TA augmenté pure (large plage acceptée 1–2)";drCls="leger";}
+    else{drInterp="Delta ratio élevé (>2) → évoque une alcalose métabolique associée (vomissements, diurétiques) masquant partiellement l'acidose, ou une acidose respiratoire chronique compensée";drCls="modere";}
+    deltaHtml = `<br><strong>Delta ratio = ${deltaRatio.toFixed(2)}</strong> — <span class="${drCls}">${drInterp}</span>`;
+  }
+
   document.getElementById('ta_result').classList.remove('hidden');
   document.getElementById('ta_result').innerHTML=warn+
     `<strong>TA brut = ${ta.toFixed(0)} mmol/L</strong> | TA corrigé à l'albumine = <strong>${taCorr.toFixed(0)} mmol/L</strong><br>
-    <span class="${cls}">${interp}</span><br>
-    <small style="color:var(--muted)">Normale : 8–12 mmol/L. TA corrigé = TA + 0,25 × (40 − albumine g/L)</small>`;
+    <span class="${cls}">${interp}</span>${deltaHtml}<br>
+    <small style="color:var(--muted)">Normale : 8–12 mmol/L. TA corrigé = TA + 0,25 × (40 − albumine g/L). Delta ratio = (TA corrigé − 12) / (24 − HCO3⁻) — calculé automatiquement si TA élevé, pour dépister un trouble acido-basique mixte.</small>`;
 }
 
 function calcParkland(){
@@ -11223,6 +12576,316 @@ function calcSI(){
   document.getElementById('si_result').innerHTML = warn +
     `<strong>Shock Index = ${si.toFixed(2)}</strong> — <span class="${cls}">${interp}</span><br>
     <small style="color:var(--muted)">Normal : 0,5-0,7. &gt;0,9-1 associé à une mortalité accrue en contexte hémorragique (trauma, HPP, hémorragie digestive) — se méfie du piège d'une PA normale masquant une hypovolémie compensée.</small>`;
+}
+
+function calcQTc(){
+  const fc=parseFloat(document.getElementById('qtc_fc').value);
+  const qt=parseFloat(document.getElementById('qtc_qt').value);
+  const sex=document.getElementById('qtc_sex').value;
+  if([fc,qt].some(isNaN) || fc<=0){alert('Remplir la fréquence cardiaque et le QT mesuré (FC doit être &gt; 0)');return;}
+  const warn = plausibilityWarnings([
+    {val:fc, min:20, max:250, label:'Fréquence cardiaque', unit:'/min'},
+    {val:qt, min:200, max:800, label:'QT mesuré', unit:'ms'}
+  ]);
+  const rr=60/fc; // en secondes
+  const qtSec=qt/1000;
+  const qtcBazett=(qtSec/Math.sqrt(rr))*1000;
+  const qtcFrid=(qtSec/Math.cbrt(rr))*1000;
+  const seuil = sex==='F' ? 470 : 450;
+  const seuilSevere = 500;
+  function interpret(val){
+    if(val>=seuilSevere) return {txt:"QTc TRÈS ALLONGÉ — risque élevé de torsades de pointes : corriger K+/Mg2+/Ca2+, arrêter tout médicament torsadogène, envisager surveillance scopée", cls:"grave"};
+    if(val>=seuil) return {txt:"QTc allongé — vérifier électrolytes (K+, Mg2+, Ca2+) et médicaments torsadogènes en cours", cls:"modere"};
+    return {txt:"QTc normal", cls:"leger"};
+  }
+  const iBaz=interpret(qtcBazett);
+  const iFrid=interpret(qtcFrid);
+  document.getElementById('qtc_result').classList.remove('hidden');
+  document.getElementById('qtc_result').innerHTML=warn+
+    `<strong>QTc Bazett = ${qtcBazett.toFixed(0)} ms</strong> — <span class="${iBaz.cls}">${iBaz.txt}</span><br>
+    <strong>QTc Fridericia = ${qtcFrid.toFixed(0)} ms</strong> — <span class="${iFrid.cls}">${iFrid.txt}</span><br>
+    <small style="color:var(--muted)">Seuil d'allongement : ${seuil} ms (${sex==='F'?'femme':'homme'}), risque élevé de torsades ≥${seuilSevere} ms. Fridericia plus fiable si FC &gt;100 ou &lt;60/min (Bazett sur-corrige aux extrêmes de fréquence). Formules : Bazett = QT/√RR ; Fridericia = QT/∛RR (RR en secondes).</small>`;
+}
+
+function calcWinters(){
+  const hco3=parseFloat(document.getElementById('wint_hco3').value);
+  const paco2Mesuree=parseFloat(document.getElementById('wint_paco2').value);
+  if(isNaN(hco3)){alert('Remplir au moins le HCO3-');return;}
+  const warnFields=[{val:hco3, min:0, max:45, label:'HCO3-', unit:'mmol/L'}];
+  if(!isNaN(paco2Mesuree)) warnFields.push({val:paco2Mesuree, min:5, max:120, label:'PaCO2 mesurée', unit:'mmHg'});
+  const warn = plausibilityWarnings(warnFields);
+  const paco2Attendue = 1.5*hco3 + 8;
+  const bornInf = paco2Attendue - 2;
+  const bornSup = paco2Attendue + 2;
+  let compHtml='';
+  if(!isNaN(paco2Mesuree)){
+    let interp,cls;
+    if(paco2Mesuree < bornInf){interp="PaCO2 mesurée INFÉRIEURE à l'attendue → alcalose respiratoire surajoutée (trouble mixte)";cls="modere";}
+    else if(paco2Mesuree > bornSup){interp="PaCO2 mesurée SUPÉRIEURE à l'attendue → acidose respiratoire surajoutée (compensation insuffisante, épuisement respiratoire à surveiller)";cls="grave";}
+    else{interp="PaCO2 mesurée cohérente avec une compensation respiratoire adaptée — pas de trouble ventilatoire associé évident";cls="leger";}
+    compHtml = `<br><strong>PaCO2 mesurée = ${paco2Mesuree} mmHg</strong> — <span class="${cls}">${interp}</span>`;
+  }
+  document.getElementById('wint_result').classList.remove('hidden');
+  document.getElementById('wint_result').innerHTML=warn+
+    `<strong>PaCO2 attendue = ${paco2Attendue.toFixed(1)} mmHg</strong> (plage ${bornInf.toFixed(1)}–${bornSup.toFixed(1)} mmHg)${compHtml}<br>
+    <small style="color:var(--muted)">Formule de Winters (acidose métabolique) : PaCO2 attendue = 1,5 × HCO3⁻ + 8 (± 2). Ne s'applique qu'à l'acidose métabolique aiguë ; ne pas utiliser en cas d'alcalose métabolique ou de trouble respiratoire chronique connu.</small>`;
+}
+
+function calcNaCorr(){
+  const actuel=parseFloat(document.getElementById('nac_actuel').value);
+  const cible=parseFloat(document.getElementById('nac_cible').value);
+  const duree=document.getElementById('nac_duree').value;
+  if([actuel,cible].some(isNaN)){alert('Remplir tous les champs');return;}
+  const warn = plausibilityWarnings([
+    {val:actuel, min:100, max:160, label:'Na+ actuel', unit:'mmol/L'},
+    {val:cible, min:100, max:160, label:'Na+ cible', unit:'mmol/L'}
+  ]);
+  if(cible<=actuel){
+    document.getElementById('nac_result').classList.remove('hidden');
+    document.getElementById('nac_result').innerHTML = warn + `<div class="warn-box">⚠️ Le Na+ cible doit être supérieur au Na+ actuel pour ce calculateur de correction d'hyponatrémie.</div>`;
+    return;
+  }
+  const delta = cible-actuel;
+  const limite24 = duree==='aigue' ? 10 : 8;
+  const limite48 = duree==='aigue' ? 18 : 16;
+  let interp,cls;
+  if(delta<=limite24){interp=`Correction envisagée (+${delta.toFixed(1)} mmol/L) dans la limite recommandée des 24 premières heures`;cls="leger";}
+  else{interp=`⚠️ Correction envisagée (+${delta.toFixed(1)} mmol/L) DÉPASSE la limite recommandée de ${limite24} mmol/L/24h → risque de myélinolyse centropontine. Répartir la correction sur plusieurs jours, avec un contrôle biologique rapproché`;cls="grave";}
+  document.getElementById('nac_result').classList.remove('hidden');
+  document.getElementById('nac_result').innerHTML=warn+
+    `<strong>Delta Na+ souhaité = +${delta.toFixed(1)} mmol/L</strong><br>
+    <span class="${cls}">${interp}</span><br>
+    Limites de sécurité (${duree==='aigue'?'hyponatrémie aiguë/symptomatique sévère':'hyponatrémie chronique ou durée inconnue'}) : <strong>≤${limite24} mmol/L par 24h</strong> et <strong>≤${limite48} mmol/L par 48h</strong><br>
+    <small style="color:var(--muted)">En cas de symptômes neurologiques sévères (convulsions, coma), une correction rapide initiale de +4 à 6 mmol/L (NaCl hypertonique 3%) est justifiée pour lever l'urgence, PUIS ralentir strictement pour rester sous les limites ci-dessus sur le reste des 24-48h. Contrôler le Na+ toutes les 2-4h pendant la phase de correction active.</small>`;
+}
+
+function calcPF(){
+  const pao2=parseFloat(document.getElementById('pf_pao2').value);
+  const fio2pct=parseFloat(document.getElementById('pf_fio2').value);
+  const peep=parseFloat(document.getElementById('pf_peep').value);
+  if([pao2,fio2pct].some(isNaN) || fio2pct<=0){alert('Remplir PaO2 et FiO2 (FiO2 doit être &gt; 0)');return;}
+  const warn = plausibilityWarnings([
+    {val:pao2, min:30, max:600, label:'PaO2', unit:'mmHg'},
+    {val:fio2pct, min:21, max:100, label:'FiO2', unit:'%'}
+  ]);
+  const fio2=fio2pct/100;
+  const pf=pao2/fio2;
+  const peepOk = !isNaN(peep) && peep>=5;
+  let interp,cls;
+  if(pf>300){interp="Pas de critère d'oxygénation pour un SDRA (P/F &gt;300)";cls="leger";}
+  else if(pf>200){interp="SDRA LÉGER (200 &lt; P/F ≤300)";cls="modere";}
+  else if(pf>100){interp="SDRA MODÉRÉ (100 &lt; P/F ≤200)";cls="grave";}
+  else{interp="SDRA SÉVÈRE (P/F ≤100)";cls="grave";}
+  let peepWarn='';
+  if(!isNaN(peep) && !peepOk){
+    peepWarn = `<div class="warn-box">⚠️ Les critères de Berlin exigent une PEEP (ou CPAP) ≥5 cmH2O pour classer la sévérité du SDRA. PEEP saisie = ${peep} cmH2O — la classification ci-dessus est indicative seulement.</div>`;
+  } else if(isNaN(peep)){
+    peepWarn = `<div class="warn-box">⚠️ PEEP non renseignée — les critères de Berlin exigent une PEEP/CPAP ≥5 cmH2O pour une classification de sévérité valide.</div>`;
+  }
+  document.getElementById('pf_result').classList.remove('hidden');
+  document.getElementById('pf_result').innerHTML = warn + peepWarn +
+    `<strong>P/F ratio = ${pf.toFixed(0)}</strong> — <span class="${cls}">${interp}</span><br>
+    <small style="color:var(--muted)">Critères de Berlin (2012) — nécessite en plus : début aigu &lt;7 jours, opacités bilatérales à l'imagerie non pleinement expliquées par une insuffisance cardiaque/surcharge. Rappel : si gazométrie non disponible, la définition globale ARDS 2024 autorise un rapport SpO2/FiO2 ≤315 en alternative (seuils adaptés aux ressources limitées).</small>`;
+}
+
+function calcPAM(){
+  const pas=parseFloat(document.getElementById('pam_pas').value);
+  const pad=parseFloat(document.getElementById('pam_pad').value);
+  if([pas,pad].some(isNaN)){alert('Remplir tous les champs');return;}
+  if(pad>=pas){
+    document.getElementById('pam_result').classList.remove('hidden');
+    document.getElementById('pam_result').innerHTML = `<div class="warn-box">⚠️ La PA diastolique doit être inférieure à la PA systolique — vérifier la saisie.</div>`;
+    return;
+  }
+  const warn = plausibilityWarnings([
+    {val:pas, min:40, max:300, label:'PA systolique', unit:'mmHg'},
+    {val:pad, min:20, max:200, label:'PA diastolique', unit:'mmHg'}
+  ]);
+  const pam=pad+(pas-pad)/3;
+  let interp,cls;
+  if(pam<65){interp="PAM &lt;65 mmHg — seuil habituel de perfusion d'organe insuffisante, envisager un support hémodynamique selon le contexte clinique";cls="grave";}
+  else if(pam<=110){interp="Dans la cible usuelle de perfusion d'organe (≥65 mmHg)";cls="leger";}
+  else{interp="PAM élevée — vérifier le contexte (douleur, agitation, HTA non contrôlée, HTIC avec PAM cible plus élevée)";cls="modere";}
+  document.getElementById('pam_result').classList.remove('hidden');
+  document.getElementById('pam_result').innerHTML=warn+
+    `<strong>PAM = ${pam.toFixed(0)} mmHg</strong> — <span class="${cls}">${interp}</span><br>
+    <small style="color:var(--muted)">Formule : PAM = PAD + (PAS − PAD)/3. Cible usuelle en choc/sepsis : ≥65 mmHg (60-65 mmHg si ≥65 ans) ; cible plus élevée (≥80-90 mmHg) en cas de traumatisme médullaire aigu ou d'antécédent d'HTA sévère selon le contexte.</small>`;
+}
+
+function calcAa(){
+  const age=parseFloat(document.getElementById('aa_age').value);
+  const fio2pct=parseFloat(document.getElementById('aa_fio2').value);
+  const paco2=parseFloat(document.getElementById('aa_paco2').value);
+  const pao2=parseFloat(document.getElementById('aa_pao2').value);
+  const patm=parseFloat(document.getElementById('aa_patm').value)||760;
+  if([fio2pct,paco2,pao2].some(isNaN) || fio2pct<=0){alert('Remplir FiO2, PaCO2 et PaO2 (FiO2 doit être &gt; 0)');return;}
+  const warn = plausibilityWarnings([
+    {val:fio2pct, min:21, max:100, label:'FiO2', unit:'%'},
+    {val:paco2, min:10, max:120, label:'PaCO2', unit:'mmHg'},
+    {val:pao2, min:20, max:600, label:'PaO2', unit:'mmHg'},
+    {val:patm, min:500, max:800, label:'Pression atmosphérique', unit:'mmHg'}
+  ]);
+  const fio2=fio2pct/100;
+  const pAO2 = fio2*(patm-47) - (paco2/0.8); // équation des gaz alvéolaires simplifiée, PH2O=47 mmHg
+  const gradient = pAO2-pao2;
+  const seuilAge = !isNaN(age) ? (age/4)+4 : 15; // approximation usuelle : seuil normal ≈ (âge/4)+4, sinon valeur de repos usuelle
+  let interp,cls;
+  if(gradient<=seuilAge){interp="Gradient normal pour l'âge — une hypoxémie associée oriente vers une hypoventilation pure (dépression respiratoire, intoxication, atteinte neuromusculaire) plutôt qu'une atteinte parenchymateuse/vasculaire pulmonaire";cls="leger";}
+  else{interp="Gradient ÉLEVÉ pour l'âge — oriente vers une atteinte des échanges gazeux (pneumopathie, EP, SDRA, œdème pulmonaire, shunt) plutôt qu'une hypoventilation pure";cls="grave";}
+  document.getElementById('aa_result').classList.remove('hidden');
+  document.getElementById('aa_result').innerHTML=warn+
+    `<strong>PAO2 alvéolaire calculée = ${pAO2.toFixed(0)} mmHg</strong><br>
+    <strong>Gradient A-a = ${gradient.toFixed(0)} mmHg</strong> (seuil normal estimé ≈${seuilAge.toFixed(0)} mmHg${!isNaN(age)?' pour '+age+' ans':''}) — <span class="${cls}">${interp}</span><br>
+    <small style="color:var(--muted)">Formule : PAO2 = FiO2×(Patm−47) − PaCO2/0,8 ; Gradient A-a = PAO2 − PaO2. Le gradient normal augmente physiologiquement avec l'âge (≈ âge/4 + 4). Calcul valable en air ambiant ou sous O2 à débit connu — moins fiable sous ventilation mécanique avec PEEP élevée.</small>`;
+}
+
+function calcFENa(){
+  const nau=parseFloat(document.getElementById('fena_nau').value);
+  const nap=parseFloat(document.getElementById('fena_nap').value);
+  const cru=parseFloat(document.getElementById('fena_cru').value);
+  const crp=parseFloat(document.getElementById('fena_crp').value);
+  if([nau,nap,cru,crp].some(isNaN) || nap<=0 || cru<=0){alert('Remplir tous les champs (Na plasmatique et créatinine urinaire doivent être &gt; 0)');return;}
+  const warn = plausibilityWarnings([
+    {val:nau, min:1, max:200, label:'Na urinaire', unit:'mmol/L'},
+    {val:nap, min:100, max:200, label:'Na plasmatique', unit:'mmol/L'},
+    {val:cru, min:100, max:20000, label:'Créatinine urinaire', unit:'µmol/L'},
+    {val:crp, min:10, max:2000, label:'Créatinine plasmatique', unit:'µmol/L'}
+  ]);
+  const fena = (nau*crp)/(nap*cru)*100;
+  let interp,cls;
+  if(fena<1){interp="FENa &lt;1% — oriente vers une cause PRÉRÉNALE (hypovolémie, bas débit) ou une glomérulonéphrite/vasculopathie aiguë";cls="modere";}
+  else{interp="FENa &gt;1% (souvent &gt;2%) — oriente vers une NÉCROSE TUBULAIRE AIGUË ou une cause post-rénale/obstructive";cls="grave";}
+  document.getElementById('fena_result').classList.remove('hidden');
+  document.getElementById('fena_result').innerHTML=warn+
+    `<strong>FENa = ${fena.toFixed(2)} %</strong> — <span class="${cls}">${interp}</span><br>
+    <small style="color:var(--muted)">Formule : FENa = (Na urinaire × Créat plasmatique) / (Na plasmatique × Créat urinaire) × 100. Non interprétable si diurétiques récents (utiliser plutôt FEUrée dans ce cas) ou en insuffisance rénale chronique préexistante.</small>`;
+}
+
+function calcNaKatz(){
+  const na=parseFloat(document.getElementById('nak_na').value);
+  const gly=parseFloat(document.getElementById('nak_gly').value);
+  if([na,gly].some(isNaN)){alert('Remplir tous les champs');return;}
+  const warn = plausibilityWarnings([
+    {val:na, min:100, max:200, label:'Na+ mesuré', unit:'mmol/L'},
+    {val:gly, min:5, max:80, label:'Glycémie', unit:'mmol/L'}
+  ]);
+  // Formule de Katz : Na corrigé = Na mesuré + 1,6 × [(glycémie mmol/L − 5,5) / 5,5]
+  const naCorr = gly>5.5 ? na + 1.6*((gly-5.5)/5.5) : na;
+  let interp,cls;
+  if(naCorr<135){interp="Hyponatrémie vraie persistante après correction — ne pas attribuer uniquement à l'hyperglycémie";cls="grave";}
+  else if(naCorr>145){interp="Hypernatrémie vraie après correction";cls="grave";}
+  else{interp="Natrémie corrigée normale — l'anomalie mesurée était probablement due à l'effet dilutionnel de l'hyperglycémie";cls="leger";}
+  document.getElementById('nak_result').classList.remove('hidden');
+  document.getElementById('nak_result').innerHTML=warn+
+    `<strong>Na+ corrigé = ${naCorr.toFixed(1)} mmol/L</strong> — <span class="${cls}">${interp}</span><br>
+    <small style="color:var(--muted)">Formule de Katz : Na corrigé = Na mesuré + 1,6 × [(Glycémie − 5,5) / 5,5] (glycémie en mmol/L, ne s'applique qu'au-delà de 5,5 mmol/L). Certains auteurs utilisent un facteur de 2,4 pour les hyperglycémies très sévères (&gt;22 mmol/L) — la valeur de 1,6 reste la plus largement recommandée en pratique courante.</small>`;
+}
+
+const WALLACE_ZONES_ADULTE = [
+  {id:'tete', label:'Tête et cou', pct:9},
+  {id:'brasD', label:'Membre supérieur droit (en entier)', pct:9},
+  {id:'brasG', label:'Membre supérieur gauche (en entier)', pct:9},
+  {id:'tronqAnt', label:'Tronc — face antérieure', pct:18},
+  {id:'tronqPost', label:'Tronc — face postérieure', pct:18},
+  {id:'jambeD', label:'Membre inférieur droit (en entier)', pct:18},
+  {id:'jambeG', label:'Membre inférieur gauche (en entier)', pct:18},
+  {id:'perinee', label:'Périnée / organes génitaux', pct:1}
+];
+const WALLACE_ZONES_ENFANT = [
+  {id:'tete', label:'Tête et cou', pct:18},
+  {id:'brasD', label:'Membre supérieur droit (en entier)', pct:9},
+  {id:'brasG', label:'Membre supérieur gauche (en entier)', pct:9},
+  {id:'tronqAnt', label:'Tronc — face antérieure', pct:18},
+  {id:'tronqPost', label:'Tronc — face postérieure', pct:18},
+  {id:'jambeD', label:'Membre inférieur droit (en entier)', pct:13.5},
+  {id:'jambeG', label:'Membre inférieur gauche (en entier)', pct:13.5},
+  {id:'perinee', label:'Périnée / organes génitaux', pct:1}
+];
+function renderWallaceFields(){
+  const container = document.getElementById('wal_fields');
+  if(!container) return;
+  const terrainEl = document.getElementById('wal_terrain');
+  const terrain = terrainEl ? terrainEl.value : 'adulte';
+  const zones = terrain==='enfant' ? WALLACE_ZONES_ENFANT : WALLACE_ZONES_ADULTE;
+  container.innerHTML = zones.map(z=>
+    `<label style="display:flex; align-items:center; gap:8px; font-size:13.5px; margin:4px 0;">
+      <input type="checkbox" class="wal-zone" data-pct="${z.pct}"> ${z.label} — ${z.pct}%
+    </label>`
+  ).join('') + `
+    <div class="field" style="margin-top:8px;"><label>Brûlures en mosaïque non couvertes ci-dessus (%) — optionnel</label><input type="number" id="wal_extra" placeholder="estimation à la paume (≈1% par paume du patient)"></div>`;
+}
+function calcWallace(){
+  const checks = document.querySelectorAll('.wal-zone:checked');
+  let total = 0;
+  checks.forEach(c=> total += parseFloat(c.dataset.pct));
+  const extra = parseFloat(document.getElementById('wal_extra').value)||0;
+  total += extra;
+  document.getElementById('wal_result').classList.remove('hidden');
+  document.getElementById('wal_result').innerHTML =
+    `<strong>Surface brûlée totale (2e/3e degré) ≈ ${total.toFixed(1)} % SCB</strong><br>
+    <small style="color:var(--muted)">Ne compter que les brûlures du 2e degré (profond) et 3e degré — pas le 1er degré (simple érythème). Reporter cette valeur dans le calculateur de la <a onclick="openCalcCard('calc-parkland')" style="color:var(--accent); cursor:pointer;">Formule de Parkland</a> pour estimer le remplissage vasculaire. Chez l'enfant &lt;10 ans, préférer la table de Lund-Browder si disponible (plus précise que la règle des 9 adaptée).</small>`;
+}
+
+function calcAdrogue(){
+  const sex=document.getElementById('adr_sex').value;
+  const p=parseFloat(document.getElementById('adr_poids').value);
+  const na=parseFloat(document.getElementById('adr_na').value);
+  const delta=parseFloat(document.getElementById('adr_delta').value);
+  const perfusatNa=parseFloat(document.getElementById('adr_perfusat').value);
+  if([p,na,delta].some(isNaN) || delta===0){alert('Remplir tous les champs (élévation ciblée différente de 0)');return;}
+  const warn = plausibilityWarnings([
+    {val:p, min:1, max:300, label:'Poids', unit:'kg'},
+    {val:na, min:100, max:160, label:'Na+ actuel', unit:'mmol/L'},
+    {val:delta, min:0.5, max:15, label:'Élévation ciblée', unit:'mmol/L'}
+  ]);
+  const coeff=sex==='M'?0.6:0.5;
+  const tbw=coeff*p;
+  // Formule d'Adrogué-Madias : ΔNa par litre de perfusat = (Na perfusat − Na sérique) / (Eau corporelle totale + 1)
+  const deltaParL = (perfusatNa-na)/(tbw+1);
+  if(deltaParL<=0){
+    document.getElementById('adr_result').classList.remove('hidden');
+    document.getElementById('adr_result').innerHTML = warn + `<div class="warn-box">⚠️ Ce perfusat ferait baisser la natrémie (concentration en Na+ du perfusat ≤ natrémie actuelle) — choisir un perfusat plus concentré pour corriger une hyponatrémie.</div>`;
+    return;
+  }
+  const volumeL = delta/deltaParL;
+  const volumeMl = volumeL*1000;
+  document.getElementById('adr_result').classList.remove('hidden');
+  document.getElementById('adr_result').innerHTML=warn+
+    `<strong>ΔNa attendu = ${deltaParL.toFixed(2)} mmol/L par litre de perfusat</strong><br>
+    <strong>Volume estimé pour +${delta} mmol/L = ${volumeMl.toFixed(0)} mL</strong><br>
+    <small style="color:var(--muted)">Formule d'Adrogué-Madias : ΔNa par litre = (Na perfusat − Na sérique) / (Eau corporelle totale + 1). Eau corporelle totale estimée = ${tbw.toFixed(1)} L. Estimation théorique — ne remplace pas le contrôle biologique rapproché (Na+ toutes les 2-4h) ; se référer au calculateur de <a onclick="openCalcCard('calc-nacorr')" style="color:var(--accent); cursor:pointer;">vitesse de correction sécurisée</a> pour la limite à ne pas dépasser sur 24h.</small>`;
+}
+
+function calcBicar(){
+  const p=parseFloat(document.getElementById('bicar_poids').value);
+  const be=Math.abs(parseFloat(document.getElementById('bicar_be').value));
+  if([p,be].some(isNaN)){alert('Remplir tous les champs');return;}
+  const warn = plausibilityWarnings([
+    {val:p, min:1, max:300, label:'Poids', unit:'kg'},
+    {val:be, min:0, max:30, label:'Déficit de base', unit:'mEq/L'}
+  ]);
+  const doseTotal = 0.3*p*be;
+  const doseMoitie = doseTotal/2;
+  document.getElementById('bicar_result').classList.remove('hidden');
+  document.getElementById('bicar_result').innerHTML=warn+
+    `<strong>Dose totale calculée = ${doseTotal.toFixed(0)} mEq</strong> de bicarbonate de sodium<br>
+    Administrer environ la <strong>moitié (${doseMoitie.toFixed(0)} mEq)</strong> en première intention, puis réévaluer par une gazométrie de contrôle avant de compléter<br>
+    <small style="color:var(--muted)">Formule : Dose (mEq) = 0,3 × Poids (kg) × Déficit de base (mEq/L). 1 g de bicarbonate de sodium ≈ 12 mEq (solution à 8,4% : 1 mL = 1 mEq). Traiter la cause avant tout — la bicarbonatothérapie ne corrige pas l'étiologie et expose à une surcharge sodée/alcalose de rebond.</small>`;
+}
+
+function calcBSA(){
+  const t=parseFloat(document.getElementById('bsa_taille').value);
+  const p=parseFloat(document.getElementById('bsa_poids').value);
+  if([t,p].some(isNaN)){alert('Remplir tous les champs');return;}
+  const warn = plausibilityWarnings([
+    {val:t, min:30, max:250, label:'Taille', unit:'cm'},
+    {val:p, min:1, max:300, label:'Poids', unit:'kg'}
+  ]);
+  const bsa = Math.sqrt((t*p)/3600);
+  document.getElementById('bsa_result').classList.remove('hidden');
+  document.getElementById('bsa_result').innerHTML=warn+
+    `<strong>Surface corporelle = ${bsa.toFixed(2)} m²</strong><br>
+    <small style="color:var(--muted)">Formule de Mosteller : BSA (m²) = √[(Taille cm × Poids kg) / 3600]. Surface corporelle adulte moyenne de référence ≈ 1,7-1,9 m².</small>`;
 }
 
 /* Calculateur intégré — fiche Prééclampsie sévère / Éclampsie (sulfate de magnésium) */
