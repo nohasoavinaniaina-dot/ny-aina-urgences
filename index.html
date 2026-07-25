@@ -75,6 +75,42 @@ p.module-sub{color:var(--muted); font-size:13px; margin-bottom:18px;}
 .badge.todo{background:#3a2e1a; color:var(--warn);}
 .badge.done{background:#163325; color:var(--ok);}
 
+/* Accueil — recherche rapide */
+.quick-search-btn{
+  width:100%; background:var(--panel2); border:1px solid var(--border); color:var(--muted);
+  border-radius:10px; padding:13px 16px; font-size:14px; text-align:left; cursor:pointer;
+  display:flex; align-items:center; gap:8px; transition:border-color .15s, color .15s;
+}
+.quick-search-btn:hover{border-color:var(--accent); color:var(--text);}
+
+/* Accueil — accès rapide aux protocoles vitaux */
+.quick-access-grid{
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:10px;
+}
+.quick-access-btn{
+  background:var(--panel2); border:1px solid var(--grave); color:var(--text);
+  border-radius:10px; padding:12px 10px; font-size:13px; font-weight:600; cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center;
+  transition:background .15s, transform .1s;
+}
+.quick-access-btn:hover{background:var(--panel);}
+.quick-access-btn:active{transform:scale(.97);}
+.quick-access-btn .qa-icon{font-size:22px;}
+
+/* Accueil — fiches récemment mises à jour */
+.recent-list{list-style:none;}
+.recent-list li{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:9px 0; border-bottom:1px solid var(--border);
+}
+.recent-list li:last-child{border-bottom:none;}
+.recent-list button{
+  background:none; border:none; color:var(--text); font-size:13.5px; cursor:pointer;
+  text-align:left; padding:0; flex:1;
+}
+.recent-list button:hover{color:var(--accent);}
+.recent-date{font-size:11.5px; color:var(--muted); white-space:nowrap; flex-shrink:0;}
+
 .toc{
   background:var(--panel); border:1px solid var(--border); border-radius:12px;
   padding:14px 16px; margin-bottom:14px; scroll-margin-top:70px;
@@ -372,7 +408,7 @@ const MODULES = {
 const renderers = {}; // mod -> function() -> html string
 
 /* ——— Version de l'application ——— */
-const APP_VERSION = "2026.07.24d";
+const APP_VERSION = "2026.07.24e";
 document.addEventListener('DOMContentLoaded', ()=>{});
 (function initVersionBadge(){
   const el = document.getElementById('app-version');
@@ -3448,6 +3484,7 @@ function renderProtocoles(){
       <li>Alternatives si disponibles : <strong>Aminophylline</strong> si bradycardie sur infarctus inférieur ou lésion médullaire, <strong>Glucagon (GlucaGen®)</strong> si bêtabloquant/inhibiteur calcique en cause, <strong>entraînement électrosystolique transveineux</strong> en relais dès que possible si la cause n'est pas réversible</li>
       <li><strong>Si stable sans risque d'asystolie</strong> : surveillance scopée continue, rechercher et traiter la cause (iatrogène, ischémique, métabolique — hyperkaliémie, hypothyroïdie, hypothermie)</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : rythme stabilisé (sinusal ou FA/flutter contrôlé en fréquence) depuis &gt;24h, cause déclenchante traitée (ionique, ischémique, iatrogène), traitement de fond anti-arythmique/anticoagulant optimisé si indiqué, absence de récidive symptomatique sous scope avant la sortie.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Atropine, Cordarone® et Sulfate de magnésium sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Adénosine et l'entraînement électrosystolique (transcutané ou transveineux) sont d'accès limité aux CHU/CHRR disposant d'un plateau de cardiologie/réanimation — en leur absence pour une bradycardie instable réfractaire à l'atropine, l'Adrénaline ou l'Isoprénaline IVSE (si disponibles) restent les options de recours en attendant un transfert.</p>
   </div>
 
@@ -3534,7 +3571,9 @@ function renderProtocoles(){
 
   <div class="card" id="proto-angioedeme-bradykinique">
     <h3>😷 Angio-œdème bradykinique (non allergique)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : WAO/EAACI Guideline for the management of hereditary angioedema, 2021 (principes appliqués également à l'angio-œdème aux IEC)</p>
     <p style="font-size:13.5px; margin-bottom:8px;">À distinguer impérativement de l'angio-œdème allergique (histaminique) : mécanisme non IgE-médié, <strong>résistant à l'adrénaline, aux antihistaminiques et aux corticoïdes</strong>. Deux causes principales : <strong>iatrogène aux IEC</strong> (peut survenir à tout moment du traitement, même après des années) et <strong>angio-œdème héréditaire</strong> (déficit ou dysfonction en C1-inhibiteur, antécédents familiaux, épisodes récidivants depuis l'enfance).</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne pas s'attendre à une réponse à l'adrénaline, aux antihistaminiques ou aux corticoïdes — l'absence d'amélioration sous ce traitement ne doit pas faire perdre de temps : elle conforte au contraire le mécanisme bradykinique et impose de sécuriser les voies aériennes précocement, avant la détresse respiratoire franche.</div></div>
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
         <label>⚖️ Poids du patient (kg) — calcul du concentré de C1-inhibiteur (Berinert®)</label>
@@ -3552,11 +3591,13 @@ function renderProtocoles(){
       <li>À défaut de traitement spécifique (contexte à ressources limitées) : <strong>acide tranexamique</strong> 1g IV (effet antifibrinolytique avec un bénéfice modeste rapporté sur certains angio-œdèmes bradykiniques), <strong>plasma frais congelé</strong> discuté en dernier recours (apporte du C1-inhibiteur mais aussi du kininogène, risque théorique d'aggravation transitoire)</li>
       <li><strong>Surveillance prolongée</strong> en unité de soins continus tant que l'œdème facial/lingual/laryngé n'est pas en régression franche, du fait de l'évolution imprévisible et parfois prolongée (12-72h)</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : régression complète de l'œdème facial/lingual/laryngé, absence de tout signe respiratoire depuis &gt;24h après la dernière évolution, IEC/ARA2 formellement arrêtés et contre-indication documentée, orientation vers un centre de référence angio-œdème si forme héréditaire ou récidivante.</p>
   </div>
 
   <div class="card" id="proto-tamponnade">
     <h3>🫀 Tamponnade cardiaque</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après les ESC Guidelines 2015 (maladies du péricarde). Accumulation de liquide péricardique (ou sang, pus, air) sous tension, comprimant les cavités cardiaques et limitant le remplissage diastolique — une des 3 causes de choc obstructif.</p>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Éviter la ventilation mécanique en pression positive avant le drainage si possible — elle aggrave la compression des cavités droites et peut précipiter un collapsus. Si l'intubation est indispensable, réaliser le drainage péricardique en priorité si réalisable rapidement.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Signes évocateurs</strong> : triade de Beck (hypotension, turgescence jugulaire, assourdissement des bruits du cœur — inconstante), tachycardie, <strong>pouls paradoxal</strong> (chute de la PAS &gt;10 mmHg à l'inspiration), polypnée, signes de choc obstructif sans râles pulmonaires</li>
       <li><strong>Échographie cardiaque au lit (POCUS)</strong> dès que possible pour confirmer le diagnostic : épanchement péricardique, collapsus diastolique du ventricule/oreillette droite, variation respiratoire des flux mitral/tricuspide, veine cave inférieure dilatée sans variation respiratoire — ne doit pas retarder le geste si instabilité extrême avec forte suspicion clinique</li>
@@ -3573,6 +3614,7 @@ function renderProtocoles(){
       <li>Laisser un drain péricardique en place après évacuation initiale (prévention de la récidive), surveillance échographique répétée</li>
       <li>Rechercher la cause sous-jacente : traumatique (hémopéricarde), néoplasique, urémique, infectieuse (tuberculose, purulente), post-péricardiotomie/post-IDM (syndrome de Dressler), dissection aortique (tamponnade par rupture dans le péricarde — <em>voir protocole dédié</em>), iatrogène (post-geste invasif)</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : absence de récidive d'épanchement significatif à l'échographie de contrôle, drain retiré, stabilité hémodynamique sans support depuis &gt;24-48h, cause sous-jacente traitée ou en cours de prise en charge (néoplasie, tuberculose, urémie...).</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la péricardiocentèse à l'aiguille (geste manuel) est réalisable à tout niveau disposant d'une aiguille longue et d'un opérateur formé, avec ou sans échoguidage. L'échographie cardiaque au lit reste d'accès limité hors CHU/CHRR — devant une forte suspicion clinique avec instabilité extrême, le geste ne doit pas être retardé par l'absence d'imagerie.</p>
   </div>
 
@@ -3609,6 +3651,7 @@ function renderProtocoles(){
       <div class="field" id="sca_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
     </div>
     <div class="result-box hidden" id="sca_result"></div>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais thrombolyser un NSTEMI/angor instable — la thrombolyse est réservée au STEMI (sus-décalage ST). En cas d'IDM du VD (suspecté sur un sus-décalage inférieur avec dérivations droites), les nitrés et diurétiques sont contre-indiqués : ils peuvent précipiter un collapsus par chute préchargée.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>
         <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
@@ -3630,12 +3673,15 @@ function renderProtocoles(){
       <li>Surveillance scope continue — risque de trouble du rythme ventriculaire dans les premières heures ; DAE/défibrillateur à proximité immédiate</li>
       <li>Statine à forte dose dès l'admission ; IEC si dysfonction VG ; traiter les complications précoces (choc cardiogénique, trouble du rythme, rupture septale/pariétale)</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : stabilité hémodynamique et rythmique depuis &gt;48-72h sans support, absence d'ischémie résiduelle ou de complication mécanique, traitement de sortie optimisé (double antiagrégation, statine, bêtabloquant, IEC selon fonction VG), éducation du patient et suivi cardiologique programmé.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'angioplastie primaire (salle de cathétérisme) n'existe que de façon très limitée sur le territoire — la thrombolyse IV (Actilyse®, disponible en pharmacie hospitalière de CHU) reste l'option de reperfusion la plus réaliste en 1ère intention. Aspégic®, Plavix®, Cardensiel® et les statines génériques sont largement disponibles (LNMEIS) ; le Ticagrélor (Brilique®) est d'accès plus limité, réservé aux pharmacies privées des grandes villes.</p>
   </div>
 
   <div class="card" id="proto-oap">
     <h3>💧 Œdème aigu du poumon (OAP) cardiogénique</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : ESC Heart Failure Guidelines 2021 (actualisées 2023)</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Dyspnée aiguë avec orthopnée, crépitants bilatéraux, souvent contexte de cardiopathie connue ou poussée hypertensive/SCA sous-jacent.</p>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais donner de diurétique ou de vasodilatateur en 1ère intention si une composante de choc cardiogénique est associée (hypoTA, hypoperfusion) — ces traitements aggravent l'hypotension. Dans ce cas, privilégier l'inotrope/vasopresseur (cf. protocole Choc cardiogénique) avant de traiter la congestion.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>Position demi-assise/assise, jambes pendantes si possible (diminue le retour veineux)</li>
       <li>Oxygène pour SpO2 cible ≥94% ; ventilation non invasive (CPAP/VNI) précoce si détresse respiratoire — réduit le recours à l'intubation</li>
@@ -3658,6 +3704,7 @@ function renderProtocoles(){
       <li>Si choc cardiogénique associé (hypoTA, hypoperfusion) : éviter les diurétiques/vasodilatateurs en 1ère intention — <strong>Dobutamine (Dobutrex®)</strong> ± <strong>Noradrénaline (Noradrénaline Aguettant®)</strong> — voir <a onclick="openProtoCard('proto-choc-cardiogenique')" style="color:var(--accent); cursor:pointer;">protocole dédié Choc cardiogénique</a></li>
       <li>Intubation/ventilation mécanique si épuisement respiratoire ou échec de la VNI</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : sevrage de l'oxygène ou retour au support de base, poids stabilisé après diurèse efficace, absence de dyspnée de repos, facteur déclenchant identifié et traité, traitement de fond de l'insuffisance cardiaque optimisé avant la sortie.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Lasilix® et Morphine Aguettant® sont disponibles à tous les niveaux hospitaliers (LNMEIS). Risordan®/Natispray® sont d'accès plus limité, généralement disponibles en pharmacie hospitalière de CHU/CHRR — en leur absence, se concentrer sur le diurétique et la VNI. Dobutrex® et Noradrénaline Aguettant® sont disponibles en pharmacie hospitalière des CHU/CHRR (cf. protocole Choc cardiogénique).</p>
   </div>
 
@@ -3724,11 +3771,13 @@ function renderProtocoles(){
       <li>Discussion pluridisciplinaire précoce (cardiologie interventionnelle, chirurgie cardiaque, réanimation) dès le stade C si évolution défavorable sous traitement médical initial</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais traiter un choc cardiogénique comme un choc hypovolémique — un remplissage vasculaire agressif aggrave la congestion pulmonaire et peut précipiter une détresse respiratoire majeure. Toujours évaluer la volémie (échographie, signes de congestion) avant de remplir.</div></div>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie de réanimation</strong> : sevrage des inotropes/vasopresseurs depuis &gt;24-48h, cause sous-jacente traitée ou contrôlée (revascularisation, correction chirurgicale), fonction ventriculaire stabilisée à l'échocardiographie, absence de nouvelle défaillance d'organe.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Dobutrex® et Noradrénaline Aguettant® sont disponibles en pharmacie hospitalière des CHU/CHRR. La coronarographie et l'assistance circulatoire mécanique (contre-pulsion, ECMO) ne sont pas disponibles sur le territoire — en cas de SCA compliqué de choc cardiogénique, la thrombolyse (cf. protocole SCA) reste l'option de reperfusion disponible localement en l'absence d'angioplastie, et le traitement médical maximal (inotrope/vasopresseur) reste l'unique recours en cas d'échec.</p>
   </div>
 
   <div class="card" id="proto-hta-urgence">
     <h3>📈 Urgence et crise hypertensive</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : ESC/ESH Guidelines for the management of arterial hypertension, 2023</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Poussée hypertensive simple</strong> (TA élevée sans souffrance d'organe) ≠ <strong>urgence hypertensive</strong> (TA élevée, souvent &gt;180/120 mmHg, AVEC souffrance d'organe : encéphalopathie, OAP, dissection aortique, SCA, éclampsie, insuffisance rénale aiguë).</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Poussée hypertensive sans souffrance d'organe :</strong> pas de baisse tensionnelle brutale — repos, traitement PO habituel repris/optimisé, réévaluation ambulatoire. Éviter la Nifédipine sublinguale (risque de chute tensionnelle brutale et d'ischémie)</li>
@@ -3760,6 +3809,7 @@ function renderProtocoles(){
       <li><strong>Cibles tensionnelles à retenir :</strong> encéphalopathie hypertensive/HTA maligne — baisse de 20-25% de la TAM en 1h ; dissection aortique/prééclampsie sévère — TA systolique &lt;140 mmHg (voire &lt;120 pour la dissection) dès la 1ère heure ; AVC — ne pas baisser sauf &gt;220/120 mmHg hors thrombolyse (cf. protocole AVC dédié)</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Nifédipine sublinguale contre-indiquée en 1ère intention (chute tensionnelle brutale incontrôlable, risque d'ischémie myocardique/cérébrale) — ne jamais l'utiliser pour « faire baisser vite » une poussée hypertensive simple.</div></div>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : TA stabilisée sous traitement oral, résolution complète de la souffrance d'organe (neurologique, cardiaque, rénale), relais antihypertenseur oral efficace depuis &gt;24h, cause déclenchante identifiée et prise en charge (observance, sténose, éclampsie...).</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Loxen® (Nicardipine) est le plus largement disponible des antihypertenseurs IV, jusqu'au niveau CHRD. Trandate® (Labétalol) et Eupressyl®/Médiatensyl® (Urapidil) sont d'accès plus limité, principalement en CHU/CHRR — en leur absence, la Nicardipine reste l'option de référence, y compris par burette microgouttes en l'absence de pousse-seringue. L'Esmolol (Brevibloc®) est réservé aux pharmacies hospitalières de CHU.</p>
   </div>
 
@@ -3801,6 +3851,7 @@ function renderProtocoles(){
       <li>Rechercher un contexte favorisant : HTA mal contrôlée (cause la plus fréquente), maladie du tissu conjonctif (Marfan, Ehlers-Danlos), bicuspidie aortique, grossesse, traumatisme thoracique, cocaïne</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Jamais de vasodilatateur (Nicardipine) seul en 1ère intention : sans bêtabloquant associé au préalable, la tachycardie réflexe augmente le cisaillement pariétal aortique (dP/dt) et peut précipiter l'extension ou la rupture de la dissection.</div></div>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : contrôle tensionnel strict stabilisé sous traitement oral (bêtabloquant systématique au long cours), imagerie de contrôle rassurante (absence d'extension pour un type B non opéré, suites chirurgicales stabilisées pour un type A opéré), suivi cardiologique/chirurgical programmé.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'angioscanner est disponible dans les CHU/CHRR équipés en scanner injecté. Le TEVAR (endoprothèse) et la chirurgie de l'aorte ascendante ne sont pas disponibles sur le territoire — en cas de type A confirmé, organiser un transfert international dès que la stabilisation médicale le permet. Esmolol et Trandate® sont réservés aux pharmacies hospitalières de CHU ; en leur absence, le Labétalol reste plus facilement substituable par voie orale/IV lente selon disponibilité locale.</p>
   </div>
 
@@ -3916,7 +3967,10 @@ function renderProtocoles(){
 
   <div class="card" id="proto-grippe-grave">
     <h3>🦠 Grippe grave / Détresse respiratoire virale sévère (dont COVID-19)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Sources : essai RECOVERY (dexaméthasone, 2020) et principes de ventilation protectrice type SDRA</p>
     <p style="font-size:13.5px; margin-bottom:8px;">À évoquer en contexte épidémique saisonnier ou de cluster devant une détresse respiratoire fébrile d'installation rapide, avec ou sans pneumonie virale primitive à l'imagerie. Cadre commun à la grippe grave (influenza A/B), au COVID-19 sévère et aux autres pneumopathies virales sévères (VRS de l'adulte fragile, etc.) — la prise en charge symptomatique et respiratoire est largement superposable, seuls les antiviraux spécifiques diffèrent.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Une forme initialement modérée peut s'aggraver brutalement en 24-72h, notamment dans le COVID-19 où une détresse respiratoire secondaire peut survenir après une période de stabilité apparente — ne jamais relâcher la surveillance sur un tableau initial rassurant.</div></div>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne pas prescrire de corticothérapie chez un patient ne nécessitant pas d'oxygénothérapie — aucun bénéfice démontré et possible retard de clairance virale.</div></div>
     <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Signes de gravité à rechercher activement :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li>Polypnée &gt;30/min, SpO2 &lt;90% en air ambiant, signes de lutte respiratoire, cyanose</li>
@@ -3934,6 +3988,7 @@ function renderProtocoles(){
       <li><strong>Isolement respiratoire</strong> (gouttelettes ± air selon l'agent suspecté et les gestes réalisés) — protection du personnel soignant, port de EPI adapté, en particulier lors des gestes générateurs d'aérosols (intubation, aspiration, VNI/OHD)</li>
       <li>Surveillance rapprochée des formes initialement modérées : l'aggravation peut être rapide (24-72h), notamment dans le COVID-19 où une phase de détresse respiratoire secondaire peut survenir après une période de stabilité apparente</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : sevrage de l'oxygénothérapie ou retour au support de base, apyrexie, absence de nouvelle détresse respiratoire depuis &gt;48h, antiviral/antibiothérapie complétés ou relayables per os.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le paracétamol et la Dexaméthasone sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Oseltamivir (Tamiflu®) <strong>ne figure pas sur la Liste Nationale des Médicaments Essentiels et Intrants de Santé</strong> — son accès reste exceptionnel en pratique courante, généralement limité à des stocks stratégiques mobilisés par le Ministère de la Santé Publique en période d'épidémie de grippe déclarée ou via une pharmacie privée d'importation ; ne pas compter dessus comme traitement de routine. Son absence ne doit jamais retarder les mesures qui sauvent réellement en contexte de ressources limitées : oxygénothérapie précoce, ventilation protectrice si besoin, et antibiothérapie sans délai en cas de doute sur une surinfection bactérienne (bénéfice bien plus robuste et systématiquement disponible). L'OHD/HFNC n'est disponible que dans certains services de réanimation ; en son absence, l'oxygénothérapie standard à haut débit par masque à haute concentration reste l'alternative de premier recours.</p>
   </div>
 
@@ -4336,7 +4391,10 @@ function renderProtocoles(){
 
   <div class="card" id="proto-paludisme">
     <h3>🦟 Paludisme grave (accès palustre grave)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : WHO Guidelines for malaria, éd. 2024 (OMS) — Artésunate IV en 1ère intention pour tous les âges, y compris grossesse</p>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après l'OMS. Urgence médicale — traitement parentéral à débuter sans délai, avant même la confirmation biologique si suspicion clinique forte.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais attendre la confirmation biologique (goutte épaisse/TDR) pour débuter l'Artésunate IV devant une suspicion clinique forte en zone d'endémie — chaque heure de retard aggrave le pronostic.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Anémie hémolytique retardée post-artésunate : possible jusqu'à 4 semaines après le traitement, y compris chez un patient déjà sorti et apparemment guéri — prévoir systématiquement une NFS de contrôle à distance (J14-J28) et informer le patient des signes d'alerte (pâleur, fatigue, urines foncées).</div></div>
     <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Critères de gravité (au moins 1 suffit) :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li>Trouble de conscience/coma, convulsions répétées, prostration</li>
@@ -4376,13 +4434,16 @@ function renderProtocoles(){
       <li>Surveillance rapprochée : glycémie répétée (risque d'hypoglycémie sous artésunate/quinine), état neurologique, diurèse</li>
       <li>Surveiller une anémie hémolytique retardée post-artésunate (jusqu'à 4 semaines après traitement) — contrôle NFS à distance</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie stable, relais oral bien toléré avec parasitémie ≤1%, absence de complication persistante (fonction rénale, neurologique et respiratoire normalisées), NFS de contrôle programmée à J14-J28 (dépistage de l'hémolyse retardée post-artésunate).</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Artésunate injectable est le traitement de 1ère intention distribué gratuitement via le <strong>Programme National de Lutte contre le Paludisme (PNLP)</strong> à tous les niveaux de soins publics, y compris CSB2/CHRD — vérifier le stock local (ruptures ponctuelles possibles). L'Artésunate intrarectal (pré-transfert) est également fourni par le PNLP pour les formations sanitaires de base sans capacité IV. La Quinine IV reste une alternative de repli si rupture d'Artésunate/Artéméther. Madagascar est une zone de transmission de <em>P. falciparum</em> (majoritaire) et de <em>P. vivax</em> (notamment dans les Hautes Terres) — le test de diagnostic rapide (TDR) combiné ou la goutte épaisse doivent orienter le choix thérapeutique si l'espèce n'est pas d'emblée <em>falciparum</em>.</p>
   </div>
 
   <div class="card" id="proto-eclampsie">
     <h3>🤰 Prééclampsie sévère / Éclampsie</h3>
     <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 415.5" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme prééclampsie sévère et éclampsie</title><desc>Diagramme de décision pour la reconnaissance et la prise en charge de la prééclampsie sévère et de l'éclampsie, du sulfate de magnésium à l'extraction fœtale</desc><defs><marker id="ah-eclampsie" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="40" y="16" width="540" height="49" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">Prééclampsie sévère</text><text x="310.0" y="47.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)">TA ≥160/110 + protéinurie, ou signe de gravité (céphalées, RHD, douleur épigastrique)</text><line x1="310" y1="65" x2="310" y2="85" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-eclampsie)"/><rect x="40" y="85" width="540" height="34.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="102.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Convulsions généralisées → Éclampsie</text><line x1="310" y1="119.5" x2="310" y2="139.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-eclampsie)"/><rect x="40" y="139.5" width="540" height="63.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="156.7" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Sulfate de magnésium — traitement de référence</text><text x="310.0" y="171.3" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)">Charge 4g IV en 15-20min puis entretien 1g/h (Zuspan)</text><text x="310.0" y="185.9" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)">Ou schéma Pritchard (IV+IM) en ressources limitées</text><line x1="310" y1="203.0" x2="310" y2="223.0" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-eclampsie)"/><rect x="40" y="223.0" width="540" height="34.5" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="240.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Récidive convulsive → nouveau bolus de 2g MgSO4</text><line x1="310" y1="257.5" x2="310" y2="277.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-eclampsie)"/><rect x="40" y="277.5" width="540" height="49" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="310.0" y="294.7" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">TA ≥160/110 mmHg persistante ?</text><text x="310.0" y="309.3" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)">Labétalol IV, Nicardipine IV ou Nifédipine PO</text><line x1="310" y1="326.5" x2="310" y2="346.5" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-eclampsie)"/><rect x="40" y="346.5" width="540" height="49" rx="8" fill="var(--panel2)" stroke="var(--accent2)" stroke-width="1.5"/><text x="310.0" y="363.7" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent2)" font-weight="700">Le seul traitement curatif est l'accouchement</text><text x="310.0" y="378.3" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent2)">Organiser l'extraction fœtale dès stabilisation maternelle</text></svg></div>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : OMS — WHO recommendations for prevention and treatment of pre-eclampsia and eclampsia, actualisées ; ISSHP 2021 (International Society for the Study of Hypertension in Pregnancy)</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Prééclampsie sévère :</strong> TA ≥160/110 mmHg + protéinurie (ou signe de gravité : céphalées, troubles visuels, douleur épigastrique, œdème pulmonaire, thrombopénie, cytolyse hépatique). <strong>Éclampsie :</strong> convulsions généralisées chez une femme enceinte/post-partum avec prééclampsie — urgence vitale materno-fœtale.</p>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Le sulfate de magnésium est le traitement anticonvulsivant de référence — ne jamais le remplacer par une benzodiazépine ou la phénytoïne en 1ère intention, moins efficaces sur la prévention des récidives et sans effet sur la composante vasculaire. Ne jamais retarder l'organisation de l'extraction fœtale dans l'attente d'une stabilisation complète et prolongée : l'accouchement est le seul traitement curatif.</div></div>
 
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
@@ -4427,6 +4488,7 @@ function renderProtocoles(){
       <li>Bilan de gravité : NFS/plaquettes, bilan hépatique, fonction rénale, protéinurie, bilan de coagulation (rechercher un HELLP syndrome)</li>
       <li><strong>Le seul traitement curatif est l'accouchement</strong> — organiser l'extraction fœtale dès stabilisation maternelle, en coordination avec l'équipe obstétricale</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> (post-partum) : TA contrôlée sous traitement oral depuis &gt;24-48h, absence de signe de gravité neurologique/hépatique/rénal, bilan biologique en amélioration nette, éducation sur les signes d'alerte à domicile (céphalées, troubles visuels, douleur épigastrique) et suivi tensionnel rapproché programmé.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le sulfate de magnésium injectable est largement disponible, y compris au niveau CHRD (LNMEIS) — le schéma Pritchard (IM) reste une alternative fiable en l'absence de pousse-seringue électrique. Trandate® et Loxen® sont disponibles en pharmacie hospitalière ; à défaut, la Nifédipine PO (Adalate®) est l'antihypertenseur le plus largement accessible, y compris en structure de base.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">🩺 <strong>Prévention (à intégrer au suivi prénatal, non un geste d'urgence)</strong> : dans les populations à apport calcique alimentaire bas — situation fréquente à Madagascar (régime à dominante rizicole, pauvre en produits laitiers) — l'OMS recommande une <strong>supplémentation calcique de 1,5 à 2 g/j</strong> (calcium élément, en 3 prises, idéalement à distance du fer) à partir de 20 SA chez toute femme enceinte, réduisant significativement le risque de prééclampsie et d'HTA gravidique. À signaler à l'équipe de consultation prénatale en relais de la prise en charge aiguë.</p>
   </div>
@@ -4467,6 +4529,8 @@ function renderProtocoles(){
       <li>Si hémorragie réfractaire aux utérotoniques : tamponnement par ballonnet intra-utérin (efficace dans &gt;80% des cas s'il est posé avant l'état de choc avancé), sinon geste chirurgical/radiologie interventionnelle selon plateau technique disponible</li>
       <li>Vêtement anti-choc non pneumatique (NASG) si disponible, en attendant/pendant le transfert — réduit la mortalité de près de moitié en ressources limitées</li>
     </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais attendre les résultats biologiques pour débuter le remplissage/la transfusion devant un choc hémorragique franc — la clinique (fréquence cardiaque, TA, état de conscience) prime. Le tamponnement par ballonnet est d'autant plus efficace qu'il est posé précocement, avant l'état de choc avancé — ne pas le différer en multipliant les tentatives d'utérotoniques inefficaces.</div></div>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : hémorragie contrôlée depuis &gt;24h, hémoglobine stabilisée ou en correction (transfusion si besoin), involution utérine normale, absence de signe infectieux associé, éducation sur les signes d'alerte de reprise du saignement.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Oxytocine (Syntocinon®), Misoprostol (Cytotec®, Misotac®, bien plus largement disponible et ne nécessitant pas de chaîne du froid contrairement à l'oxytocine) et Exacyl® sont disponibles jusqu'au niveau CHRD. Le ballonnet intra-utérin dédié étant rare hors CHU, un ballonnet de sonde de Foley gonflé (dispositif de fortune) peut être utilisé en alternative. Le NASG et la banque de sang (CNTS) sont d'accès variable selon la région — anticiper le transfert précoce si l'hémorragie n'est pas rapidement contrôlée.</p>
   </div>
 
@@ -5382,6 +5446,7 @@ function renderProtocoles(){
       <li>Réévaluation quotidienne de la nécessité de chaque traitement (désescalade antibiotique, sevrage des vasopresseurs, allègement de la sédation) — la prise en charge du sepsis ne s'arrête pas à la 1ère heure, elle se poursuit tout au long du séjour, jusqu'au suivi post-hospitalisation (séquelles physiques/cognitives/psychologiques à dépister)</li>
     </ol>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">⚠️ Pour le choc septique dans le cadre spécifique d'un purpura fulminans (méningococcémie), voir le protocole dédié ci-dessous — l'antibiothérapie y prime sur tout le reste et doit être administrée sur place avant tout transfert.</p>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie de réanimation</strong> : sevrage complet des vasopresseurs depuis &gt;24h, lactates normalisés ou en décroissance nette, absence de nouvelle défaillance d'organe, foyer infectieux contrôlé (drainage/chirurgie réalisés si indiqués) et antibiothérapie désescaladée adaptée à l'antibiogramme.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Ringer Lactate/NaCl 0,9% et Noradrénaline Aguettant® sont disponibles dans les hôpitaux de référence (CHU/CHRR) ; leur absence en structure de base (CSB/CHRD sans réanimation) impose un transfert précoce dès la reconnaissance du choc septique, sans retarder la 1ère dose d'antibiotique ni le remplissage initial. <strong>Nouveauté utile en contexte de transfert :</strong> la SSC 2026 recommande, en préhospitalier, de débuter l'antibiothérapie avant l'arrivée à l'hôpital si le délai prévisible avant évaluation médicale hospitalière est ≥60 minutes chez un patient en choc septique probable/certain — pertinent pour les évacuations CSB2/CHRD → CHU à Madagascar si une 1ère dose d'antibiotique IV/IM peut être administrée avant le départ. Le dosage des lactates n'est pas disponible partout — l'évaluation clinique (marbrures, temps de recoloration cutanée, diurèse) reste alors l'outil de suivi principal. L'Hydrocortisone est peu coûteuse et généralement disponible même en structure de base — à ne pas négliger dès qu'un vasopresseur est nécessaire.</p>
   </div>
 
@@ -5431,7 +5496,10 @@ function renderProtocoles(){
 
   <div class="card" id="proto-meningite">
     <h3>🦠 Méningite / Encéphalite bactérienne aiguë</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Sources : NICE NG240 (2024, Royaume-Uni) — antibiothérapie dans l'heure, dexaméthasone avant/avec la 1ère dose d'antibiotique</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Triade classique (fièvre, raideur de nuque, céphalées) souvent incomplète — méfiance chez le nourrisson (irritabilité, fontanelle bombée) et le sujet âgé (confusion isolée possible). Urgence absolue : chaque heure de retard d'antibiothérapie augmente la mortalité.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais retarder l'antibiothérapie pour réaliser l'imagerie cérébrale ou la ponction lombaire — hémocultures avant la 1ère dose si possible mais sans délai significatif ; antibiotique à débuter dans l'heure suivant l'admission.</div></div>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>La dexaméthasone est inefficace, voire délétère, si elle est administrée après la 1ère dose d'antibiotique — à injecter en même temps ou juste avant, jamais après.</div></div>
 
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
@@ -5470,11 +5538,15 @@ function renderProtocoles(){
       </li>
       <li>Surveillance rapprochée : conscience, pupilles, signes d'engagement, convulsions — traiter une HTIC associée si présente (cf. protocole dédié)</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> (après ≥48h d'antibiothérapie efficace) : apyrexie, amélioration neurologique nette sans nouveau déficit, absence de complication (hydrocéphalie, abcès cérébral, thrombophlébite cérébrale), cure antibiotique complète programmée (7-14 jours selon le germe) ; dépistage auditif à programmer avant la sortie en cas de méningite à pneumocoque ou méningocoque.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Claforan®, Clamoxyl® et Soludécadron® sont disponibles à tous les niveaux hospitaliers (LNMEIS). L'Aciclovir IV (Zovirax®) est plus limité, généralement disponible en pharmacie hospitalière de CHU/CHRR — anticiper une rupture possible et transférer si suspicion d'encéphalite herpétique dans une structure ne disposant pas du traitement. La TDM cérébrale n'étant pas accessible partout, ne pas la considérer comme un préalable systématique à la PL en l'absence de signe de localisation.</p>
   </div>
 
   <div class="card" id="proto-purpura-fulminans">
     <h3>🟣 Purpura fulminans (méningococcémie grave)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Sources : NICE NG240 (2024) et Surviving Sepsis Campaign 2026 — antibiothérapie pré-hospitalière immédiate, geste qui prime sur tout transfert</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>La 1ère dose d'antibiotique doit être injectée sur place (IM si pas de voie veineuse) avant tout transfert — ne jamais attendre l'arrivée à l'hôpital, les prélèvements, ni l'imagerie. C'est le geste qui prime sur tout le reste dans cette pathologie foudroyante.</div></div>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ponction lombaire contre-indiquée en phase de choc — la coagulopathie associée (CIVD) et l'instabilité hémodynamique en font un geste à haut risque ; à différer après stabilisation.</div></div>
 
     <div class="purpura-calc">
       <div class="row2" style="align-items:end;">
@@ -5502,6 +5574,7 @@ function renderProtocoles(){
       <li>Isolement gouttelettes du patient, antibioprophylaxie systématique des sujets contacts proches (<strong>Rifampicine (Rifadine®)</strong> 600 mg PO x2/j pendant 2 jours chez l'adulte, 10 mg/kg x2/j chez l'enfant >1 mois — contre-indiquée chez la femme enceinte ; ou <strong>Ciprofloxacine (Ciflox®)</strong> 500 mg PO dose unique ; ou <strong>Ceftriaxone (Rocéphine®)</strong> 250 mg IM dose unique chez l'adulte (125 mg chez l'enfant <15 ans) — à privilégier chez la femme enceinte), déclaration obligatoire</li>
       <li>Surveillance étroite : extension du purpura, diurèse, marbrures, lactates, coagulation (risque de CIVD) — orientation en réanimation systématique</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Orientation — pas de sortie précoce possible :</strong> hospitalisation en réanimation systématique. Sortie de réanimation envisageable seulement après stabilisation hémodynamique complète, sevrage des amines vasopressives, absence de progression du purpura depuis &gt;24h et bilan de coagulation normalisé.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Rocéphine® est disponible à tous les niveaux, y compris en CSB — la 1ère dose doit être injectée sur place (IM si pas de voie veineuse) avant même d'attendre le transfert, geste qui prime sur tout le reste dans cette pathologie foudroyante. Les amines vasopressives et la réanimation avancée nécessitent un transfert vers un CHU/CHRR ; ne jamais retarder l'antibiothérapie initiale en attendant les moyens de ce transfert.</p>
   </div>
 
@@ -5554,7 +5627,18 @@ function renderProtocoles(){
 
   <div class="card" id="proto-tetanos">
     <h3>🦷 Tétanos</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : classification d'Ablett (grading de référence, largement utilisé en réanimation)</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Toxi-infection à Clostridium tetani, rare en zone vaccinée mais à évoquer devant un trismus fébrile, une hypertonie généralisée avec spasmes paroxystiques (opisthotonos), souvent déclenchés par les stimuli, sur une plaie souillée ou vaccination incomplète/inconnue.</p>
+    <p style="margin-top:8px; font-weight:600; color:var(--accent2);">Classification d'Ablett — oriente le niveau de surveillance :</p>
+    <table>
+      <tr><th>Grade</th><th>Sévérité</th><th>Signes</th></tr>
+      <tr><td>I</td><td>Léger</td><td>Trismus modéré, spasticité générale, pas de spasme ni de gêne respiratoire</td></tr>
+      <tr><td>II</td><td>Modéré</td><td>Trismus net, rigidité marquée, spasmes brefs, gêne respiratoire modérée (FR&gt;30)</td></tr>
+      <tr><td>III</td><td>Sévère</td><td>Trismus sévère, spasmes réflexes prolongés, apnées, dysphagie sévère, tachycardie</td></tr>
+      <tr><td>IV</td><td>Très sévère</td><td>Grade III + dysautonomie cardiovasculaire (HTA/hypoTA, troubles du rythme)</td></tr>
+    </table>
+    <p style="font-size:13.5px; margin-top:6px;">Grades I-II : surveillance en service conventionnel possible. Grades III-IV : réanimation systématique (ventilation mécanique et gestion de la dysautonomie).</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>La dysautonomie (grade IV) est la principale cause de décès sous ventilation — surveillance cardiovasculaire continue indispensable dès l'apparition de spasmes sévères, même si le patient semble stable au repos.</div></div>
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
         <label>⚖️ Poids du patient (kg) — calcul de l'Esmolol (dysautonomie)</label>
@@ -5591,13 +5675,14 @@ function renderProtocoles(){
       <li>Vaccination antitétanique à jour à réaliser (le tétanos ne confère pas d'immunité naturelle, le vaccin reste nécessaire même après l'épisode), en un site différent des immunoglobulines</li>
       <li>Prévention avant tout : vérification et mise à jour systématique du statut vaccinal devant toute plaie, selon le type de plaie et l'ancienneté de la dernière dose</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : disparition des spasmes depuis plusieurs jours sans sédation, sevrage complet de la ventilation mécanique si utilisée, stabilité cardiovasculaire (grade IV) depuis &gt;48-72h, cure antibiotique terminée, vaccination antitétanique programmée/à jour.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le tétanos reste une pathologie non exceptionnelle localement du fait d'une couverture vaccinale incomplète en zone rurale. Le Valium®, le Flagyl® et le Trandate® sont disponibles à tous les niveaux hospitaliers. Le Gammatétanos® (immunoglobulines) est en revanche d'accès limité, généralement disponible seulement en pharmacie hospitalière de CHU/CHRR — son absence ne doit jamais retarder les autres mesures (antibiothérapie, contrôle des spasmes, parage de plaie), qui restent les leviers essentiels en son absence.</p>
   </div>
 
   <div class="card" id="proto-fasciite-necrosante">
     <h3>🦠 Fasciite nécrosante / Infections nécrosantes des tissus mous</h3>
     <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Urgence chirurgicale absolue — le délai avant débridement conditionne directement la survie (mortalité ~4% si chirurgie &lt;12h vs jusqu'à 38% en cas de retard). Ne jamais attendre l'imagerie ou la biologie en cas de forte suspicion clinique.</div></div>
-    <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Signes cliniques évocateurs (à rechercher activement, souvent frustres au stade précoce) :</p>
+    <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Signes cliniques évocateurs (à rechercher activement, souvent frustres au stade précoce) — score LRINEC (Wong, 2004) en outil d'aide :</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
       <li><strong>Douleur disproportionnée</strong> par rapport à l'aspect cutané initial — signe le plus précoce et le plus sensible</li>
       <li><strong>Induration sous-cutanée "en bois"</strong> s'étendant au-delà des limites visibles de l'érythème cutané</li>
@@ -5656,6 +5741,7 @@ function renderProtocoles(){
       <li>Prélèvements peropératoires (bactériologie, anatomopathologie) pour adapter l'antibiothérapie et confirmer le diagnostic</li>
       <li>Surveillance rapprochée en réanimation — le choc septique et la défaillance multiviscérale sont fréquents dans les premières 24-48h</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : absence de progression de la nécrose depuis plusieurs reprises chirurgicales successives, couverture cutanée en cours/acquise (greffe si besoin), apyrexie, antibiothérapie relayable per os, sevrage des amines vasopressives si choc septique associé.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Flagyl® et Gentalline® sont largement disponibles à tous les niveaux hospitaliers. La Clindamycine (Dalacine®) est disponible principalement en pharmacie hospitalière de CHU/CHRR — en son absence, l'association Pénicilline G/Gentamicine reste une alternative acceptable, sans l'effet anti-toxinique spécifique de la clindamycine. Le plateau chirurgical (bloc opératoire, disponibilité de sang pour transfusion) doit être mobilisé sans délai ; un transfert vers un centre chirurgical de référence ne doit jamais retarder l'antibiothérapie initiale.</p>
   </div>
 
@@ -5689,6 +5775,7 @@ function renderProtocoles(){
       <li><strong>Allopurinol</strong> PO (prévention) ou <strong>rasburicase IV</strong> si disponible (traitement curatif de l'hyperuricémie sévère, plus efficace mais coûteux/accès limité) — l'allopurinol reste l'option la plus accessible en ressources limitées</li>
       <li>Surveillance biologique rapprochée (ionogramme, créatinine, uricémie, calcémie) toutes les 6-8h en phase aiguë ; indication d'épuration extra-rénale en urgence si hyperkaliémie réfractaire ou anurie (cf. protocole dédié)</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie depuis &gt;48h, sortie d'aplasie (neutrophiles &gt;500/mm³ en ascension) ou stabilité clinique prolongée si aplasie persistante, hémocultures négatives ou foyer contrôlé, relais antibiotique oral possible, avis de l'hématologue/oncologue référent obtenu.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : selon la Liste Nationale des Médicaments Essentiels et Intrants de Santé (LNMEIS 2023), la Tazocilline® n'est référencée qu'au niveau <strong>CHU</strong> (non disponible en CHRR) — anticiper une rupture possible et avoir une alternative (céphalosporine de 3e génération + aminoside, disponibles à la plupart des niveaux) en repli immédiat, plutôt que de retarder la 1ère dose. La Vancomycine est référencée CHU/CHRR ; le Céfépime, les carbapénèmes (Méropénème), la rasburicase et le filgrastim (G-CSF) ne sont référencés qu'au niveau CHU, la rasburicase et le G-CSF relevant spécifiquement du programme national Cancer. L'Allopurinol, à l'inverse, est disponible à tous les niveaux de soins (LNMEIS), ce qui en fait l'option de référence accessible en prophylaxie/traitement de l'hyperuricémie en dehors des grands centres. En l'absence des molécules de 1ère intention, ne jamais retarder l'antibiothérapie de première intention disponible : le geste qui sauve est la première dose large spectre dans l'heure, pas la molécule idéale.</p>
   </div>
 
@@ -5745,7 +5832,9 @@ function renderProtocoles(){
 
   <div class="card" id="proto-embolie-pulmonaire">
     <h3>🫁 Embolie pulmonaire (EP)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : ESC Guidelines for the diagnosis and management of acute pulmonary embolism, 2019 (actualisées 2023)</p>
     <p style="font-size:13.5px; margin-bottom:8px;">À évoquer devant une dyspnée aiguë inexpliquée, une douleur thoracique pleurétique, une tachycardie, ou un malaise/syncope inexpliqué, surtout avec facteur de risque thromboembolique (chirurgie récente, alitement, cancer, grossesse/post-partum, contraception œstroprogestative, antécédent de TVP/EP).</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>En cas d'EP à haut risque avec choc, éviter un remplissage vasculaire agressif — il peut aggraver la dilatation/dysfonction du ventricule droit ; privilégier un remplissage prudent (250-500 mL) réévalué.</div></div>
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
         <label>⚖️ Poids du patient (kg) — calcul des doses d'anticoagulation/thrombolyse</label>
@@ -5780,6 +5869,7 @@ function renderProtocoles(){
       <li>Oxygénothérapie selon SpO2, antalgie si douleur pleurétique, éviter le remplissage vasculaire agressif en cas de choc (peut aggraver la défaillance ventriculaire droite) — privilégier un remplissage prudent (250-500 mL) avec réévaluation</li>
       <li>Score de <strong>PESI</strong> (Pulmonary Embolism Severity Index) utile pour évaluer le pronostic et orienter la décision d'hospitalisation vs prise en charge ambulatoire des formes de faible gravité</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : stabilité hémodynamique et respiratoire depuis &gt;24-48h, score PESI faible ou évolution favorable, anticoagulation efficace et bien tolérée, éducation du patient (durée du traitement, signes d'alerte hémorragiques), suivi programmé.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Héparine Choay® (HNF) et l'Énoxaparine (Lovenox®) sont disponibles à la plupart des niveaux hospitaliers — l'HNF reste souvent l'option la plus accessible et la moins coûteuse (nécessite une surveillance biologique du TCA, réalisable dans la majorité des laboratoires). Le Rivaroxaban (Xarelto®) et l'Actilyse® (thrombolyse) sont d'accès plus limité, principalement en pharmacie hospitalière de CHU — en cas d'EP à haut risque sans thrombolytique disponible, l'anticoagulation par HNF à dose curative reste indiquée en urgence pendant l'organisation du transfert.</p>
   </div>
 
@@ -6674,6 +6764,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-avortement-septique">
     <h3>🦠 Avortement septique</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : OMS — Abortion care guideline (2022), principes de contrôle de la source infectieuse</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Infection grave de l'utérus et parfois des annexes, contemporaine d'un avortement spontané ou provoqué — urgence gynécologique majeure, cause mondiale importante et évitable de mortalité maternelle (OMS), en particulier lorsque l'évacuation utérine a été réalisée dans des conditions non stériles. Symptomatologie typiquement retardée de 24-48h après le geste.</p>
 
     <div class="row2" style="align-items:end;">
@@ -6708,11 +6799,13 @@ function renderProtocoles(){
       <li>Accompagnement et information systématiques sur la contraception et l'accès à des soins post-avortement sécurisés, dans le respect du choix et de la confidentialité de la patiente</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais retarder l'antibiothérapie en attendant les résultats des prélèvements en cas de signes de choc septique. Ne jamais différer l'évacuation utérine par crainte de « disséminer » l'infection — c'est l'inverse : la rétention non évacuée entretient le foyer septique.</div></div>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie depuis &gt;48h, évacuation utérine confirmée complète (échographie de contrôle), involution utérine normale, absence de complication persistante (péritonite, collection), accompagnement contraceptif organisé.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Gentalline® et Totapen® sont disponibles jusqu'au niveau CHRD (LNMEIS) ; la Dalacine® (clindamycine injectable) est d'accès plus variable, souvent limitée aux CHU/CHRR — à défaut, une bi-antibiothérapie Ampicilline + Gentamicine reste une alternative raisonnable en 1ère intention, avec ajout de <strong>Métronidazole (Flagyl®)</strong> IV (large disponibilité, bonne couverture anaérobie) pour compenser l'absence de couverture anti-anaérobie stricte de la clindamycine.</p>
   </div>
 
   <div class="card" id="proto-hrp-placenta-praevia">
     <h3>🩸 Hématome rétroplacentaire (HRP) / Placenta praevia hémorragique</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : RCOG Green-top Guideline No. 63 (Antepartum Haemorrhage, révisée)</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>HRP :</strong> décollement prématuré du placenta normalement inséré — douleur utérine brutale et intense, utérus "de bois" (contracture permanente), saignement noirâtre parfois minime malgré une gravité majeure (hémorragie souvent décollée non extériorisée), souffrance fœtale aiguë. <strong>Placenta praevia :</strong> saignement rouge vif, indolore, utérus souple, souvent récidivant au cours de la grossesse.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Urgence vitale materno-fœtale</strong> — 2 VVP de gros calibre, bilan (NFS, coagulation avec fibrinogène, groupe/Rh/RAI), commander des culots globulaires ; rechercher un trouble de la coagulation (le HRP peut se compliquer de CIVD)</li>
@@ -6730,11 +6823,13 @@ function renderProtocoles(){
       </li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais réaliser de toucher vaginal avant d'avoir éliminé un placenta praevia par l'échographie — risque d'aggraver une hémorragie sur placenta bas inséré.</div></div>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : hémorragie contrôlée depuis &gt;24-48h, bilan de coagulation normalisé, absence de signe de souffrance fœtale persistante (grossesse en cours) ou suites post-partum simples, hémoglobine stabilisée/corrigée.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les culots globulaires/PFC dépendent de la banque de sang (CNTS) régionale, d'accès variable — anticiper une commande précoce dès la suspicion. Le Rhophylac® reste d'accès limité hors CHU/CHRR ; à défaut, orienter vers la structure de référence disposant du produit dans les 72h.</p>
   </div>
 
   <div class="card" id="proto-accouchement-inopine">
     <h3>🍼 Accouchement inopiné (hors maternité / extra-hospitalier)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : OMS/ICM (International Confederation of Midwives) — recommandations sur l'accouchement normal et la gestion active de la délivrance</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Accouchement imminent sans possibilité de transfert à temps vers une structure obstétricale — situation fréquente dans les zones à accès limité aux soins. La grande majorité des accouchements se déroulent sans complication ; l'objectif est d'accompagner sans précipiter ni retenir l'accouchement.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Évaluer l'imminence</strong> : envie de pousser irrépressible, tête visible à la vulve (couronnement) → l'accouchement est imminent, ne pas tenter de transférer la patiente</li>
@@ -6787,6 +6882,7 @@ function renderProtocoles(){
       <li>Surveillance post-geste rapprochée (saignement, tonus utérin, constantes) — cf. protocole HPP si hémorragie associée ou secondaire</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais tirer sur le cordon sans contre-pression sus-pubienne, et ne jamais forcer une traction qui rencontre une résistance importante (risque majeur d'inversion utérine ou de rupture du cordon, et risque d'aggravation hémorragique en cas de placenta accreta méconnu).</div></div>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : absence de saignement actif depuis &gt;24h, tonus utérin satisfaisant, apyrexie, hémoglobine stabilisée, antibioprophylaxie complétée si administrée.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la kétamine injectable est largement disponible jusqu'au niveau CHRD et constitue une option d'anesthésie de choix pour la révision utérine en ressources limitées (maintien de la stabilité hémodynamique). Le bloc paracervical reste une alternative simple en son absence.</p>
   </div>
 
@@ -6808,6 +6904,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-dystocie-epaules">
     <h3>💪 Dystocie des épaules</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : ACOG Practice Bulletin — Shoulder Dystocia (référence de la séquence HELPERR)</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Impossibilité de dégager les épaules après la sortie de la tête fœtale (signe du "tortue" — la tête recule contre le périnée) — urgence obstétricale avec risque d'asphyxie fœtale et de lésion du plexus brachial. Mnémotechnique <strong>HELPERR</strong>.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>H</strong>elp — Appeler à l'aide immédiatement (obstétricien, sage-femme, pédiatre/réanimateur néonatal), noter l'heure de sortie de la tête</li>
@@ -6969,7 +7066,9 @@ function renderProtocoles(){
 
   <div class="card" id="proto-hellp">
     <h3>🤰 Syndrome HELLP</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : critères diagnostiques de Tennessee/Mississippi ; ACOG Practice Bulletin — Gestational Hypertension and Preeclampsia (2020)</p>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>H</strong>emolysis (hémolyse), <strong>E</strong>levated <strong>L</strong>iver enzymes (cytolyse hépatique), <strong>L</strong>ow <strong>P</strong>latelets (thrombopénie) — variante ou complication sévère de la prééclampsie (survient dans 10-20% des prééclampsies sévères), mais peut aussi apparaître isolément, sans HTA franche ni protéinurie dans 10-15% des cas, et jusqu'à 30% des cas se révèlent en post-partum (jusqu'à 7 jours après l'accouchement). Mortalité maternelle jusqu'à 1%, morbidité sévère (hématome sous-capsulaire du foie, CIVD, insuffisance rénale aiguë, œdème pulmonaire, décollement rétinien).</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Toute douleur épigastrique/hypochondre droit intense chez une patiente HELLP doit faire éliminer en urgence un hématome sous-capsulaire/une rupture hépatique par imagerie — c'est une urgence chirurgicale vitale qui peut se décompenser brutalement, y compris en dehors de tout contexte hémorragique extériorisé.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Diagnostic biologique (critères de Tennessee/Mississippi) :</strong> hémolyse (schizocytes, haptoglobine effondrée, LDH &gt;600 UI/L, bilirubine élevée), cytolyse hépatique (ASAT/ALAT &gt;2x la normale), thrombopénie (&lt;100 000-150 000/mm³) — le tableau peut être incomplet (formes partielles)</li>
       <li><strong>Signes d'alerte cliniques :</strong> douleur épigastrique/hypochondre droit (distension capsulaire hépatique — signe cardinal, souvent au premier plan), nausées/vomissements, céphalées, malaise général ; parfois tableau trompeur isolé sans HTA sévère</li>
@@ -6992,12 +7091,15 @@ function renderProtocoles(){
       <li><strong>Le seul traitement curatif reste l'accouchement</strong> — à discuter en urgence avec l'équipe obstétricale dès la 34e SA, ou avant si dégradation maternelle/fœtale sévère quel que soit le terme ; corticothérapie de maturation pulmonaire fœtale si extraction anticipée et terme le permettant</li>
       <li>Orientation en réanimation/unité de soins intensifs si défaillance d'organe associée (CIVD, insuffisance rénale, OAP, atteinte neurologique)</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : normalisation ou nette amélioration des plaquettes/enzymes hépatiques (typiquement à partir de J3-J4 post-partum), absence de complication persistante (hépatique, rénale, neurologique), TA contrôlée, surveillance biologique rapprochée organisée les premiers jours suivant la sortie du fait du risque d'aggravation transitoire post-partum.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le sulfate de magnésium injectable est largement disponible jusqu'au niveau CHRD (LNMEIS). La transfusion plaquettaire et le PFC dépendent de la banque de sang (CNTS) régionale, souvent d'accès limité — anticiper le transfert précoce vers un CHU en cas de thrombopénie sévère avant un geste chirurgical.</p>
   </div>
 
   <div class="card" id="proto-choc-hemorragique-obstetrical">
     <h3>🩸 Choc hémorragique obstétrical</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : RCOG Green-top Guideline No. 52 (Postpartum Haemorrhage) — principes de transfusion équilibrée et de contrôle précoce du fibrinogène</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Protocole transversal de réanimation du choc hémorragique en contexte obstétrical (HPP, HRP, rupture utérine, GEU rompue...), à appliquer <strong>en parallèle</strong> du traitement de la cause spécifique. Piège classique : l'<strong>hypervolémie physiologique de la grossesse</strong> (+30 à 50% du volume sanguin) masque longtemps les signes de choc — une femme enceinte peut perdre 1000-1500 mL avant de présenter une tachycardie ou une hypotension franches ; ne pas se rassurer sur des constantes initialement normales.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais se fier aux seules constantes vitales initiales pour écarter un choc hémorragique en obstétrique — la réserve physiologique gravidique les maintient artificiellement normales jusqu'à une perte sanguine déjà sévère. Estimer objectivement les pertes plutôt que de se rassurer sur un pouls/une TA encore corrects.</div></div>
 
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
@@ -7028,6 +7130,7 @@ function renderProtocoles(){
       <li>Maintenir la <strong>normothermie</strong> (réchauffement actif, produits sanguins réchauffés si possible) et corriger l'acidose — la triade létale hypothermie/acidose/coagulopathie aggrave rapidement le pronostic</li>
       <li>Si hémorragie réfractaire malgré ces mesures : tamponnement/gestes hémostatiques spécifiques à la cause, <strong>hystérectomie d'hémostase</strong> à ne pas différer si le pronostic vital maternel est engagé et les mesures conservatrices ont échoué</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : hémorragie contrôlée et cause traitée depuis &gt;24-48h, hémoglobine et coagulation stabilisées, sevrage des produits sanguins, absence de complication d'organe persistante (rénale, hépatique), surveillance des signes de reprise du saignement enseignée à la patiente.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le dosage du fibrinogène et les concentrés de fibrinogène/cryoprécipités sont rarement disponibles hors CHU — en leur absence, le PFC reste la principale source d'apport de facteurs de coagulation et de fibrinogène ; anticiper largement le transfert vers un centre disposant d'une banque de sang (CNTS) si l'hémorragie n'est pas rapidement contrôlée sur place.</p>
   </div>
 
@@ -7055,6 +7158,7 @@ function renderProtocoles(){
     <h3>🫀 Arrêt cardio-respiratoire chez la femme enceinte / césarienne périmortem</h3>
     <div class="proto-diagram"><div class="pd-label">Vue synthétique</div><svg viewBox="0 0 620 361" role="img" style="width:100%; height:auto; max-width:620px; display:block; margin:10px auto;" xmlns="http://www.w3.org/2000/svg"><title>Algorithme ACR chez la femme enceinte</title><desc>Diagramme de décision ERC 2025/AHA pour l'arrêt cardio-respiratoire chez la femme enceinte, jusqu'à la césarienne périmortem</desc><defs><marker id="ah-acrgrossesse" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="40" y="16" width="540" height="49" rx="8" fill="var(--panel2)" stroke="var(--modere)" stroke-width="1.5"/><text x="310.0" y="33.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)" font-weight="700">ACR chez la femme enceinte ≥20 SA</text><text x="310.0" y="47.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--modere)">RCP standard immédiate — massage, ventilation, DAE sans délai</text><line x1="310" y1="65" x2="310" y2="85" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-acrgrossesse)"/><rect x="40" y="85" width="540" height="49" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="102.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Déplacement utérin manuel vers la gauche</text><text x="310.0" y="116.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)">Par un assistant dédié — ne jamais gêner la qualité des compressions</text><line x1="310" y1="134" x2="310" y2="154" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-acrgrossesse)"/><rect x="40" y="154" width="540" height="49" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="171.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Rechercher les causes réversibles spécifiques</text><text x="310.0" y="185.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--text)">Hémorragie, embolie amniotique/pulmonaire, éclampsie/HELLP, toxicité MgSO4</text><line x1="310" y1="203" x2="310" y2="223" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-acrgrossesse)"/><rect x="40" y="223" width="540" height="49" rx="8" fill="var(--panel2)" stroke="var(--grave)" stroke-width="1.5"/><text x="310.0" y="240.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)" font-weight="700">Absence de RACS à 4 min de RCP bien conduite</text><text x="310.0" y="254.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--grave)">Décider la césarienne périmortem sans délai, sur place</text><line x1="310" y1="272" x2="310" y2="292" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah-acrgrossesse)"/><rect x="40" y="292" width="540" height="49" rx="8" fill="var(--panel2)" stroke="var(--accent2)" stroke-width="1.5"/><text x="310.0" y="309.2" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent2)" font-weight="700">Extraction fœtale — objectif 5e minute</text><text x="310.0" y="323.8" text-anchor="middle" dominant-baseline="central" font-size="12.2" fill="var(--accent2)">Poursuivre la RCP pendant et après le geste, prise en charge NN simultanée</text></svg></div>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations ERC 2025 (circonstances particulières) et AHA. La RCP chez la femme enceinte (grossesse ≥20 SA, utérus palpable au-dessus de l'ombilic) nécessite des adaptations spécifiques liées à la compression aorto-cave par l'utérus gravide, qui réduit drastiquement le retour veineux et l'efficacité du massage cardiaque.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais retarder la décision de césarienne périmortem dans l'attente d'un transfert ou de matériel spécifique — le geste doit débuter sur place dès 4 minutes de RCP sans RACS, avec un simple bistouri si nécessaire. Chaque minute de retard réduit les chances de survie maternelle et fœtale.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>RCP standard immédiate</strong> (algorithme ACR habituel : massage cardiaque, ventilation, DAE/défibrillation dès que possible — aucune contre-indication à la défibrillation ni aux médicaments de l'ACR pendant la grossesse) avec les adaptations suivantes</li>
       <li><strong>Déplacement utérin manuel vers la gauche</strong> par un assistant dédié (une ou deux mains, l'utérus poussé/soulevé vers la gauche du patient) — <strong>à privilégier par rapport à l'inclinaison latérale du corps</strong>, qui diminue l'efficacité du massage cardiaque ; ne jamais utiliser de billot/coussin sous le bassin si cela compromet la qualité des compressions</li>
@@ -7071,6 +7175,7 @@ function renderProtocoles(){
       <li>La césarienne périmortem est réalisée avant tout <strong>pour améliorer les chances de survie maternelle</strong> (lève la compression aorto-cave, améliore le retour veineux et l'efficacité du massage cardiaque) — le bénéfice fœtal est secondaire mais réel si le geste est rapide</li>
       <li><strong>Poursuivre la RCP pendant et après l'extraction</strong>, sans interrompre les compressions thoraciques pour le geste chirurgical ; prise en charge néonatale immédiate simultanée par une seconde équipe (cf. protocole réanimation du nouveau-né)</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie de réanimation</strong> (en cas de RACS) : stabilité hémodynamique et neurologique depuis &gt;24-48h, cause de l'ACR identifiée et traitée, prise en charge néonatale organisée, bilan étiologique complété (hémorragie, embolie, éclampsie/HELLP, cardiomyopathie).</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le matériel de RCP standard (planche dure, DAE si disponible) et un simple bistouri pour la césarienne périmortem doivent être immédiatement accessibles dans toute salle de naissance/urgence recevant des femmes enceintes — le geste ne doit jamais être retardé par l'absence de plateau technique sophistiqué.</p>
   </div>
 
@@ -7131,7 +7236,9 @@ function renderProtocoles(){
 
   <div class="card" id="proto-sepsis-puerperal">
     <h3>🦠 Sepsis puerpéral / chorioamniotite</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : principes Surviving Sepsis Campaign 2026 appliqués au sepsis obstétrical — antibiothérapie dans l'heure, contrôle de la source infectieuse</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Infection génitale survenant pendant le travail/l'accouchement (chorioamniotite) ou dans les 6 semaines du post-partum (endométrite, plus rarement avortement septique) — cause majeure de mortalité maternelle évitable, particulièrement dans les contextes à ressources limitées où les avortements non sécurisés restent fréquents. Peut évoluer très rapidement vers un choc septique.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Les paramètres vitaux normaux de la grossesse (tachycardie physiologique, hypotension relative) peuvent masquer les premiers signes de choc septique — se fier au qSOFA/lactates et à la cinétique clinique plutôt qu'à des seuils isolés.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Signes évocateurs :</strong> fièvre ≥38°C (ou hypothermie dans les formes sévères), douleur pelvienne/utérine, lochies fétides ou purulentes, utérus mal involué et douloureux à la palpation, tachycardie maternelle/fœtale ; rechercher systématiquement des critères de sepsis (qSOFA, lactates) devant tout tableau fébrile en péri-partum</li>
       <li><strong>Facteurs de risque à rechercher :</strong> rupture prématurée des membranes prolongée, travail prolongé, touchers vaginaux répétés, rétention de débris placentaires, manœuvres endo-utérines (révision utérine, délivrance artificielle), avortement provoqué en conditions non sécurisées, césarienne</li>
@@ -7153,6 +7260,7 @@ function renderProtocoles(){
       <li><strong>Si suspicion d'avortement septique :</strong> évacuation utérine en urgence après début de l'antibiothérapie, recherche de complications (perforation utérine, péritonite, CIVD, insuffisance rénale aiguë par nécrose corticale) ; vaccination antitétanique à vérifier/compléter selon le contexte</li>
       <li>Prévention du choc septique gravissime (fasciite nécrosante périnéale, gangrène gazeuse utérine) : réévaluation rapprochée, avis chirurgical si non-amélioration sous 24-48h d'antibiothérapie adaptée ou aggravation locale/systémique</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie depuis &gt;48h, involution utérine normale, lochies non fétides, absence de complication persistante (rétention, collection pelvienne), relais antibiotique oral adapté si nécessaire.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Augmentin®, Rocéphine®, Flagyl® et Gentalline® sont disponibles jusqu'au niveau CHRD (LNMEIS). L'échographie pelvienne et l'évacuation utérine restent parfois d'accès limité en structure de base — anticiper le transfert dès la suspicion de rétention.</p>
   </div>
 
@@ -7209,7 +7317,8 @@ function renderProtocoles(){
 
   <div class="card" id="proto-trauma-grossesse">
     <h3>🚑 Traumatisme chez la femme enceinte</h3>
-    <p style="font-size:13.5px; margin-bottom:8px;">D'après ATLS 10th Ed. (chapitre grossesse et traumatisme). <strong>La priorité reste la réanimation maternelle</strong> — la meilleure prise en charge du fœtus passe par une stabilisation maternelle optimale. Toute femme en âge de procréer victime d'un traumatisme doit bénéficier d'un dosage de β-hCG.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après ATLS 10th Ed. (2018, chapitre grossesse et traumatisme). <strong>La priorité reste la réanimation maternelle</strong> — la meilleure prise en charge du fœtus passe par une stabilisation maternelle optimale. Toute femme en âge de procréer victime d'un traumatisme doit bénéficier d'un dosage de β-hCG.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais priver la mère d'une imagerie indiquée (TDM notamment) par crainte de l'irradiation fœtale — les bénéfices d'un diagnostic précis dépassent largement le risque radique aux doses diagnostiques. Le décollement placentaire post-traumatique peut se révéler avec un délai de plusieurs heures même après un choc apparemment mineur — le monitoring fœtal ne doit jamais être écourté.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>ABCDE standard</strong> avec adaptations : <strong>décubitus latéral gauche ou déplacement utérin manuel vers la gauche</strong> dès que l'utérus est palpable au-dessus de l'ombilic (≥20 SA), pour lever la compression aorto-cave et améliorer le retour veineux/le débit cardiaque maternel</li>
       <li><strong>Particularités physiologiques de la grossesse à connaître</strong> pour l'interprétation clinique : volume sanguin augmenté de 30-50% (les signes de choc hémorragique peuvent être retardés — jusqu'à 30% de perte volémique avant les premiers signes cliniques francs), tachycardie physiologique relative, hypotension de décubitus dorsal fréquente sans rapport avec une hémorragie</li>
@@ -7227,6 +7336,7 @@ function renderProtocoles(){
       <li><strong>Césarienne périmortem</strong> à envisager sans délai en cas d'arrêt cardiaque maternel post-traumatique et grossesse ≥20 SA (cf. protocole dédié) ; césarienne en urgence (hors ACR) à discuter avec l'équipe obstétricale si détresse fœtale sévère et mère stabilisable</li>
       <li>Prévention de la maladie thromboembolique (mobilisation précoce, bas de contention) et anti-tétanique selon les plaies associées</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : mère hémodynamiquement stable, monitoring fœtal rassurant sur la durée requise (≥4-6h) sans anomalie, absence de signe de décollement placentaire retardé, bilan lésionnel maternel complété et stabilisé, avis obstétrical de suivi programmé.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la TDM reste réservée aux CHU/CHRR disposant du matériel — ne jamais différer un transfert vers une structure équipée en cas de traumatisme abdominal significatif. Le Rhophylac® est d'accès limité hors CHU ; orienter en urgence vers une structure disposant du produit dans les 72h.</p>
   </div>
 
@@ -7401,6 +7511,7 @@ function renderProtocoles(){
     </div>
 
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Contexte Madagascar :</strong> zone d'enzootie rabique canine — toute morsure, griffure ou léchage sur peau lésée/muqueuse par un animal suspect (notamment chien errant) doit être évaluée sans délai. La rage est mortelle à quasi 100% une fois les symptômes déclarés, mais entièrement évitable par une prophylaxie post-exposition (PPE) bien conduite et précoce.</p>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais différer le lavage de plaie ni la 1ère dose de vaccin dans l'attente d'une observation de l'animal, sauf cas précis d'un animal domestique identifiable et observable (cf. ci-dessous) — dans le doute, la PPE se débute immédiatement.</div></div>
     <table style="margin-bottom:10px;">
       <tr><th>Catégorie OMS</th><th>Type de contact</th><th>Conduite</th></tr>
       <tr><td class="leger">I</td><td>Contact ou alimentation de l'animal, léchage sur peau intacte</td><td>Aucune PPE si l'anamnèse est fiable</td></tr>
@@ -7416,6 +7527,7 @@ function renderProtocoles(){
       <li><strong>Ne jamais différer la PPE</strong> dans l'attente d'observation de l'animal, sauf exception : un chien ou chat domestique apparemment sain, identifiable et observable peut être surveillé 10 jours — si l'animal reste vivant et asymptomatique à J10, la PPE peut être interrompue ; en cas de doute ou d'animal errant/sauvage/non retrouvé, la PPE complète doit être menée à son terme</li>
       <li><strong>Une fois les symptômes rabiques déclarés</strong> (agitation, hydrophobie, paralysie) : aucun traitement curatif disponible, prise en charge exclusivement palliative — isolement du patient et précautions contact/gouttelettes pour protéger le personnel soignant (salive hautement contaminante)</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : schéma vaccinal planifié et 1ère dose administrée avant la sortie, patient/entourage informés du calendrier des doses suivantes (J3-J7-J14) et de l'importance de ne pas les manquer, plaie surveillée pour signes d'infection locale.</p>
     <p style="margin-top:10px; font-size:13px; color:var(--muted);">Voir aussi le protocole <strong>Plaies et morsures</strong> pour la prise en charge locale complète de la plaie.</p>
   </div>
 
@@ -7443,6 +7555,7 @@ function renderProtocoles(){
     </div>
     <div class="field" id="cholera_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
     <div class="result-box hidden" id="cholera_result"></div>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Ne jamais attendre la confirmation étiologique pour débuter la réhydratation — c'est le geste qui sauve, avant même l'antibiotique. La voie IV prime sur toute autre priorité devant un pouls radial faible/absent.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>
         <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
@@ -7464,6 +7577,7 @@ function renderProtocoles(){
       <li>Mesures d'hygiène et d'isolement : lavage des mains, désinfection des selles/vomissements, points d'eau potable et de SRO dédiés — essentiels pour limiter la transmission en contexte épidémique</li>
       <li>Toute diarrhée aiguë sévère fébrile ou avec rectorragie doit faire reconsidérer un autre diagnostic (shigellose, amibiase) — le choléra classique n'est habituellement pas fébrile</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : réhydratation complète (pli cutané normal, diurèse reprise), tolérance orale/SRO satisfaisante, absence de selles liquides fréquentes depuis plusieurs heures, entourage éduqué aux mesures d'hygiène et aux signes de récidive de déshydratation.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Ringer Lactate et les SRO sont distribués gratuitement à tous les niveaux (y compris CSB2) via le programme national de lutte contre les maladies diarrhéiques, en particulier lors des épidémies. La Doxycycline et l'Azithromycine sont disponibles jusqu'au niveau CHRD (LNMEIS) — la réhydratation reste le geste prioritaire et salvateur, réalisable partout, même en l'absence d'antibiotique.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">⚠️ <strong>Contexte épidémiologique régional</strong> : Madagascar a connu une émergence de souches de <em>V. cholerae</em> résistantes aux tétracyclines/doxycycline lors de précédentes épidémies (Antananarivo, années 2000) ; une souche multirésistante distincte, apparue au Yémen, circule depuis 2023-2024 dans la région (Kenya, Tanzanie, Comores/Mayotte) — en cas d'échec clinique sous Doxycycline, de notion d'importation depuis une zone à souche résistante, ou dès que possible, privilégier/vérifier la sensibilité par antibiogramme local et envisager l'<strong>Azithromycine</strong> en 1ère intention si disponible. Une vigilance frontalière particulière s'applique aux régions côtières du Nord-Ouest (Mahajanga/Boeny) du fait de la proximité avec l'archipel des Comores.</p>
   </div>
@@ -7478,6 +7592,8 @@ function renderProtocoles(){
       <tr><td class="modere">Forme sévère non vitale</td><td>Pleurésie abondante, TB ganglionnaire compressive, mauvais état général/dénutrition sévère</td><td>Hospitalisation courte, bilan initial complet, prise en charge nutritionnelle associée</td></tr>
       <tr><td class="leger">Forme non compliquée</td><td>TB pulmonaire commune, bon état général</td><td>Prise en charge ambulatoire au CDT, traitement supervisé (DOT)</td></tr>
     </table>
+
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais interrompre ou espacer le traitement antituberculeux de sa propre initiative, même en cas d'amélioration clinique rapide — l'arrêt prématuré est la principale cause d'échec thérapeutique et de sélection de résistance (TB-MR). L'observance doit être expliquée et soutenue dès la 1ère consultation.</div></div>
 
     <p style="margin-top:8px; font-weight:600; color:var(--accent2);">1. Diagnostic — parcours au CDT</p>
     <ul style="margin-left:18px; font-size:13.5px; line-height:1.9;">
@@ -7575,13 +7691,16 @@ function renderProtocoles(){
       <li>Prise en charge exclusivement spécialisée (pneumo-phtisiologue/centre de référence TB-MR) : ce protocole ne couvre pas la prescription détaillée des molécules de 2ème ligne</li>
     </ul>
 
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> (formes hospitalisées) : amélioration clinique nette, capacité à poursuivre le traitement en ambulatoire au CDT (DOT), négativation ou décroissance de la bacilloscopie si initialement positive, absence de complication aiguë non stabilisée (détresse respiratoire, hémoptysie active, atteinte neurologique évolutive).</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">⚠️ <strong>Contexte Madagascar :</strong> diagnostic et traitement de la TB pharmacosensible gratuits dans le réseau public de CDT. Populations à risque particulier : contacts de cas, PVVIH, usagers de drogues injectables, travailleurs des zones minières, milieu carcéral (surpopulation/ventilation insuffisante). Les schémas de traitement de la TB-MR/RR évoluent rapidement (raccourcissement en cours sous l'impulsion du PNLT et de l'Institut Pasteur de Madagascar) — vérifier la version en vigueur auprès du CDT référent avant toute prescription. Sources : directives de l'OMS (traitement de la tuberculose, tuberculose pharmacorésistante, TB de l'enfant et de l'adolescent), Plan Stratégique National de Lutte contre la Tuberculose à Madagascar (PNLT, Ministère de la Santé Publique).</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les comprimés ADF (RHZE/RH) sont fournis gratuitement à tous les CDT du réseau PNLT, y compris au niveau CSB2 — aucune rupture de stock ne doit conduire à interrompre un traitement en cours sans contacter le CDT référent. Le Xpert MTB/RIF est disponible dans les CDT de référence régionaux (accès parfois limité en zone très reculée, la microscopie BAAR restant alors le recours de 1ère ligne). Les molécules de 2ème ligne pour la TB-MR/RR sont réservées aux centres spécialisés (Institut Pasteur de Madagascar et centres agréés PNLT).</p>
   </div>
 
   <div class="card" id="proto-drepanocytose">
     <h3>🔴 Crise vaso-occlusive drépanocytaire</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : recommandations ASH (American Society of Hematology, 2020) sur la prise en charge aiguë de la drépanocytose</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Douleur osseuse/articulaire intense chez un patient drépanocytaire connu, déclenchée par le froid, la déshydratation, une infection, un effort ou une hypoxie. Pathologie fréquente en Afrique/Océan Indien — la douleur est souvent sous-estimée et sous-traitée. Rechercher systématiquement une complication grave associée : <strong>syndrome thoracique aigu</strong>, <strong>priapisme</strong>, séquestration splénique aiguë (surtout enfant), AVC (surtout enfant — imagerie cérébrale en urgence si déficit, cf. protocole AVC).</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais sous-traiter la douleur par crainte d'une dépendance aux opioïdes — la titration de morphine dans les 30-60 minutes suivant l'arrivée est un standard de qualité, pas une option. Ne pas transfuser au-delà de la cible d'Hb recommandée (hyperviscosité) ni administrer d'oxygène en l'absence d'hypoxémie documentée (SpO2 &lt;95% ou inférieure à la valeur de base).</div></div>
 
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
@@ -8312,6 +8431,8 @@ function renderProtocoles(){
 
   <div class="card" id="proto-pericardite-myocardite">
     <h3>🫀 Péricardite aiguë / Myocardite fulminante</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : ESC Guidelines for the diagnosis and management of pericardial diseases, 2015</p>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>AINS et Aspirine contre-indiqués en cas de péricardite post-IDM précoce (syndrome de Dressler exclu, péricardite péri-infarctus) — ils peuvent gêner la cicatrisation myocardique ; utiliser l'Aspirine à dose anti-inflammatoire dans ce contexte plutôt qu'un AINS non salicylé. Éviter tout effort physique en cas de myocardite tant que la fonction cardiaque n'est pas normalisée — l'exercice peut aggraver l'inflammation myocardique.</div></div>
     <table>
       <tr><th>Situation</th><th>Éléments clés</th></tr>
       <tr><td>Péricardite aiguë simple</td><td>Douleur thoracique positionnelle (soulagée en antéflexion), frottement péricardique, sus-décalage ST diffus concave sans miroir, sous-décalage PQ</td></tr>
@@ -8357,6 +8478,7 @@ function renderProtocoles(){
       <li><strong>IRM cardiaque et/ou biopsie myocardique</strong> à distance de la phase aiguë pour orientation étiologique (non disponible localement — orientation clinique et échographique en pratique courante)</li>
       <li>Transfert précoce vers un centre disposant d'une réanimation cardiologique si instabilité progressive</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : régression de la douleur et du syndrome inflammatoire biologique (péricardite), ou sevrage des inotropes/vasopresseurs et stabilité rythmique depuis &gt;48h (myocardite), absence de nouvel épanchement significatif, traitement de sortie et suivi cardiologique programmés.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Aspégic®, Colchicine Opocalcium® et Dobutrex® sont disponibles en pharmacie hospitalière des grandes villes. L'assistance circulatoire mécanique n'existe pas sur le territoire — le traitement médical maximal reste l'unique option locale.</p>
   </div>
 
@@ -8662,7 +8784,9 @@ function renderProtocoles(){
 
   <div class="card" id="proto-peste">
     <h3>🐀 Peste (bubonique / pulmonaire)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : OMS — Antibiotics for treating plague, révision 2021</p>
     <div class="warn-box">⚠️ Maladie à déclaration obligatoire, endémique dans les Hautes Terres malgaches — la forme pulmonaire est hautement contagieuse par voie aérienne (gouttelettes) : isolement respiratoire immédiat de tout cas suspect.</div>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Devant une forme pulmonaire, l'antibiotique doit être administré dans les 24h suivant le début des symptômes pour être pleinement efficace — ne jamais attendre la confirmation bactériologique. Maintenir l'isolement gouttelettes jusqu'à 48-72h d'antibiothérapie efficace ET amélioration clinique nette.</div></div>
     <table>
       <tr><th>Forme</th><th>Présentation</th></tr>
       <tr><td>Bubonique</td><td>Adénopathie douloureuse volumineuse (bubon), inguinale/axillaire/cervicale, fièvre élevée d'apparition brutale, notion d'exposition à des puces de rongeurs ou séjour en zone d'enzootie (régions d'altitude)</td></tr>
@@ -8698,11 +8822,13 @@ function renderProtocoles(){
       </li>
       <li>Prise en charge symptomatique du choc septique/CIVD selon protocoles dédiés en cas de forme sévère</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie depuis &gt;48-72h sous antibiothérapie efficace, régression du bubon ou des signes respiratoires, isolement levé après confirmation clinique, cure antibiotique complétée (10 jours) ou relayable per os.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Gentalline® et la Ciflox® sont largement disponibles à tous les niveaux de soins (LNMEIS). La Streptomycine, historiquement de référence, est devenue plus difficile à trouver (usage antituberculeux en déclin) — la Gentamicine ou la Ciprofloxacine sont les alternatives à privilégier en pratique courante. La Doxycycline est disponible en formulation générique peu coûteuse.</p>
   </div>
 
   <div class="card" id="proto-dengue">
     <h3>🦟 Dengue grave / Syndrome de choc dengue</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : OMS — Dengue guidelines for diagnosis, treatment, prevention and control (révision 2023)</p>
     <p style="font-weight:600; color:var(--accent2); margin-bottom:6px;">Signes d'alerte (à rechercher activement, en particulier à la défervescence, J3-J7) :</p>
     <p style="font-size:13.5px;">🔹 Douleur abdominale intense 🔹 Vomissements persistants 🔹 Saignements des muqueuses 🔹 Léthargie/agitation 🔹 Hépatomégalie douloureuse 🔹 Élévation de l'hématocrite avec chute rapide des plaquettes</p>
     <div class="row2" style="align-items:end; margin-top:8px;">
@@ -8730,12 +8856,15 @@ function renderProtocoles(){
       <li>Phase critique (défervescence) = période de plus haut risque, même si le patient semble s'améliorer cliniquement sur le plan fébrile</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Contre-indication formelle de l'aspirine et des AINS dans la dengue — majoration du risque hémorragique par effet antiagrégant plaquettaire sur un terrain déjà à risque de thrombopénie/fuite plasmatique.</div></div>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie stable depuis &gt;24h sans antipyrétique, amélioration clinique nette, hématocrite stabilisé, remontée des plaquettes amorcée, absence de saignement actif ni de signe d'alerte depuis &gt;24-48h après la phase critique.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Doliprane®, Efferalgan® et les solutés de remplissage (Baxter®) sont disponibles à tous les niveaux. Aucun traitement antiviral spécifique n'existe — la prise en charge repose entièrement sur la surveillance et le remplissage titré, réalisables même en structure de base à condition d'une évaluation clinique répétée rigoureuse.</p>
   </div>
 
   <div class="card" id="proto-leptospirose">
     <h3>💧 Leptospirose sévère</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : recommandations OMS sur la leptospirose (Human Leptospirosis: Guidance for Diagnosis, Surveillance and Control)</p>
     <p class="module-sub" style="margin-bottom:8px;">Zoonose bactérienne (contact avec eau/sol souillés par urine de rongeurs) — forme sévère = syndrome de Weil (ictère + insuffisance rénale + hémorragies), fréquente en saison des pluies/après cyclones à Madagascar.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne pas retarder l'antibiothérapie dans l'attente d'une confirmation sérologique — le bénéfice est maximal si débutée précocement, dès la suspicion clinique en contexte évocateur (exposition à l'eau douce/inondation).</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Suspecter devant</strong> — fièvre élevée brutale, myalgies intenses (mollets), céphalées, hyperhémie conjonctivale, contexte d'exposition à l'eau douce/inondation/activité agricole ou rizicole</li>
       <li><strong>Rechercher les signes de gravité</strong> — ictère franc, oligo-anurie, hémorragies (pulmonaires — hémoptysies graves possibles, digestives, cutanéo-muqueuses), détresse respiratoire</li>
@@ -8751,11 +8880,14 @@ function renderProtocoles(){
       <li><strong>Support d'organe selon les défaillances</strong> — épuration extra-rénale si insuffisance rénale aiguë sévère (accès limité, cf protocole EER), ventilation mécanique si hémorragie pulmonaire/SDRA</li>
       <li>Réaction de Jarisch-Herxheimer possible en début de traitement (aggravation transitoire) — surveillance rapprochée à l'instauration de l'antibiothérapie</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie, fonction rénale normalisée ou stabilisée sans besoin d'épuration extra-rénale, absence de saignement actif depuis &gt;48h, cure antibiotique complète (7 jours) ou relayable per os, ictère en régression.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine® et Doxycycline sont largement disponibles à tous les niveaux hospitaliers (LNMEIS). La Pénicilline G est également accessible mais de moins en moins utilisée au profit de la Ceftriaxone, plus simple d'administration (1 injection/jour).</p>
   </div>
 
   <div class="card" id="proto-typhoide">
     <h3>🦠 Fièvre typhoïde compliquée</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : recommandations OMS sur la prise en charge de la fièvre typhoïde et des salmonelloses invasives</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Toute défense/contracture abdominale chez un patient fébrile en contexte typhoïdique doit faire évoquer une perforation digestive — indication chirurgicale urgente après réanimation hémodynamique initiale, ne pas attendre une aggravation franche.</div></div>
     <table>
       <tr><th>Complication</th><th>Signes / Conduite</th></tr>
       <tr><td class="grave">Perforation digestive (iléale)</td><td>Douleur abdominale brutale, défense/contracture, généralement en 2e-3e semaine d'évolution → chirurgie en urgence après réanimation hémodynamique et antibiothérapie</td></tr>
@@ -8789,6 +8921,7 @@ function renderProtocoles(){
       <li>Hémocultures et coproculture avant antibiothérapie si possible, sans retarder le traitement en cas de forme grave</li>
       <li>Toute défense abdominale chez un patient fébrile doit faire évoquer une perforation typhoïdique, pathologie encore fréquente à Madagascar</li>
     </ol>
+    <p style="margin-top:10px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie depuis &gt;48-72h, transit repris normalement, absence de saignement digestif actif, cure antibiotique complétée ou relayable per os, suites chirurgicales stabilisées si perforation opérée.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine® est disponible à tous les niveaux hospitaliers et constitue le traitement de référence local, les résistances à la Ciflox® étant significatives. Le Zithromax® est disponible en pharmacie privée des grandes villes.</p>
   </div>
 
@@ -8847,7 +8980,8 @@ function renderProtocoles(){
 
   <div class="card" id="proto-sepsis-pediatrique">
     <h3>🦠 Sepsis / Choc septique de l'enfant</h3>
-    <p class="module-sub" style="margin-bottom:8px;">La reconnaissance précoce diffère de l'adulte — l'hypotension est un signe <strong>tardif</strong> chez l'enfant, qui compense longtemps par la tachycardie et la vasoconstriction.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>L'hypotension est un signe <strong>tardif</strong> chez l'enfant, qui compense longtemps par la tachycardie et la vasoconstriction — ne pas attendre une chute tensionnelle pour reconnaître et traiter le choc septique.</div></div>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne pas poursuivre le remplissage au-delà de 40-60 mL/kg sans réévaluer — le risque de surcharge (hépatomégalie, crépitants, galop) est plus rapide et plus grave que chez l'adulte ; passer aux vasopresseurs sans délai si le choc persiste malgré ce volume.</div></div>
 
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
@@ -8891,6 +9025,7 @@ function renderProtocoles(){
       <li>Réévaluation clinique très fréquente (fréquence cardiaque, TRC, diurèse, état de conscience) — la présentation évolue vite chez l'enfant</li>
     </ol>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Repère diagnostique 2024</strong> : le score de Phoenix (Schlapbach et al., JAMA 2024) a remplacé les anciens critères SIRS pour la définition internationale du sepsis pédiatrique — il repose sur la dysfonction d'organe (respiratoire, cardiovasculaire, neurologique, coagulation) plutôt que sur des critères inflammatoires isolés ; il structure surtout la recherche/l'épidémiologie et ne modifie pas la conduite clinique décrite ci-dessus, qui reste fondée sur la reconnaissance clinique précoce.</p>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie de réanimation</strong> : sevrage des vasopresseurs depuis &gt;24h, hémodynamique stable sans support, foyer infectieux contrôlé, antibiothérapie désescaladée, alimentation entérale reprise.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine® et Gentalline® pédiatriques sont disponibles à tous les niveaux hospitaliers. Adrénaline et Noradrénaline Aguettant® sont présentes en réanimation de CHU/CHRR — leur absence en structure de base impose un transfert rapide dès la reconnaissance du choc réfractaire au remplissage.</p>
   </div>
 
@@ -8925,7 +9060,9 @@ function renderProtocoles(){
 
   <div class="card" id="proto-stt-drepanocytaire">
     <h3>🔴 Syndrome thoracique aigu drépanocytaire</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : recommandations ASH (American Society of Hematology, 2020) sur la prise en charge aiguë de la drépanocytose</p>
     <div class="warn-box">⚠️ Complication grave et potentiellement mortelle de la drépanocytose — première cause de décès chez l'adulte drépanocytaire, à différencier d'une simple crise vaso-occlusive.</div>
+    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais sur-sédater pour calmer la douleur — l'hypoventilation qui en résulte aggrave la falciformation par hypoxie régionale et peut précipiter le syndrome. Titrer la morphine à l'effet, avec surveillance respiratoire rapprochée.</div></div>
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
         <label>⚖️ Poids du patient (kg) — calcul des doses (antalgie, antibiothérapie, transfusion)</label>
@@ -8962,6 +9099,7 @@ function renderProtocoles(){
       <li><strong>Kinésithérapie respiratoire incitative</strong> et mobilisation précoce — réduit le risque d'atélectasie et de majoration du syndrome</li>
       <li>Surveillance rapprochée — risque d'aggravation rapide vers une détresse respiratoire nécessitant la ventilation mécanique</li>
     </ol>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : apyrexie, SpO2 revenue à la valeur de base en air ambiant, douleur contrôlée par antalgie orale, radiographie stable ou en amélioration, absence de nouvelle détresse respiratoire depuis &gt;24-48h.</p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Rocéphine®, Zithromax®, Perfalgan® et Morphine Aguettant® sont disponibles dans les hôpitaux de référence. L'échange transfusionnel dépend fortement de la disponibilité des culots au CNTS — anticiper largement la commande et envisager un transfert précoce vers un CHU si la forme s'aggrave et que la structure locale ne dispose pas de banque de sang suffisante.</p>
   </div>
 
@@ -9115,6 +9253,7 @@ function renderProtocoles(){
       <li>Allaitement maternel à maintenir/encourager dès que l'état clinique le permet — bénéfice immunitaire propre, ne pas interrompre systématiquement</li>
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Éviter la <strong>Ceftriaxone</strong> chez le nouveau-né, en particulier s'il est ictérique/prématuré ou reçoit des solutés contenant du calcium (risque de précipitation calcium-ceftriaxone et de déplacement de la bilirubine de son transporteur plasmatique, majorant le risque d'ictère nucléaire) — préférer le <strong>Céfotaxime</strong> lorsqu'une céphalosporine de 3e génération est nécessaire chez le nouveau-né.</div></div>
+    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : cure antibiotique complète selon la durée retenue (cf. ci-dessus), apyrexie/normothermie stable, prise pondérale et alimentation orale correctement établies, examen clinique normalisé, absence de signe neurologique résiduel si méningite associée.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Ampicilline/Amoxicilline injectable et Gentalline® sont disponibles à la plupart des niveaux hospitaliers (LNMEIS), permettant de débuter le traitement de 1ère intention sans délai dès la suspicion clinique. Le Céfotaxime est d'accès plus limité (CHU/CHRR) — en son absence et devant la nécessité d'élargir le spectre, peser prudemment le rapport bénéfice-risque d'une Ceftriaxone en informant l'équipe, ou organiser un transfert rapide. La CRP et l'hémoculture ne sont pas disponibles à tous les niveaux — en leur absence, la décision de traiter et sa durée reposent principalement sur la clinique et les facteurs de risque, avec un seuil de suspicion bas étant donné la gravité potentielle.</p>
   </div>
 
@@ -9793,30 +9932,73 @@ function renderGestes(){
       <button type="button" class="toc-toggle" aria-label="Afficher/masquer le sommaire" onclick="event.stopPropagation(); toggleGestesToc();">▾</button>
     </div>
     <ul class="toc-list">
-      <li><a onclick="openGesteCard('geste-al-toxicite')">💉 Anesthésiques locaux — Dose max & LAST</a></li>
-      <li><a onclick="openGesteCard('geste-bloc-femoral')">🦵 Bloc fémoral (3-en-1)</a></li>
-      <li><a onclick="openGesteCard('geste-bloc-iliofascial')">🦴 Bloc iliofascial</a></li>
-      <li><a onclick="openGesteCard('geste-bloc-sciatique-poplite')">🦵 Bloc sciatique — voie poplitée</a></li>
-      <li><a onclick="openGesteCard('geste-bloc-cheville')">🦶 Bloc de cheville (5 nerfs)</a></li>
-      <li><a onclick="openGesteCard('geste-bloc-penien')">🍆 Bloc pénien</a></li>
-      <li><a onclick="openGesteCard('geste-reduction-epaule')">💪 Réduction de luxation antérieure d'épaule</a></li>
-      <li><a onclick="openGesteCard('geste-reduction-coude')">💪 Réduction de luxation postérieure de coude</a></li>
-      <li><a onclick="openGesteCard('geste-pronation-douloureuse')">🧒 Pronation douloureuse (subluxation de la tête radiale)</a></li>
-      <li><a onclick="openGesteCard('geste-arthrocentese-genou')">🦵 Arthrocentèse du genou</a></li>
-      <li><a onclick="openGesteCard('geste-reduction-cheville')">🦶 Réduction de fracture-luxation de cheville</a></li>
-      <li><a onclick="openGesteCard('geste-ponction-pleurale')">💧 Ponction pleurale (diagnostique & évacuatrice)</a></li>
-      <li><a onclick="openGesteCard('geste-exsufflation')">🫁 Exsufflation à l'aiguille</a></li>
-      <li><a onclick="openGesteCard('geste-drainage-thoracique')">🫁 Drainage thoracique</a></li>
-      <li><a onclick="openGesteCard('geste-pericardiocentese')">❤️ Péricardiocentèse</a></li>
-      <li><a onclick="openGesteCard('geste-ponction-lombaire')">🧠 Ponction lombaire</a></li>
-      <li><a onclick="openGesteCard('geste-paracentese')">💧 Ponction d'ascite (paracentèse)</a></li>
-      <li><a onclick="openGesteCard('geste-voie-io')">🦴 Voie intra-osseuse</a></li>
-      <li><a onclick="openGesteCard('geste-sondages')">🩹 Sondage vésical & sondage naso-gastrique</a></li>
-      <li><a onclick="openGesteCard('geste-suture-plaie')">🧵 Suture de plaie simple</a></li>
-      <li><a onclick="openGesteCard('geste-bloc-digital')">🖐️ Bloc digital (anesthésie tronculaire du doigt)</a></li>
-      <li><a onclick="openGesteCard('geste-corps-etranger-orl')">👂 Corps étranger auriculaire & nasal</a></li>
-      <li><a onclick="openGesteCard('geste-reduction-nez')">👃 Réduction de fracture des os propres du nez</a></li>
-      <li><a onclick="openGesteCard('geste-cricothyroidotomie')">🫁 Cricothyroïdotomie (scalpel-bougie)</a></li>
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫁 Voies aériennes</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-cricothyroidotomie')">🫁 Cricothyroïdotomie (scalpel-bougie)</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🫁 Thoracique & pleuro-pulmonaire</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-ponction-pleurale')">💧 Ponction pleurale (diagnostique & évacuatrice)</a></li>
+        <li><a onclick="openGesteCard('geste-exsufflation')">🫁 Exsufflation à l'aiguille</a></li>
+        <li><a onclick="openGesteCard('geste-drainage-thoracique')">🫁 Drainage thoracique</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>❤️ Cardiovasculaire</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-pericardiocentese')">❤️ Péricardiocentèse</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🧠 Neurologique</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-ponction-lombaire')">🧠 Ponction lombaire</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>💧 Abdominal</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-paracentese')">💧 Ponction d'ascite (paracentèse)</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🦴 Accès vasculaire & osseux</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-voie-io')">🦴 Voie intra-osseuse</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🩹 Sondages</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-sondages')">🩹 Sondage vésical & sondage naso-gastrique</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>💉 Anesthésie locorégionale (blocs nerveux)</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-al-toxicite')">💉 Anesthésiques locaux — Dose max & LAST</a></li>
+        <li><a onclick="openGesteCard('geste-bloc-femoral')">🦵 Bloc fémoral (3-en-1)</a></li>
+        <li><a onclick="openGesteCard('geste-bloc-iliofascial')">🦴 Bloc iliofascial</a></li>
+        <li><a onclick="openGesteCard('geste-bloc-sciatique-poplite')">🦵 Bloc sciatique — voie poplitée</a></li>
+        <li><a onclick="openGesteCard('geste-bloc-cheville')">🦶 Bloc de cheville (5 nerfs)</a></li>
+        <li><a onclick="openGesteCard('geste-bloc-penien')">🍆 Bloc pénien</a></li>
+        <li><a onclick="openGesteCard('geste-bloc-digital')">🖐️ Bloc digital (anesthésie tronculaire du doigt)</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🦴 Orthopédie & traumatologie</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-reduction-epaule')">💪 Réduction de luxation antérieure d'épaule</a></li>
+        <li><a onclick="openGesteCard('geste-reduction-coude')">💪 Réduction de luxation postérieure de coude</a></li>
+        <li><a onclick="openGesteCard('geste-pronation-douloureuse')">🧒 Pronation douloureuse (subluxation de la tête radiale)</a></li>
+        <li><a onclick="openGesteCard('geste-arthrocentese-genou')">🦵 Arthrocentèse du genou</a></li>
+        <li><a onclick="openGesteCard('geste-reduction-cheville')">🦶 Réduction de fracture-luxation de cheville</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🧵 Plaies & tégument</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-suture-plaie')">🧵 Suture de plaie simple</a></li>
+      </ul></li>
+
+      <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>👂 ORL & face</span><span class="toc-cat-arrow">▾</span></li>
+      <li class="toc-group collapsed"><ul class="toc-sub">
+        <li><a onclick="openGesteCard('geste-corps-etranger-orl')">👂 Corps étranger auriculaire & nasal</a></li>
+        <li><a onclick="openGesteCard('geste-reduction-nez')">👃 Réduction de fracture des os propres du nez</a></li>
+      </ul></li>
     </ul>
   </nav>
 
@@ -14948,6 +15130,42 @@ window.init_abreviations = function(){
   input.focus();
 };
 
+/* ——— Accès rapide aux protocoles vitaux (accueil) ——— */
+/* Pour ajouter un protocole : {icon, label, module, id} — id = id de la carte ciblée */
+const QUICK_ACCESS = [
+  {icon:'🫀', label:'ACR adulte', module:'protocoles', id:'proto-acr-adulte'},
+  {icon:'👶', label:'ACR pédiatrique', module:'protocoles', id:'proto-acr-pediatrique'},
+  {icon:'🦠', label:'Sepsis / choc septique', module:'protocoles', id:'proto-sepsis'},
+  {icon:'🐝', label:'Anaphylaxie', module:'protocoles', id:'proto-anaphylaxie'},
+  {icon:'❤️', label:'SCA', module:'protocoles', id:'proto-sca'},
+  {icon:'🧠', label:'AVC', module:'protocoles', id:'proto-avc'},
+  {icon:'⚡', label:'État de mal épileptique', module:'protocoles', id:'proto-etat-mal-epileptique'},
+  {icon:'🤰', label:'Éclampsie', module:'protocoles', id:'proto-eclampsie'},
+  {icon:'🩸', label:'Hémorragie du post-partum', module:'protocoles', id:'proto-hpp'},
+];
+
+/* ——— Fiches récemment mises à jour (accueil) ——— */
+/* À tenir à jour manuellement : ajouter en tête de liste à chaque mise à jour notable, retirer les plus anciennes */
+const RECENT_UPDATES = [
+  {icon:'🫁', label:'Exacerbation aiguë de BPCO — refonte complète (Rome 2021/GOLD 2024)', module:'protocoles', id:'proto-bpco', date:'Juil. 2026'},
+  {icon:'👁️', label:'Glaucome aigu — durées de traitement précisées', module:'protocoles', id:'proto-glaucome-aigu', date:'Juil. 2026'},
+  {icon:'📊', label:'Score de Bishop (maturation cervicale)', module:'scores', id:'score-bishop', date:'Juil. 2026'},
+  {icon:'📊', label:"Score d'Apgar (nouveau-né)", module:'scores', id:'score-apgar', date:'Juil. 2026'},
+  {icon:'📊', label:'Score de Silverman-Andersen (détresse respiratoire néonatale)', module:'scores', id:'score-silverman', date:'Juil. 2026'},
+  {icon:'📊', label:'CIWA-Ar (sevrage alcoolique)', module:'scores', id:'score-ciwa', date:'Juil. 2026'},
+  {icon:'📊', label:'SAD PERSONS (risque suicidaire)', module:'scores', id:'score-sadpersons', date:'Juil. 2026'},
+];
+
+/* ——— Raccourci recherche (accueil) ——— */
+function focusSearch(){
+  if(window.innerWidth<=860){
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('overlay').classList.add('show');
+  }
+  const input = document.getElementById('nav-search');
+  if(input){ input.focus(); }
+}
+
 /* ——— Mise à jour badge accueil ——— */
 function renderAccueil(){
   const done=['scores','protocoles','drogues','ventilation','abords','surveillance','biologie','fiches','calculateurs','ionique','abreviations'];
@@ -14956,8 +15174,23 @@ function renderAccueil(){
   <p class="module-sub">Ny Aina Med's Emergency & Intensive Care — Application de référence rapide pour la réanimation médicale. Usage hors-ligne.</p>
   <p style="font-size:13px; color:var(--muted); margin-top:-8px; margin-bottom:12px;">Rédacteur : Dr RANDRIAMBOLOLONIAINA Nohasoavina Tolotra Casimir</p>
   <div class="card">
+    <button type="button" class="quick-search-btn" onclick="focusSearch()">🔍 Rechercher une fiche, un médicament, un score…</button>
+  </div>
+  <div class="card">
     <h3>⚠️ Avertissement</h3>
     <p style="font-size:13.5px; color:var(--muted)">Cet outil est une aide-mémoire destinée aux professionnels de santé. Il ne remplace pas le jugement clinique ni les protocoles institutionnels. Vérifier systématiquement les posologies avant administration.</p>
+  </div>
+  <div class="card">
+    <h3>🚀 Accès rapide — protocoles vitaux</h3>
+    <div class="quick-access-grid">
+      ${QUICK_ACCESS.map(q=>`<button type="button" class="quick-access-btn" onclick="showModule('${q.module}','${q.id}')"><span class="qa-icon">${q.icon}</span><span>${q.label}</span></button>`).join('')}
+    </div>
+  </div>
+  <div class="card">
+    <h3>🕓 Récemment mis à jour</h3>
+    <ul class="recent-list">
+      ${RECENT_UPDATES.map(r=>`<li><button type="button" onclick="showModule('${r.module}','${r.id}')">${r.icon} ${r.label}</button><span class="recent-date">${r.date}</span></li>`).join('')}
+    </ul>
   </div>
   <div class="card">
     <h3>Modules disponibles</h3>
