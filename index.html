@@ -57,6 +57,18 @@ body{
   background:var(--bg2); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:40;
 }
 #topbar button{background:none; border:1px solid var(--border); color:var(--text); border-radius:8px; padding:6px 10px; font-size:18px;}
+#global-weight-box{display:flex; align-items:center; gap:6px; margin-left:auto; font-size:13px; color:var(--muted); white-space:nowrap;}
+#global-weight-box label{font-weight:600;}
+#global-weight{width:60px; padding:5px 7px; border-radius:7px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-size:13px; -moz-appearance:textfield;}
+#global-weight:focus{outline:2px solid var(--accent); outline-offset:1px;}
+#global-weight.weight-active{border-color:var(--accent2); box-shadow:0 0 0 1px var(--accent2);}
+#global-weight-clear{background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:3px 7px; font-size:11px; cursor:pointer; line-height:1;}
+#global-weight-clear:hover{color:var(--text); border-color:var(--accent);}
+@media (max-width:480px){
+  #global-weight-box{font-size:12px;}
+  #global-weight-box label{display:none;}
+  #global-weight{width:50px;}
+}
 #content{padding:20px 24px 60px; max-width:980px; margin:0 auto; width:100%;}
 
 h2.module-title{font-size:20px; color:var(--accent); margin-bottom:4px;}
@@ -262,6 +274,8 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
 #search-results a:hover, #search-results a:active{background:var(--panel2); border-color:var(--accent);}
 #search-results .sr-mod{color:var(--accent); font-size:10.5px; text-transform:uppercase; letter-spacing:.03em; display:block; margin-bottom:2px;}
 #search-results .sr-empty{color:var(--muted); font-size:12.5px; padding:10px;}
+#search-results .sr-section-label{color:var(--accent2); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; padding:8px 8px 4px; margin-top:2px;}
+#search-results .sr-section-label:first-child{margin-top:0;}
 .search-highlight{outline:2px solid var(--accent); outline-offset:3px; transition:outline-color 2s ease;}
 
 #search-box{
@@ -337,7 +351,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
 
 /* Print */
 @media print{
-  #sidebar, #topbar, #overlay, #theme-toggle, .fav-star, .pdf-export-btn, .toc, #search-box{display:none !important;}
+  #sidebar, #topbar, #overlay, #theme-toggle, .fav-star, .pdf-export-btn, .toc, #search-box, #global-weight-box{display:none !important;}
   #app{display:block;}
   #main{width:100%;}
   body{background:#fff; color:#000; font-size:12px;}
@@ -356,7 +370,7 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
       <button id="theme-toggle" onclick="toggleTheme()" style="margin-top:10px;" aria-label="Changer de thème clair/sombre"><span id="theme-icon">🌙</span> <span id="theme-label">Mode sombre</span></button>
     </div>
     <div id="search-box">
-      <input type="text" id="nav-search" placeholder="Rechercher (ex. atropine, hyperkaliémie...)">
+      <input type="text" id="nav-search" placeholder="Symptôme ou mot-clé (ex. douleur thoracique, atropine...)">
     </div>
     <ul id="search-results"></ul>
     <ul id="nav-list">
@@ -382,6 +396,12 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
     <div id="topbar">
       <button id="menu-toggle">☰</button>
       <strong id="topbar-title">Accueil</strong>
+      <div id="global-weight-box" title="Poids du patient — se reporte automatiquement dans tous les calculateurs de l'application">
+        <label for="global-weight">⚖️ Poids</label>
+        <input type="number" id="global-weight" min="0" step="0.5" placeholder="kg" inputmode="decimal" aria-label="Poids du patient en kg, appliqué à tous les calculateurs" oninput="syncGlobalWeight(this.value)">
+        <span id="global-weight-unit">kg</span>
+        <button id="global-weight-clear" type="button" onclick="clearGlobalWeight()" title="Effacer le poids" aria-label="Effacer le poids">✕</button>
+      </div>
     </div>
     <div id="content"></div>
   </main>
@@ -438,7 +458,66 @@ function toggleTheme(){
   applyTheme(saved);
 })();
 
-/* ——— Favoris (accès rapide) ——— */
+/* ——— Poids patient global (persistant, appliqué à tous les calculateurs) ——— */
+/* Les fiches sont injectées dynamiquement dans #content au changement de module :
+   on applique donc le poids mémorisé à chaque nouveau rendu, via un MutationObserver. */
+function applyGlobalWeightToField(el, val){
+  if(el.value === val) return;
+  el.value = val;
+  el.dispatchEvent(new Event('input', {bubbles:true}));
+  el.dispatchEvent(new Event('change', {bubbles:true}));
+}
+function applyGlobalWeightToDOM(){
+  let saved = '';
+  try{ saved = localStorage.getItem('nam_weight') || ''; }catch(e){}
+  if(!saved) return;
+  document.querySelectorAll('#content input[id$="_poids"]').forEach(function(el){
+    applyGlobalWeightToField(el, saved);
+  });
+}
+function syncGlobalWeight(val){
+  try{
+    if(val){ localStorage.setItem('nam_weight', val); }
+    else { localStorage.removeItem('nam_weight'); }
+  }catch(e){}
+  const gw = document.getElementById('global-weight');
+  if(gw){ gw.classList.toggle('weight-active', !!val); }
+  document.querySelectorAll('#content input[id$="_poids"]').forEach(function(el){
+    applyGlobalWeightToField(el, val);
+  });
+}
+function clearGlobalWeight(){
+  const gw = document.getElementById('global-weight');
+  if(gw){ gw.value = ''; }
+  syncGlobalWeight('');
+}
+(function initGlobalWeight(){
+  let saved = '';
+  try{ saved = localStorage.getItem('nam_weight') || ''; }catch(e){}
+  const gw = document.getElementById('global-weight');
+  if(gw && saved){ gw.value = saved; gw.classList.add('weight-active'); }
+  // Réapplique le poids mémorisé à chaque nouveau rendu de module/fiche
+  const weightObserver = new MutationObserver(function(){ applyGlobalWeightToDOM(); });
+  const contentEl = document.getElementById('content');
+  if(contentEl){ weightObserver.observe(contentEl, {childList:true, subtree:true}); }
+  // Synchronisation inverse : si le poids est saisi directement dans une fiche, le reporter dans le bandeau global
+  document.body.addEventListener('input', function(e){
+    const t = e.target;
+    if(t && t.id && t.id.endsWith('_poids') && t.id !== 'global-weight'){
+      const gwField = document.getElementById('global-weight');
+      if(gwField && gwField.value !== t.value){
+        gwField.value = t.value;
+        gwField.classList.toggle('weight-active', !!t.value);
+        try{
+          if(t.value){ localStorage.setItem('nam_weight', t.value); }
+          else { localStorage.removeItem('nam_weight'); }
+        }catch(err){}
+      }
+    }
+  });
+})();
+
+
 function getFavorites(){
   try{ return JSON.parse(localStorage.getItem('nam_favorites') || '[]'); }catch(e){ return []; }
 }
@@ -4390,9 +4469,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-acidocetose-alcoolique">
     <h3>🍺 Acidocétose alcoolique</h3>
-    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : principes de prise en charge de l'acidocétose alcoolique et de prévention de l'encéphalopathie de Gayet-Wernicke (thiamine avant/avec le glucose)</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Entité distincte de l'ACD et de l'acidose lactique. Terrain typique : alcoolisme chronique avec réduction ou arrêt récent des apports alcooliques (souvent après un épisode de forte consommation), associé à un jeûne prolongé et des vomissements répétés. Biologie : acidose métabolique à trou anionique augmenté, cétonémie/cétonurie positive (surtout β-hydroxybutyrate), <strong>glycémie basse, normale ou seulement discrètement élevée</strong> (jamais franchement élevée comme dans l'ACD).</p>
-    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais administrer de soluté glucosé sans thiamine préalable ou simultanée chez un patient alcoolique — le glucose seul peut précipiter ou aggraver une encéphalopathie de Gayet-Wernicke en consommant les réserves résiduelles de thiamine.</div></div>
     <p style="font-size:13.5px; margin-bottom:8px;"><strong>Diagnostic différentiel :</strong> ACD (glycémie franchement élevée, contexte diabétique), acidose lactique/MALA (cétose peu marquée, contexte metformine/choc/hypoxie), intoxication au méthanol/éthylène glycol (trou osmolaire élevé, troubles visuels), pancréatite aiguë associée (fréquente, à rechercher systématiquement devant des douleurs abdominales).</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>
@@ -4416,7 +4493,6 @@ function renderProtocoles(){
       <li>Évolution généralement rapide et favorable ; en l'absence d'amélioration attendue, rechercher une cause alternative ou associée (sepsis, pancréatite sévère, intoxication associée)</li>
     </ol>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Thiamine injectable et les solutés glucosés (G5%/G10%) sont disponibles à tous les niveaux hospitaliers (LNMEIS) — prise en charge réalisable même en structure de base. Le dosage de la cétonémie capillaire n'est souvent disponible qu'en CHU ; à défaut, le diagnostic reste clinique et biologique (trou anionique, GDS veineux, contexte évocateur).</p>
-    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : trou anionique normalisé, alimentation orale reprise, absence de complication associée non traitée (pancréatite, hépatite alcoolique), dépistage et prise en charge du sevrage alcoolique engagés, orientation addictologique proposée.</p>
   </div>
 
   <div class="card" id="proto-paludisme">
@@ -5382,9 +5458,7 @@ function renderProtocoles(){
 
   <div class="card" id="proto-sevrage-alcool">
     <h3>🍺 Sevrage alcoolique sévère / Délirium tremens</h3>
-    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : ASAM Clinical Practice Guideline on Alcohol Withdrawal Management, 2020 ; échelle CIWA-Ar (Sullivan et al.)</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Apparaît typiquement 48-96h après l'arrêt/la réduction de la consommation chez un patient alcoolo-dépendant. Formes de gravité croissante : tremblements/anxiété simples → hallucinose alcoolique → crises convulsives → <strong>délirium tremens</strong> (confusion, agitation, hallucinations, hyperactivité neurovégétative) — mortalité significative si non traité.</p>
-    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Le sous-dosage des benzodiazépines est l'erreur la plus fréquente et la plus délétère — la tolérance croisée avec l'alcool impose souvent des doses bien supérieures à celles utilisées en pratique courante ; titrer sans hésiter jusqu'au contrôle des symptômes plutôt que de plafonner par prudence.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li>Évaluation de la sévérité par un score clinique type <strong>CIWA-Ar</strong> si disponible, pour guider et adapter le traitement</li>
       <li>
@@ -5407,7 +5481,6 @@ function renderProtocoles(){
       <li>Surveillance rapprochée : constantes, état neurologique, glycémie — hospitalisation en unité de surveillance continue si délirium tremens constitué</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Valium® est disponible à tous les niveaux hospitaliers ; le Temesta® est plus limité aux structures de référence. La Vitamine B1 injectable (Vitamine B1 Aguettant®, Bécozyme®) est généralement disponible mais peut faire l'objet de ruptures ponctuelles — dans ce cas, ne jamais administrer de sérum glucosé sans y avoir pensé, et privilégier la voie orale/IM en dépannage plutôt que d'omettre la supplémentation. Le score CIWA-Ar, peu utilisé en pratique courante localement, reste un outil simple à intégrer à la surveillance infirmière si le personnel est formé.</p>
-    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : sevrage complet des benzodiazépines de réanimation depuis &gt;24h sans réapparition de symptômes, examen neurologique normal, constantes stables, orientation addictologique et accompagnement au sevrage proposés avant la sortie.</p>
   </div>
 
   <div class="card" id="proto-rhabdomyolyse">
@@ -8008,7 +8081,6 @@ function renderProtocoles(){
 
   <div class="card" id="proto-organophosphores">
     <h3>🌾 Intoxication aux organophosphorés / carbamates (pesticides)</h3>
-    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : Eddleston M. et al., Management of acute organophosphorus pesticide poisoning, <em>Lancet</em> 2008 ; principes OMS de prise en charge des intoxications aux pesticides</p>
 
     <div class="orga-calc">
       <div class="row2" style="align-items:end;">
@@ -8045,14 +8117,11 @@ function renderProtocoles(){
       <li><strong>Médicaments contre-indiqués</strong> : morphine, théophylline/aminophylline, phénothiazines (aggravent la toxicité cholinergique et la dépression respiratoire)</li>
       <li><strong>Surveillance prolongée 48-72h minimum</strong> : risque de <strong>syndrome intermédiaire</strong> (faiblesse musculaire proximale et respiratoire retardée, typiquement entre J1 et J4, après amélioration initiale apparente) — surveillance CPK et kaliémie (rhabdomyolyse), fonction rénale</li>
     </ol>
-    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais approcher un patient contaminé sans protection individuelle complète — plusieurs cas documentés de contamination secondaire grave du personnel soignant existent, y compris par simple contact avec les vêtements ou les vomissements du patient.</div></div>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Atropine Aguettant® est disponible à tous les niveaux de soins (LNMEIS) — s'assurer d'un stock suffisant en zone rurale/agricole où ces intoxications sont fréquentes, les doses cumulées pouvant être très importantes. La Pralidoxime (Contrathion®) est en revanche d'accès limité, généralement seulement en pharmacie hospitalière de CHU/CHRR, voire absente de certains circuits — son indisponibilité ne doit jamais retarder ni limiter les doses d'Atropine, qui reste le traitement déterminant même en monothérapie.</p>
-    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : sevrage complet de l'atropine depuis &gt;24-48h sans réapparition de signes cholinergiques, absence de syndrome intermédiaire (surveillance de la force musculaire proximale et de la fonction respiratoire), CPK et fonction rénale normalisées, évaluation psychiatrique si ingestion volontaire.</p>
   </div>
 
   <div class="card" id="proto-co">
     <h3>💨 Intoxication au monoxyde de carbone (CO)</h3>
-    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : Undersea and Hyperbaric Medical Society (UHMS) — indications de l'oxygénothérapie hyperbare dans l'intoxication au CO</p>
     <p style="font-size:13.5px; margin-bottom:8px;">Gaz inodore et incolore, source fréquente : groupes électrogènes, braseros/charbon utilisés en espace clos, incendie, appareils de chauffage défectueux. À évoquer systématiquement devant des céphalées, nausées ou une confusion touchant plusieurs personnes du même foyer simultanément.</p>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Retirer immédiatement la victime de la source d'exposition</strong> et aérer les lieux avant toute autre prise en charge</li>
@@ -8814,7 +8883,6 @@ function renderProtocoles(){
   <div class="card" id="proto-paracetamol">
     <h3>💊 Intoxication au paracétamol (acétaminophène)</h3>
     <p class="module-sub" style="margin-bottom:8px;">Intoxication médicamenteuse la plus fréquente — toxicité hépatique retardée (24-72h), souvent asymptomatique initialement : ne jamais sous-estimer une ingestion rapportée comme "banale".</p>
-    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>L'absence de symptôme à l'arrivée ne signifie rien — la toxicité hépatique se développe silencieusement sur 24-72h. Ne jamais différer le dosage plasmatique et la NAC dans l'attente de signes cliniques, qui n'apparaissent souvent qu'après l'installation de lésions hépatiques déjà significatives.</div></div>
 
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
@@ -8847,14 +8915,11 @@ function renderProtocoles(){
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">📋 <strong>Schéma simplifié « 2 poches »</strong> (consensus ACMT/AACT/America's Poison Centers 2023) : <strong>200 mg/kg sur 4h puis 100 mg/kg sur 16h</strong> (dose totale identique, 300 mg/kg) — efficacité comparable au schéma classique à 3 poches avec moins d'erreurs de préparation/administration et moins de réactions anaphylactoïdes ; option à considérer en priorité dans un contexte de ressources limitées où la manipulation de 3 poches à débits différents majore le risque d'erreur. <span id="paraco_inline_2poches">saisir le poids ci-dessus pour les doses calculées</span></p>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Fluimucil®, Exomuc® existe surtout en présentation orale (mucolytique) dans les pharmacies malgaches — la <strong>forme injectable est nettement moins répandue</strong> et généralement limitée aux pharmacies hospitalières des CHU. En son absence, la NAC orale (schéma prolongé, 72h ci-dessus) peut être utilisée comme alternative si le patient est capable de la tolérer (moins efficace en cas de vomissements associés). Le Carbomix® est présent en pharmacie hospitalière mais pas systématiquement en stock — le charbon activé générique reste l'option la plus courante.</p>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Surveiller transaminases, TP/INR, fonction rénale, lactates et pH répétés. Critères de gravité (King's College) orientant vers une transplantation hépatique en urgence (non disponible à Madagascar — transfert international à envisager selon les moyens) : pH &lt;7,3, ou association INR &gt;6,5 + créatinine &gt;300µmol/L + encéphalopathie grade III-IV.</p>
-    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : cure de NAC complétée, transaminases en décroissance nette ou normalisées, TP/INR normalisé, absence de signe d'insuffisance hépatique, évaluation psychiatrique systématique si ingestion volontaire avant toute sortie.</p>
   </div>
 
   <div class="card" id="proto-opiaces">
     <h3>💉 Overdose aux opiacés</h3>
-    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : OMS — Community management of opioid overdose, 2014</p>
     <p class="module-sub" style="margin-bottom:8px;">Triade classique : trouble de conscience + dépression respiratoire (bradypnée &lt;12/min) + myosis serré bilatéral.</p>
-    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>La durée d'action de la naloxone (30-90 min) est plus courte que celle de la plupart des opiacés — un patient réveillé peut retomber en dépression respiratoire après la levée de l'effet ; toujours prévoir une surveillance prolongée plutôt que de considérer l'incident clos après le réveil initial.</div></div>
     <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
       <li><strong>Priorité aux voies aériennes et à la ventilation</strong> — assister la ventilation au masque si bradypnée sévère/apnée, en attendant l'effet de l'antidote</li>
       <li><strong>Naloxone (Narcan®)</strong> — antagoniste opioïde spécifique, titration prudente pour éviter un syndrome de sevrage brutal :</li>
@@ -8867,12 +8932,10 @@ function renderProtocoles(){
     </table>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Naloxone injectable (Narcan®) est présente dans les pharmacies hospitalières disposant d'un service d'anesthésie-réanimation (utilisée classiquement en antagonisation post-opératoire), mais reste souvent absente des formations sanitaires de base (CSB). Les intoxications aux opiacés forts restent rares à Madagascar comparativement au tramadol et à la codéine, disponibles sur ordonnance — anticiper une disponibilité limitée en zone rurale et un transfert rapide si besoin.</p>
     <p style="margin-top:8px; font-size:13px; color:var(--muted);">Surveillance prolongée obligatoire après réveil (minimum 4-6h, davantage si opioïde à longue durée d'action) — risque de récidive de la dépression respiratoire à la levée de l'effet de la naloxone. Rechercher une co-ingestion (benzodiazépines, alcool) qui aggrave le tableau et n'est pas antagonisée par la naloxone.</p>
-    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : absence de récidive de dépression respiratoire pendant la période de surveillance requise, vigilance normale, évaluation psychiatrique/addictologique si pertinente, orientation vers une prise en charge de l'addiction proposée.</p>
   </div>
 
   <div class="card" id="proto-tricycliques">
     <h3>💊 Intoxication aux antidépresseurs tricycliques</h3>
-    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : principes de traitement par alcalinisation au bicarbonate de sodium — American College of Medical Toxicology (ACMT) Position Statement</p>
     <div class="warn-box">⚠️ Toxicité cardiaque potentiellement mortelle par effet stabilisant de membrane — surveillance ECG systématique et répétée, même si le patient est initialement asymptomatique.</div>
     <div class="row2" style="align-items:end;">
       <div class="field" style="margin-bottom:0;">
@@ -8903,13 +8966,10 @@ function renderProtocoles(){
       </li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Amitriptyline (Laroxyl®) est l'un des antidépresseurs tricycliques les plus largement prescrits localement (accessible et peu coûteux), ce qui en fait une cause d'intoxication volontaire relativement fréquente. Le Bicarbonate de sodium Lavoisier® et le Valium® sont disponibles à tous les niveaux hospitaliers. L'Intralipid® est présent dans les pharmacies des CHU (également utilisé en nutrition parentérale).</p>
-    <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais administrer d'antiarythmiques de classe Ia (quinidine, procaïnamide) ou III (amiodarone) en cas de trouble du rythme ventriculaire — ils aggravent l'effet stabilisant de membrane et peuvent précipiter une asystolie.</div></div>
-    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : ECG normalisé (QRS &lt;100ms) depuis &gt;24h sans traitement alcalinisant, absence de convulsion/trouble du rythme depuis &gt;24h, examen neurologique normal, évaluation psychiatrique systématique avant la sortie si ingestion volontaire.</p>
   </div>
 
   <div class="card" id="proto-digitalique">
     <h3>💊 Intoxication digitalique</h3>
-    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Source : principes de traitement par fragments Fab anti-digoxine — American College of Medical Toxicology (ACMT) Position Statement</p>
 
     <div class="digit-calc">
       <div class="row2" style="align-items:end;">
@@ -8953,7 +9013,6 @@ function renderProtocoles(){
     </ol>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ne jamais administrer de calcium IV en cas d'hyperkaliémie associée à une intoxication digitalique — risque de majoration de l'arythmie (contrairement à l'hyperkaliémie « classique » où le calcium IV est le traitement de 1ère ligne).</div></div>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les anticorps anti-digoxine (Digidot®, DigiFab®) ne sont <strong>pas disponibles</strong> sur le territoire malgache — antidote à commander en urgence auprès d'un centre antipoison international si les moyens le permettent. En son absence, le traitement repose sur le traitement symptomatique du trouble du rythme (Atropine, entraînement électrosystolique si disponible en CHU) et la correction prudente de la kaliémie, dans l'attente d'une élimination spontanée. La Digoxine Nativelle® elle-même est largement disponible et utilisée, ce qui rend cette intoxication iatrogène possible en pratique courante.</p>
-    <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : ECG normalisé sans trouble du rythme depuis &gt;24h, kaliémie normalisée, digoxinémie en décroissance/normalisée, traitement digitalique de fond réévalué (posologie, fonction rénale, interactions) avant toute reprise.</p>
   </div>
 
   <div class="card" id="proto-trauma-rachis">
@@ -15632,6 +15691,62 @@ function buildSearchIndex(){
 }
 buildSearchIndex();
 
+/* ——— Index symptôme → diagnostics (recherche par motif de consultation) ———
+   Contrairement à la recherche textuelle ci-dessus (qui cherche un mot dans le
+   contenu des fiches), cet index relie un symptôme/motif d'entrée à une liste
+   ordonnée (du plus probable/dangereux au moins probable) de fiches pertinentes,
+   même quand le mot du symptôme n'apparaît pas tel quel dans le texte de la fiche. */
+const SYMPTOM_INDEX = [
+  { symptoms:['douleur thoracique','douleur poitrine','oppression thoracique'], items:['proto-douleur-thoracique-triage','proto-sca','proto-dissection-aortique','proto-embolie-pulmonaire','proto-pneumothorax','proto-tamponnade','proto-pericardite-myocardite'] },
+  { symptoms:['essoufflement','dyspnee','difficulte a respirer','manque d\'air','detresse respiratoire'], items:['proto-detresse-respiratoire','proto-oap','proto-embolie-pulmonaire','proto-asthme','proto-bpco','proto-anaphylaxie','proto-pneumothorax'] },
+  { symptoms:['crise d\'asthme','sifflement respiratoire','respiration sifflante'], items:['proto-asthme','proto-bpco','proto-anaphylaxie','proto-corps-etranger'] },
+  { symptoms:['convulsions','crise convulsive','crise d\'epilepsie'], items:['proto-convulsions-febriles','proto-etat-mal-epileptique','proto-eclampsie','proto-hypoglycemie','proto-hic','proto-meningite'] },
+  { symptoms:['perte de connaissance','malaise','syncope','evanouissement'], items:['proto-syncope','proto-hypoglycemie','proto-avc','proto-troubles-rythme','proto-torsades-pointes'] },
+  { symptoms:['coma','trouble de la conscience','ne repond plus','inconscient'], items:['proto-coma','proto-hic','proto-avc','proto-hypoglycemie','proto-intoxications','proto-meningite'] },
+  { symptoms:['cephalees','mal de tete','maux de tete'], items:['proto-hic','proto-meningite','proto-avc','proto-dissection-aortique','proto-hta-urgence','proto-purpura-fulminans'] },
+  { symptoms:['douleur abdominale','mal au ventre','douleur au ventre','douleur abdo'], items:['proto-abdomen-aigu','proto-pancreatite','proto-cholecystite','proto-angiocholite','proto-occlusion-intestinale','proto-geu','proto-ischemie-mesenterique','proto-epigastralgie'] },
+  { symptoms:['femme enceinte qui saigne','saignement pendant la grossesse','saignement grossesse','metrorragie grossesse'], items:['proto-geu','proto-fausse-couche','proto-hrp-placenta-praevia','proto-mole-hydatiforme'] },
+  { symptoms:['saignement apres accouchement','hemorragie apres accouchement','hemorragie du post-partum'], items:['proto-hpp','proto-retention-placentaire','proto-inversion-uterine','proto-rupture-uterine'] },
+  { symptoms:['femme enceinte qui convulse','convulsion chez la femme enceinte','crise convulsive grossesse'], items:['proto-eclampsie','proto-acr-grossesse'] },
+  { symptoms:['fievre chez l\'enfant','enfant fievreux','enfant qui a de la fievre'], items:['proto-convulsions-febriles','proto-sepsis-pediatrique','proto-pac-pediatrique','proto-meningite','proto-paludisme'] },
+  { symptoms:['nouveau-ne qui va mal','bebe qui va mal','nouveau-ne ne va pas bien'], items:['proto-reanimation-nn','proto-sepsis-neonatal','proto-ictere-neonatal'] },
+  { symptoms:['diarrhee','diarrhee aigue','selles liquides'], items:['proto-cholera','proto-deshydratation-enfant','proto-typhoide'] },
+  { symptoms:['vomissements','vomissements repetes'], items:['proto-deshydratation-enfant','proto-acd','proto-hhs','proto-occlusion-intestinale','proto-invagination'] },
+  { symptoms:['eruption cutanee fievre','fievre et eruption','tache rouge et fievre','eruption febrile'], items:['proto-purpura-fulminans','proto-meningite','proto-dress','proto-sjs-ten','proto-dengue'] },
+  { symptoms:['gonflement du visage','oedeme du visage','visage gonfle','levres gonflees'], items:['proto-anaphylaxie','proto-angioedeme-bradykinique'] },
+  { symptoms:['douleur testiculaire','douleur aux testicules','bourse douloureuse'], items:['proto-torsion-testiculaire'] },
+  { symptoms:['douleur oculaire','oeil rouge douloureux','mal a l\'oeil'], items:['proto-glaucome-aigu','proto-trauma-oculaire','proto-endophtalmie','proto-cellulite-orbitaire'] },
+  { symptoms:['baisse brutale de la vision','perte de vision soudaine','ne voit plus d\'un oeil'], items:['proto-oacr','proto-glaucome-aigu','proto-avc'] },
+  { symptoms:['agitation','patient agite','patient violent'], items:['proto-agitation','proto-delirium-reanimation','proto-hypoglycemie','proto-intoxications'] },
+  { symptoms:['idees suicidaires','tentative de suicide','envie de mourir'], items:['proto-suicidaire','proto-paracetamol','proto-tricycliques','proto-agitation'] },
+  { symptoms:['vertiges','tete qui tourne','sensation de tourner'], items:['proto-vertige-aigu','proto-avc','proto-hypoglycemie'] },
+  { symptoms:['morsure de serpent','piqure de scorpion','morsure d\'araignee','envenimation'], items:['proto-envenimations','proto-envenimations-marines'] },
+  { symptoms:['morsure de chien','morsure d\'animal','risque de rage'], items:['proto-rage','proto-plaies-morsures','proto-tetanos'] },
+  { symptoms:['brulure','brule','brulures'], items:['proto-brulures'] },
+  { symptoms:['polytraumatise','accident de la route','accident de voiture','polytraumatisme'], items:['proto-polytraumatisme','proto-trauma-thoracique','proto-trauma-abdominal','proto-trauma-rachis','proto-fracture-bassin'] },
+  { symptoms:['traumatisme cranien','coup a la tete','choc a la tete'], items:['proto-tc-grave','proto-tc-leger','proto-tc-pecarn','proto-hic'] },
+  { symptoms:['noyade','sortie de l\'eau inconscient'], items:['proto-noyade'] },
+  { symptoms:['electrisation','electrocution'], items:['proto-electrisation'] },
+  { symptoms:['hypothermie','tres froid','temperature corporelle basse'], items:['proto-hypothermie'] },
+  { symptoms:['coup de chaleur','hyperthermie','forte chaleur malaise'], items:['proto-coup-chaleur'] },
+  { symptoms:['ictere','jaunisse','peau jaune','yeux jaunes'], items:['proto-ictere-neonatal','proto-insuffisance-hepatique-aigue','proto-angiocholite','proto-leptospirose'] },
+  { symptoms:['sang dans les urines','hematurie','urine rouge'], items:['proto-colique-nephretique'] },
+  { symptoms:['difficulte a uriner','ne peut pas uriner','retention urinaire','globe vesical'], items:['proto-retention-urine'] },
+  { symptoms:['faiblesse musculaire','paralysie','ne peut plus bouger un membre','deficit moteur'], items:['proto-avc','proto-guillain-barre','proto-myasthenie','proto-compression-medullaire'] },
+  { symptoms:['mal au dos avec fievre','douleur dorsale fievre','douleur rachis fievre'], items:['proto-arthrite-septique'] },
+  { symptoms:['articulation gonflee','genou gonfle et fievre','articulation chaude et rouge'], items:['proto-arthrite-septique'] },
+  { symptoms:['jambe gonflee','membre gonfle douloureux','mollet gonfle'], items:['proto-tvp','proto-ischemie-membre','proto-syndrome-loges','proto-fasciite-necrosante'] },
+  { symptoms:['intoxication medicamenteuse','surdosage','a avale trop de medicaments'], items:['proto-intoxications','proto-paracetamol','proto-tricycliques','proto-opiaces','proto-digitalique'] },
+  { symptoms:['reaction allergique','allergie grave'], items:['proto-anaphylaxie','proto-angioedeme-bradykinique'] },
+  { symptoms:['a avale quelque chose','corps etranger avale','s\'etouffe','etouffement'], items:['proto-corps-etranger'] },
+  { symptoms:['choc','tension tres basse','patient en choc'], items:['proto-etats-choc','proto-choc-cardiogenique','proto-sepsis','proto-choc-hemorragique-obstetrical'] },
+  { symptoms:['arret cardiaque','ne respire plus','pas de pouls'], items:['proto-acr-adulte','proto-acr-pediatrique','proto-acr-grossesse','proto-post-rosc'] },
+  { symptoms:['malaise diabetique','hypoglycemie','glycemie basse'], items:['proto-hypoglycemie','proto-acd','proto-hhs'] },
+];
+const SEARCH_BY_ID = {};
+SEARCH_INDEX.forEach(item=>{ SEARCH_BY_ID[item.id] = item; });
+SYMPTOM_INDEX.forEach(entry=>{ entry.normSymptoms = entry.symptoms.map(normalizeText); });
+
 const searchInput = document.getElementById('nav-search');
 const resultsList = document.getElementById('search-results');
 const navList = document.getElementById('nav-list');
@@ -15646,16 +15761,51 @@ searchInput.addEventListener('input', (e)=>{
     return;
   }
   navList.style.display = 'none';
-  const matches = SEARCH_INDEX.filter(item => item.norm.includes(q)).slice(0, 40);
-  if(matches.length === 0){
-    resultsList.innerHTML = '<li class="sr-empty">Aucun résultat pour "'+raw.replace(/</g,'&lt;')+'"</li>';
-  } else {
-    resultsList.innerHTML = matches.map(m =>
+
+  // 1) Recherche par symptôme/motif de consultation (index curé, différentiel classé par pertinence)
+  const symptomIds = [];
+  const seenSymptomIds = new Set();
+  if(q.length >= 3){
+    SYMPTOM_INDEX.forEach(entry=>{
+      const hit = entry.normSymptoms.some(s => s.includes(q) || q.includes(s));
+      if(hit){
+        entry.items.forEach(id=>{
+          if(!seenSymptomIds.has(id) && SEARCH_BY_ID[id]){
+            seenSymptomIds.add(id);
+            symptomIds.push(id);
+          }
+        });
+      }
+    });
+  }
+
+  // 2) Recherche textuelle classique (contenu des fiches), en excluant les fiches déjà proposées ci-dessus
+  const textMatches = SEARCH_INDEX
+    .filter(item => item.norm.includes(q) && !seenSymptomIds.has(item.id))
+    .slice(0, 40);
+
+  let html = '';
+  if(symptomIds.length){
+    html += '<li class="sr-section-label">🩺 Pistes diagnostiques probables</li>';
+    html += symptomIds.map(id=>{
+      const m = SEARCH_BY_ID[id];
+      return `<li><a data-mod="${m.module}" data-target="${m.id}">
+        <span class="sr-mod">${MODULES[m.module].icon} ${m.moduleTitle}</span>${m.title}
+      </a></li>`;
+    }).join('');
+  }
+  if(textMatches.length){
+    if(symptomIds.length) html += '<li class="sr-section-label">📄 Autres résultats</li>';
+    html += textMatches.map(m =>
       `<li><a data-mod="${m.module}" data-target="${m.id}">
         <span class="sr-mod">${MODULES[m.module].icon} ${m.moduleTitle}</span>${m.title}
       </a></li>`
     ).join('');
   }
+  if(!symptomIds.length && !textMatches.length){
+    html = '<li class="sr-empty">Aucun résultat pour "'+raw.replace(/</g,'&lt;')+'"</li>';
+  }
+  resultsList.innerHTML = html;
   resultsList.classList.add('show');
 });
 
