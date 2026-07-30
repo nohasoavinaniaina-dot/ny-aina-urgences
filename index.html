@@ -3161,7 +3161,9 @@ function renderProtocoles(){
         <li><a onclick="openProtoCard('proto-dissection-aortique')">💔 Dissection aortique</a></li>
         <li><a onclick="openProtoCard('proto-embolie-pulmonaire')">🫁 Embolie pulmonaire</a></li>
         <li><a onclick="openProtoCard('proto-ischemie-membre')">🦵 Ischémie aiguë de membre</a></li>
+        <li><a onclick="openProtoCard('proto-aomi')">🦵 AOMI — Artériopathie oblitérante des membres inférieurs</a></li>
         <li><a onclick="openProtoCard('proto-tvp')">🩸 Thrombose veineuse profonde (TVP)</a></li>
+        <li><a onclick="openProtoCard('proto-erysipele')">🔴 Érysipèle / Dermohypodermite bactérienne non nécrosante</a></li>
         <li><a onclick="openProtoCard('proto-relais-avk-hbpm')">🔄 Relais HBPM (Lovenox®) ↔ AVK</a></li>
         <li><a onclick="openProtoCard('proto-aaa-rompu')">🩸 Anévrysme de l'aorte abdominale rompu</a></li>
         <li><a onclick="openProtoCard('proto-torsades-pointes')">⚡ Torsades de pointes / QT long</a></li>
@@ -3363,6 +3365,17 @@ function renderProtocoles(){
         <li><a onclick="openProtoCard('proto-sepsis-neonatal')">🦠 Sepsis néonatal (&lt;28 jours)</a></li>
         <li><a onclick="openProtoCard('proto-polytrauma-pediatrique')">🚑 Polytraumatisme pédiatrique — spécificités</a></li>
         <li><a onclick="openProtoCard('proto-douleur-enfant')">🩹 Douleur de l'enfant — évaluation et prise en charge</a></li>
+        <li><a onclick="openProtoCard('proto-fievre-nourrisson')">🌡️ Fièvre du nourrisson &lt; 3 mois</a></li>
+        <li><a onclick="openProtoCard('proto-maltraitance-pediatrique')">🛑 Maltraitance infantile / TC non accidentel</a></li>
+        <li><a onclick="openProtoCard('proto-eruptions-febriles-enfant')">🔴 Exanthèmes fébriles de l'enfant — diagnostic différentiel</a></li>
+        <li><a onclick="openProtoCard('proto-mpox-enfant')">🐒 Mpox chez l'enfant — épidémie Madagascar 2025-2026</a></li>
+        <li><a onclick="openProtoCard('proto-kawasaki')">🔥 Maladie de Kawasaki</a></li>
+        <li><a onclick="openProtoCard('proto-purpura-rhumatoide')">🟣 Purpura rhumatoïde (vascularite à IgA)</a></li>
+        <li><a onclick="openProtoCard('proto-stenose-pylore')">🍼 Sténose hypertrophique du pylore</a></li>
+        <li><a onclick="openProtoCard('proto-ecun')">🩹 Entérocolite ulcéro-nécrosante</a></li>
+        <li><a onclick="openProtoCard('proto-coqueluche')">😮‍💨 Coqueluche du nourrisson</a></li>
+        <li><a onclick="openProtoCard('proto-mastoidite')">👂 Mastoïdite aiguë</a></li>
+        <li><a onclick="openProtoCard('proto-spasme-sanglot')">😤 Spasme du sanglot</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🔴 Réanimation avancée & Complications</span><span class="toc-cat-arrow">▾</span></li>
@@ -6093,6 +6106,34 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Héparine Choay® et la Morphine sont disponibles à la plupart des niveaux hospitaliers (LNMEIS). L'embolectomie chirurgicale (sonde de Fogarty) nécessite un plateau de chirurgie vasculaire, généralement limité aux CHU/CHRR ; la thrombolyse in situ/thrombectomie percutanée n'est pas disponible sur le territoire — en leur absence, anticoaguler sans délai et organiser un transfert chirurgical en urgence dès la suspicion, le pronostic du membre se jouant en heures.</p>
   </div>
 
+  <div class="card" id="proto-aomi">
+    <h3>🦵 AOMI — Artériopathie oblitérante des membres inférieurs (décompensation)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les ESC/ESVS Guidelines 2024 sur les maladies artérielles périphériques et aortiques, et les Global Vascular Guidelines 2019 sur l'ischémie critique chronique. À distinguer de l'<a onclick="openProtoCard('proto-ischemie-membre')" style="color:var(--accent); cursor:pointer; text-decoration:underline;">ischémie aiguë de membre</a> (installation brutale, souvent embolique) — l'AOMI est une maladie chronique athéromateuse pouvant se décompenser progressivement (aggravation de la claudication, apparition d'une douleur de repos ou d'un trouble trophique) ou brutalement (thrombose aiguë sur artère pathologique = ischémie aiguë sur chronique, la présentation la plus fréquente en urgence).</p>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Stade Leriche-Fontaine</th><th>Rutherford</th><th>Clinique</th></tr>
+      <tr><td class="leger">I</td><td>0</td><td>Asymptomatique (AOMI découverte sur IPS abaissé/dépistage)</td></tr>
+      <tr><td class="leger">IIa</td><td>1</td><td>Claudication intermittente non invalidante (périmètre de marche &gt;200m)</td></tr>
+      <tr><td class="modere">IIb</td><td>2-3</td><td>Claudication invalidante (périmètre de marche &lt;200m)</td></tr>
+      <tr><td class="grave">III</td><td>4</td><td>Douleur de décubitus/repos — <strong>ischémie critique chronique</strong></td></tr>
+      <tr><td class="grave">IV</td><td>5-6</td><td>Trouble trophique (ulcère artériel, gangrène) — <strong>ischémie critique chronique</strong></td></tr>
+    </table>
+    <p style="font-size:13px; margin-bottom:8px; color:var(--muted);">Les stades III-IV (Fontaine) / 4-6 (Rutherford) définissent l'<strong>ischémie critique chronique menaçant le membre</strong> (chronic limb-threatening ischemia) — urgence vasculaire nécessitant un avis chirurgical vasculaire rapide, à distinguer de l'ischémie aiguë vraie par l'ancienneté des symptômes et l'absence de paralysie/anesthésie brutale.</p>
+
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Devant une claudication qui s'aggrave brutalement ou une douleur de repos d'apparition récente chez un artériopathe connu, évoquer une <strong>thrombose aiguë sur lésion chronique</strong> — rechercher les 6 P et appliquer sans délai le protocole d'ischémie aiguë de membre (anticoagulation immédiate) si les pouls distaux deviennent abolis ou si un déficit sensitivomoteur apparaît, plutôt que de la traiter comme une simple poussée de claudication.</div></div>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Indice de pression systolique (IPS/ABI)</strong> — rapport pression systolique cheville/bras : normal 0,90-1,40 ; AOMI si ≤0,90 ; AOMI sévère si &lt;0,50 ; un IPS &gt;1,40 (incompressibilité artérielle, médiacalcose — fréquente chez le diabétique/insuffisant rénal) impose la mesure de la pression au gros orteil (IPO) ou une autre méthode</li>
+      <li><strong>Examen clinique</strong> — palpation de tous les pouls (fémoral, poplité, tibial postérieur, pédieux), recherche d'un souffle vasculaire, temps de recoloration cutanée, aspect trophique (pâleur, dépilation, ongles cassants, ulcère à l'emporte-pièce typiquement suspendu/distal et douloureux)</li>
+      <li><strong>Bilan étiologique et facteurs de risque cardiovasculaire</strong> systématique — l'AOMI est un marqueur majeur de risque cardiovasculaire global (coronaropathie, AVC) : bilan lipidique, glycémie/HbA1c, tabagisme, pression artérielle</li>
+      <li><strong>Traitement médical de fond</strong> — statine à haute intensité (objectif LDL agressif compte tenu du haut risque cardiovasculaire), antiagrégant plaquettaire (Aspirine ou Clopidogrel), sevrage tabagique impératif, équilibre glycémique et tensionnel optimal, réadaptation à la marche encadrée (programme d'entraînement supervisé) dans les formes IIa/IIb</li>
+      <li><strong>Ischémie critique chronique (stade III-IV/Rutherford 4-6)</strong> — antalgie (souvent morphinique, la douleur de décubitus est intense), avis chirurgical vasculaire pour revascularisation (endovasculaire ou pontage selon la classification anatomique des lésions et le terrain), soins de plaie/pansements adaptés si trouble trophique, dépistage et traitement de toute surinfection associée (voir protocole érysipèle/fasciite selon la présentation)</li>
+      <li><strong>Ne jamais</strong> réaliser de compression veineuse (bas de contention, bandage compressif) sans avoir éliminé une AOMI sévère sous-jacente (IPS non fait ou &lt;0,60-0,90 selon les seuils) — risque d'aggravation ischémique iatrogène, notamment chez le patient présentant un ulcère de jambe de cause incertaine</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : statines, antiagrégants et antalgiques disponibles à la plupart des niveaux hospitaliers (LNMEIS). La mesure de l'IPS (Doppler de poche) et l'écho-Doppler artériel restent d'accès limité hors CHU/CHRR ; la revascularisation (endovasculaire ou chirurgicale) nécessite un plateau de chirurgie vasculaire — organiser un transfert précoce dès le stade d'ischémie critique chronique plutôt que d'attendre la constitution d'une gangrène.</p>
+    <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : Aboyans V et al., 2024 ESC/ESVS Guidelines on the management of peripheral arterial and aortic diseases, Eur Heart J 2024 ; Global Vascular Guidelines on the Management of Chronic Limb-Threatening Ischemia, J Vasc Surg 2019.</p>
+  </div>
+
   <div class="card" id="proto-tvp">
     <h3>🩸 Thrombose veineuse profonde (TVP)</h3>
     <p style="font-size:13.5px; margin-bottom:8px;">D'après les ESC/ESVS Guidelines sur la maladie thromboembolique veineuse. Signes évocateurs : douleur/tuméfaction unilatérale d'un membre, augmentation de chaleur locale, œdème prenant le godet, dilatation veineuse superficielle, signe de Homans (peu fiable, non recommandé isolément).</p>
@@ -6153,6 +6194,43 @@ function renderProtocoles(){
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Warfarine (Coumadine®) est l'AVK la plus largement disponible et reste l'option la plus accessible, mais nécessite une surveillance INR régulière souvent limitée aux grandes villes (CHU/CHRR) — anticiper le relais en conséquence en cas de sortie précoce vers une zone sans accès facile au laboratoire. Le Lovenox® est disponible en pharmacie hospitalière courante.</p>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">Voir aussi : <a onclick="openProtoCard('proto-tvp')" style="color:var(--accent); cursor:pointer; text-decoration:underline;">Thrombose veineuse profonde</a> · <a onclick="openProtoCard('proto-embolie-pulmonaire')" style="color:var(--accent); cursor:pointer; text-decoration:underline;">Embolie pulmonaire</a> · <a onclick="openProtoCard('proto-fa-rapide')" style="color:var(--accent); cursor:pointer; text-decoration:underline;">Fibrillation atriale rapide</a></p>
     <div class="safety-alert sa-interdit"><div><span class="sa-label"></span>Ce protocole ne s'applique <strong>pas</strong> à l'anticoagulation post-AVC ischémique cardioembolique — l'héparine à dose curative y est évitée en phase aiguë (risque de transformation hémorragique) et le délai d'introduction de l'anticoagulant oral suit la règle du « 1-3-6-12 jours » selon la sévérité, sans pont héparinique. Voir la section dédiée du <a onclick="openProtoCard('proto-avc')" style="color:var(--accent); cursor:pointer; text-decoration:underline;">protocole AVC</a>.</div></div>
+  </div>
+
+  <div class="card" id="proto-erysipele">
+    <h3>🔴 Érysipèle / Dermohypodermite bactérienne non nécrosante (DHBNN)</h3>
+    <p style="font-size:13.5px; margin-bottom:8px;">D'après les recommandations HAS/SPILF/SFD 2019, actualisées HAS/SPILF 2024 (fiches mémo antibiothérapie). Infection aiguë du derme et de l'hypoderme, sans nécrose, principalement à Streptocoque β-hémolytique du groupe A chez l'adulte (staphylococcique possible chez l'enfant). Atteint le membre inférieur dans 80% des cas.</p>
+
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Éliminer en priorité une <strong>dermohypodermite bactérienne nécrosante/fasciite nécrosante</strong> (voir fiche dédiée) devant toute douleur disproportionnée par rapport aux signes cutanés, des lividités/taches cyaniques, une crépitation sous-cutanée, une hypo/anesthésie locale, une induration dépassant largement l'érythème, ou une aggravation rapide en quelques heures — l'incertitude diagnostique impose l'avis chirurgical en urgence, ne jamais attendre l'imagerie.</div></div>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Diagnostic</th><th>Éléments distinctifs</th></tr>
+      <tr><td><strong>Érysipèle/DHBNN</strong></td><td>Placard érythémateux inflammatoire unilatéral, bien limité, chaud, douloureux, fièvre souvent élevée d'apparition brutale ; évolution lente sur 24-48h sous traitement</td></tr>
+      <tr><td><strong>TVP</strong> (<a onclick="openProtoCard('proto-tvp')" style="color:var(--accent); cursor:pointer; text-decoration:underline;">fiche dédiée</a>)</td><td>Œdème/tuméfaction souvent sans érythème net ou érythème plus diffus/moins chaud, fièvre absente ou modérée ; contexte thrombogène (immobilisation, chirurgie récente)</td></tr>
+      <tr><td><strong>Fasciite nécrosante</strong> (<a onclick="openProtoCard('proto-fasciite-necrosante')" style="color:var(--accent); cursor:pointer; text-decoration:underline;">fiche dédiée</a>)</td><td>Douleur disproportionnée, extension rapide en heures, sepsis sévère précoce, signes locaux de nécrose</td></tr>
+    </table>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Diagnostic clinique</strong> — aucun examen complémentaire n'est nécessaire dans une forme typique non compliquée ; rechercher systématiquement une porte d'entrée cutanée (intertrigo interorteils, plaie, ulcère), marquer au feutre les limites du placard pour suivre l'évolution</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Antibiothérapie de 1ère intention (forme non compliquée, adulte)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Amoxicilline (Clamoxyl®)</strong> <strong style="color:var(--accent2)">50 mg/kg/j PO en 3 prises</strong> (max 6g/j), durée <strong>7 jours</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Enfant : Amoxicilline/acide clavulanique (Augmentin®) 1 dose-poids x3/j pendant 7 jours</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Si allergie documentée à la pénicilline</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Clindamycine (Dalacine®) 600 mg PO x3/j</strong> (x4/j si poids &gt;100kg), 7 jours</div>
+        </div>
+      </li>
+      <li><strong>Antalgie/antipyrétique</strong> systématique (Paracétamol) — <strong>proscrire les AINS et la corticothérapie</strong>, susceptibles de favoriser une évolution vers une forme nécrosante en masquant les signes d'alerte</li>
+      <li><strong>Traitement de la porte d'entrée</strong> — traiter systématiquement un intertrigo interorteils mycosique associé (antifongique local), soins de plaie/ulcère si présent, prévention des récidives (hygiène cutanée, contention veineuse une fois une AOMI sévère éliminée — voir fiche dédiée)</li>
+      <li><strong>Prise en charge ambulatoire possible</strong> si forme typique sans signe de gravité, patient sans comorbidité majeure, et possibilité de réévaluation à 48-72h ; <strong>hospitalisation</strong> si signe de gravité local ou général, terrain à risque (diabète mal équilibré, immunodépression, âge extrême, insuffisance cardiaque/rénale), doute diagnostique avec une forme nécrosante, échec d'une antibiothérapie orale bien conduite, ou difficulté prévisible d'observance/de surveillance</li>
+      <li><strong>Réévaluation systématique à 48-72h</strong> — une aggravation des signes locaux malgré une antibiothérapie bien conduite doit faire reconsidérer le diagnostic (forme nécrosante débutante, abcès sous-jacent) plutôt que d'attribuer l'échec à une simple résistance antibiotique</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Amoxicilline/Clamoxyl® et Augmentin® largement disponibles (LNMEIS) ; la Clindamycine est d'accès plus limité hors grands centres — en son absence chez l'allergique à la pénicilline, solliciter un avis infectiologique pour une alternative disponible localement.</p>
+    <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : HAS/SFD/SPILF, Prise en charge des infections cutanées bactériennes courantes, 2019 ; HAS/SPILF, fiches mémo Choix et durées d'antibiothérapies — DHBNN adulte et enfant, actualisation 2024.</p>
   </div>
 
   <div class="card" id="proto-envenimations">
@@ -9740,6 +9818,285 @@ function renderProtocoles(){
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Paracétamol et Ibuprofène sont disponibles à tous les niveaux (LNMEIS). La Morphine est disponible en milieu hospitalier mais son accès peut être restreint en structure de base du fait de la réglementation des stupéfiants — anticiper la commande/l'autorisation. La Kétamine, largement disponible du fait de son usage anesthésique courant, représente une alternative analgésique précieuse en zone reculée lorsque la Morphine n'est pas accessible. Le MEOPA et l'EMLA® restent d'accès limité, principalement en CHU/CHRR.</p>
   </div>
 
+  <div class="card" id="proto-fievre-nourrisson">
+    <h3>🌡️ Fièvre du nourrisson &lt; 3 mois</h3>
+    <p class="module-sub" style="margin-bottom:8px;">D'après les recommandations AAP 2021 (nourrissons nés à terme, bien portants, sans antécédent). Chez le nourrisson &lt;90 jours, la fièvre (≥38°C) peut être le seul signe d'une infection bactérienne invasive (bactériémie, méningite, pyélonéphrite) — l'aspect clinique rassurant n'exclut pas une infection grave à cet âge, contrairement à l'enfant plus grand.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais se fier au seul aspect clinique chez le nourrisson &lt;3 mois — un nourrisson fébrile peut paraître bien portant et être bactériémique.</div></div>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>📅 Âge (jours)</label>
+        <input type="number" step="1" min="0" id="fnn_age" placeholder="ex. 35" oninput="calcFievreNourrisson()">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids (kg)</label>
+        <input type="number" step="0.1" min="0" id="fnn_poids" placeholder="ex. 4.2" oninput="calcFievreNourrisson()">
+      </div>
+    </div>
+    <div class="field" id="fnn_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    <div class="result-box hidden" id="fnn_result"></div>
+
+    <table style="margin:10px 0;">
+      <tr><th>Tranche d'âge</th><th>Bilan recommandé</th><th>Attitude</th></tr>
+      <tr><td class="grave">0-21 jours</td><td>NFS, CRP/PCT, hémoculture, ECBU, <strong>ponction lombaire systématique</strong></td><td>Hospitalisation + antibiothérapie IV systématique, quel que soit l'aspect clinique</td></tr>
+      <tr><td class="modere">22-28 jours</td><td>Idem, PL fortement recommandée (surtout si marqueurs inflammatoires anormaux)</td><td>Hospitalisation dans la grande majorité des cas</td></tr>
+      <tr><td class="leger">29-60(-90) jours</td><td>NFS, CRP/PCT ± ECBU systématique ; PL si marqueurs anormaux ou aspect inquiétant</td><td>Retour à domicile envisageable si bien portant + marqueurs rassurants + réévaluation à 24h possible</td></tr>
+    </table>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Marqueurs de risque d'infection bactérienne invasive</strong> — température ≥38,5°C, CRP élevée, procalcitonine élevée, ANC élevé, leucocyturie/nitrites positifs à l'ECBU</li>
+      <li><strong>Listeria monocytogenes et entérocoque</strong> ne sont pas couverts par les céphalosporines de 3e génération seules — d'où l'ajout systématique d'ampicilline chez le nouveau-né &lt;21 jours</li>
+      <li>La <strong>ceftriaxone</strong> est déconseillée chez le nouveau-né ictérique ou &lt;28 jours (risque de déplacement de la bilirubine, contre-indication avec les solutés contenant du calcium) — préférer le <strong>céfotaxime</strong> à cet âge</li>
+      <li>Tout nourrisson fébrile avec <strong>antécédent de prématurité, pathologie chronique, immunodépression, ou aspect toxique</strong> impose une prise en charge maximale quel que soit l'âge</li>
+      <li>Éducation parentale et critères de reconsultation en urgence si retour à domicile : léthargie, refus alimentaire, difficultés respiratoires, teint gris/marbrures, fièvre persistante &gt;48h</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Céfotaxime et Ampicilline disponibles au niveau CHU/CHRR ; la ponction lombaire systématique chez le nouveau-né peut être différée si le plateau technique n'est pas disponible, mais ne doit jamais retarder l'antibiothérapie probabiliste — transférer sans délai vers un centre équipé en cas de doute.</p>
+    <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : AAP Clinical Practice Guideline 2021 (Pediatrics), actualisations 2023-2024.</p>
+  </div>
+
+  <div class="card" id="proto-maltraitance-pediatrique">
+    <h3>🛑 Maltraitance infantile / Traumatisme crânien non accidentel</h3>
+    <p class="module-sub" style="margin-bottom:8px;">D'après les recommandations HAS 2017 (repérage et conduite à tenir en cas de maltraitance ; syndrome du bébé secoué). Y penser systématiquement, à chaque consultation d'un enfant, quel que soit le milieu socio-économique.</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Le signalement s'impose dès la suspicion, même sans certitude ni preuve — celle-ci relève de l'enquête des autorités compétentes, pas du médecin.</div></div>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes d'alerte cliniques</strong> — ecchymoses/hématomes d'âges différents ou de formes suggestives (doigts, ceinture), brûlures de contours nets ou en gant/chaussette, fractures multiples ou d'âges différents, discordance entre le mécanisme rapporté et la lésion observée, retard de recours aux soins</li>
+      <li><strong>Signes non spécifiques à ne pas négliger</strong> — modification du comportement de l'enfant, malaise/convulsion inexpliqué, cassure de la courbe staturo-pondérale, régression développementale, parent qui répond systématiquement à la place de l'enfant ou au contraire l'ignore</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>👶 Syndrome du bébé secoué</strong> — sous-ensemble des traumatismes crâniens non accidentels (nourrisson &lt;1 an le plus souvent, &lt;6 mois en majorité)</div>
+          <div style="margin:3px 0; font-size:13.5px;">Triade évocatrice : hématome sous-dural (souvent multifocal/d'âges différents), hémorragies rétiniennes, encéphalopathie — mais présentation souvent trompeuse (malaise, vomissements, convulsions, irritabilité, hypotonie)</div>
+        </div>
+      </li>
+      <li><strong>Bilan devant une suspicion</strong> — imagerie cérébrale (TDM en urgence puis IRM), fond d'œil systématique (hémorragies rétiniennes), radiographies du squelette entier (recherche de fractures asymptomatiques, datation), bilan de coagulation (éliminer un diagnostic différentiel hématologique)</li>
+      <li><strong>Diagnostics différentiels à éliminer</strong> — troubles de la coagulation, ostéogenèse imparfaite, maladies métaboliques osseuses, accident domestique authentique (mécanisme cohérent avec les lésions et l'âge de l'enfant)</li>
+      <li><strong>Conduite à tenir</strong> — hospitalisation pour mise en sécurité et bilan complet, signalement systématique aux autorités compétentes de protection de l'enfance, traçabilité écrite précise et factuelle de l'examen clinique (schémas, photographies datées si possible)</li>
+      <li>Le signalement est une <strong>obligation légale et déontologique</strong> protégeant le médecin de bonne foi — il ne préjuge pas de la culpabilité et n'a pas à être prouvé par le soignant</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : en l'absence de circuit de signalement formalisé identique au système français, orienter vers les autorités locales de protection de l'enfance et les services sociaux hospitaliers disponibles ; documenter systématiquement l'examen clinique de façon détaillée et objective dans le dossier, quelle que soit la filière de signalement disponible localement.</p>
+    <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : HAS, recommandation de bonne pratique « Syndrome du bébé secoué » et fiche mémo « Maltraitance chez l'enfant », actualisation juillet 2017.</p>
+  </div>
+
+  <div class="card" id="proto-kawasaki">
+    <h3>🔥 Maladie de Kawasaki</h3>
+    <p class="module-sub" style="margin-bottom:8px;">D'après l'AHA Scientific Statement 2017 (actualisé 2024). Vascularite fébrile de l'enfant &lt;5 ans (pic 6 mois-5 ans), urgence diagnostique en raison du risque d'anévrysme coronarien en l'absence de traitement précoce.</p>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Critère</th><th>Détail</th></tr>
+      <tr><td colspan="2"><strong>Fièvre ≥5 jours</strong> + au moins 4 des 5 critères suivants (forme classique)</td></tr>
+      <tr><td>1</td><td>Conjonctivite bilatérale non purulente</td></tr>
+      <tr><td>2</td><td>Atteinte muqueuse (lèvres fissurées, langue framboisée, érythème pharyngé)</td></tr>
+      <tr><td>3</td><td>Exanthème polymorphe</td></tr>
+      <tr><td>4</td><td>Atteinte des extrémités (érythème/œdème des mains-pieds, desquamation péri-unguéale tardive)</td></tr>
+      <tr><td>5</td><td>Adénopathie cervicale ≥1,5cm, le plus souvent unilatérale</td></tr>
+    </table>
+
+    <div class="row2" style="align-items:end;">
+      <div class="field" style="margin-bottom:0;">
+        <label>⚖️ Poids de l'enfant (kg) — calcul des doses ci-dessous</label>
+        <input type="number" step="0.1" min="0" id="kw_poids" placeholder="ex. 12" oninput="calcKawasaki()">
+      </div>
+      <div class="field" id="kw_note" style="margin-bottom:0; font-size:12px; color:var(--muted);"></div>
+    </div>
+    <div class="result-box hidden" id="kw_result"></div>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Forme incomplète/atypique</strong> — à évoquer si fièvre ≥5j + seulement 2-3 critères, surtout chez le nourrisson &lt;6 mois (présentation souvent atypique et risque coronarien plus élevé) : s'appuyer sur les marqueurs biologiques (CRP/VS élevées, anémie, thrombocytose tardive, hypoalbuminémie, leucocyturie stérile) et l'échocardiographie</li>
+      <li><strong>Échocardiographie</strong> dans les 24h suivant le diagnostic (ne doit pas retarder le traitement) — recherche de dilatation/anévrysme coronarien, à répéter à 1-2 semaines et 4-6 semaines</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💉 Traitement de 1re intention (idéalement dans les 10 premiers jours)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Immunoglobulines IV 2 g/kg</strong> en perfusion unique sur 10-12h + <strong style="color:var(--accent2)">Aspirine 30-50 mg/kg/j</strong> jusqu'à apyrexie</div>
+          <div style="font-size:12.5px; color:var(--muted);">Voir doses calculées ci-dessus</div>
+        </div>
+      </li>
+      <li><strong>Relais aspirine</strong> à dose antiagrégante (3-5 mg/kg/j) dès 48-72h d'apyrexie, poursuivie 6-8 semaines (ou plus longtemps si anomalie coronarienne persistante)</li>
+      <li><strong>Résistance aux immunoglobulines</strong> (fièvre persistante/récidivante ≥36h après la fin de la perfusion) : discuter une 2e cure d'IgIV ± corticothérapie associée, avis spécialisé</li>
+      <li><strong>Facteurs de haut risque</strong> de complications coronariennes — âge &lt;6 mois ou ≥8 ans, résistance aux IgIV, marqueurs inflammatoires très élevés, thrombopénie, hyponatrémie</li>
+      <li>Éviter les <strong>vaccins vivants</strong> (ROR, varicelle) dans les 11 mois suivant l'administration d'IgIV (perte d'efficacité vaccinale)</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : les immunoglobulines IV sont un produit rare et coûteux, généralement non disponibles en routine hors grands centres — un avis pédiatrique/cardio-pédiatrique urgent est indispensable dès la suspicion clinique pour organiser l'accès au traitement et la surveillance échographique, le pronostic dépendant directement de la précocité du traitement.</p>
+    <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : AHA Scientific Statement on Kawasaki Disease 2017 (Circulation), mise à jour comparative AAP/AHA 2024.</p>
+  </div>
+
+  <div class="card" id="proto-eruptions-febriles-enfant">
+    <h3>🔴 Exanthèmes fébriles de l'enfant — diagnostic différentiel</h3>
+    <p class="module-sub" style="margin-bottom:8px;">La majorité des éruptions fébriles de l'enfant sont d'origine virale bénigne, mais la démarche doit systématiquement écarter en premier les diagnostics à haut risque vital. D'après le Red Book (AAP) 2024, le CDC Pink Book, les fiches HAS/SPILF sur les exanthèmes fébriles de l'enfant, et le fact-sheet rougeole de l'OMS 2025.</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Devant toute éruption fébrile de l'enfant, éliminer en priorité un <strong>purpura fulminans/méningococcémie</strong>, une <strong>maladie de Kawasaki</strong>, un <strong>DRESS</strong> ou <strong>Sd de Stevens-Johnson/Lyell</strong>, et, en zone d'épidémie active, une <strong>dengue</strong> ou un <strong>Mpox</strong> — ces diagnostics engagent le pronostic vital ou fonctionnel et priment sur la recherche de l'exanthème viral bénin le plus probable.</div></div>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Maladie</th><th>Agent</th><th>Incubation</th><th>Éruption</th><th>Signes associés clés</th></tr>
+      <tr><td><strong>Rougeole</strong></td><td>Morbillivirus</td><td>10-14j</td><td>Maculo-papuleuse confluente, descendante (visage→tronc→membres), J3-J5 de la fièvre</td><td>Catarrhe oculo-nasal, toux, signe de Koplik (énanthème pathognomonique)</td></tr>
+      <tr><td><strong>Rubéole</strong></td><td>Rubivirus</td><td>14-21j</td><td>Maculo-papuleuse rose pâle, discrète, descendante rapide (&lt;3j)</td><td>Adénopathies rétro-auriculaires/occipitales, fièvre modérée ou absente</td></tr>
+      <tr><td><strong>Scarlatine</strong></td><td>Streptocoque A (toxines)</td><td>2-5j</td><td>Érythème diffus « en nappe », granité, respect péribuccal, desquamation en fin d'évolution</td><td>Angine érythémateuse, langue framboisée, ganglions cervicaux</td></tr>
+      <tr><td><strong>Varicelle</strong></td><td>VZV</td><td>10-21j</td><td>Vésicules sur fond érythémateux, polymorphe (macules/papules/vésicules/croûtes simultanément), prurigineuse, atteinte du cuir chevelu</td><td>Fièvre modérée, prurit marqué</td></tr>
+      <tr><td><strong>Mégalérythème épidémique (5e maladie)</strong></td><td>Parvovirus B19</td><td>4-14j</td><td>Érythème « souffleté » des joues puis réticulé/en dentelle des membres</td><td>Souvent afébrile au stade éruptif ; arthralgies possibles chez le plus grand enfant</td></tr>
+      <tr><td><strong>Roséole (6e maladie/exanthème subit)</strong></td><td>HHV-6/7</td><td>9-10j</td><td>Maculo-papuleuse rose pâle, apparaît <strong>à la défervescence</strong> (après 3-5j de fièvre isolée élevée)</td><td>Fièvre élevée initiale bien tolérée, convulsions fébriles fréquentes</td></tr>
+      <tr><td><strong>Sd pieds-mains-bouche</strong></td><td>Coxsackie A16/Entérovirus 71</td><td>3-6j</td><td>Vésicules des paumes/plantes/fesses + érosions buccales douloureuses</td><td>Refus alimentaire (douleur buccale), risque de déshydratation</td></tr>
+      <tr><td><strong>Mononucléose infectieuse</strong></td><td>EBV</td><td>30-50j</td><td>Maculo-papuleuse (svt déclenchée par amoxicilline), inconstante</td><td>Angine érythémato-pultacée, adénopathies diffuses, splénomégalie, asthénie marquée</td></tr>
+    </table>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Démarche clinique</strong> — statut vaccinal (ROR notamment), chronologie fièvre/éruption (précède, concomitante ou suit la défervescence), sens de progression (descendante/centrifuge), présence d'un énanthème, notion de contage ou d'épidémie en cours dans l'entourage</li>
+      <li><strong>Rougeole</strong> — maladie à déclaration obligatoire ; isolement respiratoire (voie aérienne, très forte contagiosité), vitamine A systématique chez l'enfant (réduit la mortalité et les complications, notamment en contexte de risque de carence) ; complications à rechercher : pneumopathie, otite, kératite, encéphalite aiguë ; Madagascar reste un pays à risque de résurgence épidémique (couverture vaccinale ROR incomplète, épidémies majeures documentées) — abaisser le seuil de suspicion devant tout enfant fébrile non ou incomplètement vacciné avec éruption descendante</li>
+      <li><strong>Varicelle</strong> — <strong>contre-indication formelle à l'aspirine</strong> (risque de syndrome de Reye) ; aciclovir réservé aux formes compliquées, à l'immunodéprimé, au nouveau-né, ou en cas de contage avec une personne à risque (grossesse, immunodépression) ; surveiller la surinfection cutanée à Streptocoque/Staphylocoque (fasciite nécrosante rare mais gravissime) et la rare ataxie cérébelleuse post-varicelleuse</li>
+      <li><strong>Scarlatine</strong> — traitement systématique par pénicilline (Amoxicilline) pour prévenir le rhumatisme articulaire aigu (RAA) et la glomérulonéphrite post-streptococcique, éviction scolaire jusqu'à 48h d'antibiothérapie efficace ; contexte international de recrudescence des infections invasives à Streptocoque A depuis 2022-2023, justifiant une vigilance accrue devant les formes toxiniques sévères (choc toxique streptococcique)</li>
+      <li><strong>Mégalérythème épidémique (parvovirus B19)</strong> — risque spécifique chez la <strong>femme enceinte non immunisée</strong> (anasarque fœto-placentaire, à adresser en urgence en cas de contage) et chez l'enfant porteur d'une <strong>hémoglobinopathie/hémolyse chronique</strong> (drépanocytose — risque d'érythroblastopénie aiguë/crise aplasique, voir protocole dédié)</li>
+      <li><strong>Sd pieds-mains-bouche</strong> — traitement symptomatique (antalgie buccale, hydratation fractionnée) ; formes à entérovirus 71 exposant rarement à des complications neurologiques sévères (rhombencéphalite, œdème pulmonaire neurogénique) — signes d'alerte : myoclonies, ataxie, somnolence, tachycardie/tachypnée disproportionnées</li>
+      <li><strong>Diagnostics à exclure formellement</strong> avant de retenir une cause virale bénigne — purpura fulminans (fiche dédiée), maladie de Kawasaki (fiche dédiée), DRESS et Sd de Stevens-Johnson/Lyell (fiches dédiées), dengue en zone/saison à risque (fiche dédiée), et <strong>Mpox</strong> en contexte d'épidémie active (fiche dédiée) — la lymphadénopathie et la distribution centrifuge avec atteinte palmo-plantaire orientent vers ce dernier plutôt que vers la varicelle</li>
+      <li><strong>Mesures d'isolement/éviction</strong> à adapter selon l'agent suspecté (aérien pour la rougeole et la varicelle, gouttelettes/contact pour la scarlatine) ; éviction scolaire réglementaire pour la scarlatine, la rougeole et la coqueluche</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Amoxicilline, Paracétamol et vitamine A largement disponibles ; l'aciclovir injectable et les sérologies virales spécifiques (parvovirus B19, EBV) sont peu accessibles hors grands centres — le diagnostic reste avant tout clinique, et un avis pédiatrique/infectiologique doit être sollicité au moindre doute sur une forme compliquée ou un diagnostic différentiel grave.</p>
+    <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : Red Book (AAP) 2024 ; CDC Pink Book (chapitres rougeole, rubéole, varicelle) ; fiches HAS/SPILF sur les exanthèmes fébriles de l'enfant ; OMS, fact-sheet Rougeole, actualisation 2025.</p>
+  </div>
+
+  <div class="card" id="proto-mpox-enfant">
+    <h3>🐒 Mpox (variole du singe) chez l'enfant — contexte épidémique Madagascar 2025-2026</h3>
+    <p class="module-sub" style="margin-bottom:8px;">Madagascar est touché depuis le 18 décembre 2025 par une épidémie de Mpox à transmission communautaire active, avec extension géographique progressive à de nombreuses régions (dont Analamanga/Antananarivo) et plusieurs milliers de cas confirmés à ce jour. D'après le WHO Living Guideline « Clinical management and infection prevention and control for mpox » (OMS, mise à jour mai 2025).</p>
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Isolement en précautions <strong>contact + gouttelettes</strong> dès la suspicion clinique, avant même la confirmation biologique — poursuivi jusqu'à cicatrisation complète des lésions (chute de toutes les croûtes). Le Ministère de la Santé Publique malgache doit être notifié sans délai (maladie à déclaration obligatoire dans le contexte épidémique en cours).</div></div>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Présentation clinique</strong> — prodrome possible (fièvre, myalgies, asthénie) suivi d'une éruption évoluant en une séquence macules→papules→vésicules→pustules→croûtes, à distribution volontiers <strong>centrifuge</strong> (débutant au visage/extrémités), avec atteinte fréquente des <strong>paumes et plantes</strong></li>
+      <li><strong>Diagnostic différentiel avec la varicelle</strong> — la <strong>lymphadénopathie</strong> est un signe caractéristique du Mpox, généralement absente dans la varicelle ; l'éruption varicelleuse progresse plus rapidement, est de distribution plus centrale, et n'atteint classiquement pas les paumes/plantes, contrairement au Mpox</li>
+      <li><strong>Populations à risque de forme grave</strong> à identifier systématiquement — jeunes enfants (notamment &lt;8 ans), femmes enceintes, personnes vivant avec le VIH ou immunodéprimées, patients porteurs de comorbidités chroniques (diabète, insuffisance rénale) ; ce sont les populations que les autorités sanitaires malgaches identifient explicitement comme prioritaires pour la vigilance</li>
+      <li><strong>Complications</strong> à rechercher — surinfection bactérienne cutanée des lésions, pneumopathie, kératite (risque de séquelles visuelles), atteinte muqueuse buccale/génitale douloureuse gênant l'alimentation ou la miction, plus rarement encéphalite ou sepsis sur surinfection</li>
+      <li><strong>Prise en charge</strong> — essentiellement symptomatique : antalgie, hydratation et soutien nutritionnel (troubles de l'alimentation si lésions buccales), soins cutanés (garder les lésions propres et sèches, éviter le grattage, traiter toute surinfection bactérienne par antibiothérapie adaptée)</li>
+      <li><strong>Antiviraux spécifiques (tecovirimat)</strong> — à discuter avec un avis spécialisé pour les formes sévères ou chez l'immunodéprimé ; disponibilité très limitée hors essais cliniques/programmes d'accès élargi, l'OMS souligne un niveau de preuve encore insuffisant pour une recommandation large</li>
+      <li><strong>Allaitement</strong> — l'OMS recommande (recommandation conditionnelle, faible niveau de preuve) sa poursuite chez la mère infectée tout en limitant le contact direct peau-à-peau avec le nourrisson non infecté, avec renforcement de l'hygiène des mains et couverture des lésions</li>
+      <li><strong>Vaccination ciblée</strong> — des campagnes de vaccination ciblant les sujets contacts et les populations les plus exposées sont en cours à Madagascar (doses fournies notamment par l'UNICEF) ; se renseigner localement sur les circuits d'accès en vigueur</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : épidémie active et évolutive (plusieurs milliers de cas confirmés, dizaines de décès depuis décembre 2025), avec extension progressive à de nouvelles régions — se référer aux bulletins épidémiologiques actualisés du COUSP/Ministère de la Santé Publique pour la conduite à tenir locale, les circuits de prélèvement/confirmation et l'accès aux antiviraux/vaccins, qui évoluent rapidement.</p>
+    <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : OMS, « Clinical management and infection prevention and control for mpox: living guideline », Genève, mise à jour mai 2025 ; bulletins épidémiologiques du Ministère de la Santé Publique de Madagascar, juillet 2026.</p>
+  </div>
+
+  <div class="card" id="proto-purpura-rhumatoide">
+    <h3>🟣 Purpura rhumatoïde (vascularite à IgA)</h3>
+    <p class="module-sub" style="margin-bottom:8px;">D'après les critères EULAR/PRINTO/PRES et les recommandations EULAR 2019. Vascularite la plus fréquente de l'enfant (pic 3-10 ans), souvent précédée d'une infection ORL.</p>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Critère</th><th>Détail</th></tr>
+      <tr><td colspan="2"><strong>Purpura palpable</strong> (obligatoire, prédominance aux membres inférieurs/fesses, sans thrombopénie) + au moins 1 des critères suivants</td></tr>
+      <tr><td>Digestif</td><td>Douleurs abdominales diffuses (parfois invagination intestinale secondaire), hémorragie digestive</td></tr>
+      <tr><td>Histologique</td><td>Vascularite leucocytoclasique à dépôts d'IgA, ou glomérulonéphrite à dépôts d'IgA</td></tr>
+      <tr><td>Articulaire</td><td>Arthrite ou arthralgies d'installation aiguë</td></tr>
+      <tr><td>Rénal</td><td>Protéinurie, hématurie</td></tr>
+    </table>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Diagnostic clinique</strong> — aucun test biologique spécifique ; NFS/plaquettes pour éliminer une thrombopénie, bandelette urinaire systématique à la recherche d'une atteinte rénale</li>
+      <li><strong>Atteinte digestive</strong> — douleurs abdominales dans ~50-75% des cas, parfois révélatrices (précèdent le purpura) ; surveiller le risque d'<strong>invagination intestinale</strong> (voir protocole dédié) et d'hémorragie digestive</li>
+      <li><strong>Traitement symptomatique</strong> — repos, antalgiques (paracétamol), AINS pour les arthralgies <em>en l'absence d'atteinte rénale</em> (contre-indiqués si protéinurie/hématurie significative)</li>
+      <li><strong>Corticothérapie</strong> — non systématique ; à discuter en cas de douleurs abdominales sévères (peut accélérer la résolution des symptômes digestifs, sans preuve de prévention de la néphropathie) : Prednisone 1 mg/kg/j pendant 1-2 semaines avec décroissance progressive</li>
+      <li><strong>Suivi néphrologique</strong> — bandelette urinaire hebdomadaire pendant 1 mois puis mensuelle jusqu'à 6 mois (la néphropathie peut apparaître jusqu'à plusieurs semaines après le début) ; avis néphro-pédiatrique si protéinurie &gt;0,5-1 g/j ou syndrome néphrotique/néphritique</li>
+      <li><strong>Évolution</strong> — résolution spontanée en 4 semaines dans la majorité des cas ; récidives possibles (~30%) surtout dans les 4 premiers mois ; pronostic à long terme conditionné par l'atteinte rénale</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Prednisone et Paracétamol largement disponibles ; l'accès à un suivi néphrologique pédiatrique structuré étant limité hors CHU, organiser systématiquement une surveillance rapprochée de la bandelette urinaire par le médecin traitant avec consignes de reconsultation en cas d'œdèmes, d'oligurie ou d'urines foncées.</p>
+    <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : critères EULAR/PRINTO/PRES (Ankara 2008/2010) ; recommandations EULAR pour la prise en charge du purpura rhumatoïde, 2019.</p>
+  </div>
+
+  <div class="card" id="proto-stenose-pylore">
+    <h3>🍼 Sténose hypertrophique du pylore</h3>
+    <p class="module-sub" style="margin-bottom:8px;">Cause chirurgicale la plus fréquente de vomissements chez le nourrisson, typiquement entre 2 et 8 semaines de vie, prédominance masculine (garçon premier-né ++).</p>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Présentation typique</strong> — vomissements post-prandiaux en jet, non bilieux, s'aggravant progressivement, avec appétit conservé (« faim vorace » après le vomissement) chez un nourrisson par ailleurs alerte</li>
+      <li><strong>Retentissement</strong> — cassure de la courbe pondérale, déshydratation progressive, olive pylorique parfois palpable à l'examen (péri-ombilical droit, après vomissement, enfant calme)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>⚗️ Anomalie biologique caractéristique</strong></div>
+          <div style="margin:3px 0; font-size:13.5px;"><strong style="color:var(--accent2)">Alcalose métabolique hypochlorémique et hypokaliémique</strong> (perte de HCl et de K+ par les vomissements)</div>
+        </div>
+      </li>
+      <li><strong>Échographie abdominale</strong> — examen de référence : épaisseur du muscle pylorique &gt;3-4mm, longueur du canal &gt;15-17mm</li>
+      <li><strong>Correction hydro-électrolytique impérative avant l'anesthésie</strong> — réhydratation IV (sérum salé isotonique ± glucosé, apport potassique une fois la diurèse vérifiée), correction de l'alcalose : la chirurgie n'est jamais une urgence immédiate, contrairement à la correction métabolique</li>
+      <li><strong>Traitement</strong> — pylorotomie extra-muqueuse (Fredet-Ramstedt), chirurgicale ou cœlioscopique, une fois l'enfant stabilisé sur le plan hydro-électrolytique</li>
+      <li><strong>Diagnostics différentiels</strong> — reflux gastro-œsophagien simple, allergie aux protéines de lait de vache, erreur métabolique innée (notamment si acidose plutôt qu'alcalose)</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'échographie abdominale et la chirurgie pédiatrique sont concentrées dans les grands centres (CHU) — devant une clinique évocatrice avec alcalose hypochlorémique, transférer précocement même sans confirmation échographique immédiate, en débutant la réhydratation IV dès la suspicion.</p>
+  </div>
+
+  <div class="card" id="proto-ecun">
+    <h3>🩹 Entérocolite ulcéro-nécrosante (ECUN)</h3>
+    <p class="module-sub" style="margin-bottom:8px;">Urgence néonatale digestive la plus grave, touchant principalement le prématuré (surtout &lt;32 SA) dans les premières semaines de vie, plus rarement le nouveau-né à terme avec facteurs de risque (cardiopathie, asphyxie périnatale).</p>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Toute distension abdominale, intolérance alimentaire ou résidus gastriques chez un prématuré doit faire évoquer une ECUN débutante — le tableau peut s'aggraver en quelques heures vers le choc septique et la perforation.</div></div>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes précoces</strong> — distension abdominale, résidus gastriques bilieux ou importants, intolérance alimentaire, rectorragies, instabilité thermique, apnées/bradycardies, léthargie</li>
+      <li><strong>Signes de gravité</strong> — érythème/induration de la paroi abdominale, masse palpable, choc, CIVD, acidose métabolique sévère — évoquent une nécrose transmurale/perforation</li>
+      <li><strong>Radiographie abdominale sans préparation</strong> — pneumatose intestinale (signe caractéristique), aéroportie (veine porte), pneumopéritoine (perforation, indication chirurgicale formelle) ; clichés répétés toutes les 6-12h en phase aiguë</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>🚫 Mesures immédiates</strong></div>
+          <div style="margin:3px 0; font-size:13.5px;">Arrêt strict de l'alimentation entérale, mise en place d'une sonde gastrique en aspiration douce, voie veineuse pour nutrition parentérale et remplissage</div>
+        </div>
+      </li>
+      <li><strong>Antibiothérapie probabiliste à large spectre</strong> IV — couverture des germes digestifs (BGN, anaérobies, entérocoque) dès la suspicion, adaptée secondairement aux hémocultures</li>
+      <li><strong>Support hémodynamique et respiratoire</strong> — remplissage vasculaire, amines si choc, ventilation si détresse respiratoire/distension majeure compromettant la mécanique ventilatoire</li>
+      <li><strong>Indication chirurgicale</strong> — pneumopéritoine, détérioration clinique malgré traitement médical maximal, masse abdominale fixe, paracentèse positive (liquide purulent/marron) : résection du segment nécrosé ± stomie de dérivation</li>
+      <li><strong>Stadification de Bell</strong> (I suspecté, II confirmé, III avancé/perforation) guide l'intensité de la surveillance et du traitement</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la prise en charge néonatale intensive et la chirurgie pédiatrique néonatale sont concentrées dans de rares centres — organiser un transfert médicalisé le plus précoce possible dès les premiers signes chez un prématuré, la mise à jeun et l'antibiothérapie probabiliste devant être débutées avant le transfert.</p>
+  </div>
+
+  <div class="card" id="proto-coqueluche">
+    <h3>😮‍💨 Coqueluche du nourrisson</h3>
+    <p class="module-sub" style="margin-bottom:8px;">Infection à Bordetella pertussis particulièrement dangereuse avant l'âge de 6 mois (avant vaccination complète) — risque de formes graves avec apnées, hypoxie, surinfection, hypertension pulmonaire.</p>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Présentation typique</strong> — toux quinteuse, émétisante, avec reprise inspiratoire bruyante (« chant du coq »), quintes répétées, souvent apyrétique ; chez le <strong>nourrisson &lt;3 mois</strong>, présentation atypique possible : apnées ou bradycardies isolées sans toux caractéristique</li>
+      <li><strong>Terrain à risque de forme grave</strong> — nourrisson &lt;3 mois, prématurité, cardiopathie ou pneumopathie sous-jacente, non-vacciné ou vaccination incomplète</li>
+      <li><strong>NFS</strong> — hyperlymphocytose souvent majeure chez le nourrisson (élément d'orientation, corrélée à la sévérité) ; confirmation par PCR nasopharyngée (sensibilité optimale dans les 3 premières semaines de toux)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Antibiothérapie</strong> — réduit la contagiosité, efficace sur les symptômes surtout si débutée précocement (phase catarrhale)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Azithromycine 10 mg/kg/j</strong> en 1 prise/j pendant 3 jours (nourrisson &lt;6 mois) ou 5 jours (&gt;6 mois)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Alternative : Clarithromycine 15 mg/kg/j en 2 prises pendant 7 jours (si azithromycine indisponible)</div>
+        </div>
+      </li>
+      <li><strong>Hospitalisation systématique</strong> chez le nourrisson &lt;3 mois, ou si signes de gravité (apnées, cyanose, difficultés alimentaires, hypoxémie) — monitorage cardio-respiratoire, désobstruction rhinopharyngée, oxygénothérapie/ventilation si besoin</li>
+      <li><strong>Antibioprophylaxie de l'entourage</strong> (même schéma que le traitement curatif) — recommandée pour les contacts proches non ou incomplètement vaccinés, en particulier les nourrissons &lt;6 mois de l'entourage</li>
+      <li><strong>Éviction scolaire/collectivité</strong> 3-5 jours après le début d'une antibiothérapie efficace (ou 3 semaines sans traitement)</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Azithromycine (Zithromax® et génériques) est largement disponible ; devant une toux quinteuse évocatrice chez un nourrisson &lt;3 mois, hospitaliser sans attendre la confirmation PCR (souvent non disponible en routine hors CHU) et débuter l'antibiothérapie sur la seule base clinique.</p>
+  </div>
+
+  <div class="card" id="proto-mastoidite">
+    <h3>👂 Mastoïdite aiguë</h3>
+    <p class="module-sub" style="margin-bottom:8px;">Complication la plus fréquente de l'otite moyenne aiguë chez l'enfant (pic &lt;2 ans), urgence ORL par risque d'extension endocrânienne (thrombophlébite du sinus latéral, abcès cérébral, méningite).</p>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Signes cliniques caractéristiques</strong> — décollement du pavillon de l'oreille en avant, comblement du sillon rétro-auriculaire, tuméfaction/rougeur/douleur rétro-auriculaire, fièvre souvent élevée, otalgie, otorrhée possible</li>
+      <li><strong>Contexte</strong> — souvent otite moyenne aiguë traitée de façon incomplète ou insuffisamment traitée dans les jours/semaines précédents</li>
+      <li><strong>Imagerie</strong> — TDM des rochers avec injection en urgence si suspicion de complication (comblement des cellules mastoïdiennes, lyse osseuse, collection sous-périostée) — indispensable avant tout geste chirurgical et en cas de signe neurologique associé</li>
+      <li><strong>Signes d'alarme imposant une imagerie cérébrale complète</strong> — céphalées intenses, vomissements, troubles de conscience, signes méningés, paralysie faciale, atteinte vestibulaire (vertiges) : évoquer une extension endocrânienne</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💊 Antibiothérapie IV à large spectre en urgence</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Céfotaxime 50 mg/kg/8h IV</strong> (ou Ceftriaxone 50 mg/kg/j) ± <strong style="color:var(--accent2)">Amoxicilline-acide clavulanique</strong> selon protocole local, couvrant pneumocoque, Haemophilus, staphylocoque</div>
+        </div>
+      </li>
+      <li><strong>Paracentèse/myringotomie</strong> — à visée diagnostique (prélèvement bactériologique) et thérapeutique (évacuation)</li>
+      <li><strong>Mastoïdectomie chirurgicale</strong> — indiquée si collection sous-périostée, échec du traitement médical à 48h, ou complication endocrânienne associée</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le scanner et la chirurgie ORL pédiatrique sont concentrés dans les grands centres — devant une tuméfaction rétro-auriculaire fébrile chez l'enfant, débuter l'antibiothérapie IV dès la suspicion clinique et organiser le transfert vers un centre disposant d'imagerie et d'un avis ORL sans attendre l'aggravation.</p>
+  </div>
+
+  <div class="card" id="proto-spasme-sanglot">
+    <h3>😤 Spasme du sanglot</h3>
+    <p class="module-sub" style="margin-bottom:8px;">Épisode paroxystique bénin, fréquent entre 6 mois et 5 ans (pic 1-2 ans), déclenché par une contrariété, une douleur ou une frayeur — source d'angoisse majeure pour les parents mais sans risque neurologique.</p>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Forme « bleue » (la plus fréquente)</strong> — pleurs intenses puis blocage respiratoire en expiration, cyanose, parfois perte de connaissance brève avec hypertonie/quelques mouvements cloniques, résolution spontanée en quelques secondes à 1 minute</li>
+      <li><strong>Forme « pâle »</strong> — déclenchée par une douleur/frayeur brutale (chute, peur), réflexe vagal avec pâleur, bradycardie, syncope brève — peut simuler une pause respiratoire ou une crise convulsive</li>
+      <li><strong>Diagnostic clinique</strong> — repose sur l'anamnèse typique (facteur déclenchant identifié, chronologie pleurs → apnée → cyanose/pâleur → résolution) ; pas d'examen complémentaire systématique si présentation typique et examen neurologique normal</li>
+      <li><strong>Rechercher une carence martiale associée</strong> — la carence en fer est un facteur favorisant reconnu, une supplémentation en fer peut réduire la fréquence des épisodes en cas d'anémie/carence confirmée</li>
+      <li><strong>Diagnostics différentiels à éliminer</strong> — épilepsie (absence de facteur déclenchant typique, mouvements toniques-cloniques prolongés, confusion post-critique), cause cardiaque rythmique (si forme pâle atypique ou antécédents familiaux de mort subite : ECG à discuter)</li>
+      <li><strong>Prise en charge en urgence</strong> — rassurer les parents, aucun geste de réanimation nécessaire dans la forme typique (l'épisode cède spontanément) ; éviter les manœuvres intempestives (secouer l'enfant)</li>
+      <li><strong>Éducation parentale</strong> — expliquer le caractère bénin et l'évolution naturelle (disparition spontanée avant 5-6 ans), consulter en urgence si épisode atypique (durée prolongée &gt;1 min, mouvements toniques-cloniques prolongés, absence de facteur déclenchant, confusion post-critique prolongée)</li>
+    </ol>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le bilan martial (NFS, ferritine) est disponible dans la plupart des laboratoires ; une supplémentation en Fer (sulfate ferreux) peut être proposée en 1ère intention si carence confirmée ou suspectée, avant tout bilan neurologique complémentaire coûteux.</p>
+  </div>
+
   <div class="card" id="proto-sources">
     <h3>📚 Sources de référence</h3>
     <ul style="margin-left:18px; font-size:13px; color:var(--muted); line-height:1.9;">
@@ -12574,6 +12931,81 @@ function calcConvulsionsFebriles(){
 
   if(inlineBzd) inlineBzd.innerHTML = `→ pour <strong>${poids} kg</strong> : Diazépam <strong>${diazRectalMg.toFixed(1)} mg</strong> IR ou Midazolam <strong>${midazBuccalMg.toFixed(1)} mg</strong> buccal/IN`;
   if(inlinePara) inlinePara.innerHTML = `→ pour <strong>${poids} kg</strong> : <strong>${paraMg.toFixed(0)} mg</strong>`;
+}
+
+/* Calculateur de doses intégré — fiche Fièvre du nourrisson < 3 mois */
+function calcFievreNourrisson(){
+  const ageInput = document.getElementById('fnn_age');
+  const poidsInput = document.getElementById('fnn_poids');
+  const resultEl = document.getElementById('fnn_result');
+  const noteEl = document.getElementById('fnn_note');
+  if(!ageInput || !poidsInput) return;
+  const age = parseFloat(ageInput.value);
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(age) || age<0 || isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:2, max:8, label:'Poids saisi', unit:'kg'}]);
+  const ampiMg = poids*50;
+  const cefotaximeMg = poids*50;
+  const ceftriaxoneMg = poids*50;
+
+  let ageGroup, atbReco, sev;
+  if(age<=21){
+    ageGroup = '0-21 jours — risque élevé';
+    sev = 'grave';
+    atbReco = `Bithérapie IV systématique — <strong>Ampicilline ${ampiMg.toFixed(0)} mg/dose</strong> (toutes les 6-8h) + <strong>Céfotaxime ${cefotaximeMg.toFixed(0)} mg/dose</strong> (toutes les 8h). Bilan complet obligatoire (NFS, CRP/PCT, hémoculture, ECBU, PL). Hospitalisation systématique.`;
+  } else if(age<=28){
+    ageGroup = '22-28 jours — risque élevé à intermédiaire';
+    sev = 'modere';
+    atbReco = `<strong>Céfotaxime ${cefotaximeMg.toFixed(0)} mg/dose</strong> (toutes les 8h) ± Ampicilline si suspicion Listeria. PL recommandée si marqueurs inflammatoires anormaux. Hospitalisation dans la majorité des cas.`;
+  } else {
+    ageGroup = '29-60(-90) jours — stratification possible';
+    sev = 'leger';
+    atbReco = `<strong>Ceftriaxone ${ceftriaxoneMg.toFixed(0)} mg/dose</strong> (1x/jour) si marqueurs inflammatoires anormaux ou état clinique inquiétant. PL à discuter selon les marqueurs (CRP, PCT, ANC). Retour à domicile envisageable si bien portant et marqueurs rassurants, avec réévaluation à 24h.`;
+  }
+
+  noteEl.innerHTML = `Âge : <strong>${age} j</strong> — Poids : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<p class="${sev}" style="font-weight:600; margin-bottom:4px;">${ageGroup}</p>` +
+    `<p style="font-size:13.5px;">${atbReco}</p>` +
+    `<p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration.</p>`;
+}
+
+/* Calculateur de doses intégré — fiche Maladie de Kawasaki (IgIV + Aspirine) */
+function calcKawasaki(){
+  const poidsInput = document.getElementById('kw_poids');
+  const resultEl = document.getElementById('kw_result');
+  const noteEl = document.getElementById('kw_note');
+  if(!poidsInput) return;
+  const poids = parseFloat(poidsInput.value);
+
+  if(isNaN(poids) || poids<=0){
+    resultEl.classList.add('hidden');
+    resultEl.innerHTML = '';
+    noteEl.textContent = '';
+    return;
+  }
+
+  const warn = plausibilityWarnings([{val:poids, min:3, max:40, label:'Poids saisi', unit:'kg'}]);
+  const ivigG = poids*2;
+  const aspLowMin = poids*30, aspLowMax = poids*50;
+  const aspMaintMin = poids*3, aspMaintMax = poids*5;
+
+  noteEl.innerHTML = `Poids saisi : <strong>${poids} kg</strong>`;
+  resultEl.classList.remove('hidden');
+  resultEl.innerHTML = warn +
+    `<table style="margin-top:4px;"><tr><th>Traitement</th><th>Dose calculée</th></tr>` +
+    `<tr><td>Immunoglobulines IV (dose unique, sur 10-12h)</td><td><strong>${ivigG.toFixed(1)} g</strong> (2 g/kg)</td></tr>` +
+    `<tr><td>Aspirine phase aiguë (jusqu'à apyrexie 48-72h)</td><td><strong>${aspLowMin.toFixed(0)}-${aspLowMax.toFixed(0)} mg/j</strong> (30-50 mg/kg/j)</td></tr>` +
+    `<tr><td>Aspirine dose d'entretien (6-8 semaines)</td><td><strong>${aspMaintMin.toFixed(0)}-${aspMaintMax.toFixed(0)} mg/j</strong> (3-5 mg/kg/j)</td></tr>` +
+    `</table><p style="margin-top:8px; font-size:12px; color:var(--muted)">Dose indicative — vérifier systématiquement avant administration.</p>`;
 }
 
 /* Calculateur de doses intégré — fiche Paludisme grave (Artésunate) */
@@ -15712,7 +16144,8 @@ const SYMPTOM_INDEX = [
   { symptoms:['nouveau-ne qui va mal','bebe qui va mal','nouveau-ne ne va pas bien'], items:['proto-reanimation-nn','proto-sepsis-neonatal','proto-ictere-neonatal'] },
   { symptoms:['diarrhee','diarrhee aigue','selles liquides'], items:['proto-cholera','proto-deshydratation-enfant','proto-typhoide'] },
   { symptoms:['vomissements','vomissements repetes'], items:['proto-deshydratation-enfant','proto-acd','proto-hhs','proto-occlusion-intestinale','proto-invagination'] },
-  { symptoms:['eruption cutanee fievre','fievre et eruption','tache rouge et fievre','eruption febrile'], items:['proto-purpura-fulminans','proto-meningite','proto-dress','proto-sjs-ten','proto-dengue'] },
+  { symptoms:['eruption cutanee fievre','fievre et eruption','tache rouge et fievre','eruption febrile'], items:['proto-purpura-fulminans','proto-meningite','proto-eruptions-febriles-enfant','proto-kawasaki','proto-mpox-enfant','proto-dress','proto-sjs-ten','proto-dengue'] },
+  { symptoms:['eruption vesiculeuse','boutons d\'eau','cloques sur la peau','vesicules'], items:['proto-eruptions-febriles-enfant','proto-mpox-enfant'] },
   { symptoms:['gonflement du visage','oedeme du visage','visage gonfle','levres gonflees'], items:['proto-anaphylaxie','proto-angioedeme-bradykinique'] },
   { symptoms:['douleur testiculaire','douleur aux testicules','bourse douloureuse'], items:['proto-torsion-testiculaire'] },
   { symptoms:['douleur oculaire','oeil rouge douloureux','mal a l\'oeil'], items:['proto-glaucome-aigu','proto-trauma-oculaire','proto-endophtalmie','proto-cellulite-orbitaire'] },
@@ -15735,7 +16168,9 @@ const SYMPTOM_INDEX = [
   { symptoms:['faiblesse musculaire','paralysie','ne peut plus bouger un membre','deficit moteur'], items:['proto-avc','proto-guillain-barre','proto-myasthenie','proto-compression-medullaire'] },
   { symptoms:['mal au dos avec fievre','douleur dorsale fievre','douleur rachis fievre'], items:['proto-arthrite-septique'] },
   { symptoms:['articulation gonflee','genou gonfle et fievre','articulation chaude et rouge'], items:['proto-arthrite-septique'] },
-  { symptoms:['jambe gonflee','membre gonfle douloureux','mollet gonfle'], items:['proto-tvp','proto-ischemie-membre','proto-syndrome-loges','proto-fasciite-necrosante'] },
+  { symptoms:['jambe gonflee','membre gonfle douloureux','mollet gonfle'], items:['proto-tvp','proto-ischemie-membre','proto-syndrome-loges','proto-fasciite-necrosante','proto-erysipele'] },
+  { symptoms:['jambe rouge chaude','rougeur jambe','placard rouge jambe fievre'], items:['proto-erysipele','proto-tvp','proto-fasciite-necrosante'] },
+  { symptoms:['claudication intermittente','douleur mollet marche','crampe jambe effort'], items:['proto-aomi','proto-ischemie-membre'] },
   { symptoms:['intoxication medicamenteuse','surdosage','a avale trop de medicaments'], items:['proto-intoxications','proto-paracetamol','proto-tricycliques','proto-opiaces','proto-digitalique'] },
   { symptoms:['reaction allergique','allergie grave'], items:['proto-anaphylaxie','proto-angioedeme-bradykinique'] },
   { symptoms:['a avale quelque chose','corps etranger avale','s\'etouffe','etouffement'], items:['proto-corps-etranger'] },
