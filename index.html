@@ -428,7 +428,7 @@ const MODULES = {
 const renderers = {}; // mod -> function() -> html string
 
 /* ——— Version de l'application ——— */
-const APP_VERSION = "2026.07.24e";
+const APP_VERSION = "2026.07.31c";
 document.addEventListener('DOMContentLoaded', ()=>{});
 (function initVersionBadge(){
   const el = document.getElementById('app-version');
@@ -3178,6 +3178,7 @@ function renderProtocoles(){
         <li><a onclick="openProtoCard('proto-coma')">🧠 Coma</a></li>
         <li><a onclick="openProtoCard('proto-convulsions')">⚡ Convulsion isolée</a></li>
         <li><a onclick="openProtoCard('proto-etat-mal-epileptique')">⚡ État de mal épileptique</a></li>
+        <li><a onclick="openProtoCard('proto-epilepsie-fond')">⚡ Épilepsie — traitement de fond</a></li>
         <li><a onclick="openProtoCard('proto-hic')">🧠 Hypertension intracrânienne / Engagement cérébral</a></li>
         <li><a onclick="openProtoCard('proto-syndrome-serotoninergique')">💊 Syndrome sérotoninergique / SMN</a></li>
         <li><a onclick="openProtoCard('proto-guillain-barre')">🧠 Syndrome de Guillain-Barré</a></li>
@@ -3222,6 +3223,7 @@ function renderProtocoles(){
         <li><a onclick="openProtoCard('proto-fasciite-necrosante')">🦠 Fasciite nécrosante / Infections nécrosantes des tissus mous</a></li>
         <li><a onclick="openProtoCard('proto-neutropenie-febrile')">🧬 Neutropénie fébrile / Aplasie fébrile</a></li>
         <li><a onclick="openProtoCard('proto-arthrite-septique')">🦴 Arthrite septique / Spondylodiscite infectieuse</a></li>
+        <li><a onclick="openProtoCard('proto-toxoplasmose')">🐱 Toxoplasmose (cérébrale, oculaire, grossesse/congénitale)</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>🩸 Hématologie</span><span class="toc-cat-arrow">▾</span></li>
@@ -3401,6 +3403,7 @@ function renderProtocoles(){
         <li><a onclick="openProtoCard('proto-typhoide')">🦠 Fièvre typhoïde compliquée</a></li>
         <li><a onclick="openProtoCard('proto-malnutrition')">🍼 Malnutrition aiguë sévère de l'enfant (OMS)</a></li>
         <li><a onclick="openProtoCard('proto-bilharziose')">🐌 Bilharziose aiguë / Fièvre de Katayama</a></li>
+        <li><a onclick="openProtoCard('proto-cysticercose')">🧠 Cysticercose / Neurocysticercose</a></li>
       </ul></li>
 
       <li class="toc-cat collapsed" onclick="toggleTocCat(this)"><span>📚 Référence</span><span class="toc-cat-arrow">▾</span></li>
@@ -4290,6 +4293,68 @@ function renderProtocoles(){
     <div class="safety-alert sa-piege"><div><span class="sa-label"></span>L'erreur la plus fréquente et la plus délétère est le sous-dosage de la benzodiazépine de 1ère ligne — administrer la dose pleine d'emblée (pas de titration prudente comme en anesthésie) ; un sous-dosage retarde le contrôle des crises et augmente le risque de passage en réfractaire.</div></div>
     <p style="margin-top:8px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Valium® et Hypnovel® sont disponibles à tous les niveaux hospitaliers (LNMEIS) — les benzodiazépines restent la pierre angulaire accessible partout. La Dépakine® injectable et le Keppra® IV sont réservés aux pharmacies de CHU/CHRR ; la Phénytoïne IV est peu répandue. En l'absence d'agent de 2e ligne et de possibilité d'anesthésie générale/ventilation, un transfert vers un centre équipé doit être organisé sans délai dès l'échec des benzodiazépines, sans jamais interrompre les mesures de réanimation de base.</p>
     <p style="margin-top:8px; font-size:13.5px;"><strong>Critères de sortie</strong> : contrôle complet des crises depuis &gt;24-48h, sevrage de toute sédation/anesthésie avec examen neurologique satisfaisant, cause identifiée et traitée, traitement antiépileptique de fond optimisé et éducation du patient/entourage, suivi neurologique programmé.</p>
+  </div>
+
+  <div class="card" id="proto-epilepsie-fond">
+    <h3>⚡ Épilepsie — traitement de fond</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Sources : NICE NG217 — Epilepsies in children, young people and adults, 2022 (mise à jour janvier 2025) ; WHO mhGAP Intervention Guide, module épilepsie (évidence actualisée 2023) ; OMS — Management of epilepsy in women and girls of childbearing potential, 2023 ; AAN/AES — Efficacy and Tolerability of New Antiepileptic Drugs, réaffirmé octobre 2024 ; MSF Medical Guidelines — Epilepsy.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Cette fiche concerne le <strong>traitement antiépileptique de fond (au long cours)</strong> après le contrôle d'une crise ou d'un état de mal aigu — pour la gestion immédiate d'une crise en cours, voir le protocole <a onclick="openProtoCard('proto-etat-mal-epileptique')" style="color:var(--accent); cursor:pointer;">État de mal épileptique</a> ou <a onclick="openProtoCard('proto-convulsions')" style="color:var(--accent); cursor:pointer;">Convulsion isolée</a>. L'instauration d'un traitement de fond n'est généralement indiquée qu'après une <strong>2e crise non provoquée</strong> (le risque de récidive après une 1ère crise isolée est significatif mais ne justifie pas systématiquement un traitement immédiat, sauf anomalie à l'EEG/IRM ou contexte à haut risque de récidive).</p>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Type de crise/syndrome</th><th>1ère intention</th><th>Alternative</th></tr>
+      <tr><td>Crises focales</td><td><strong>Lamotrigine</strong> ou <strong>Lévétiracétam</strong></td><td>Carbamazépine, Oxcarbazépine</td></tr>
+      <tr><td>Crises tonico-cloniques généralisées</td><td><strong>Valproate de sodium</strong> (hors femme en âge de procréer)</td><td>Lamotrigine ou Lévétiracétam (à privilégier chez la femme en âge de procréer)</td></tr>
+      <tr><td>Absences</td><td><strong>Éthosuximide</strong> ou Valproate</td><td>Lamotrigine</td></tr>
+      <tr><td>Myoclonies / épilepsie myoclonique juvénile</td><td><strong>Valproate</strong></td><td>Lévétiracétam (attention : Carbamazépine, Oxcarbazépine, Phénytoïne, Gabapentine et Lamotrigine peuvent aggraver les myoclonies)</td></tr>
+      <tr><td>Tonique / atonique</td><td>Lamotrigine ou Valproate</td><td>—</td></tr>
+      <tr><td><strong>Contexte de ressources limitées</strong> (recommandation OMS mhGAP)</td><td><strong>Phénobarbital</strong> — efficacité comparable aux molécules plus récentes, coût très faible, prise unique quotidienne</td><td>Carbamazépine ou Valproate selon disponibilité locale</td></tr>
+    </table>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Principe général</strong> — monothérapie en 1ère intention, à dose initiale faible puis titration progressive jusqu'à la dose efficace minimale (le choix de la 1ère molécule dépend du type de crise/syndrome, de l'âge, du sexe et du désir de grossesse, des comorbidités et interactions médicamenteuses, et des données de disponibilité locale) ; un 2e antiépileptique en monothérapie alternative est tenté avant d'envisager une association en cas d'échec du 1er</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Phénobarbital (Gardénal®)</strong> — molécule de référence en contexte de ressources limitées (OMS mhGAP)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Adulte : 2-3 mg/kg/j PO en 1 prise</strong> (souvent le soir) &nbsp;·&nbsp; <strong style="color:var(--accent2)">Enfant : 3-5 mg/kg/j</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Efficacité équivalente aux antiépileptiques plus récents pour de nombreux types de crises, à un coût très inférieur et avec une prise quotidienne unique facilitant l'observance — inconvénients : sédation, effets cognitifs (surtout chez l'enfant), risque d'ostéoporose au long cours, inducteur enzymatique puissant (interactions multiples, dont contraceptifs oraux)</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Valproate de sodium (Dépakine®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">10-15 mg/kg/j</strong> en 2 prises, titration jusqu'à <strong style="color:var(--accent2)">20-30 mg/kg/j</strong> selon réponse (max habituel 2-2,5g/j)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Large spectre (généralisées, myocloniques, absences) — <strong>tératogène majeur, contre-indiqué en 1ère intention chez la femme/fille en âge de procréer</strong> sauf échec documenté des alternatives et programme de prévention de grossesse en place (contraception efficace, information systématique) ; à éviter également en cas d'hépatopathie</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Carbamazépine (Tégrétol®)</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Débuter à 100-200 mg/j</strong>, titration progressive jusqu'à <strong style="color:var(--accent2)">400-1200 mg/j</strong> en 2 prises</div>
+          <div style="font-size:12.5px; color:var(--muted);">Efficace sur les crises focales ; risque de toxidermie sévère (DRESS, Sd de Stevens-Johnson/Lyell — voir fiches dédiées), interactions médicamenteuses multiples (inducteur enzymatique) ; à éviter dans les absences/myoclonies (peut les aggraver)</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Lamotrigine (Lamictal®)</strong> — si disponible, alternative de choix chez la femme en âge de procréer</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Titration très progressive indispensable</strong> — débuter à 25 mg/j, paliers toutes les 1-2 semaines jusqu'à la dose efficace (100-400 mg/j en 2 prises)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Une titration trop rapide expose à un risque de toxidermie sévère (Sd de Stevens-Johnson/Lyell) — ne jamais accélérer la montée de dose même en cas de mauvais contrôle des crises</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Lévétiracétam (Keppra®)</strong> — si disponible</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Débuter à 250-500 mg x2/j</strong>, titration jusqu'à <strong style="color:var(--accent2)">1000-1500 mg x2/j</strong> selon réponse</div>
+          <div style="font-size:12.5px; color:var(--muted);">Bonne tolérance générale, peu d'interactions médicamenteuses (pas de métabolisme hépatique significatif), titration plus rapide possible qu'avec la lamotrigine — effets indésirables principalement neuropsychiatriques (irritabilité, troubles de l'humeur) à surveiller</div>
+        </div>
+      </li>
+      <li><strong>Grossesse et âge de procréer</strong> — éviter le Valproate en 1ère intention chez toute femme/fille en âge de procréer (risque tératogène et de troubles neurodéveloppementaux chez l'enfant exposé in utero) ; privilégier Lamotrigine ou Lévétiracétam ; <strong>acide folique</strong> systématique chez toute femme en âge de procréer sous antiépileptique ; l'allaitement reste possible sous la plupart des antiépileptiques courants (Phénobarbital, Phénytoïne, Valproate, Carbamazépine, Lamotrigine, Lévétiracétam)</li>
+      <li><strong>Surveillance</strong> — réévaluation clinique régulière (contrôle des crises, effets indésirables, observance), pas de dosage sanguin systématique des antiépileptiques sauf doute d'observance/interaction/toxicité ou ajustement de posologie difficile ; NFS et bilan hépatique à discuter selon la molécule (Valproate, Carbamazépine) surtout en début de traitement</li>
+      <li><strong>Échec thérapeutique</strong> — reconsidérer en premier lieu l'observance et le diagnostic (crises non épileptiques, syndrome épileptique mal identifié) avant de conclure à une pharmacorésistance ; après échec de 2 monothérapies bien conduites, discuter une bithérapie rationnelle ou l'orientation vers un centre spécialisé (avis neurologique, EEG, imagerie si non déjà faits)</li>
+      <li><strong>Arrêt du traitement</strong> — à discuter au cas par cas après une période prolongée sans crise (habituellement ≥2 ans), decroissance très progressive sur plusieurs mois, jamais d'arrêt brutal (risque de rebond/état de mal) ; le patient doit être informé du risque de récidive et de ses implications (conduite automobile notamment)</li>
+      <li><strong>Éducation du patient et de l'entourage</strong> — observance stricte (1ère cause de récidive évitable), mesures de sécurité du quotidien (éviter la baignade seul, la cuisson sur feu ouvert non surveillée, la conduite tant que les crises ne sont pas contrôlées selon la réglementation locale), conduite à tenir en cas de crise pour l'entourage, reconnaître les signes devant motiver une consultation en urgence (crise prolongée, changement de sémiologie, effets indésirables sévères)</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais interrompre brutalement un antiépileptique de fond, y compris en cas de rupture de stock ou de changement de molécule — organiser un relais progressif chevauché ; un arrêt brutal expose à un effet rebond pouvant aller jusqu'à l'état de mal épileptique.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le <strong>Phénobarbital (Gardénal®)</strong> est très largement disponible et peu coûteux — c'est en pratique la molécule la plus prescrite pour l'épilepsie à Madagascar (à l'instar de nombreux pays à ressources limitées, conformément à la recommandation OMS mhGAP), de même que la <strong>Carbamazépine</strong>, également très répandue. Le Valproate est disponible à la plupart des niveaux hospitaliers. La Lamotrigine et le Lévétiracétam, molécules souvent préférées dans les recommandations occidentales (notamment chez la femme en âge de procréer), restent d'accès limité et coûteux hors des grands centres — leur indisponibilité ne doit pas retarder l'instauration d'un traitement efficace par une molécule plus accessible, en informant la patiente du profil de risque du Valproate si celui-ci reste la seule option disponible. Le suivi biologique (dosages sanguins, NFS, bilan hépatique) et l'accès à l'EEG restent limités aux CHU/CHRR.</p>
   </div>
 
   <div class="card" id="proto-hypoglycemie">
@@ -5970,6 +6035,60 @@ function renderProtocoles(){
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Cloxacilline (Orbenine®) et la Ceftriaxone sont disponibles jusqu'au niveau CHRD (LNMEIS) — la Vancomycine est plus généralement réservée au CHU/CHRR. L'IRM rachidienne reste un examen rare hors des plus grands CHU ; en son absence, le scanner (moins sensible mais plus accessible) et une forte suspicion clinique (rachialgie fébrile avec syndrome inflammatoire) doivent faire débuter la prise en charge sans attendre, en orientant en urgence vers un centre équipé si signes neurologiques. Devant toute spondylodiscite atypique ou d'évolution traînante à Madagascar, le mal de Pott (tuberculose vertébrale) doit être systématiquement évoqué compte tenu de l'endémicité de la tuberculose — voir le <a onclick="openProtoCard('proto-tuberculose')" style="color:var(--accent); cursor:pointer;">protocole Tuberculose</a>.</p>
   </div>
 
+  <div class="card" id="proto-toxoplasmose">
+    <h3>🐱 Toxoplasmose (cérébrale, oculaire, grossesse/congénitale)</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Sources : DHHS/NIH/HIVMA/IDSA Guidelines for the Prevention and Treatment of Opportunistic Infections in Adults and Adolescents with HIV (mise à jour continue) ; Prosty C et al., Revisiting the Evidence Base for Modern-Day Practice of the Treatment of Toxoplasmic Encephalitis, Clin Infect Dis 2023 ; SOGC Clinical Practice Guideline — Toxoplasmose et grossesse, J Obstet Gynaecol Can 2024 ; Villena I et al., Toxoplasmose pendant la grossesse : proposition actuelle de prise en charge pratique, Gynecol Obstet Fertil Senol 2023.</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection à <em>Toxoplasma gondii</em>, protozoaire dont le réservoir est le chat (hôte définitif) — contamination par ingestion de viande peu cuite contenant des kystes, de crudités/eau souillées par des oocystes, ou contact avec des excréments de chat. Bénigne et le plus souvent asymptomatique chez l'immunocompétent, elle expose à un risque grave dans 2 situations : <strong>réactivation cérébrale chez l'immunodéprimé</strong> (VIH avancé, CD4&lt;100/mm³ ; ou immunosuppression médicamenteuse) et <strong>primo-infection maternelle pendant la grossesse</strong> (risque de toxoplasmose congénitale).</p>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Terrain</th><th>Présentation</th><th>Conduite à tenir</th></tr>
+      <tr><td>Immunocompétent</td><td>Souvent asymptomatique ; adénopathies cervicales indolores ± syndrome pseudo-grippal</td><td>Pas de traitement en général — surveillance simple, résolution spontanée en quelques semaines</td></tr>
+      <tr><td>Immunodéprimé (VIH, CD4&lt;100)</td><td>Encéphalite : céphalées, fièvre, déficit focal, confusion, crises comitiales — 1ère cause de lésion(s) cérébrale(s) chez le patient VIH avancé</td><td>Traitement antiparasitaire en urgence (cf. ci-dessous)</td></tr>
+      <tr><td>Grossesse (primo-infection)</td><td>Le plus souvent asymptomatique chez la mère ; risque pour le fœtus (transmission d'autant plus fréquente que l'infection est tardive, mais gravité d'autant plus élevée qu'elle est précoce)</td><td>Spiramycine puis adaptation selon PCR liquide amniotique (cf. ci-dessous)</td></tr>
+      <tr><td>Oculaire</td><td>Baisse d'acuité visuelle, myodésopsies, douleur oculaire — choriorétinite (uvéite postérieure)</td><td>Traitement si lésion proche de la macula/du nerf optique ou baisse visuelle significative — avis ophtalmologique</td></tr>
+    </table>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Immunocompétent — adénopathies isolées</strong> : pas de traitement antiparasitaire systématique (bénéfice non démontré chez l'immunocompétent asymptomatique) ; réserver le traitement aux formes symptomatiques sévères ou prolongées (&gt;2 semaines), sur avis spécialisé</li>
+      <li><strong>Suspicion d'encéphalite toxoplasmique chez l'immunodéprimé</strong> — imagerie cérébrale en urgence (TDM ou IRM injectée : lésions multiples, prise de contraste en cocarde, effet de masse ± œdème périlésionnel) ; sérologie IgG positive quasi constante (une sérologie négative rend le diagnostic peu probable mais ne l'exclut pas formellement) ; <strong>traitement d'épreuve à débuter sans attendre la biopsie</strong> devant un tableau évocateur chez un patient CD4 bas, la réponse clinico-radiologique sous 10-14 jours étant elle-même un argument diagnostique</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💊 Encéphalite toxoplasmique — traitement d'attaque, 1ère intention</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Pyriméthamine (Malocide®)</strong> dose de charge 200mg J1 puis <strong style="color:var(--accent2)">50-75 mg/j PO</strong> + <strong style="color:var(--accent2)">Sulfadiazine (Adiazine®) 1-1,5 g PO x4/j</strong> + <strong style="color:var(--accent2)">Acide folinique 10-25 mg/j</strong> &nbsp;·&nbsp; <strong>6 semaines minimum</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">L'acide folinique (et non l'acide folique) est indispensable pour prévenir la toxicité hématologique de la pyriméthamine (antifolique), sans diminuer son efficacité antiparasitaire</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Alternative si Pyriméthamine/Sulfadiazine indisponible</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Cotrimoxazole (TMP-SMX)</strong> — TMP <strong style="color:var(--accent2)">10 mg/kg/j</strong> en 2 prises, IV ou PO &nbsp;·&nbsp; 6 semaines</div>
+          <div style="font-size:12.5px; color:var(--muted);">Efficacité clinique et radiologique comparable à l'association pyriméthamine-sulfadiazine dans une méta-analyse récente (Prosty et al. 2023), avec une meilleure tolérance — alternative de choix, en particulier dans les contextes où la Pyriméthamine et la Sulfadiazine sont d'accès difficile</div>
+        </div>
+      </li>
+      <li><strong>Corticothérapie adjuvante</strong> (Dexaméthasone) uniquement en cas d'effet de masse important avec engagement menaçant ou œdème périlésionnel significatif — à limiter en durée (peut masquer une réponse au traitement antiparasitaire et retarder le diagnostic différentiel avec un lymphome cérébral)</li>
+      <li><strong>Traitement d'entretien (prophylaxie secondaire)</strong> après la phase d'attaque, à demi-dose, poursuivi jusqu'à restauration immunitaire sous traitement antirétroviral (CD4&gt;200/mm³ pendant plus de 3 mois) chez le patient VIH</li>
+      <li><strong>Absence d'amélioration clinique/radiologique à 10-14 jours</strong> sous traitement bien conduit → reconsidérer le diagnostic (lymphome cérébral primitif, tuberculome, abcès bactérien) et discuter une biopsie cérébrale</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Primo-infection pendant la grossesse — avant 14 SA ou datation incertaine</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Spiramycine (Rovamycine®) 3g/j PO</strong> (soit 1g x3/j), poursuivie jusqu'à l'accouchement si le diagnostic anténatal reste négatif</div>
+          <div style="font-size:12.5px; color:var(--muted);">Se concentre dans le placenta mais le traverse peu — vise à réduire la transmission materno-fœtale, non un traitement curatif du fœtus déjà infecté ; à débuter au plus vite, idéalement dans les 3 semaines suivant la séroconversion</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💊 Infection fœtale confirmée (PCR positive sur liquide amniotique) ou séroconversion ≥14 SA</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Pyriméthamine 1 mg/kg/j</strong> (max 50mg/j) + <strong style="color:var(--accent2)">Sulfadiazine 50-100 mg/kg/j</strong> + <strong style="color:var(--accent2)">Acide folinique</strong>, jusqu'à l'accouchement</div>
+          <div style="font-size:12.5px; color:var(--muted);">Prise en charge à orienter vers un centre expert (suivi échographique rapproché, discussion pluridisciplinaire) ; en l'absence d'amniocentèse réalisable, maintenir ce traitement par précaution jusqu'à la naissance</div>
+        </div>
+      </li>
+      <li><strong>Nouveau-né à risque</strong> (mère séroconvertie pendant la grossesse, quel que soit le terme) — bilan néonatal systématique (sérologies comparées mère-enfant, fond d'œil, imagerie cérébrale, PCR LCR si disponible) ; toxoplasmose congénitale confirmée → <strong>Pyriméthamine-Sulfadiazine + acide folinique pendant au moins 12 mois</strong> avec surveillance hématologique régulière</li>
+      <li><strong>Toxoplasmose oculaire</strong> — Pyriméthamine-Sulfadiazine ou Cotrimoxazole (efficacité comparable, cf. données d'Afrique subsaharienne), associé à une corticothérapie systémique si lésion menaçant la macula ou le nerf optique (à débuter après le traitement antiparasitaire, jamais isolément) ; avis ophtalmologique systématique pour le suivi du fond d'œil</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Chez le patient VIH avec lésion(s) cérébrale(s) évocatrice(s), le traitement d'épreuve anti-toxoplasmique est justifié en 1ère intention sans attendre une biopsie — mais toute absence de réponse à 2 semaines doit faire reconsidérer sans délai un lymphome cérébral primitif ou une tuberculose du SNC, fréquents diagnostics différentiels en zone d'endémie tuberculeuse.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : la Pyriméthamine et la Sulfadiazine sont d'accès inconstant hors des plus grands centres (CHU) — le Cotrimoxazole (déjà largement utilisé en prophylaxie systématique chez le patient VIH) constitue une alternative pragmatique et généralement bien plus disponible localement, à privilégier en 1ère intention en pratique si la bithérapie de référence n'est pas immédiatement accessible. La Spiramycine est également d'accès limité en dépôt courant — anticiper son approvisionnement dès la découverte d'une séroconversion en cours de grossesse, en orientant rapidement vers un centre de référence (CHU Antananarivo) pour la suite de la prise en charge et le suivi échographique spécialisé. L'acide folinique (Lederfoline®) doit être distingué de l'acide folique, moins efficace pour prévenir la toxicité hématologique de la Pyriméthamine.</p>
+  </div>
+
 
   <div class="card" style="border-left:4px solid var(--warn);">
     <h3>💊 Note sur les noms commerciaux</h3>
@@ -6126,11 +6245,19 @@ function renderProtocoles(){
       <li><strong>Indice de pression systolique (IPS/ABI)</strong> — rapport pression systolique cheville/bras : normal 0,90-1,40 ; AOMI si ≤0,90 ; AOMI sévère si &lt;0,50 ; un IPS &gt;1,40 (incompressibilité artérielle, médiacalcose — fréquente chez le diabétique/insuffisant rénal) impose la mesure de la pression au gros orteil (IPO) ou une autre méthode</li>
       <li><strong>Examen clinique</strong> — palpation de tous les pouls (fémoral, poplité, tibial postérieur, pédieux), recherche d'un souffle vasculaire, temps de recoloration cutanée, aspect trophique (pâleur, dépilation, ongles cassants, ulcère à l'emporte-pièce typiquement suspendu/distal et douloureux)</li>
       <li><strong>Bilan étiologique et facteurs de risque cardiovasculaire</strong> systématique — l'AOMI est un marqueur majeur de risque cardiovasculaire global (coronaropathie, AVC) : bilan lipidique, glycémie/HbA1c, tabagisme, pression artérielle</li>
-      <li><strong>Traitement médical de fond</strong> — statine à haute intensité (objectif LDL agressif compte tenu du haut risque cardiovasculaire), antiagrégant plaquettaire (Aspirine ou Clopidogrel), sevrage tabagique impératif, équilibre glycémique et tensionnel optimal, réadaptation à la marche encadrée (programme d'entraînement supervisé) dans les formes IIa/IIb</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Traitement médical de fond</strong> — à instaurer dès le diagnostic, quel que soit le stade (y compris asymptomatique), et à poursuivre au long cours</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Statine à haute intensité</strong> — Atorvastatine 40-80 mg/j ou Rosuvastatine 20 mg/j, objectif LDL &lt;0,55 g/L (haut risque cardiovasculaire)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Antiagrégant plaquettaire</strong> — Clopidogrel (Plavix®) 75 mg/j en 1ère intention (préféré à l'aspirine seule dans l'AOMI symptomatique per ESC/ESVS 2024), ou à défaut Aspirine 75-100 mg/j</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">IEC ou ARA2</strong> (Ramipril, Périndopril…) à dose maximale tolérée si HTA associée ou même en normotension compte tenu du bénéfice cardiovasculaire global démontré</div>
+          <div style="font-size:12.5px; color:var(--muted);"><strong>Sevrage tabagique impératif</strong> (mesure la plus efficace sur la progression de la maladie et le risque d'amputation) ; équilibre glycémique optimal si diabète (HbA1c cible individualisée) ; <strong>réadaptation à la marche encadrée</strong> (programme d'entraînement supervisé, 3 séances/semaine minimum) dans les formes IIa/IIb ; Cilostazol (amélioration du périmètre de marche) envisageable si claudication invalidante persistante malgré la réadaptation, mais peu voire pas disponible localement en pratique</div>
+        </div>
+      </li>
       <li><strong>Ischémie critique chronique (stade III-IV/Rutherford 4-6)</strong> — antalgie (souvent morphinique, la douleur de décubitus est intense), avis chirurgical vasculaire pour revascularisation (endovasculaire ou pontage selon la classification anatomique des lésions et le terrain), soins de plaie/pansements adaptés si trouble trophique, dépistage et traitement de toute surinfection associée (voir protocole érysipèle/fasciite selon la présentation)</li>
       <li><strong>Ne jamais</strong> réaliser de compression veineuse (bas de contention, bandage compressif) sans avoir éliminé une AOMI sévère sous-jacente (IPS non fait ou &lt;0,60-0,90 selon les seuils) — risque d'aggravation ischémique iatrogène, notamment chez le patient présentant un ulcère de jambe de cause incertaine</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : statines, antiagrégants et antalgiques disponibles à la plupart des niveaux hospitaliers (LNMEIS). La mesure de l'IPS (Doppler de poche) et l'écho-Doppler artériel restent d'accès limité hors CHU/CHRR ; la revascularisation (endovasculaire ou chirurgicale) nécessite un plateau de chirurgie vasculaire — organiser un transfert précoce dès le stade d'ischémie critique chronique plutôt que d'attendre la constitution d'une gangrène.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : statines (Atorvastatine largement disponible ; Rosuvastatine d'accès plus limité et coûteuse hors grands centres), Clopidogrel et Aspirine, IEC (Ramipril, Périndopril) disponibles à la plupart des niveaux hospitaliers (LNMEIS). Le Cilostazol n'est pratiquement pas disponible localement — ne pas retarder la prise en charge en son absence, la réadaptation à la marche et le sevrage tabagique restant les mesures les plus déterminantes. La mesure de l'IPS (Doppler de poche) et l'écho-Doppler artériel restent d'accès limité hors CHU/CHRR ; la revascularisation (endovasculaire ou chirurgicale) nécessite un plateau de chirurgie vasculaire — organiser un transfert précoce dès le stade d'ischémie critique chronique plutôt que d'attendre la constitution d'une gangrène.</p>
     <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : Aboyans V et al., 2024 ESC/ESVS Guidelines on the management of peripheral arterial and aortic diseases, Eur Heart J 2024 ; Global Vascular Guidelines on the Management of Chronic Limb-Threatening Ischemia, J Vasc Surg 2019.</p>
   </div>
 
@@ -6225,11 +6352,18 @@ function renderProtocoles(){
         </div>
       </li>
       <li><strong>Antalgie/antipyrétique</strong> systématique (Paracétamol) — <strong>proscrire les AINS et la corticothérapie</strong>, susceptibles de favoriser une évolution vers une forme nécrosante en masquant les signes d'alerte</li>
-      <li><strong>Traitement de la porte d'entrée</strong> — traiter systématiquement un intertrigo interorteils mycosique associé (antifongique local), soins de plaie/ulcère si présent, prévention des récidives (hygiène cutanée, contention veineuse une fois une AOMI sévère éliminée — voir fiche dédiée)</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Traitement de la porte d'entrée</strong> — intertrigo interorteils mycosique associé, très fréquemment retrouvé et à traiter systématiquement (favorise les récidives s'il persiste)</div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Éconazole (Pevaryl®) crème/poudre 1%</strong>, application locale <strong>2 fois/jour pendant 3 à 4 semaines</strong> (poursuivre au-delà de la disparition des lésions visibles pour limiter les récidives)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Alternative : Terbinafine (Lamisil®) crème 1%, 1 application/jour pendant 1 à 2 semaines (durée plus courte, activité fongicide) ; forme de poudre à privilégier en association si hyperhidrose/macération associée</div>
+        </div>
+        <div style="margin-top:6px;">soins de plaie/ulcère si présent, prévention des récidives (hygiène cutanée, séchage soigneux des espaces interorteils, contention veineuse une fois une AOMI sévère éliminée — voir fiche dédiée)</div>
+      </li>
       <li><strong>Prise en charge ambulatoire possible</strong> si forme typique sans signe de gravité, patient sans comorbidité majeure, et possibilité de réévaluation à 48-72h ; <strong>hospitalisation</strong> si signe de gravité local ou général, terrain à risque (diabète mal équilibré, immunodépression, âge extrême, insuffisance cardiaque/rénale), doute diagnostique avec une forme nécrosante, échec d'une antibiothérapie orale bien conduite, ou difficulté prévisible d'observance/de surveillance</li>
       <li><strong>Réévaluation systématique à 48-72h</strong> — une aggravation des signes locaux malgré une antibiothérapie bien conduite doit faire reconsidérer le diagnostic (forme nécrosante débutante, abcès sous-jacent) plutôt que d'attribuer l'échec à une simple résistance antibiotique</li>
     </ol>
-    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Amoxicilline/Clamoxyl® et Augmentin® largement disponibles (LNMEIS) ; la Clindamycine est d'accès plus limité hors grands centres — en son absence chez l'allergique à la pénicilline, solliciter un avis infectiologique pour une alternative disponible localement.</p>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : Amoxicilline/Clamoxyl® et Augmentin® largement disponibles (LNMEIS) ; la Clindamycine est d'accès plus limité hors grands centres — en son absence chez l'allergique à la pénicilline, solliciter un avis infectiologique pour une alternative disponible localement. L'Éconazole (Pevaryl®) crème est largement disponible en officine et bon marché ; à défaut, Kétoconazole (Kétoderm®) crème ou Terbinafine (Lamisil®) crème constituent des alternatives également répandues.</p>
     <p style="margin-top:6px; font-size:11.5px; color:var(--muted);">📅 Source : HAS/SFD/SPILF, Prise en charge des infections cutanées bactériennes courantes, 2019 ; HAS/SPILF, fiches mémo Choix et durées d'antibiothérapies — DHBNN adulte et enfant, actualisation 2024.</p>
   </div>
 
@@ -9449,6 +9583,60 @@ function renderProtocoles(){
       <li>Bilan des localisations viscérales à distance de la phase aiguë : échographie hépatique et vésico-rénale (fibrose de Symmers, dilatation urétérale), sérologie de contrôle</li>
     </ol>
     <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : le Praziquantel est distribué gratuitement dans le cadre des campagnes de chimiothérapie préventive de masse contre la bilharziose (programme national, zones d'endémie du littoral et des hauts-plateaux). La Prednisone est disponible à tous les niveaux hospitaliers (LNMEIS). La sérologie bilharzienne et la recherche d'œufs restent limitées aux laboratoires de référence (CHU, Institut Pasteur de Madagascar) — ne pas attendre ces résultats pour débuter la corticothérapie devant une forme sévère.</p>
+  </div>
+
+  <div class="card" id="proto-cysticercose">
+    <h3>🧠 Cysticercose / Neurocysticercose</h3>
+    <p style="font-size:11px; color:var(--muted); margin-bottom:6px;">📅 Sources : White AC et al., Diagnosis and Treatment of Neurocysticercosis — 2017 IDSA/ASTMH Clinical Practice Guidelines, Clin Infect Dis 2018 (référence toujours en vigueur, aucune actualisation ultérieure) ; WHO Guidelines on management of Taenia solium neurocysticercosis, 2021 ; Garcia HH et al., Neurocysticercosis, Lancet Neurol 2025 (revue).</p>
+    <p style="font-size:13.5px; margin-bottom:8px;">Infection tissulaire par la larve (cysticerque) de <em>Taenia solium</em>, contractée par ingestion d'œufs du ver adulte (auto-infestation par un porteur de tænia, ou péril fécal — eau/légumes souillés), et non par la consommation de viande de porc infestée (qui donne le tænia adulte, pas la cysticercose). La <strong>neurocysticercose (NCC)</strong> est la localisation la plus fréquente et la plus grave — 1ère cause d'épilepsie acquise dans le monde en zone d'endémie. <strong>Contexte Madagascar :</strong> maladie endémique bien documentée sur les Hautes Terres (régions Itasy, Vakinankaratra, Analamanga, Amoron'i Mania), liée à l'élevage porcin en divagation et à l'absence d'assainissement — à évoquer systématiquement devant une épilepsie de novo ou des céphalées chroniques chez un patient de ces régions.</p>
+
+    <div class="safety-alert sa-critique"><div><span class="sa-label"></span>Avant tout traitement antiparasitaire, <strong>toujours réaliser un fond d'œil</strong> à la recherche d'une cysticercose oculaire/sous-rétinienne — un traitement antiparasitaire administré sans l'avoir exclue peut provoquer une réaction inflammatoire intraoculaire sévère et une perte visuelle définitive ; l'exérèse chirurgicale prime alors sur tout traitement médicamenteux.</div></div>
+
+    <table style="margin-bottom:10px;">
+      <tr><th>Forme</th><th>Caractéristiques / imagerie</th></tr>
+      <tr><td><strong>Parenchymateuse viable (VPN)</strong></td><td>Kyste(s) intracérébral(aux) à paroi fine, scolex visible, peu ou pas d'œdème périlésionnel ; principale cause de crises épileptiques</td></tr>
+      <tr><td><strong>Lésion unique rehaussée (SEL)</strong></td><td>Lésion unique &lt;20mm avec prise de contraste ± œdème (kyste en dégénérescence) — forme la plus fréquente dans les épilepsies de novo</td></tr>
+      <tr><td><strong>Calcifiée (CPN)</strong></td><td>Séquelle inactive (parasite mort) ; peut néanmoins générer des crises par œdème périlésionnel épisodique (« calcification symptomatique »)</td></tr>
+      <tr><td><strong>Extraparenchymateuse — sous-arachnoïdienne (SAN)</strong></td><td>Citernes de la base/vallée sylvienne, parfois forme « racémeuse » (grappe de kystes sans scolex, extension progressive) — risque de vascularite, arachnoïdite, hydrocéphalie ; forme la plus sévère et la plus difficile à traiter</td></tr>
+      <tr><td><strong>Intraventriculaire (IVN)</strong></td><td>Risque d'hydrocéphalie obstructive aiguë (effet clapet) — urgence neurochirurgicale potentielle</td></tr>
+      <tr><td><strong>Médullaire / oculaire</strong></td><td>Rares ; l'atteinte oculaire contre-indique tout traitement antiparasitaire avant exérèse chirurgicale (cf. alerte ci-dessus)</td></tr>
+      <tr><td><strong>Sous-cutanée / musculaire (extra-neurologique)</strong></td><td>Nodules indolores, souvent de découverte fortuite ; ne préjuge pas d'une atteinte du SNC associée (à rechercher par imagerie cérébrale si contexte évocateur)</td></tr>
+    </table>
+
+    <ol style="margin-left:18px; font-size:13.5px; line-height:2;">
+      <li><strong>Présentation clinique</strong> — crise d'épilepsie de novo (motif le plus fréquent), céphalées chroniques/HTIC, déficit neurologique focal, troubles cognitifs, ou tableau d'hydrocéphalie aiguë (formes intraventriculaires/sous-arachnoïdiennes) ; l'examen général recherche des nodules sous-cutanés évocateurs</li>
+      <li><strong>Imagerie cérébrale</strong> (TDM puis IRM si disponible — l'IRM est supérieure pour les formes intraventriculaires/sous-arachnoïdiennes et pour visualiser le scolex) ± sérologie (Western blot EITB, plus sensible/spécifique que l'ELISA) en confirmation, surtout utile pour les lésions calcifiées isolées ou en cas de doute diagnostique</li>
+      <li><strong>Prise en charge de l'hypertension intracrânienne/hydrocéphalie en priorité absolue</strong> — <strong>ne pas débuter le traitement antiparasitaire</strong> tant que l'HTIC ou l'hydrocéphalie non contrôlée persiste (risque d'aggravation aiguë par la réaction inflammatoire de lyse parasitaire) ; avis neurochirurgical pour dérivation ventriculaire si besoin</li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Neurocysticercose parenchymateuse viable — 1 à 2 kystes</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Albendazole (Zentel®) 15 mg/kg/j PO</strong> en 2 prises (max 1200mg/j), au cours des repas (absorption améliorée par les graisses) &nbsp;·&nbsp; <strong>10 à 14 jours</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Monothérapie recommandée en 1ère intention pour 1-2 kystes (IDSA/ASTMH, recommandation forte) — non inférieure, voire supérieure, à une association pour ce nombre limité de lésions</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--modere);">
+          <div><strong>💊 Neurocysticercose parenchymateuse viable — plus de 2 kystes, ou forme sous-arachnoïdienne/racémeuse</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Albendazole 15 mg/kg/j PO</strong> + <strong style="color:var(--accent2)">Praziquantel (Biltricide®) 50 mg/kg/j PO</strong> en 3 prises &nbsp;·&nbsp; <strong>10 à 14 jours</strong></div>
+          <div style="font-size:12.5px; color:var(--muted);">Association supérieure à la monothérapie au-delà de 2 kystes (IDSA/ASTMH). Formes sous-arachnoïdiennes/racémeuses : traitement prolongé (semaines à mois), fortes doses d'Albendazole, souvent plusieurs cures — avis infectiologique/neurologique spécialisé indispensable, réponse thérapeutique à surveiller par imagerie répétée</div>
+        </div>
+      </li>
+      <li>
+        <div style="margin:6px 0 0 4px; padding-left:14px; border-left:2px solid var(--grave);">
+          <div><strong>💊 Corticothérapie adjuvante — systématique, débutée avant l'antiparasitaire</strong></div>
+          <div style="margin:3px 0; font-size:14.5px;"><strong style="color:var(--accent2)">Dexaméthasone</strong> ou <strong style="color:var(--accent2)">Prednisone 1 à 1,5 mg/kg/j PO</strong>, débutée 1 à 3 jours avant l'antiparasitaire et poursuivie pendant toute la cure (± décroissance progressive)</div>
+          <div style="font-size:12.5px; color:var(--muted);">Limite l'œdème péri-kystique et le risque de crises générées par la réaction inflammatoire de lyse parasitaire (kystes viables tués par le traitement) ; indispensable également en cas de vascularite/arachnoïdite associée aux formes sous-arachnoïdiennes</div>
+        </div>
+      </li>
+      <li><strong>Traitement antiépileptique</strong> systématique si crise(s) documentée(s) (Valproate, Carbamazépine, Phénytoïne selon disponibilité) — durée non consensuelle, généralement poursuivi plusieurs mois après résolution radiologique/contrôle des crises, décroissance prudente ensuite</li>
+      <li><strong>Forme calcifiée isolée asymptomatique</strong> — <strong>pas de traitement antiparasitaire</strong> (parasite déjà mort, rien à éradiquer) ; traitement symptomatique uniquement si crises récurrentes liées à un œdème périlésionnel épisodique</li>
+      <li><strong>Forme intraventriculaire</strong> — exérèse neurochirurgicale (endoscopie mini-invasive si disponible) privilégiée en 1ère intention plutôt que l'antiparasitaire seul, qui expose à une ventriculite/hydrocéphalie aiguë par réaction inflammatoire dans un espace clos</li>
+      <li><strong>Nodule(s) sous-cutané(s)/musculaire(s) isolé(s)</strong> sans atteinte neurologique associée (imagerie cérébrale à demander systématiquement pour l'éliminer) — abstention possible (régression spontanée fréquente) ou exérèse simple si gênant, sans nécessité d'antiparasitaire systémique</li>
+      <li><strong>Suivi</strong> — imagerie de contrôle à distance (résolution ou calcification des kystes traités) ; retraitement à discuter si lésion(s) parenchymateuse(s) persistant plus de 6 mois après la cure initiale</li>
+      <li><strong>Mesures de santé publique</strong> — dépistage et traitement du portage de tænia adulte (Ver solitaire) dans l'entourage familial (Niclosamide ou Praziquantel dose unique), éducation sur l'hygiène des mains et l'assainissement, cuisson complète du porc pour prévenir la taeniasis (mais n'empêche pas la cysticercose déjà acquise par péril fécal)</li>
+    </ol>
+    <div class="safety-alert sa-piege"><div><span class="sa-label"></span>Ne jamais débuter un traitement antiparasitaire chez un patient présentant une hydrocéphalie ou un œdème cérébral diffus non contrôlé — traiter d'abord l'hypertension intracrânienne (corticoïdes, dérivation) ; l'antiparasitaire aggraverait transitoirement l'inflammation et le risque d'engagement.</div></div>
+    <p style="margin-top:10px; font-size:12.5px; color:var(--muted);">💊 <strong>Disponibilité Madagascar</strong> : l'Albendazole (Zentel®) est largement disponible et peu coûteux (déparasitage courant). Le Praziquantel (Biltricide®) est accessible via les circuits pharmaceutiques hospitaliers/campagnes de masse mais moins systématiquement en stock qu'à l'Albendazole — anticiper l'approvisionnement dès la décision d'association thérapeutique. La corticothérapie orale est disponible à tous les niveaux. L'IRM cérébrale est limitée à de rares centres (Antananarivo) ; la TDM reste l'examen de 1ère intention accessible en pratique courante. La sérologie EITB n'est pas réalisée en routine à Madagascar (technique de référence disponible surtout dans les laboratoires de recherche/Institut Pasteur) — le diagnostic reste le plus souvent présomptif, fondé sur l'imagerie et le contexte épidémiologique des Hautes Terres.</p>
   </div>
 
   <div class="card" id="proto-sepsis-pediatrique">
@@ -15972,6 +16160,7 @@ const QUICK_ACCESS = [
   {icon:'❤️', label:'SCA', module:'protocoles', id:'proto-sca'},
   {icon:'🧠', label:'AVC', module:'protocoles', id:'proto-avc'},
   {icon:'⚡', label:'État de mal épileptique', module:'protocoles', id:'proto-etat-mal-epileptique'},
+  {icon:'⚡', label:'Épilepsie — traitement de fond', module:'protocoles', id:'proto-epilepsie-fond'},
   {icon:'🤰', label:'Éclampsie', module:'protocoles', id:'proto-eclampsie'},
   {icon:'🩸', label:'Hémorragie du post-partum', module:'protocoles', id:'proto-hpp'},
 ];
@@ -16132,10 +16321,10 @@ const SYMPTOM_INDEX = [
   { symptoms:['douleur thoracique','douleur poitrine','oppression thoracique'], items:['proto-douleur-thoracique-triage','proto-sca','proto-dissection-aortique','proto-embolie-pulmonaire','proto-pneumothorax','proto-tamponnade','proto-pericardite-myocardite'] },
   { symptoms:['essoufflement','dyspnee','difficulte a respirer','manque d\'air','detresse respiratoire'], items:['proto-detresse-respiratoire','proto-oap','proto-embolie-pulmonaire','proto-asthme','proto-bpco','proto-anaphylaxie','proto-pneumothorax'] },
   { symptoms:['crise d\'asthme','sifflement respiratoire','respiration sifflante'], items:['proto-asthme','proto-bpco','proto-anaphylaxie','proto-corps-etranger'] },
-  { symptoms:['convulsions','crise convulsive','crise d\'epilepsie'], items:['proto-convulsions-febriles','proto-etat-mal-epileptique','proto-eclampsie','proto-hypoglycemie','proto-hic','proto-meningite'] },
+  { symptoms:['convulsions','crise convulsive','crise d\'epilepsie'], items:['proto-convulsions-febriles','proto-etat-mal-epileptique','proto-eclampsie','proto-hypoglycemie','proto-hic','proto-meningite','proto-cysticercose','proto-toxoplasmose','proto-epilepsie-fond'] },
   { symptoms:['perte de connaissance','malaise','syncope','evanouissement'], items:['proto-syncope','proto-hypoglycemie','proto-avc','proto-troubles-rythme','proto-torsades-pointes'] },
   { symptoms:['coma','trouble de la conscience','ne repond plus','inconscient'], items:['proto-coma','proto-hic','proto-avc','proto-hypoglycemie','proto-intoxications','proto-meningite'] },
-  { symptoms:['cephalees','mal de tete','maux de tete'], items:['proto-hic','proto-meningite','proto-avc','proto-dissection-aortique','proto-hta-urgence','proto-purpura-fulminans'] },
+  { symptoms:['cephalees','mal de tete','maux de tete'], items:['proto-hic','proto-meningite','proto-avc','proto-dissection-aortique','proto-hta-urgence','proto-purpura-fulminans','proto-toxoplasmose'] },
   { symptoms:['douleur abdominale','mal au ventre','douleur au ventre','douleur abdo'], items:['proto-abdomen-aigu','proto-pancreatite','proto-cholecystite','proto-angiocholite','proto-occlusion-intestinale','proto-geu','proto-ischemie-mesenterique','proto-epigastralgie'] },
   { symptoms:['femme enceinte qui saigne','saignement pendant la grossesse','saignement grossesse','metrorragie grossesse'], items:['proto-geu','proto-fausse-couche','proto-hrp-placenta-praevia','proto-mole-hydatiforme'] },
   { symptoms:['saignement apres accouchement','hemorragie apres accouchement','hemorragie du post-partum'], items:['proto-hpp','proto-retention-placentaire','proto-inversion-uterine','proto-rupture-uterine'] },
