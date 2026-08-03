@@ -358,10 +358,189 @@ label{font-size:12.5px; color:var(--muted); display:block; margin-bottom:4px;}
   .card{border:1px solid #999; page-break-inside:avoid; margin-bottom:10px; background:#fff; color:#000;}
   a{color:#000 !important; text-decoration:none !important;}
 }
+#license-gate{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0f172a,#1e293b);display:flex;align-items:center;justify-content:center;padding:20px;}
+#license-gate.hidden{display:none;}
+#license-box{background:#fff;border-radius:16px;padding:32px 28px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center;font-family:inherit;}
+#license-box h2{margin:0 0 8px;font-size:20px;color:#0f172a;}
+#license-box p{margin:0 0 20px;font-size:13px;color:#64748b;line-height:1.5;}
+#license-input{width:100%;padding:12px 14px;border:2px solid #cbd5e1;border-radius:10px;font-size:16px;text-align:center;letter-spacing:1px;text-transform:uppercase;box-sizing:border-box;margin-bottom:12px;}
+#license-input:focus{outline:none;border-color:#2563eb;}
+#license-submit{width:100%;padding:12px;background:#2563eb;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;}
+#license-submit:disabled{opacity:.6;cursor:default;}
+#license-submit:active:not(:disabled){background:#1d4ed8;}
+#license-error{color:#dc2626;font-size:13px;margin-top:10px;min-height:18px;}
+#license-note{margin-top:16px;font-size:11px;color:#94a3b8;}
+#app.license-locked{display:none !important;}
 </style>
 </head>
 <body>
-<div id="app">
+<div id="license-gate">
+  <div id="license-box">
+    <div style="font-size:40px;margin-bottom:8px;">🔒</div>
+    <h2>Activation requise</h2>
+    <p>Entrez votre clé de licence pour activer <strong>Ny Aina Med's Emergency &amp; Intensive Care</strong> sur cet appareil.</p>
+    <input type="text" id="license-input" placeholder="URG-XXXX-XXXX-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <button id="license-submit" type="button">Activer</button>
+    <div id="license-error"></div>
+    <div id="license-note">La licence n'est demandée qu'une seule fois par appareil.</div>
+  </div>
+</div>
+<script>
+const LICENSE_HASHES = [
+  "13c035d315ca410cacafd6ea54ef1330d57ff14282bd5a97d2c292abe6cd9405",
+  "90b8cb4d93ffe1f2588883e7c06396d706e6839e904b642382b585426e072325",
+  "7ca8df4ce5d78a3d260b7e7542a055a54d92ccfdfab626e1ef8953b510be6af3",
+  "24d1b528a3b15365e492722e8219eafd349aea457d6175e42a6280a703016009",
+  "7ba42a5e8f2c6147a45dc3218baf5d4e1df465d4cbefe2ea02890565e85fb6fd",
+  "0f1b6d4e2af1974793da773f28907aaadf135ec8204d41a4391919c95e2fa697",
+  "cf5e6c873e218d49b037872be1870c968e8a4d852883289278816aad1adbcec3",
+  "91ceb23b2e6024267c7932de068bf8920503c4edbb58c2d965b910aaf7a23fe1",
+  "6a94ee3488cd957647d0397246231155a56d1275ad67b23f26b10bacb13a341a",
+  "ebde7f0fd127e26b70f507876ea578af7d00eb0675a9fac983e24542509e6f2e",
+  "9c30c5cfebbc505863ec89add14a391eebb2fb39f8c945150b1eb5bb9da58285",
+  "d21be58c16d95d64acfa80fb057a6f32dbd9142cab4ba7ec1e9a635787b4b9ea",
+  "bc6ac922ddeb9a651815a3563f9989ee5f7c4182f517f07b461446e143f9dc93",
+  "12a819a73073cfaf92e8ff7079cede3410fd5b3828c3fa80db1b1304f109a59c",
+  "d34fbde5821c955b8f8c397ea49644a2424fd594161ec407e5a523b8ae633325",
+  "03e0eb75a5a1795dd65e6b1e79021bd726ff7922a553f53588fe45c3b4dba019",
+  "575be7553fda965fe16952220518ea60699d5527d3d1b132c8328fd381da4392",
+  "eac601ef93043839d348744517b1e0c727f1b36edd7be401126b8530f0486ca0",
+  "60b43d44a65bbb4fe3ecc7751aef2f61206008427d15e7a6ef365a741e9e6f7e",
+  "e967626aab01fa4fc55baccdd0789b60b9306f5661eb6d26cf805053b70a3abc",
+  "5a432e761974bc6f712932502c6ad22ae8747d6a0bbaf6aaa6e13000cf0e6906",
+  "fe89a06433eb3935cd9f0bace4a57296d04073ae01c76bd8f3dbf8b81164df58",
+  "fdd3b39045d60a50888224a07c89e7eef478a41789de66f041bfc5fccdb25217",
+  "ced2dabb29cb7a67fd8e5162f40fc3c6b52fbf384ea11a348b410ae93075fabf",
+  "e50fca0640412ce2aff8d85cef71e6bae2e1ca9e1483d901b6f99e034f45efdc",
+  "5592c71b514f01965caf032b8d8c699190c5f85e4a2cc0f1ac17798342535f9b",
+  "0bf0c64651d2449f2089283490069ed4301e4dc51cbade775f6dc5d8303cf817",
+  "cdea4d5fd8d82964c3e06bd3129b0ae1446ae7c1197d7986b2235a26a8563b1f",
+  "bd92d943cefd1792f6cbb4ca98bdab16a24ccd5a2058b9dddede99634f02904a",
+  "01bfb4c1a9ab10add2e2751fc161b54a2a120a374a46b64d17dea3680b3eccc3",
+  "76e7c63f1ecaf08f1381717ecc4bc1c99730e7b0b19b63f6022a4225d56d3176",
+  "304275b22abe5709c21bd9667275cd1ae1adb172421a6e113b1dc9a96cd6b294",
+  "47752ef4336f3b552b8ab82ca44b587f8e33f1b58a7d65e9b62214454860af80",
+  "9d7ed0276e0d30ee7363cec1580dfe5973d1c87b7427ac20d0158494cd539929",
+  "0feafd50121c46c6fb229e53f56a884349f6705a08f7dc991e4559b9515fe783",
+  "8bf52acc72c0de24044312d21ccc3b88939f0c4f2cc52d844e642abffaef5f1e",
+  "2f36b1efe6a5f9a80d0624e42bf9208ebb381499832d96347879aa3fb916e9a0",
+  "a7bf9880dc976c4ad6235482125971195a0ec8d539c6a468d7f5da68ed6ab0dc",
+  "19fcac3b190498ce05e79a5873d76be69dffc35e43713953ee5be87fa5780603",
+  "3a001bef5e45da436f2a2ac9cba5522b874ae32097802a87647ef005981ec002",
+  "86e1eb3f843ea1dfe09cdc1fb65d2dd9510577092f16e0e615b5ff0ae9aa0548",
+  "36a12edc7417ad34efc9dbf2c59cd79051b121d9a9d71dac444d65823bf0ade2",
+  "1f008609e4ae10b843edb69856397afeda38d3a00c323781c6dd43c9a70c2eb4",
+  "9e1bb081bf83ac8ee544b991d671e7f098573f50ab9528d33dbbd889905b07c8",
+  "3d080a78a3bd42ed2572edea1dbcf50b3903a5062086c736acfef1b3c494dc38",
+  "3215bf3baf104c5e502af4599d0e9326d144dc10def02f8bd499bc29b813d53a",
+  "d0b40d88efc00eb5152712c172cb247825de7fe62fb4aa15dbdd3d3bdbbdd1d0",
+  "68f566ed50732b8c4b0acae78f87c310c7d37bae55e3a4ff718918d0046597ef",
+  "eb729cee785a768d5029d07eccbc5b8c7435aa1dcb65ca8bc7891077981bcc30",
+  "5e8ceba3f902837fbd7410268a0376fccbe362376ac6241d53b6da8387db7fd3",
+  "9c9ae4cea9b49f98df5bee98a0bd206c50bd97f0523f5f9eb5154d565611484c",
+  "a1bccc768c7df083d50a7717b2dd5f697da425b58706036c420421c3bd6b5d97",
+  "ea1c9473474b15328a8ae8181bb86be9962d107b75bcb922b75bf2f9fc2f0cfc",
+  "e03f04b67ee52cc552a1851e805436660c4d91ab0149ae78641caddcd10168a5",
+  "8ccf49e771c8663f965cc1562e7922f5e1610b525da42e0f0b3d753699597403",
+  "5d57c1a6f4a49747ad4ae5d2de0f668891f1a273723b762278e112d2e23cd0bf",
+  "870544ff0bfccf914bbf2bafdfd9bb4f60fcce692fcf863dbe291f17a95dff59",
+  "c371dcf263edf4e43c652fd266c190b5b9945d6dc2b5eee1e252da3144899f74",
+  "1d092d163b43396b02b19311db5ad84cd256c2d7bde695c7b6706663284dd1f1",
+  "c1218c9f2299f63b3b461e7e72f466ab3d7a78e09c2c9327b1b441c5f3b2b31e",
+  "d773ddc16148ddc07d061b9a7399ae84a0e65507860b75a6a7d8f358ae4a1d00",
+  "3db3d23742023483a30db4c98ba921dbc672e7c3974369f6281a4b85a7712bea",
+  "bcd50ea98b29fd6f411b9665fe0eb25ed4ba251dd9c1cc1b389faea43bc28776",
+  "c9ffab175331c72a3207b860a7e9abfb403387e383ce80833cf417c97f23b962",
+  "7fa1fe9b937265da918186c995824e51ceefbc38c3d2dbfef01a7f61130650b4",
+  "9176e4b5ae412735655b2988acfd8776f319fbd81ac6219c107fb73201112404",
+  "01560eb571b1513fcd61782dcc11f2f97e91939625e75844fbd8a741c31245eb",
+  "93ea82483d6cb4ce3f75a1ee3f0380a392dc0aacebc7d742772ff0d3be3ca243",
+  "b17f9245bc13751de4c71e88284ad97c27d6c382d32502dbe2b5702b71516257",
+  "cf9e872195db04a793dd558ba5068c5576a85ef0d6fa7a708060bd69c89eb264",
+  "7669a2f807f18c8d18f5bed673e26fd21827e552100808fe0c585597a7c53533",
+  "c595f01115bee88fbbdb8fb10bd4809622152b72005b7fe05e6d23ac8ed0a977",
+  "4510a67b6d76b546a9fcbeaee2d039456476ab4d9dc3dbc8366222acc8dfc01e",
+  "f7857e61522d03ac7cfb7c5109ad22a6a66c79c4f8b069045ad8ea49d328e040",
+  "3d27cd8638ba6de64d77074cf455345d719a23964f6c20f6c2e965e3a6ce0c6a",
+  "df9e102870c98e200a80d1700b2c63fb040377b3864cb1e6be49fc28a4dc22a2",
+  "8e1dedf20b287648405a69a7181e4f60c9870e306ceec60be4076e87600bfbb0",
+  "f8863dddf9ea95f85dc05040b917d4c251e5ba9f6510b10b8808d610ed78b592",
+  "12ffc0901ebf8d690e4310da414236db189c91a49959859f1aa095da0d710c02",
+  "353d185efbb35ca6d1486063c5516842e7929d304251e9d15636f226cfda708e",
+  "9864b99bab0cc871bf6f0ce003f0c073a7d205cdf411d7087dda24bd3bcd8155",
+  "abbb623bfa17ef418a0766d629128934d322fe6f41a42645c39142e4625a7c23",
+  "5433c09b0fc35df8b1f716f450ba4e9c03315f56e61fee84740b8867eb8c0ac9",
+  "2c6198a194c89e96b4c914128edaa7dec09ab865902d345ee710fa4f51585b60",
+  "3faf70e39031b0c6382efba75c8df9662746520c185244549c2497fbc8559e8a",
+  "ce2a50d1fcd0303e48ce90003e1de215d57ace7119ce0cd2da31cb7cdbd1c678",
+  "ac2df3520633628defb43b556fdb5a1c5fc2f259c8bc685f64876f004fd025e5",
+  "85affc32f82a3c8fdc2564b01c7bb01f4fe15ae583d40868959a6cdcd20f469b",
+  "6eff4e80eb8f95f7c0580e40823121fe383362ef343ad53351ca6b91b7100a5a",
+  "2a1b053e9cdce294c8c82e94792da6734ae7977908b6fe975285d63a1de6ea2c",
+  "ba24504c5d6845e2ee6a401d5a12b5abf0b9a4386d48c08b40e01a2d5178479b",
+  "869ac279c0017d7404474bbd89f63fa0614077699798cd06798d20141d586961",
+  "886ffcab584b5c08bafdd0182669093190729ddc3b2eaa767a2319e81c46ce44",
+  "d45f0988bd6148cade5fd4197aa5eba74dcca006198cfd93f99144ea50201534",
+  "da2cc415270289aa42ec1683f7c17043cc08b9bd1621157f7baf34b6a0a8ea6a",
+  "d19be561ce9fd083c96a5b2918573a70859f1cb927f4ad597ccdf11f261ff5d4",
+  "3670d69df8a842549827906a2d5d4cfc3049a1b6a62d446fd49ed36ca6f419a6",
+  "83cac7acd2d4b7d3af06907810ff7371594925977b68fa3b8ea90c463db12e10",
+  "9964f8ba753a83a42fb3ece2624a15b2b8aa8636bfc14f4ac3adfd8ca1f1723c",
+  "8c3f3f6369ecd5f3249c96a14d348263856885e683ad8dc70e30925065ccaa1c",
+];
+
+document.addEventListener('DOMContentLoaded', function(){
+  var STORAGE_KEY = 'nyAinaUrgencesLicense';
+  var gate = document.getElementById('license-gate');
+  var input = document.getElementById('license-input');
+  var btn = document.getElementById('license-submit');
+  var err = document.getElementById('license-error');
+
+  function sha256Hex(str){
+    var enc = new TextEncoder().encode(str);
+    return crypto.subtle.digest('SHA-256', enc).then(function(buf){
+      return Array.prototype.map.call(new Uint8Array(buf), function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    });
+  }
+
+  function unlock(){
+    gate.classList.add('hidden');
+    var app = document.getElementById('app');
+    if(app){ app.classList.remove('license-locked'); }
+  }
+
+  function showGate(){
+    gate.classList.remove('hidden');
+  }
+
+  var saved = localStorage.getItem(STORAGE_KEY);
+  if(saved === 'valid'){
+    unlock();
+  } else {
+    showGate();
+  }
+
+  function tryActivate(){
+    var raw = input.value.trim().toUpperCase();
+    if(!raw){ err.textContent = 'Veuillez entrer une clé.'; return; }
+    btn.disabled = true; btn.textContent = 'Vérification...';
+    sha256Hex(raw).then(function(hash){
+      if(LICENSE_HASHES.indexOf(hash) !== -1){
+        localStorage.setItem(STORAGE_KEY, 'valid');
+        err.textContent = '';
+        unlock();
+      } else {
+        err.textContent = 'Clé de licence invalide. Vérifiez et réessayez.';
+        btn.disabled = false; btn.textContent = 'Activer';
+      }
+    });
+  }
+
+  btn.addEventListener('click', tryActivate);
+  input.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ tryActivate(); } });
+})();
+</script>
+<div id="app" class="license-locked">
   <aside id="sidebar">
     <div class="brand">
       <h1>🫀 Ny Aina Med's</h1>
